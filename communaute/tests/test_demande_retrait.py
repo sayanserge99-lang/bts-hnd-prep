@@ -19,7 +19,8 @@ def sujet(creer_sujet, session_terminee):
     return creer_sujet(session_terminee, titre="Comptabilité générale", statut=PUBLIE)
 
 
-def demander(client, sujet, **champs):
+def demander(client, sujet, ip=None, **champs):
+    entetes = {"HTTP_X_REAL_IP": ip} if ip else {}
     donnees = {
         "sujet": sujet.pk,
         "demandeur_nom": "Éditions du Littoral",
@@ -28,7 +29,7 @@ def demander(client, sujet, **champs):
         "certifie_titulaire": "on",
         **champs,
     }
-    return client.post(f"{reverse('demande_de_retrait')}?sujet={sujet.pk}", donnees)
+    return client.post(f"{reverse('demande_de_retrait')}?sujet={sujet.pk}", donnees, **entetes)
 
 
 def test_le_formulaire_vise_le_sujet_de_la_fiche(client, sujet):
@@ -83,6 +84,20 @@ def test_le_nombre_de_demandes_par_jour_est_limite(client, creer_sujet, session_
     assert DemandeRetrait.objects.count() == settings.DEMANDES_RETRAIT_PAR_JOUR
     sujets[-1].refresh_from_db()
     assert sujets[-1].statut == PUBLIE
+
+
+def test_derriere_nginx_la_limite_suit_l_adresse_du_visiteur(client, settings, creer_sujet, session_terminee):
+    settings.DERRIERE_PROXY = True
+    sujets = [creer_sujet(session_terminee, titre=f"Sujet {n}", statut=PUBLIE) for n in range(5)]
+
+    # Toutes les requêtes arrivent de Nginx (même REMOTE_ADDR) ; seul X-Real-IP distingue les visiteurs.
+    for cible in sujets[:3]:
+        demander(client, cible, ip="203.0.113.7")
+    demander(client, sujets[3], ip="198.51.100.20")
+    demander(client, sujets[4], ip="203.0.113.7")
+
+    assert DemandeRetrait.objects.count() == 4
+    assert not DemandeRetrait.objects.filter(sujet=sujets[4]).exists()
 
 
 def test_accepter_supprime_le_document_et_garde_la_trace(client, sujet):

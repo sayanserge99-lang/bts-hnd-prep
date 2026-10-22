@@ -11,7 +11,10 @@ from .forms import DemandeRetraitForm
 
 
 def adresse_ip(request):
-    # Derrière Nginx en production, il faudra lire l'en-tête transmis par le proxy (X-Forwarded-For).
+    # Derrière Nginx, REMOTE_ADDR est celle de Nginx : l'adresse du visiteur est dans X-Real-IP,
+    # que Nginx écrase toujours (deploy/nginx.conf). Sans proxy, cet en-tête serait falsifiable.
+    if settings.DERRIERE_PROXY:
+        return request.META.get("HTTP_X_REAL_IP") or request.META.get("REMOTE_ADDR", "")
     return request.META.get("REMOTE_ADDR", "")
 
 

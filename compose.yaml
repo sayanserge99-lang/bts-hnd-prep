@@ -24,7 +24,9 @@ services:
     image: redis:7-alpine
 
   web:
-    build: .
+    build:
+      context: .
+      target: dev
     command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     environment:
       DJANGO_DEBUG: "1"
@@ -49,7 +51,9 @@ services:
   # Recompile static/css/app.css toutes les 2 s : les fichiers Windows montés dans Docker
   # n'envoient pas de notification de changement, donc --watch ne verrait rien.
   tailwind:
-    build: .
+    build:
+      context: .
+      target: dev
     command: sh -c "while true; do tailwindcss -i assets/css/app.css -o static/css/app.css 2>/dev/null; sleep 2; done"
     volumes:
       - .:/app

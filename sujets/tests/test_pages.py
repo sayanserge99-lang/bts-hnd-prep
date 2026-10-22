@@ -78,6 +78,18 @@ def resultats(client, **filtres):
     return client.get(reverse("sujets:liste"), {"examen": "BTS", **filtres}, headers={"HX-Request": "true"}).content.decode()
 
 
+def test_en_production_nginx_envoie_le_pdf_apres_controle(client, settings, publie, brouillon):
+    settings.FICHIERS_PAR_NGINX = True
+
+    reponse = client.get(reverse("sujets:pdf", args=[publie.pk]), {"telecharger": "1"})
+    assert reponse["X-Accel-Redirect"] == "/fichiers-proteges/" + publie.fichier.name
+    assert reponse["Content-Disposition"].startswith("attachment")
+    assert reponse.content == b""
+
+    # Le contrôle reste dans Django : aucun en-tête pour un sujet non publié.
+    assert client.get(reverse("sujets:pdf", args=[brouillon.pk])).status_code == 404
+
+
 def test_filtre_par_annee(client, publie):
     assert publie.titre in resultats(client, annee="2025")
     assert publie.titre not in resultats(client, annee="2024")

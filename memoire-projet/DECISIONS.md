@@ -40,5 +40,7 @@
   chaque mot vaut comme début de mot ; accents ignorés en français ; tous les mots sont exigés.
 - **PDF des sujets** : jamais servis par MEDIA_URL ; uniquement par la vue `sujets:pdf`, qui exige le statut publié
   (sinon un sujet non publié serait lisible en devinant son adresse). Testé.
+- **Production** : un seul Dockerfile à trois cibles (dev, prod, nginx) ; secrets dans `.env.production` (jamais versionné) ;
+  le serveur refuse de démarrer sans DJANGO_SECRET_KEY ; HSTS 1 h au départ, sous-domaines/préchargement à décider.
 - **Interface** : Tailwind v4 en exécutable autonome (pas de Node), polices du système, HTMX servi localement ;
   les pages marchent aussi sans JavaScript (formulaire GET classique).

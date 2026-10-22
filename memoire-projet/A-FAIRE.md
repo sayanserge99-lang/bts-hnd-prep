@@ -18,11 +18,14 @@
 - [x] Recherche plein texte : index GIN, accents ignorés (fr_unaccent), débuts de mot, titre et matière > texte.
 - [ ] Recherche : un renommage de matière ne met pas l'index à jour (lancer `reindexer_recherche`) ; à automatiser si besoin.
 - [x] Docker de développement : `Dockerfile` (Python 3.13), `compose.yaml` (web, PostgreSQL 17, Redis 7).
-- [ ] Celery, django-storages, Docker de production (Gunicorn, Nginx).
+- [x] Docker de production : Gunicorn, Nginx, X-Accel-Redirect, X-Real-IP, SMTP, check --deploy, sauvegardes.
+- [ ] HTTPS Let's Encrypt sur le vrai serveur (procédure écrite dans deploy/DEPLOIEMENT.md, non testée).
+- [ ] Celery (extraction du texte, compression des PDF) ; django-storages si stockage S3.
+- [ ] Copier les sauvegardes hors du serveur (autre machine ou stockage distant).
 - [ ] Créer un superutilisateur : `docker compose exec web python manage.py createsuperuser` (à faire par Serge Alain).
 - [x] Tailwind + HTMX, gabarit de base, sélecteur de langue, accueil, catalogue, fiche sujet, pages légales vides.
 - [x] Comptes : inscription, connexion avec blocage, mot de passe oublié, espace perso, favoris, export, suppression.
-- [ ] Production : fournisseur d'e-mails (SMTP) pour la réinitialisation ; `EMAIL_BACKEND` par variable d'environnement.
+- [ ] Choisir le fournisseur d'e-mails (SMTP) et remplir `EMAIL_*` dans .env.production.
 - [ ] Établissement dans le profil : à ajouter quand la liste des IPES sera saisie (partenaires.Etablissement).
 - [ ] Option « Partager mes résultats avec mon établissement » (CDC 10.6) : avec le tableau de bord IPES (V3).
 - [x] Traductions EN : 270 textes traduits, test de complétude.
@@ -30,11 +33,10 @@
 - [ ] Production : lancer `compilemessages` dans le Dockerfile au lieu de versionner le `.mo`.
 - [x] Formulaire de demande de retrait (sujets) avec actions d'admin Accepter / Refuser.
 - [ ] Rédiger les pages légales (mentions, confidentialité, CGV, contact) : contenu à fournir par Serge Alain / juriste.
-- [ ] Demande de retrait : lire l'IP réelle derrière Nginx (X-Forwarded-For) ; renseigner ADMINS pour être prévenu.
+- [ ] Renseigner DJANGO_ADMINS dans .env.production pour être prévenu des demandes de retrait.
 - [ ] Demande de retrait des corrigés : à ajouter avec les corrigés (V2).
 - [ ] Décider le quota de téléchargement des visiteurs (CDC 7 : « limité ») ; aujourd'hui tout est ouvert.
 - [ ] Accueil : apparier spécialités BTS ↔ HND comme sur la maquette (aucun lien en base aujourd'hui).
-- [ ] Production : servir les PDF via Nginx (X-Accel-Redirect) après le contrôle de la vue `sujets:pdf`.
 - [ ] Alpine.js : pas encore nécessaire (ajouter quand il le sera : minuteur d'examen blanc, menus).
 - [ ] Permissions modérateur limitées à ses matières (AffectationModerateur) dans l'admin.
 - [ ] Corrige : décider si on ajoute `verifie_par` (FK utilisateur) pour tracer la vérification.

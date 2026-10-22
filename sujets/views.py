@@ -1,9 +1,12 @@
+from urllib.parse import quote
+
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Count, OuterRef, Subquery
-from django.http import FileResponse
+from django.http import FileResponse, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.http import content_disposition_header
 from django.utils.text import slugify
 from django.views.decorators.http import require_POST
 
@@ -100,9 +103,13 @@ def basculer_favori(request, pk):
 
 def pdf(request, pk):
     sujet = get_object_or_404(Sujet.objects.publies().select_related("session"), pk=pk)
-    return FileResponse(
-        sujet.fichier.open("rb"),
-        content_type="application/pdf",
-        as_attachment=request.GET.get("telecharger") == "1",
-        filename=f"{slugify(sujet.titre)}-{sujet.session.annee}.pdf",
-    )
+    telecharger = request.GET.get("telecharger") == "1"
+    nom = f"{slugify(sujet.titre)}-{sujet.session.annee}.pdf"
+    if settings.FICHIERS_PAR_NGINX:
+        # Django a vérifié la publication ; Nginx envoie le fichier depuis un emplacement interne,
+        # inaccessible directement (deploy/nginx.conf, location /fichiers-proteges/).
+        reponse = HttpResponse(content_type="application/pdf")
+        reponse["X-Accel-Redirect"] = "/fichiers-proteges/" + quote(sujet.fichier.name)
+        reponse["Content-Disposition"] = content_disposition_header(telecharger, nom)
+        return reponse
+    return FileResponse(sujet.fichier.open("rb"), content_type="application/pdf", as_attachment=telecharger, filename=nom)

@@ -8,7 +8,10 @@ Phase 0 (cadrage). Le squelette Django **tourne** :
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **71 tests verts** (12 publication, 10 recherche, 15 pages, 16 comptes, 4 langues, 11 retrait, 3 groupes).
+- `pytest` : **73 tests verts** (12 publication, 10 recherche, 16 pages, 16 comptes, 4 langues, 12 retrait, 3 groupes).
+- **Production prête** (`compose.prod.yaml`, `deploy/`) : Gunicorn + Nginx, PDF via X-Accel-Redirect, IP via X-Real-IP,
+  SMTP, `check --deploy` propre (et dans la CI), sauvegarde quotidienne testée (restauration OK).
+  Essayée en local sur le port 8080 avec un `.env.production` de test (non versionné). Pas encore sur un vrai serveur.
 - **Demande de retrait** (`/demande-de-retrait/?sujet=<id>`, lien en bas de chaque fiche) : masquage immédiat,
   certification obligatoire, 3 demandes/jour par IP, accusé de réception ; admin : Accepter (PDF supprimé, trace
   gardée) ou Refuser (republié si la session est terminée, sinon brouillon).
@@ -26,8 +29,9 @@ Phase 0 (cadrage). Le squelette Django **tourne** :
 
 ## Prochaine étape
 
-1. Docker de production (Gunicorn, Nginx, envoi réel des e-mails) et Celery (extraction du texte des PDF).
-2. Retours de Serge Alain sur les pages (pas encore reçus).
+1. Choix du VPS / hébergeur et du nom de domaine (Serge Alain), puis suivre `deploy/DEPLOIEMENT.md` (HTTPS non testé).
+2. Celery : extraction du texte des PDF (remplit `texte_extrait`, puis l'index de recherche) et compression.
+3. Retours de Serge Alain sur les pages (pas encore reçus).
 
 ## Repères
 
@@ -46,5 +50,8 @@ Phase 0 (cadrage). Le squelette Django **tourne** :
   resynchronisé avec toutes les permissions après chaque `migrate` (`accounts/signals.py`).
 - Nouveau texte à l'écran : `docker compose exec web python manage.py makemessages -l en --ignore=.venv --ignore=static --no-obsolete`,
   traduire dans le .po, puis `docker compose exec web python manage.py compilemessages --ignore=.venv` et `docker compose restart web`.
+- Production locale : `docker compose -f compose.prod.yaml --env-file .env.production up -d --build` → http://localhost:8080.
+  Sous Git Bash, `export MSYS_NO_PATHCONV=1` avant `deploy/sauvegarde.sh` (sinon /app devient un chemin Windows).
+  Le shell Django 5.2 affiche une ligne d'import : utiliser `shell --no-imports -c` pour lire une valeur.
 - Données fictives : `docker compose exec web python manage.py donnees_demo` (refusé si DEBUG=0).
 - Superutilisateur : pas encore créé (`docker compose exec web python manage.py createsuperuser`).

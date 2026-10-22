@@ -7,3 +7,5 @@ media/
 staticfiles/
 .pytest_cache/
 static/css/
+.env.production
+sauvegardes/

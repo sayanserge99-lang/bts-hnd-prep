@@ -38,3 +38,7 @@
 - Demande de retrait : formulaire, masquage immédiat + 3 protections (certification, 3/jour/IP, accusé),
   actions Accepter / Refuser. 11 tests, 71/71 verts. Trou trouvé dans le garde-fou des traductions
   (il ne voyait pas les textes jamais extraits) → la CI lance makemessages avant pytest.
+- Production : Dockerfile multi-cibles, compose.prod.yaml, Nginx (gzip, cache 1 an, X-Accel-Redirect), réglages
+  sécurité, SMTP, ADMINS. Essayée en local : PDF publié OK, brouillon 404 par vue, /media/ et /fichiers-proteges/,
+  en-tête forgé sans effet ; check --deploy propre (ajouté à la CI). Sauvegarde testée : 66 sujets restaurés,
+  66 PDF dans l'archive. Vérification faussée une fois par la ligne d'import du shell Django → refaite. 73/73 verts.
