@@ -31,3 +31,10 @@
 - **Point 10** : DemandeRetrait.demandeur = nom + e-mail (pas de clé vers Utilisateur).
 - **Point 11** : statut « masqué » sur Sujet et Corrigé ; une demande de retrait masque le contenu dès sa création.
 - **Point 12** : Quiz → Matière (+ Chapitre facultatif) ; pas de `durée` sur CodeAcces (prise de l'Offre).
+
+## Validées ensuite
+
+- **PostgreSQL uniquement** (22/10/2026) : la base SQLite de secours est retirée, car la recherche
+  plein texte (index GIN, unaccent) en dépend. Conforme au CDC (« PostgreSQL comme base unique »).
+- **Recherche** : titre et nom de matière pèsent plus (poids A) que le texte extrait (poids C) ;
+  chaque mot vaut comme début de mot ; accents ignorés en français ; tous les mots sont exigés.

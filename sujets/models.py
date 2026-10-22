@@ -1,9 +1,16 @@
+import re
+
 from django.conf import settings
+from django.contrib.postgres.indexes import GinIndex
+from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector, SearchVectorField
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.db.models import Q
+from django.db.models import F, Q, Value
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+
+# Configurations de recherche PostgreSQL par langue d'examen (fr_unaccent : migration 0002).
+CONFIG_RECHERCHE = {"fr": "fr_unaccent", "en": "english"}
 
 
 class PublicationInterdite(ValidationError):
@@ -24,6 +31,25 @@ class SujetQuerySet(models.QuerySet):
 
     def publiables(self, aujourd_hui=None):
         return self.filter(session__date_fin_officielle__lt=aujourd_hui or timezone.localdate())
+
+    def rechercher(self, texte, langue):
+        """Sujets contenant tous les mots, triés par pertinence.
+
+        Chaque mot vaut aussi comme début de mot (« amortis » trouve « amortissement »),
+        et les accents sont ignorés en français.
+        """
+        mots = re.findall(r"[^\W_]+", texte)
+        if not mots:
+            return self.none()
+        requete = SearchQuery(
+            " & ".join(f"{mot}:*" for mot in mots), config=CONFIG_RECHERCHE[langue], search_type="raw"
+        )
+        return (
+            self.filter(recherche=requete)
+            # F() et non "recherche" : un simple nom ferait recalculer le vecteur et perdre les poids.
+            .annotate(pertinence=SearchRank(F("recherche"), requete))
+            .order_by("-pertinence")
+        )
 
     # Les opérations groupées contournent save() : on y applique la même règle.
     def update(self, **kwargs):
@@ -69,6 +95,7 @@ class Sujet(models.Model):
     fichier = models.FileField(_("fichier PDF"), upload_to="sujets/%Y/")
     nb_pages = models.PositiveSmallIntegerField(_("nombre de pages"), null=True, blank=True)
     texte_extrait = models.TextField(blank=True, help_text=_("Rempli par la tâche d'extraction, sert à la recherche."))
+    recherche = SearchVectorField(null=True, editable=False)
     source = models.CharField(max_length=200, help_text=_("Exemple : MINESUP, BTS session 2025."))
     statut = models.CharField(max_length=10, choices=Statut.choices, default=Statut.BROUILLON)
     date_publication = models.DateTimeField(null=True, blank=True, editable=False)
@@ -80,6 +107,7 @@ class Sujet(models.Model):
     class Meta:
         verbose_name = _("sujet")
         ordering = ["-session__annee", "titre"]
+        indexes = [GinIndex(fields=["recherche"], name="sujet_recherche_gin")]
 
     def __str__(self):
         return f"{self.titre} — {self.session}"
@@ -108,6 +136,18 @@ class Sujet(models.Model):
         elif self.statut == self.Statut.BROUILLON:
             self.date_publication = None
         super().save(*args, **kwargs)
+        self.mettre_a_jour_recherche()
+
+    def mettre_a_jour_recherche(self):
+        # Les opérations groupées ne passent pas ici : relancer `manage.py reindexer_recherche`.
+        config = CONFIG_RECHERCHE[self.session.examen.langue]
+        noms_matiere = " ".join(filter(None, [self.matiere.nom_fr, self.matiere.nom_en]))
+        vecteur = (
+            SearchVector(Value(noms_matiere), weight="A", config=config)
+            + SearchVector("titre", weight="A", config=config)
+            + SearchVector("texte_extrait", weight="C", config=config)
+        )
+        Sujet.objects.filter(pk=self.pk).update(recherche=vecteur)
 
     def coefficient_pour(self, specialite):
         lien = self.matiere.specialitematiere_set.filter(specialite=specialite).first()

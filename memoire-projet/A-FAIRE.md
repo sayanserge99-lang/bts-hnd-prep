@@ -15,7 +15,8 @@
 
 ## Squelette (suite)
 
-- [ ] Recherche plein texte : `SearchVectorField` + index GIN sur Sujet (PostgreSQL uniquement).
+- [x] Recherche plein texte : index GIN, accents ignorés (fr_unaccent), débuts de mot, titre et matière > texte.
+- [ ] Recherche : un renommage de matière ne met pas l'index à jour (lancer `reindexer_recherche`) ; à automatiser si besoin.
 - [x] Docker de développement : `Dockerfile` (Python 3.13), `compose.yaml` (web, PostgreSQL 17, Redis 7).
 - [ ] Celery, django-storages, Docker de production (Gunicorn, Nginx).
 - [ ] Créer un superutilisateur : `docker compose exec web python manage.py createsuperuser` (à faire par Serge Alain).

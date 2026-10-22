@@ -8,6 +8,9 @@ services:
       POSTGRES_DB: btshnd
       POSTGRES_USER: btshnd
       POSTGRES_PASSWORD: btshnd
+    # Ouvert sur la machine pour lancer pytest depuis le venv.
+    ports:
+      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
