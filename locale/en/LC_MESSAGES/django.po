@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-22 14:17+0100\n"
+"POT-Creation-Date: 2026-10-22 14:58+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -267,14 +267,18 @@ msgid_plural "%d demandes refusées."
 msgstr[0] "%d request refused."
 msgstr[1] "%d requests refused."
 
-#: communaute/forms.py:17
+#: communaute/forms.py:19
 msgid "Motif de la demande"
 msgstr "Reason for the request"
 
-#: communaute/forms.py:18
+#: communaute/forms.py:20
 msgid "Précisez vos droits sur ce document (auteur, éditeur, établissement…)."
 msgstr ""
 "Explain your rights over this document (author, publisher, institution…)."
+
+#: communaute/forms.py:30
+msgid "La demande doit viser un seul document."
+msgstr "The request must concern a single document."
 
 #: communaute/models.py:17 paiements/models.py:53
 msgid "En attente"
@@ -355,12 +359,12 @@ msgstr "takedown request"
 msgid "demandes de retrait"
 msgstr "takedown requests"
 
-#: communaute/views.py:33
+#: communaute/views.py:43
 msgid ""
 "Trop de demandes envoyées aujourd'hui. Écrivez-nous depuis la page Contact."
 msgstr "Too many requests sent today. Write to us from the Contact page."
 
-#: communaute/views.py:38
+#: communaute/views.py:48
 msgid "Votre demande de retrait a bien été reçue"
 msgstr "Your takedown request has been received"
 
@@ -556,15 +560,15 @@ msgstr "Share of revenue paid to the institution."
 msgid "partenariat"
 msgstr "partnership"
 
-#: sujets/admin.py:31
+#: sujets/admin.py:33
 msgid "Choisissez uniquement des spécialités rattachées à cette matière."
 msgstr "Choose only specialties linked to this subject."
 
-#: sujets/admin.py:37
+#: sujets/admin.py:39
 msgid "Fichier ZIP"
 msgstr "ZIP file"
 
-#: sujets/admin.py:38
+#: sujets/admin.py:40
 msgid ""
 "Le ZIP contient sujets.csv et les fichiers (PDF, ou photos JPG/PNG) qu'il "
 "cite."
@@ -572,26 +576,26 @@ msgstr ""
 "The ZIP contains sujets.csv and the files it lists (PDFs, or JPG/PNG "
 "photos)."
 
-#: sujets/admin.py:41
+#: sujets/admin.py:43
 msgid "Simulation : vérifier sans rien enregistrer"
 msgstr "Dry run: check without saving anything"
 
-#: sujets/admin.py:74 templates/admin/sujets/sujet/change_list.html:6
+#: sujets/admin.py:76 templates/admin/sujets/sujet/change_list.html:6
 msgid "Importer des sujets"
 msgstr "Import papers"
 
-#: sujets/admin.py:94
+#: sujets/admin.py:96
 msgid "Publier les sujets sélectionnés"
 msgstr "Publish selected papers"
 
-#: sujets/admin.py:104
+#: sujets/admin.py:106
 #, python-format
 msgid "%d sujet publié."
 msgid_plural "%d sujets publiés."
 msgstr[0] "%d paper published."
 msgstr[1] "%d papers published."
 
-#: sujets/admin.py:111
+#: sujets/admin.py:113
 #, python-format
 msgid "%d sujet refusé : sa session n'est pas officiellement terminée."
 msgid_plural ""
@@ -599,27 +603,59 @@ msgid_plural ""
 msgstr[0] "%d paper refused: its session has not officially ended."
 msgstr[1] "%d papers refused: their session has not officially ended."
 
-#: sujets/admin.py:119
+#: sujets/admin.py:121
 msgid "Dépublier les sujets sélectionnés"
 msgstr "Unpublish selected papers"
 
-#: sujets/admin.py:124
+#: sujets/admin.py:126
 #, python-format
 msgid "%d sujet dépublié."
 msgid_plural "%d sujets dépubliés."
 msgstr[0] "%d paper unpublished."
 msgstr[1] "%d papers unpublished."
 
-#: sujets/admin.py:126
+#: sujets/admin.py:128
 msgid "Relancer le traitement des PDF (texte, OCR, compression)"
 msgstr "Reprocess PDFs (text, OCR, compression)"
 
-#: sujets/admin.py:133
+#: sujets/admin.py:135
 #, python-format
 msgid "%d PDF mis en file de traitement."
 msgid_plural "%d PDF mis en file de traitement."
 msgstr[0] "%d PDF queued for processing."
 msgstr[1] "%d PDFs queued for processing."
+
+#: sujets/admin.py:150
+msgid "Aperçu (tel que l'étudiant le verra)"
+msgstr "Preview (as the student will see it)"
+
+#: sujets/admin.py:153
+msgid "Enregistrez une première fois pour voir l'aperçu."
+msgstr "Save once to see the preview."
+
+#: sujets/admin.py:158
+msgid "Publier les corrigés sélectionnés"
+msgstr "Publish selected marking guides"
+
+#: sujets/admin.py:166
+#, python-format
+msgid "%d corrigé publié."
+msgid_plural "%d corrigés publiés."
+msgstr[0] "%d marking guide published."
+msgstr[1] "%d marking guides published."
+
+#: sujets/admin.py:171
+#, python-format
+msgid ""
+"%d corrigé refusé : la session de son sujet n'est pas officiellement "
+"terminée."
+msgid_plural ""
+"%d corrigés refusés : la session de leur sujet n'est pas officiellement "
+"terminée."
+msgstr[0] ""
+"%d marking guide refused: its paper's session has not officially ended."
+msgstr[1] ""
+"%d marking guides refused: their paper's session has not officially ended."
 
 #: sujets/importation.py:82
 msgid "Le tableau n'est ni en UTF-8 ni en Windows-1252."
@@ -737,15 +773,15 @@ msgstr ""
 "The %(session)s session officially ends on %(date)s: its papers cannot be "
 "published before then."
 
-#: sujets/models.py:78 sujets/models.py:182
+#: sujets/models.py:78 sujets/models.py:210
 msgid "Brouillon"
 msgstr "Draft"
 
-#: sujets/models.py:79 sujets/models.py:183
+#: sujets/models.py:79 sujets/models.py:211
 msgid "Publié"
 msgstr "Published"
 
-#: sujets/models.py:80 sujets/models.py:184
+#: sujets/models.py:80 sujets/models.py:212
 msgid "Masqué (demande de retrait en cours)"
 msgstr "Hidden (takedown request pending)"
 
@@ -765,7 +801,7 @@ msgstr "Only specialties the subject is linked to."
 msgid "type d'épreuve"
 msgstr "paper type"
 
-#: sujets/models.py:97 sujets/models.py:193
+#: sujets/models.py:97 sujets/models.py:233
 msgid "fichier PDF"
 msgstr "PDF file"
 
@@ -789,49 +825,87 @@ msgstr "paper"
 msgid "La matière n'appartient pas à l'examen de la session."
 msgstr "The subject does not belong to the session's exam."
 
-#: sujets/models.py:177
+#: sujets/models.py:205
 msgid "En préparation"
 msgstr "In preparation"
 
-#: sujets/models.py:178
+#: sujets/models.py:206 templates/sujets/_corrige.html:10
+#: templates/sujets/_resultats.html:20 templates/sujets/liste.html:75
 msgid "Proposé par la communauté"
 msgstr "Community answer"
 
-#: sujets/models.py:179
+#: sujets/models.py:207 templates/sujets/_corrige.html:8
+#: templates/sujets/_resultats.html:18 templates/sujets/liste.html:74
 msgid "Vérifié par un enseignant"
 msgstr "Verified by a teacher"
 
-#: sujets/models.py:187
+#: sujets/models.py:215
 msgid "Plateforme"
 msgstr "Platform"
 
-#: sujets/models.py:188
+#: sujets/models.py:216
 msgid "Enseignant"
 msgstr "Teacher"
 
-#: sujets/models.py:189
+#: sujets/models.py:217
 msgid "Partagé"
 msgstr "Shared"
 
-#: sujets/models.py:198
+#: sujets/models.py:220
+#, python-brace-format
+msgid ""
+"Markdown : **gras**, listes, tableaux (| a | b |), code entre ```. Formules "
+": $x^2$ dans le texte, $$\\frac{a}{b}$$ sur sa propre ligne."
+msgstr ""
+"Markdown: **bold**, lists, tables (| a | b |), code between ```. Formulas: "
+"$x^2$ inline, $$\\frac{a}{b}$$ on its own line."
+
+#: sujets/models.py:226
+msgid "début du corrigé"
+msgstr "start of the marking guide"
+
+#: sujets/models.py:227
+msgid "Visible par tous (par exemple l'exercice 1). "
+msgstr "Visible to everyone (for example question 1). "
+
+#: sujets/models.py:230
+msgid "suite du corrigé"
+msgstr "rest of the marking guide"
+
+#: sujets/models.py:231
+msgid ""
+"Réservée aux abonnés une fois le paiement ouvert (CDC 3.3) ; visible par "
+"tous d'ici là."
+msgstr ""
+"Reserved for subscribers once payment opens; visible to everyone until then."
+
+#: sujets/models.py:237
 msgid "titulaire des droits"
 msgstr "rights holder"
 
-#: sujets/models.py:200
+#: sujets/models.py:239
 msgid "régime de propriété"
 msgstr "ownership"
 
-#: sujets/models.py:209
+#: sujets/models.py:250
 msgid "corrigé"
 msgstr "marking guide"
 
-#: sujets/models.py:231
+#: sujets/models.py:290
 msgid "favori"
 msgstr "favourite"
 
 #: sujets/signals.py:21
 msgid "Une spécialité choisie n'est pas rattachée à la matière du sujet."
 msgstr "A chosen specialty is not linked to the paper's subject."
+
+#: sujets/views.py:179
+msgid "Décrivez l'erreur en quelques mots (10 caractères au moins)."
+msgstr "Describe the mistake in a few words (at least 10 characters)."
+
+#: sujets/views.py:183
+msgid "Merci ! L'enseignant relira ce passage."
+msgstr "Thank you! The teacher will review this part."
 
 #: templates/accounts/connexion.html:4 templates/accounts/connexion.html:8
 #: templates/accounts/connexion.html:12 templates/accounts/inscription.html:19
@@ -1192,7 +1266,7 @@ msgid "Entraînement"
 msgstr "Practice"
 
 #: templates/base.html:29 templates/base.html:96
-#: templates/sujets/detail.html:15
+#: templates/sujets/detail.html:19
 msgid "Bientôt"
 msgstr "Soon"
 
@@ -1265,6 +1339,10 @@ msgstr "All papers sorted by specialty, subject and year, free to read."
 #: templates/catalogue/accueil.html:17
 msgid "Corrigés et entraînement arrivent bientôt."
 msgstr "Marking guides and practice tests are coming soon."
+
+#: templates/catalogue/accueil.html:17
+msgid "Corrigés disponibles ; l'entraînement arrive bientôt."
+msgstr "Marking guides available; practice tests are coming soon."
 
 #: templates/catalogue/accueil.html:21 templates/sujets/liste.html:11
 msgid "Examen"
@@ -1466,6 +1544,61 @@ msgstr "Add to favourites"
 msgid "Se connecter pour garder ce sujet"
 msgstr "Log in to save this paper"
 
+#: templates/sujets/_corrige.html:22
+msgid "Lire le corrigé (PDF)"
+msgstr "Read the marking guide (PDF)"
+
+#: templates/sujets/_corrige.html:27
+msgid "La suite avec le Pass session"
+msgstr "The rest with the Session pass"
+
+#: templates/sujets/_corrige.html:28
+msgid ""
+"Le corrigé complet, le barème détaillé et les conseils de l'enseignant."
+msgstr ""
+"The full marking guide, the detailed marking scheme and the teacher's "
+"advice."
+
+#: templates/sujets/_corrige.html:29
+msgid "Voir le Pass session"
+msgstr "See the Session pass"
+
+#: templates/sujets/_corrige.html:35
+msgid ""
+"Même vérifié, un corrigé peut contenir des erreurs. Si vous en trouvez une, "
+"signalez-la : l'enseignant la relira."
+msgstr ""
+"Even when verified, a marking guide may contain mistakes. If you find one, "
+"report it: the teacher will review it."
+
+#: templates/sujets/_corrige.html:38
+msgid "Signaler une erreur"
+msgstr "Report a mistake"
+
+#: templates/sujets/_corrige.html:41
+msgid "Où est l'erreur, et quelle serait la bonne réponse ?"
+msgstr "Where is the mistake, and what would the right answer be?"
+
+#: templates/sujets/_corrige.html:43
+msgid "Envoyer"
+msgstr "Send"
+
+#: templates/sujets/_corrige.html:47
+msgid "Se connecter pour signaler une erreur"
+msgstr "Log in to report a mistake"
+
+#: templates/sujets/_corrige.html:49 templates/sujets/detail.html:52
+msgid "Demander le retrait de ce document"
+msgstr "Request removal of this document"
+
+#: templates/sujets/_corrige.html:54
+msgid "Le corrigé de ce sujet est en préparation."
+msgstr "The marking guide for this paper is in preparation."
+
+#: templates/sujets/_corrige.html:54
+msgid "Ce sujet n'a pas encore de corrigé."
+msgstr "This paper has no marking guide yet."
+
 #: templates/sujets/_resultats.html:3
 #, python-format
 msgid "%(total)s sujet"
@@ -1483,28 +1616,32 @@ msgstr "%(annee)s session"
 msgid "Matière commune à %(n)s spécialités"
 msgstr "Subject shared by %(n)s specialties"
 
-#: templates/sujets/_resultats.html:15
+#: templates/sujets/_resultats.html:22
+msgid "Corrigé en préparation"
+msgstr "Marking guide in preparation"
+
+#: templates/sujets/_resultats.html:26
 msgid "Voir le sujet"
 msgstr "See the paper"
 
-#: templates/sujets/_resultats.html:18
+#: templates/sujets/_resultats.html:29
 msgid "Aucun sujet ne correspond à ces critères."
 msgstr "No paper matches these criteria."
 
-#: templates/sujets/_resultats.html:23 templates/sujets/detail.html:33
+#: templates/sujets/_resultats.html:34 templates/sujets/detail.html:41
 msgid "Pages"
 msgstr "Pages"
 
-#: templates/sujets/_resultats.html:25
+#: templates/sujets/_resultats.html:36
 msgid "Précédent"
 msgstr "Previous"
 
-#: templates/sujets/_resultats.html:27
+#: templates/sujets/_resultats.html:38
 #, python-format
 msgid "Page %(n)s sur %(total)s"
 msgstr "Page %(n)s of %(total)s"
 
-#: templates/sujets/_resultats.html:29
+#: templates/sujets/_resultats.html:40
 msgid "Suivant"
 msgstr "Next"
 
@@ -1513,45 +1650,46 @@ msgid "Tous les sujets"
 msgstr "All papers"
 
 #: templates/sujets/detail.html:14
+msgid "Sujet ou corrigé"
+msgstr "Paper or marking guide"
+
+#: templates/sujets/detail.html:15
 msgid "Sujet"
 msgstr "Paper"
 
-#: templates/sujets/detail.html:15
+#: templates/sujets/detail.html:17 templates/sujets/detail.html:19
+#: templates/sujets/liste.html:71
 msgid "Corrigé"
 msgstr "Marking guide"
 
-#: templates/sujets/detail.html:19
+#: templates/sujets/detail.html:27
 msgid "Lire le sujet (PDF)"
 msgstr "Read the paper (PDF)"
 
-#: templates/sujets/detail.html:20
+#: templates/sujets/detail.html:28
 msgid "Télécharger"
 msgstr "Download"
 
-#: templates/sujets/detail.html:26
+#: templates/sujets/detail.html:34
 msgid "Durée"
 msgstr "Duration"
 
-#: templates/sujets/detail.html:27
+#: templates/sujets/detail.html:35
 #, python-format
 msgid "%(h)s minutes"
 msgstr "%(h)s minutes"
 
-#: templates/sujets/detail.html:29
+#: templates/sujets/detail.html:37
 msgid "Coefficient"
 msgstr "Coefficient"
 
-#: templates/sujets/detail.html:36
+#: templates/sujets/detail.html:44
 msgid "Barème"
 msgstr "Marking scheme"
 
-#: templates/sujets/detail.html:39
+#: templates/sujets/detail.html:47
 msgid "Source"
 msgstr "Source"
-
-#: templates/sujets/detail.html:44
-msgid "Demander le retrait de ce document"
-msgstr "Request removal of this document"
 
 #: templates/sujets/liste.html:19
 msgid "Aucun sujet n'est encore disponible."
@@ -1589,6 +1727,10 @@ msgstr "Paper type"
 msgid "Tous les types"
 msgstr "All types"
 
-#: templates/sujets/liste.html:72
+#: templates/sujets/liste.html:73
+msgid "Avec ou sans corrigé"
+msgstr "With or without a marking guide"
+
+#: templates/sujets/liste.html:81
 msgid "Filtrer"
 msgstr "Filter"

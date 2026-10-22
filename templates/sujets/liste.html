@@ -67,6 +67,15 @@
             {% endfor %}
           </select>
         </label>
+        {% if fonctionnalites.corriges %}
+        <label class="text-sm font-medium">{% translate "Corrigé" %}
+          <select name="corrige" class="champ mt-1">
+            <option value="">{% translate "Avec ou sans corrigé" %}</option>
+            <option value="verifie" {% if filtres.corrige == "verifie" %}selected{% endif %}>{% translate "Vérifié par un enseignant" %}</option>
+            <option value="communaute" {% if filtres.corrige == "communaute" %}selected{% endif %}>{% translate "Proposé par la communauté" %}</option>
+          </select>
+        </label>
+        {% endif %}
       </div>
 
       <noscript><button class="bouton-plein">{% translate "Filtrer" %}</button></noscript>

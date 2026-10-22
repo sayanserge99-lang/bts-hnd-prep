@@ -201,7 +201,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Drapeaux des fonctionnalités V2/V3 : présentes dans le code, masquées tant que False.
 FONCTIONNALITES = {
-    "corriges": False,
+    "corriges": True,
     "entrainement": False,
     "examens_blancs": False,
     "hors_ligne": False,

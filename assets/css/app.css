@@ -60,4 +60,39 @@
   .errorlist {
     @apply mt-1 text-sm text-red-700;
   }
+
+  /* Corrigés : HTML produit par sujets/rendu.py (Markdown + MathML). */
+  .corrige {
+    @apply space-y-3 leading-relaxed;
+  }
+  .corrige h1, .corrige h2, .corrige h3 {
+    @apply mt-5 font-bold;
+  }
+  .corrige h1, .corrige h2 {
+    @apply text-lg;
+  }
+  .corrige ul {
+    @apply list-disc pl-6;
+  }
+  .corrige ol {
+    @apply list-decimal pl-6;
+  }
+  .corrige table {
+    @apply block w-full overflow-x-auto rounded-lg border border-bordure bg-white text-sm;
+  }
+  .corrige th, .corrige td {
+    @apply border-b border-bordure px-3 py-2 text-left;
+  }
+  .corrige pre {
+    @apply overflow-x-auto rounded-lg bg-encre p-3 text-sm text-white;
+  }
+  .corrige code {
+    @apply rounded bg-bordure/50 px-1;
+  }
+  .corrige pre code {
+    @apply bg-transparent p-0;
+  }
+  .corrige math[display="block"] {
+    @apply my-3 overflow-x-auto;
+  }
 }

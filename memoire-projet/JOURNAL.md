@@ -58,3 +58,9 @@
   Essai réel : session 2021 absente → 3 refus clairs ; une fois créée, 2 importés + 1 refus, OCR des 2 photos,
   recherche OK. Données d'essai supprimées. 115/115 verts.
 - CI de afb122b verte, mais apt a pris 719 s (contre 10 s au passage précédent) : cause non identifiée, noté.
+- V2 lancée. Module 1, corrigés : rendu Markdown + MathML, onglets, badges, filtre, signalement, retrait de corrigé,
+  aperçu admin, règle de publication sur les corrigés (save + update groupé). 19 tests.
+  Faille trouvée par un test : latex2mathml recopie 	ext{<script>} sans l'échapper (mon commentaire disait
+  l'inverse) → nettoyage nh3 de tout le HTML final avec une liste MathML ; contre-épreuve faite.
+  Défauts corrigés en route : refus de retrait republiait un corrigé sans la règle ; acceptation ne vidait pas
+  le début du corrigé ; chaînes de formules non brutes (, 	) dans donnees_demo. 134/134 verts.

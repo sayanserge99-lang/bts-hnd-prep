@@ -42,5 +42,8 @@
   (sinon un sujet non publié serait lisible en devinant son adresse). Testé.
 - **Production** : un seul Dockerfile à trois cibles (dev, prod, nginx) ; secrets dans `.env.production` (jamais versionné) ;
   le serveur refuse de démarrer sans DJANGO_SECRET_KEY ; HSTS 1 h au départ, sous-domaines/préchargement à décider.
+- **Corrigés** : en V2, le corrigé entier est visible par tous tant que le paiement est fermé ; la coupure
+  « début gratuit / suite Premium » s'active seule avec PAIEMENT_ACTIF. Formules en MathML (pas de KaTeX :
+  300 Ko de JS en moins). Tout le HTML final passe par nh3 (latex2mathml n'échappe pas 	ext{...}).
 - **Interface** : Tailwind v4 en exécutable autonome (pas de Node), polices du système, HTMX servi localement ;
   les pages marchent aussi sans JavaScript (formulaire GET classique).

@@ -14,7 +14,7 @@
     </h1>
     <p class="mt-4 text-lg text-gris">
       {% translate "Tous les sujets classés par spécialité, matière et année, à consulter gratuitement." %}
-      {% if not fonctionnalites.corriges %}{% translate "Corrigés et entraînement arrivent bientôt." %}{% endif %}
+      {% if not fonctionnalites.corriges %}{% translate "Corrigés et entraînement arrivent bientôt." %}{% elif not fonctionnalites.entrainement %}{% translate "Corrigés disponibles ; l'entraînement arrive bientôt." %}{% endif %}
     </p>
 
     <form id="choix" action="{% url 'sujets:liste' %}" method="get" class="carte mt-6 grid gap-4 sm:grid-cols-[auto_1fr]">

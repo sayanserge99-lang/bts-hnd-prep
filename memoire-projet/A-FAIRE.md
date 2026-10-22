@@ -48,7 +48,11 @@
 - [ ] Alpine.js : pas encore nécessaire (ajouter quand il le sera : minuteur d'examen blanc, menus).
 - [x] Modérateurs limités à leurs matières (liste, fiches, actions, listes de choix), accès admin automatique.
 - [ ] V3 : rôle « Établissement » pour le tableau de bord IPES (CDC 10.6), absent des 3 rôles du CDC section 7.
+- [x] Corrigés V2 : rendu Markdown/MathML sûr, badges, filtre, signalement, retrait, aperçu admin.
 - [ ] Corrige : décider si on ajoute `verifie_par` (FK utilisateur) pour tracer la vérification.
+- [ ] V3 : filigrane nominatif et lien temporaire sur le PDF du corrigé Premium (CDC 4).
+- [ ] Rendu : les $ à l'intérieur d'un bloc de code sont pris pour des formules (limite connue).
+- [ ] Vérifier à l'écran l'affichage MathML des formules (Chrome, Firefox, navigateur Android).
 - [ ] Forum (V3) : pas encore modélisé.
 
 ## Étude de faisabilité (reporté, « on les fera le moment venu »)

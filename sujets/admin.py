@@ -7,6 +7,7 @@ from django.http import HttpResponse
 from django.template.response import TemplateResponse
 from django.urls import path
 from django.utils import timezone
+from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import ngettext
 
@@ -14,6 +15,7 @@ from accounts.moderation import LimiteAuxMatieresDuModerateur
 
 from . import importation
 from .models import Corrige, Favori, Sujet
+from .rendu import rendre
 from .tasks import traiter_pdf_du_sujet
 
 
@@ -139,7 +141,40 @@ class SujetAdmin(LimiteAuxMatieresDuModerateur, admin.ModelAdmin):
 class CorrigeAdmin(LimiteAuxMatieresDuModerateur, admin.ModelAdmin):
     chemins_matiere = ("sujet__matiere",)
     list_display = ("sujet", "statut", "publication", "auteur", "titulaire_droits")
-    list_filter = ("statut", "publication")
+    list_filter = ("statut", "publication", "sujet__session__examen")
+    search_fields = ("sujet__titre", "auteur")
+    autocomplete_fields = ("sujet",)
+    readonly_fields = ("apercu",)
+    actions = ["publier"]
+
+    @admin.display(description=_("Aperçu (tel que l'étudiant le verra)"))
+    def apercu(self, corrige):
+        if not corrige.pk:
+            return _("Enregistrez une première fois pour voir l'aperçu.")
+        return format_html(
+            '<div style="max-width:48rem">{}<hr>{}</div>', rendre(corrige.partie_gratuite), rendre(corrige.contenu)
+        )
+
+    @admin.action(description=_("Publier les corrigés sélectionnés"))
+    def publier(self, request, queryset):
+        # Même règle que les sujets : la mise à jour groupée refuse une session non terminée.
+        autorises = queryset.exclude(publication=Corrige.Publication.MASQUE).filter(
+            sujet__session__date_fin_officielle__lt=timezone.localdate()
+        )
+        refuses = queryset.exclude(publication=Corrige.Publication.MASQUE).count() - autorises.count()
+        publies = autorises.update(publication=Corrige.Publication.PUBLIE)
+        self.message_user(request, ngettext("%d corrigé publié.", "%d corrigés publiés.", publies) % publies)
+        if refuses:
+            self.message_user(
+                request,
+                ngettext(
+                    "%d corrigé refusé : la session de son sujet n'est pas officiellement terminée.",
+                    "%d corrigés refusés : la session de leur sujet n'est pas officiellement terminée.",
+                    refuses,
+                )
+                % refuses,
+                messages.WARNING,
+            )
 
 
 @admin.register(Favori)

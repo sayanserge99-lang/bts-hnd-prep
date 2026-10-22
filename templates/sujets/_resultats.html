@@ -12,6 +12,17 @@
         {% blocktranslate with annee=sujet.session.annee %}Session {{ annee }}{% endblocktranslate %}
         · {% if sujet.nb_specialites > 1 %}{% blocktranslate with n=sujet.nb_specialites %}Matière commune à {{ n }} spécialités{% endblocktranslate %}{% else %}{{ sujet.get_type_epreuve_display }}{% endif %}
       </p>
+      {% if fonctionnalites.corriges and sujet.statut_corrige %}
+        <p class="mt-2">
+          {% if sujet.statut_corrige == "verifie" %}
+            <span class="inline-flex items-center gap-1 rounded bg-vert-clair px-2 py-0.5 text-xs font-semibold uppercase tracking-wide text-vert">✓ {% translate "Vérifié par un enseignant" %}</span>
+          {% elif sujet.statut_corrige == "communaute" %}
+            <span class="inline-flex rounded border border-bleu px-2 py-0.5 text-xs font-semibold uppercase tracking-wide text-bleu">{% translate "Proposé par la communauté" %}</span>
+          {% else %}
+            <span class="inline-flex rounded bg-bordure/60 px-2 py-0.5 text-xs font-semibold uppercase tracking-wide text-gris">{% translate "Corrigé en préparation" %}</span>
+          {% endif %}
+        </p>
+      {% endif %}
       <a href="{% url 'sujets:detail' sujet.pk %}" class="bouton-contour mt-3">{% translate "Voir le sujet" %}</a>
     </li>
   {% empty %}

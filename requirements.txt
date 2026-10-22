@@ -7,6 +7,9 @@ gunicorn>=23.0
 celery>=5.4
 pypdf>=5.0
 ocrmypdf>=16.0
+markdown>=3.7
+nh3>=0.2.18
+latex2mathml>=3.77
 
 pytest>=8.3
 pytest-django>=4.9

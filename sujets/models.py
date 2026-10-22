@@ -172,6 +172,34 @@ def _traiter_pdf(sujet_id):
     traiter_pdf_du_sujet.delay(sujet_id)
 
 
+class CorrigeQuerySet(models.QuerySet):
+    def visibles(self):
+        """Corrigés lisibles par le public : publiés, rédigés, et rattachés à un sujet publié.
+
+        Un corrigé dévoile le contenu du sujet : il suit donc la visibilité du sujet.
+        """
+        return self.filter(
+            publication=Corrige.Publication.PUBLIE,
+            statut__in=[Corrige.Statut.VERIFIE, Corrige.Statut.COMMUNAUTE],
+            sujet__statut=Sujet.Statut.PUBLIE,
+        ).order_by(
+            # Le corrigé vérifié par un enseignant passe en premier (CDC 10.7).
+            models.Case(models.When(statut=Corrige.Statut.VERIFIE, then=0), default=1),
+            "-modifie_le",
+        )
+
+    def update(self, **kwargs):
+        if kwargs.get("publication") == Corrige.Publication.PUBLIE:
+            bloque = (
+                self.filter(sujet__session__date_fin_officielle__gte=timezone.localdate())
+                .select_related("sujet__session")
+                .first()
+            )
+            if bloque:
+                raise _message_interdiction(bloque.sujet.session)
+        return super().update(**kwargs)
+
+
 class Corrige(models.Model):
     class Statut(models.TextChoices):
         EN_PREPARATION = "en_preparation", _("En préparation")
@@ -188,10 +216,21 @@ class Corrige(models.Model):
         ENSEIGNANT = "enseignant", _("Enseignant")
         PARTAGE = "partage", _("Partagé")
 
+    AIDE_REDACTION = _(
+        "Markdown : **gras**, listes, tableaux (| a | b |), code entre ```. "
+        "Formules : $x^2$ dans le texte, $$\\frac{a}{b}$$ sur sa propre ligne."
+    )
+
     sujet = models.ForeignKey(Sujet, on_delete=models.CASCADE, related_name="corriges")
-    contenu = models.TextField(blank=True)
+    partie_gratuite = models.TextField(
+        _("début du corrigé"), blank=True,
+        help_text=_("Visible par tous (par exemple l'exercice 1). ") + AIDE_REDACTION,
+    )
+    contenu = models.TextField(
+        _("suite du corrigé"), blank=True,
+        help_text=_("Réservée aux abonnés une fois le paiement ouvert (CDC 3.3) ; visible par tous d'ici là."),
+    )
     fichier = models.FileField(_("fichier PDF"), upload_to="corriges/%Y/", blank=True)
-    partie_gratuite = models.TextField(blank=True)
     statut = models.CharField(max_length=20, choices=Statut.choices, default=Statut.EN_PREPARATION)
     publication = models.CharField(max_length=10, choices=Publication.choices, default=Publication.BROUILLON)
     auteur = models.CharField(max_length=200)
@@ -205,10 +244,14 @@ class Corrige(models.Model):
     cree_le = models.DateTimeField(auto_now_add=True)
     modifie_le = models.DateTimeField(auto_now=True)
 
+    objects = CorrigeQuerySet.as_manager()
+
     class Meta:
         verbose_name = _("corrigé")
         constraints = [
-            models.CheckConstraint(condition=~Q(contenu="") | ~Q(fichier=""), name="corrige_contenu_ou_fichier"),
+            models.CheckConstraint(
+                condition=~Q(partie_gratuite="") | ~Q(contenu="") | ~Q(fichier=""), name="corrige_contenu_ou_fichier"
+            ),
             # CDC 10.1 : un corrigé sans titulaire des droits ne peut pas exister.
             models.CheckConstraint(condition=~Q(titulaire_droits=""), name="corrige_titulaire_obligatoire"),
             # CDC 10.6 : régime de propriété obligatoire pour un corrigé issu d'un partenariat.
@@ -220,6 +263,22 @@ class Corrige(models.Model):
 
     def __str__(self):
         return f"Corrigé · {self.sujet}"
+
+    def verifier_publication(self):
+        # Même règle que le sujet : un corrigé publié pendant la session dévoilerait l'épreuve.
+        if self.publication == self.Publication.PUBLIE and not self.sujet.peut_etre_publie():
+            raise _message_interdiction(self.sujet.session)
+
+    def clean(self):
+        if self.sujet_id:
+            try:
+                self.verifier_publication()
+            except PublicationInterdite as erreur:
+                raise ValidationError({"publication": erreur}) from erreur
+
+    def save(self, *args, **kwargs):
+        self.verifier_publication()
+        super().save(*args, **kwargs)
 
 
 class Favori(models.Model):

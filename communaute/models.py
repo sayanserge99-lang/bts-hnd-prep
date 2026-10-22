@@ -115,7 +115,9 @@ class DemandeRetrait(models.Model):
         else:
             if self.corrige.fichier:
                 self.corrige.fichier.delete(save=False)
-            Corrige.objects.filter(pk=self.corrige_id).update(fichier="", contenu="[Retiré à la demande du titulaire des droits]")
+            Corrige.objects.filter(pk=self.corrige_id).update(
+                fichier="", partie_gratuite="", contenu="[Retiré à la demande du titulaire des droits]"
+            )
         self._clore(self.Statut.ACCEPTEE)
 
     def refuser(self):
@@ -132,7 +134,11 @@ class DemandeRetrait(models.Model):
             sujet.statut = Sujet.Statut.PUBLIE if sujet.peut_etre_publie() else Sujet.Statut.BROUILLON
             sujet.save()
         else:
-            Corrige.objects.filter(pk=self.corrige_id).update(publication=Corrige.Publication.PUBLIE)
+            corrige = self.corrige
+            corrige.publication = (
+                Corrige.Publication.PUBLIE if corrige.sujet.peut_etre_publie() else Corrige.Publication.BROUILLON
+            )
+            corrige.save()
 
     def _clore(self, statut):
         self.statut = statut

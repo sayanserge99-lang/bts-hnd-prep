@@ -10,11 +10,19 @@
   <h1 class="mt-3 text-2xl font-bold">{{ sujet.titre }} — {{ sujet.session.annee }}</h1>
   <p class="mt-1 text-gris">{{ sujet.session.examen.code }} · {{ sujet.matiere }} · {{ sujet.get_type_epreuve_display }}</p>
 
-  <div class="mt-5 flex border-b border-bordure text-center font-semibold">
-    <span class="flex-1 border-b-2 border-vert pb-2 text-vert">{% translate "Sujet" %}</span>
-    <span class="flex-1 pb-2 text-gris">{% translate "Corrigé" %} {% if not fonctionnalites.corriges %}<span class="badge-bientot">{% translate "Bientôt" %}</span>{% endif %}</span>
-  </div>
+  {# Onglets de la maquette mobile : de simples liens, utilisables sans JavaScript. #}
+  <nav class="mt-5 flex border-b border-bordure text-center font-semibold" aria-label="{% translate 'Sujet ou corrigé' %}">
+    <a href="?onglet=sujet" class="flex-1 pb-2 {% if onglet == 'sujet' %}border-b-2 border-vert text-vert{% else %}text-gris{% endif %}" {% if onglet == 'sujet' %}aria-current="page"{% endif %}>{% translate "Sujet" %}</a>
+    {% if fonctionnalites.corriges %}
+      <a href="?onglet=corrige" class="flex-1 pb-2 {% if onglet == 'corrige' %}border-b-2 border-vert text-vert{% else %}text-gris{% endif %}" {% if onglet == 'corrige' %}aria-current="page"{% endif %}>{% translate "Corrigé" %}</a>
+    {% else %}
+      <span class="flex-1 pb-2 text-gris">{% translate "Corrigé" %} <span class="badge-bientot">{% translate "Bientôt" %}</span></span>
+    {% endif %}
+  </nav>
 
+  {% if onglet == "corrige" %}
+    {% include "sujets/_corrige.html" %}
+  {% else %}
   <div class="mt-5 flex flex-wrap gap-3">
     <a href="{% url 'sujets:pdf' sujet.pk %}" class="bouton-plein" target="_blank" rel="noopener">{% translate "Lire le sujet (PDF)" %}</a>
     <a href="{% url 'sujets:pdf' sujet.pk %}?telecharger=1" class="bouton-contour">{% translate "Télécharger" %}</a>
@@ -43,5 +51,6 @@
   <p class="mt-6 text-xs text-gris">
     <a href="{% url 'demande_de_retrait' %}?sujet={{ sujet.pk }}" class="underline">{% translate "Demander le retrait de ce document" %}</a>
   </p>
+  {% endif %}
 </article>
 {% endblock %}

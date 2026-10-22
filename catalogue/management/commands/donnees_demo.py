@@ -8,7 +8,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 
 from catalogue.models import Examen, Matiere, Session, Specialite, SpecialiteMatiere
-from sujets.models import Sujet
+from sujets.models import Corrige, Sujet
 
 SOURCE_DEMO = "Démonstration (sujet fictif)"
 
@@ -58,6 +58,44 @@ MATIERES = {
 }
 
 ANNEES_PUBLIEES = range(2022, 2027)
+
+# (examen, matière, année, statut, auteur, début visible par tous, suite)
+CORRIGES = [
+    ("BTS", "Comptabilité générale", 2025, "verifie", "M. Exemple, enseignant de comptabilité (fictif)",
+     r"""## Exercice 1 : amortissement dégressif
+
+Base amortissable : 12 000 000 FCFA, durée 5 ans, coefficient dégressif 2.
+
+Taux dégressif : $t = \frac{100}{5} \times 2 = 40\,\%$
+
+| Année | Base | Annuité | VNC fin d'année |
+|---|---|---|---|
+| N | 12 000 000 | 4 800 000 | 7 200 000 |
+| N+1 | 7 200 000 | 2 880 000 | 4 320 000 |
+""",
+     r"""## Exercice 2 : écriture de régularisation
+
+À la clôture, la dotation de l'exercice N se comptabilise ainsi :
+
+| Compte | Libellé | Débit | Crédit |
+|---|---|---|---|
+| 681 | Dotations aux amortissements | 4 800 000 | |
+| 2845 | Amortissements du matériel | | 4 800 000 |
+"""),
+    ("BTS", "Mathématiques financières", 2025, "communaute", "Étudiant contributeur (fictif)",
+     r"""## Exercice 1 : valeur acquise
+
+Capital de 500 000 FCFA placé 3 ans à 6 % l'an, intérêts composés :
+
+$$C_n = C_0 (1 + i)^n = 500\,000 \times 1{,}06^3 \approx 595\,508$$
+""", ""),
+    ("HND", "Financial Accounting", 2025, "verifie", "Mr Example, accounting lecturer (fictitious)",
+     r"""## Question 1: straight-line depreciation
+
+Annual charge: $\frac{\text{cost} - \text{residual value}}{\text{useful life}} = \frac{9\,000\,000 - 1\,000\,000}{4} = 2\,000\,000$ FCFA
+""", ""),
+    ("BTS", "Comptabilité générale", 2024, "en_preparation", "M. Exemple (fictif)", "À venir.", ""),
+]
 ANNEE_FUTURE = 2027
 
 
@@ -96,7 +134,8 @@ class Command(BaseCommand):
         if not settings.DEBUG:
             raise CommandError("Refusé : DEBUG est désactivé (base de production ?).")
         if Sujet.objects.filter(source=SOURCE_DEMO).exists():
-            self.stdout.write("Les données de démonstration sont déjà présentes.")
+            self.stdout.write("Les sujets de démonstration sont déjà présents.")
+            self.creer_corriges()
             return
 
         with transaction.atomic():
@@ -149,3 +188,16 @@ class Command(BaseCommand):
                         nombre += 1
 
         self.stdout.write(self.style.SUCCESS(f"{nombre} sujets de démonstration créés (session {ANNEE_FUTURE} en brouillon)."))
+        self.creer_corriges()
+
+    def creer_corriges(self):
+        if Corrige.objects.filter(titulaire_droits=SOURCE_DEMO).exists():
+            return
+        for examen, matiere, annee, statut, auteur, debut, suite in CORRIGES:
+            sujet = Sujet.objects.get(source=SOURCE_DEMO, session__examen__code=examen, session__annee=annee, titre=matiere)
+            Corrige.objects.create(
+                sujet=sujet, statut=statut, auteur=auteur, titulaire_droits=SOURCE_DEMO,
+                regime_propriete=Corrige.RegimePropriete.PLATEFORME, partie_gratuite=debut, contenu=suite,
+                publication=Corrige.Publication.PUBLIE if statut != Corrige.Statut.EN_PREPARATION else Corrige.Publication.BROUILLON,
+            )
+        self.stdout.write(self.style.SUCCESS(f"{len(CORRIGES)} corrigés de démonstration créés."))

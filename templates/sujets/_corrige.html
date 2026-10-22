@@ -1,0 +1,57 @@
+{% load i18n corriges %}
+<div class="mt-5 space-y-6">
+  {% for corrige in corriges %}
+    <section class="space-y-4" aria-labelledby="corrige-{{ corrige.pk }}">
+      <div>
+        {# CDC 10.7 : distinguer corrigés vérifiés et communautaires. #}
+        {% if corrige.statut == "verifie" %}
+          <span id="corrige-{{ corrige.pk }}" class="inline-flex items-center gap-1 rounded bg-vert-clair px-2 py-1 text-xs font-semibold uppercase tracking-wide text-vert">✓ {% translate "Vérifié par un enseignant" %}</span>
+        {% else %}
+          <span id="corrige-{{ corrige.pk }}" class="inline-flex items-center gap-1 rounded border border-bleu px-2 py-1 text-xs font-semibold uppercase tracking-wide text-bleu">{% translate "Proposé par la communauté" %}</span>
+        {% endif %}
+        <p class="mt-1 text-sm text-gris">{{ corrige.auteur }}</p>
+      </div>
+
+      {% if corrige.partie_gratuite %}
+        <div class="corrige">{{ corrige.partie_gratuite|mise_en_forme }}</div>
+      {% endif %}
+
+      {% if complet %}
+        {% if corrige.contenu %}<div class="corrige">{{ corrige.contenu|mise_en_forme }}</div>{% endif %}
+        {% if corrige.fichier %}
+          <a href="{% url 'sujets:pdf_corrige' corrige.pk %}" class="bouton-contour" target="_blank" rel="noopener">{% translate "Lire le corrigé (PDF)" %}</a>
+        {% endif %}
+      {% elif corrige.contenu or corrige.fichier %}
+        {# CDC 3.3 (V3) : la suite est réservée aux abonnés une fois le paiement ouvert. #}
+        <div class="rounded-2xl bg-ambre-clair p-5">
+          <p class="text-lg font-bold text-ambre">✦ {% translate "La suite avec le Pass session" %}</p>
+          <p class="mt-1">{% translate "Le corrigé complet, le barème détaillé et les conseils de l'enseignant." %}</p>
+          <a href="{% url 'accueil' %}#offres" class="bouton-plein mt-4 w-full">{% translate "Voir le Pass session" %}</a>
+        </div>
+      {% endif %}
+
+      {# CDC 10.7 : un corrigé peut contenir des erreurs ; bouton « Signaler une erreur ». #}
+      <div class="carte space-y-3 text-sm">
+        <p>ⓘ {% translate "Même vérifié, un corrigé peut contenir des erreurs. Si vous en trouvez une, signalez-la : l'enseignant la relira." %}</p>
+        {% if user.is_authenticated %}
+          <details>
+            <summary class="bouton-contour cursor-pointer">⚑ {% translate "Signaler une erreur" %}</summary>
+            <form method="post" action="{% url 'sujets:signaler_corrige' corrige.pk %}" class="mt-3 space-y-2">
+              {% csrf_token %}
+              <label for="motif-{{ corrige.pk }}" class="block font-medium">{% translate "Où est l'erreur, et quelle serait la bonne réponse ?" %}</label>
+              <textarea id="motif-{{ corrige.pk }}" name="motif" rows="3" required minlength="10" class="champ"></textarea>
+              <button class="bouton-plein">{% translate "Envoyer" %}</button>
+            </form>
+          </details>
+        {% else %}
+          <a href="{% url 'accounts:connexion' %}?next={{ request.get_full_path|urlencode }}" class="bouton-contour">⚑ {% translate "Se connecter pour signaler une erreur" %}</a>
+        {% endif %}
+        <p class="text-xs text-gris"><a href="{% url 'demande_de_retrait' %}?corrige={{ corrige.pk }}" class="underline">{% translate "Demander le retrait de ce document" %}</a></p>
+      </div>
+    </section>
+  {% empty %}
+    <p class="carte text-gris">
+      {% if en_preparation %}{% translate "Le corrigé de ce sujet est en préparation." %}{% else %}{% translate "Ce sujet n'a pas encore de corrigé." %}{% endif %}
+    </p>
+  {% endfor %}
+</div>
