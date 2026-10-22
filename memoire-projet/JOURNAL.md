@@ -49,3 +49,6 @@
   OCR (OCRmyPDF 17 --mode skip, Tesseract fra+eng), compression Ghostscript /ebook gardée si plus légère.
   8 tests (vrai scan généré, OCR, compression > 50 %). Essai réel avec le worker : scan OCRisé en 1,9 s,
   trouvé par « regularisation ». CI : Tesseract + Ghostscript installés. 89/89 verts.
+- CI bloquée plus de 10 min à l'installation apt (reconstruction de man-db sur Ubuntu 24.04) → désactivée,
+  installation en 10 s, passage vert (6394fb8). Les journaux de la CI ne sont pas lisibles sans connexion :
+  impossible de confirmer depuis ici que les tests d'OCR n'y sont pas sautés (-rs les listerait).
