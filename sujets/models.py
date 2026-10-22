@@ -4,13 +4,15 @@ from django.conf import settings
 from django.contrib.postgres.indexes import GinIndex
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector, SearchVectorField
 from django.core.exceptions import ValidationError
-from django.db import models
+from django.db import models, transaction
 from django.db.models import F, Q, Value
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 # Configurations de recherche PostgreSQL par langue d'examen (fr_unaccent : migration 0002).
 CONFIG_RECHERCHE = {"fr": "fr_unaccent", "en": "english"}
+
+FICHIER_NON_CHARGE = object()
 
 
 class PublicationInterdite(ValidationError):
@@ -109,6 +111,12 @@ class Sujet(models.Model):
         ordering = ["-session__annee", "titre"]
         indexes = [GinIndex(fields=["recherche"], name="sujet_recherche_gin")]
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Valeur brute, pour ne pas déclencher de requête quand le champ n'est pas chargé (.only(), .defer()).
+        valeur = self.__dict__.get("fichier", FICHIER_NON_CHARGE)
+        self._fichier_initial = getattr(valeur, "name", valeur)
+
     def __str__(self):
         return f"{self.titre} — {self.session}"
 
@@ -137,6 +145,10 @@ class Sujet(models.Model):
             self.date_publication = None
         super().save(*args, **kwargs)
         self.mettre_a_jour_recherche()
+        if self._fichier_initial is not FICHIER_NON_CHARGE and self.fichier.name != self._fichier_initial:
+            self._fichier_initial = self.fichier.name
+            # Après validation en base : la tâche doit trouver le sujet et son fichier.
+            transaction.on_commit(lambda: _traiter_pdf(self.pk))
 
     def mettre_a_jour_recherche(self):
         # Les opérations groupées ne passent pas ici : relancer `manage.py reindexer_recherche`.
@@ -152,6 +164,12 @@ class Sujet(models.Model):
     def coefficient_pour(self, specialite):
         lien = self.matiere.specialitematiere_set.filter(specialite=specialite).first()
         return lien.coefficient if lien else None
+
+
+def _traiter_pdf(sujet_id):
+    from .tasks import traiter_pdf_du_sujet  # import tardif : tasks importe ce module
+
+    traiter_pdf_du_sujet.delay(sujet_id)
 
 
 class Corrige(models.Model):

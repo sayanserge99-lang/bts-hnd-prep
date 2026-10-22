@@ -20,7 +20,10 @@
 - [x] Docker de développement : `Dockerfile` (Python 3.13), `compose.yaml` (web, PostgreSQL 17, Redis 7).
 - [x] Docker de production : Gunicorn, Nginx, X-Accel-Redirect, X-Real-IP, SMTP, check --deploy, sauvegardes.
 - [ ] HTTPS Let's Encrypt sur le vrai serveur (procédure écrite dans deploy/DEPLOIEMENT.md, non testée).
-- [ ] Celery (extraction du texte, compression des PDF) ; django-storages si stockage S3.
+- [x] Celery : texte, OCR des scans, compression, pages, index ; action d'admin « Relancer le traitement ».
+- [ ] django-storages si stockage S3 (aujourd'hui : volume Docker `fichiers`).
+- [ ] Retouche des photos de sujets (recadrage, contraste) avant publication : manuelle (étude de faisabilité 2.1).
+- [ ] Images WebP (CDC 4) : à traiter avec l'envoi de photos par les contributeurs (V3).
 - [ ] Copier les sauvegardes hors du serveur (autre machine ou stockage distant).
 - [ ] Créer un superutilisateur : `docker compose exec web python manage.py createsuperuser` (à faire par Serge Alain).
 - [x] Tailwind + HTMX, gabarit de base, sélecteur de langue, accueil, catalogue, fiche sujet, pages légales vides.

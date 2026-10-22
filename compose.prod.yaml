@@ -41,6 +41,26 @@ services:
       redis:
         condition: service_started
 
+  # Traitement des PDF : même image que web, même volume de fichiers.
+  worker:
+    build:
+      context: .
+      target: prod
+    restart: unless-stopped
+    command: celery -A config worker --loglevel=info --concurrency=2
+    env_file: .env.production
+    environment:
+      DJANGO_PRODUCTION: "1"
+      POSTGRES_HOST: db
+      REDIS_URL: redis://redis:6379/0
+    volumes:
+      - fichiers:/app/media
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
   nginx:
     build:
       context: .

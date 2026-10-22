@@ -45,3 +45,7 @@
 - Inventaire des espaces : public, étudiant, administration (modérateur + admin) ; un 4e (IPES, V3) sans rôle au CDC.
 - Modérateurs limités à leurs matières + accès admin automatique selon le groupe. 8 tests ; contre-épreuve :
   restriction désactivée → 6 échecs. 81/81 verts.
+- Celery : worker (dev + prod), tâche traiter_pdf_du_sujet lancée après validation en base quand le fichier change,
+  OCR (OCRmyPDF 17 --mode skip, Tesseract fra+eng), compression Ghostscript /ebook gardée si plus légère.
+  8 tests (vrai scan généré, OCR, compression > 50 %). Essai réel avec le worker : scan OCRisé en 1,9 s,
+  trouvé par « regularisation ». CI : Tesseract + Ghostscript installés. 89/89 verts.

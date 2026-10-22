@@ -91,4 +91,7 @@ docker compose -f compose.prod.yaml --env-file .env.production up -d --build
 - **Les PDF ne sont jamais accessibles par leur chemin.** Django vérifie que le sujet est publié, puis
   demande à Nginx de l'envoyer (en-tête `X-Accel-Redirect`). Un sujet non publié reste introuvable.
 - **Gunicorn** fait tourner Django avec 3 processus.
-- **Redis** garde le compteur de tentatives de connexion, partagé entre les processus.
+- **Redis** garde le compteur de tentatives de connexion, partagé entre les processus, et la file des tâches.
+- **Le worker Celery** traite chaque PDF ajouté : lecture du texte pour la recherche, OCR des scans
+  (Tesseract, français et anglais), compression (Ghostscript, gardée seulement si le fichier est plus léger).
+  Si un traitement a échoué, l'action d'admin « Relancer le traitement des PDF » le refait.

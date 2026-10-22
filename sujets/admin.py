@@ -7,6 +7,7 @@ from django.utils.translation import ngettext
 from accounts.moderation import LimiteAuxMatieresDuModerateur
 
 from .models import Corrige, Favori, Sujet
+from .tasks import traiter_pdf_du_sujet
 
 
 class SujetAdminForm(forms.ModelForm):
@@ -31,7 +32,7 @@ class SujetAdmin(LimiteAuxMatieresDuModerateur, admin.ModelAdmin):
     list_filter = ("statut", "session__examen", "session__annee", "type_epreuve")
     search_fields = ("titre", "texte_extrait")
     filter_horizontal = ("specialites",)
-    actions = ["publier", "depublier"]
+    actions = ["publier", "depublier", "retraiter_pdf"]
 
     @admin.action(description=_("Publier les sujets sélectionnés"))
     def publier(self, request, queryset):
@@ -64,6 +65,17 @@ class SujetAdmin(LimiteAuxMatieresDuModerateur, admin.ModelAdmin):
             statut=Sujet.Statut.BROUILLON, date_publication=None
         )
         self.message_user(request, ngettext("%d sujet dépublié.", "%d sujets dépubliés.", nombre) % nombre)
+
+    @admin.action(description=_("Relancer le traitement des PDF (texte, OCR, compression)"))
+    def retraiter_pdf(self, request, queryset):
+        identifiants = list(queryset.values_list("pk", flat=True))
+        for identifiant in identifiants:
+            traiter_pdf_du_sujet.delay(identifiant)
+        self.message_user(
+            request,
+            ngettext("%d PDF mis en file de traitement.", "%d PDF mis en file de traitement.", len(identifiants))
+            % len(identifiants),
+        )
 
 
 @admin.register(Corrige)

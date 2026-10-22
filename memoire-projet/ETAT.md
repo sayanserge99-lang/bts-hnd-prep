@@ -8,7 +8,10 @@ Phase 0 (cadrage). Le squelette Django **tourne** :
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **81 tests verts** (12 publication, 10 recherche, 16 pages, 16 comptes, 4 langues, 12 retrait, 8 modération, 3 groupes).
+- `pytest` : **89 tests verts** (12 publication, 10 recherche, 16 pages, 16 comptes, 4 langues, 12 retrait,
+  8 modération, 8 traitement PDF, 3 groupes). Les tests d'OCR demandent Tesseract/Ghostscript (Docker, CI).
+- **Celery** (service `worker`) : chaque PDF ajouté ou remplacé → texte (pypdf), OCR si scan (OCRmyPDF/Tesseract
+  fra+eng), compression Ghostscript gardée si plus légère, nb de pages, index de recherche. Essai réel OK (1,9 s).
 - **Modérateurs limités à leurs matières** dans l'admin (`accounts/moderation.py`, 8 pages) ; matières attribuées
   depuis la fiche de l'utilisateur ; entrer dans le groupe Modérateur/Administrateur ouvre l'accès à /admin/.
 - **Production prête** (`compose.prod.yaml`, `deploy/`) : Gunicorn + Nginx, PDF via X-Accel-Redirect, IP via X-Real-IP,
@@ -32,8 +35,9 @@ Phase 0 (cadrage). Le squelette Django **tourne** :
 ## Prochaine étape
 
 1. Choix du VPS / hébergeur et du nom de domaine (Serge Alain), puis suivre `deploy/DEPLOIEMENT.md` (HTTPS non testé).
-2. Celery : extraction du texte des PDF (remplit `texte_extrait`, puis l'index de recherche) et compression.
-3. Retours de Serge Alain sur les pages (pas encore reçus).
+2. Retours de Serge Alain sur les pages (pas encore reçus).
+3. Fin de la V1 : rédaction des pages légales (contenu de Serge Alain), collecte et saisie des vrais sujets.
+   Puis V2 : corrigés, QCM, examens blancs, suivi de progression, PWA hors ligne.
 
 ## Repères
 
@@ -55,5 +59,7 @@ Phase 0 (cadrage). Le squelette Django **tourne** :
 - Production locale : `docker compose -f compose.prod.yaml --env-file .env.production up -d --build` → http://localhost:8080.
   Sous Git Bash, `export MSYS_NO_PATHCONV=1` avant `deploy/sauvegarde.sh` (sinon /app devient un chemin Windows).
   Le shell Django 5.2 affiche une ligne d'import : utiliser `shell --no-imports -c` pour lire une valeur.
+- Celery ne se recharge pas tout seul : après une modification de `sujets/tasks.py` ou `traitement_pdf.py`,
+  `docker compose restart worker`. Journal : `docker compose logs -f worker`.
 - Données fictives : `docker compose exec web python manage.py donnees_demo` (refusé si DEBUG=0).
 - Superutilisateur : pas encore créé (`docker compose exec web python manage.py createsuperuser`).

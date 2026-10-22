@@ -42,6 +42,12 @@ jobs:
           python-version: "3.13"
           cache: pip
 
+      # Mêmes outils que l'image Docker : les tests d'OCR et de compression tournent aussi ici.
+      - name: Installer les outils système
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends gettext tesseract-ocr tesseract-ocr-fra tesseract-ocr-eng ghostscript
+
       - name: Installer les dépendances
         run: pip install -r requirements.txt
 
@@ -62,8 +68,8 @@ jobs:
       # apparaît alors vide dans le .po et fait échouer test_tous_les_textes_ont_une_traduction_anglaise.
       - name: Extraire les textes à traduire
         run: |
-          sudo apt-get install -y --no-install-recommends gettext
           python manage.py makemessages -l en --ignore=.venv --ignore=static --ignore=staticfiles --ignore=media --no-obsolete
 
+      # -rs affiche les tests sautés : les tests d'OCR ne doivent pas l'être ici.
       - name: Lancer les tests
-        run: pytest -v
+        run: pytest -v -rs

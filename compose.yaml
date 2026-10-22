@@ -1,5 +1,16 @@
-# Environnement de développement : docker compose up
-# La configuration de production (Gunicorn, Nginx) viendra dans un fichier séparé.
+# Environnement de développement : docker compose up -d
+# Production : compose.prod.yaml (voir deploy/DEPLOIEMENT.md).
+
+# Réglages communs au serveur web et au worker Celery.
+x-django-env: &django-env
+  DJANGO_DEBUG: "1"
+  DJANGO_ALLOWED_HOSTS: localhost,127.0.0.1
+  POSTGRES_DB: btshnd
+  POSTGRES_USER: btshnd
+  POSTGRES_PASSWORD: btshnd
+  POSTGRES_HOST: db
+  POSTGRES_PORT: "5432"
+  REDIS_URL: redis://redis:6379/0
 
 services:
   db:
@@ -19,7 +30,7 @@ services:
       timeout: 5s
       retries: 10
 
-  # Cache partagé (blocage des connexions) ; servira aussi à Celery.
+  # Cache partagé (blocage des connexions) et file des tâches Celery.
   redis:
     image: redis:7-alpine
 
@@ -28,18 +39,26 @@ services:
       context: .
       target: dev
     command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
-    environment:
-      DJANGO_DEBUG: "1"
-      DJANGO_ALLOWED_HOSTS: localhost,127.0.0.1
-      POSTGRES_DB: btshnd
-      POSTGRES_USER: btshnd
-      POSTGRES_PASSWORD: btshnd
-      POSTGRES_HOST: db
-      POSTGRES_PORT: "5432"
-      REDIS_URL: redis://redis:6379/0
+    environment: *django-env
     ports:
       - "8000:8000"
     # Le code est monté dans le conteneur : une modification recharge le serveur.
+    volumes:
+      - .:/app
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+  # Traitement des PDF (OCR, compression, texte). Ne se recharge pas tout seul :
+  # après une modification de sujets/tasks.py ou traitement_pdf.py, `docker compose restart worker`.
+  worker:
+    build:
+      context: .
+      target: dev
+    command: celery -A config worker --loglevel=info --concurrency=2
+    environment: *django-env
     volumes:
       - .:/app
     depends_on:

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-22 12:29+0100\n"
+"POT-Creation-Date: 2026-10-22 13:47+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,15 +18,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: accounts/admin.py:19
+#: accounts/admin.py:13
+msgid "Matières modérées (rôle Modérateur)"
+msgstr "Moderated subjects (Moderator role)"
+
+#: accounts/admin.py:27
 msgid "Identité"
 msgstr "Identity"
 
-#: accounts/admin.py:20
+#: accounts/admin.py:28
 msgid "Rôles"
 msgstr "Roles"
 
-#: accounts/admin.py:21
+#: accounts/admin.py:29
 msgid "Dates"
 msgstr "Dates"
 
@@ -158,7 +162,7 @@ msgstr "Your account and your data have been deleted."
 msgid "Mot de passe modifié. Vous pouvez vous connecter."
 msgstr "Password changed. You can now log in."
 
-#: catalogue/models.py:9 config/settings.py:115
+#: catalogue/models.py:9 config/settings.py:178
 msgid "Français"
 msgstr "French"
 
@@ -241,22 +245,22 @@ msgstr "title"
 msgid "chapitre"
 msgstr "chapter"
 
-#: communaute/admin.py:27
+#: communaute/admin.py:34
 msgid "Accepter : supprimer le document"
 msgstr "Accept: delete the document"
 
-#: communaute/admin.py:33
+#: communaute/admin.py:40
 #, python-format
 msgid "%d demande acceptée."
 msgid_plural "%d demandes acceptées."
 msgstr[0] "%d request accepted."
 msgstr[1] "%d requests accepted."
 
-#: communaute/admin.py:36
+#: communaute/admin.py:43
 msgid "Refuser : republier le contenu"
 msgstr "Refuse: republish the content"
 
-#: communaute/admin.py:43
+#: communaute/admin.py:50
 #, python-format
 msgid "%d demande refusée."
 msgid_plural "%d demandes refusées."
@@ -351,16 +355,16 @@ msgstr "takedown request"
 msgid "demandes de retrait"
 msgstr "takedown requests"
 
-#: communaute/views.py:30
+#: communaute/views.py:33
 msgid ""
 "Trop de demandes envoyées aujourd'hui. Écrivez-nous depuis la page Contact."
 msgstr "Too many requests sent today. Write to us from the Contact page."
 
-#: communaute/views.py:35
+#: communaute/views.py:38
 msgid "Votre demande de retrait a bien été reçue"
 msgstr "Your takedown request has been received"
 
-#: config/settings.py:115
+#: config/settings.py:178
 msgid "English"
 msgstr "English"
 
@@ -424,11 +428,11 @@ msgstr "number of questions"
 msgid "quiz"
 msgstr "quiz"
 
-#: entrainement/models.py:77 sujets/models.py:93
+#: entrainement/models.py:77 sujets/models.py:95
 msgid "durée (minutes)"
 msgstr "duration (minutes)"
 
-#: entrainement/models.py:78 sujets/models.py:94
+#: entrainement/models.py:78 sujets/models.py:96
 msgid "barème"
 msgstr "marking scheme"
 
@@ -552,22 +556,22 @@ msgstr "Share of revenue paid to the institution."
 msgid "partenariat"
 msgstr "partnership"
 
-#: sujets/admin.py:21
+#: sujets/admin.py:24
 msgid "Choisissez uniquement des spécialités rattachées à cette matière."
 msgstr "Choose only specialties linked to this subject."
 
-#: sujets/admin.py:34
+#: sujets/admin.py:37
 msgid "Publier les sujets sélectionnés"
 msgstr "Publish selected papers"
 
-#: sujets/admin.py:44
+#: sujets/admin.py:47
 #, python-format
 msgid "%d sujet publié."
 msgid_plural "%d sujets publiés."
 msgstr[0] "%d paper published."
 msgstr[1] "%d papers published."
 
-#: sujets/admin.py:51
+#: sujets/admin.py:54
 #, python-format
 msgid "%d sujet refusé : sa session n'est pas officiellement terminée."
 msgid_plural ""
@@ -575,18 +579,29 @@ msgid_plural ""
 msgstr[0] "%d paper refused: its session has not officially ended."
 msgstr[1] "%d papers refused: their session has not officially ended."
 
-#: sujets/admin.py:59
+#: sujets/admin.py:62
 msgid "Dépublier les sujets sélectionnés"
 msgstr "Unpublish selected papers"
 
-#: sujets/admin.py:64
+#: sujets/admin.py:67
 #, python-format
 msgid "%d sujet dépublié."
 msgid_plural "%d sujets dépubliés."
 msgstr[0] "%d paper unpublished."
 msgstr[1] "%d papers unpublished."
 
-#: sujets/models.py:22
+#: sujets/admin.py:69
+msgid "Relancer le traitement des PDF (texte, OCR, compression)"
+msgstr "Reprocess PDFs (text, OCR, compression)"
+
+#: sujets/admin.py:76
+#, python-format
+msgid "%d PDF mis en file de traitement."
+msgid_plural "%d PDF mis en file de traitement."
+msgstr[0] "%d PDF queued for processing."
+msgstr[1] "%d PDFs queued for processing."
+
+#: sujets/models.py:24
 #, python-format
 msgid ""
 "La session %(session)s se termine officiellement le %(date)s : ses sujets ne"
@@ -595,95 +610,95 @@ msgstr ""
 "The %(session)s session officially ends on %(date)s: its papers cannot be "
 "published before then."
 
-#: sujets/models.py:76 sujets/models.py:164
+#: sujets/models.py:78 sujets/models.py:182
 msgid "Brouillon"
 msgstr "Draft"
 
-#: sujets/models.py:77 sujets/models.py:165
+#: sujets/models.py:79 sujets/models.py:183
 msgid "Publié"
 msgstr "Published"
 
-#: sujets/models.py:78 sujets/models.py:166
+#: sujets/models.py:80 sujets/models.py:184
 msgid "Masqué (demande de retrait en cours)"
 msgstr "Hidden (takedown request pending)"
 
-#: sujets/models.py:81
+#: sujets/models.py:83
 msgid "Écrite"
 msgstr "Written"
 
-#: sujets/models.py:82
+#: sujets/models.py:84
 msgid "Pratique"
 msgstr "Practical"
 
-#: sujets/models.py:90
+#: sujets/models.py:92
 msgid "Uniquement des spécialités auxquelles la matière est rattachée."
 msgstr "Only specialties the subject is linked to."
 
-#: sujets/models.py:92
+#: sujets/models.py:94
 msgid "type d'épreuve"
 msgstr "paper type"
 
-#: sujets/models.py:95 sujets/models.py:175
+#: sujets/models.py:97 sujets/models.py:193
 msgid "fichier PDF"
 msgstr "PDF file"
 
-#: sujets/models.py:96
+#: sujets/models.py:98
 msgid "nombre de pages"
 msgstr "number of pages"
 
-#: sujets/models.py:97
+#: sujets/models.py:99
 msgid "Rempli par la tâche d'extraction, sert à la recherche."
 msgstr "Filled in by the extraction task, used for search."
 
-#: sujets/models.py:99
+#: sujets/models.py:101
 msgid "Exemple : MINESUP, BTS session 2025."
 msgstr "Example: MINESUP, HND 2025 session."
 
-#: sujets/models.py:108
+#: sujets/models.py:110
 msgid "sujet"
 msgstr "paper"
 
-#: sujets/models.py:124
+#: sujets/models.py:132
 msgid "La matière n'appartient pas à l'examen de la session."
 msgstr "The subject does not belong to the session's exam."
 
-#: sujets/models.py:159
+#: sujets/models.py:177
 msgid "En préparation"
 msgstr "In preparation"
 
-#: sujets/models.py:160
+#: sujets/models.py:178
 msgid "Proposé par la communauté"
 msgstr "Community answer"
 
-#: sujets/models.py:161
+#: sujets/models.py:179
 msgid "Vérifié par un enseignant"
 msgstr "Verified by a teacher"
 
-#: sujets/models.py:169
+#: sujets/models.py:187
 msgid "Plateforme"
 msgstr "Platform"
 
-#: sujets/models.py:170
+#: sujets/models.py:188
 msgid "Enseignant"
 msgstr "Teacher"
 
-#: sujets/models.py:171
+#: sujets/models.py:189
 msgid "Partagé"
 msgstr "Shared"
 
-#: sujets/models.py:180
+#: sujets/models.py:198
 msgid "titulaire des droits"
 msgstr "rights holder"
 
-#: sujets/models.py:182
+#: sujets/models.py:200
 msgid "régime de propriété"
 msgstr "ownership"
 
-#: sujets/models.py:191
+#: sujets/models.py:209
 msgid "corrigé"
 msgstr "marking guide"
 
-#: sujets/models.py:213
+#: sujets/models.py:231
 msgid "favori"
 msgstr "favourite"
 

@@ -12,8 +12,10 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1
 
 # gettext : compilation des traductions FR/EN (compilemessages).
+# Tesseract (français, anglais) : OCR des sujets scannés ; Ghostscript : compression des PDF (CDC 5).
 RUN apt-get update \
     && apt-get install -y --no-install-recommends gettext \
+       tesseract-ocr tesseract-ocr-fra tesseract-ocr-eng ghostscript \
     && rm -rf /var/lib/apt/lists/*
 
 # Tailwind CSS en exécutable autonome : pas besoin de Node.js (CDC 5).

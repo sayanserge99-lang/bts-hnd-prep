@@ -99,6 +99,15 @@ VERSION_POLITIQUES = "1.0"
 if os.environ.get("REDIS_URL"):
     CACHES = {"default": {"BACKEND": "django.core.cache.backends.redis.RedisCache", "LOCATION": os.environ["REDIS_URL"]}}
 
+# Celery : file de tâches dans Redis. Sans Redis (venv seul, CI), les tâches s'exécutent sur place.
+CELERY_BROKER_URL = os.environ.get("REDIS_URL", "memory://")
+CELERY_TASK_ALWAYS_EAGER = not os.environ.get("REDIS_URL")
+CELERY_TASK_ACKS_LATE = True
+CELERY_WORKER_PREFETCH_MULTIPLIER = 1
+# Un OCR de sujet scanné prend quelques secondes par page ; au-delà de 10 minutes, on abandonne.
+CELERY_TASK_TIME_LIMIT = 10 * 60
+CELERY_TASK_SOFT_TIME_LIMIT = 9 * 60
+
 # E-mails : affichés dans les logs en développement, envoyés par SMTP en production.
 EMAIL_BACKEND = os.environ.get(
     "EMAIL_BACKEND",

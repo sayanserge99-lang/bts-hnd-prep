@@ -1,5 +1,7 @@
 """Procédure de retrait (CDC 10.1) : masquage immédiat, puis acceptation ou refus par un modérateur."""
 
+import os
+
 import pytest
 from django.conf import settings
 from django.core import mail
@@ -110,7 +112,7 @@ def test_accepter_supprime_le_document_et_garde_la_trace(client, sujet):
     sujet.refresh_from_db()
     assert sujet.statut == MASQUE
     assert not sujet.fichier
-    assert not __import__("os").path.exists(chemin)
+    assert not os.path.exists(chemin)
     assert DemandeRetrait.objects.get().statut == DemandeRetrait.Statut.ACCEPTEE
 
 
