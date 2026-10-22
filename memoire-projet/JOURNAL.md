@@ -57,3 +57,4 @@
   Défaut trouvé par un test : un tableau trop gros faisait planter la page (500) → message d'erreur. 26 tests.
   Essai réel : session 2021 absente → 3 refus clairs ; une fois créée, 2 importés + 1 refus, OCR des 2 photos,
   recherche OK. Données d'essai supprimées. 115/115 verts.
+- CI de afb122b verte, mais apt a pris 719 s (contre 10 s au passage précédent) : cause non identifiée, noté.

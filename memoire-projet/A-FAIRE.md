@@ -10,6 +10,8 @@
 - [x] `git init` + premier commit (61249a5). Auteur local : Ayoung Sanama Serge Alain <sayanserge99@gmail.com>.
 - [x] Dépôt GitHub : https://github.com/sayanserge99-lang/bts-hnd-prep (public). Le remote contient le nom de compte, car Windows a aussi le compte AyounSanama en mémoire.
 - [x] GitHub Actions : `.github/workflows/tests.yml` (check, migrations manquantes, pytest sur PostgreSQL 17, Python 3.13).
+- [ ] CI : l'étape « Installer les outils système » varie de 10 s à 12 min (apt sur les machines GitHub).
+      Regarder son journal (connecté) ; piste : mettre les paquets en cache (actions/cache ou cache-apt-pkgs-action).
 - [ ] Python 3.15 n'est pas officiellement supporté par Django 5.2 (ça marche, mais) :
       fixer l'image Docker de production sur Python 3.13.
 
