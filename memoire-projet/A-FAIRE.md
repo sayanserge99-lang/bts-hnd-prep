@@ -8,7 +8,7 @@
 ## Prochain
 
 - [x] `git init` + premier commit (61249a5). Auteur local : Ayoung Sanama Serge Alain <sayanserge99@gmail.com>.
-- [ ] Créer le dépôt GitHub et `git remote add origin <URL>` puis `git push -u origin main`.
+- [x] Dépôt GitHub : https://github.com/sayanserge99-lang/bts-hnd-prep (privé). Le remote contient le nom de compte, car Windows a aussi le compte AyounSanama en mémoire.
 - [ ] Python 3.15 n'est pas officiellement supporté par Django 5.2 (ça marche, mais) :
       fixer l'image Docker de production sur Python 3.13.
 

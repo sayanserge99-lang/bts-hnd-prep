@@ -12,8 +12,8 @@ Phase 0 (cadrage). Le squelette Django **tourne** :
 
 ## Prochaine étape
 
-1. Relier au dépôt GitHub : git init et premier commit faits (61249a5, branche main), il manque l'URL du dépôt.
-2. Docker (Django + PostgreSQL + Redis) et passage des tests sur PostgreSQL.
+1. Docker (Django + PostgreSQL + Redis) et passage des tests sur PostgreSQL.
+2. GitHub Actions : lancer pytest à chaque push (exigé par le CDC).
 3. Recherche plein texte (SearchVectorField + index GIN), puis templates Tailwind/HTMX.
 
 ## Repères
