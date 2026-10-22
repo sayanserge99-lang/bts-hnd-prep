@@ -51,7 +51,7 @@ RUN tailwindcss -i assets/css/app.css -o static/css/app.css --minify \
 USER app
 EXPOSE 8000
 # 3 processus pour un VPS de 2 vCPU (CDC 5).
-CMD ["sh", "-c", "python manage.py migrate --noinput && gunicorn config.wsgi --bind 0.0.0.0:8000 --workers 3 --timeout 60 --access-logfile -"]
+CMD ["sh", "-c", "python manage.py migrate --noinput && gunicorn config.wsgi --bind 0.0.0.0:8000 --workers 3 --timeout 120 --access-logfile -"]
 
 
 FROM nginx:1.27-alpine AS nginx

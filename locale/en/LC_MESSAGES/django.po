@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-22 13:47+0100\n"
+"POT-Creation-Date: 2026-10-22 14:17+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -556,22 +556,42 @@ msgstr "Share of revenue paid to the institution."
 msgid "partenariat"
 msgstr "partnership"
 
-#: sujets/admin.py:24
+#: sujets/admin.py:31
 msgid "Choisissez uniquement des spécialités rattachées à cette matière."
 msgstr "Choose only specialties linked to this subject."
 
 #: sujets/admin.py:37
+msgid "Fichier ZIP"
+msgstr "ZIP file"
+
+#: sujets/admin.py:38
+msgid ""
+"Le ZIP contient sujets.csv et les fichiers (PDF, ou photos JPG/PNG) qu'il "
+"cite."
+msgstr ""
+"The ZIP contains sujets.csv and the files it lists (PDFs, or JPG/PNG "
+"photos)."
+
+#: sujets/admin.py:41
+msgid "Simulation : vérifier sans rien enregistrer"
+msgstr "Dry run: check without saving anything"
+
+#: sujets/admin.py:74 templates/admin/sujets/sujet/change_list.html:6
+msgid "Importer des sujets"
+msgstr "Import papers"
+
+#: sujets/admin.py:94
 msgid "Publier les sujets sélectionnés"
 msgstr "Publish selected papers"
 
-#: sujets/admin.py:47
+#: sujets/admin.py:104
 #, python-format
 msgid "%d sujet publié."
 msgid_plural "%d sujets publiés."
 msgstr[0] "%d paper published."
 msgstr[1] "%d papers published."
 
-#: sujets/admin.py:54
+#: sujets/admin.py:111
 #, python-format
 msgid "%d sujet refusé : sa session n'est pas officiellement terminée."
 msgid_plural ""
@@ -579,27 +599,134 @@ msgid_plural ""
 msgstr[0] "%d paper refused: its session has not officially ended."
 msgstr[1] "%d papers refused: their session has not officially ended."
 
-#: sujets/admin.py:62
+#: sujets/admin.py:119
 msgid "Dépublier les sujets sélectionnés"
 msgstr "Unpublish selected papers"
 
-#: sujets/admin.py:67
+#: sujets/admin.py:124
 #, python-format
 msgid "%d sujet dépublié."
 msgid_plural "%d sujets dépubliés."
 msgstr[0] "%d paper unpublished."
 msgstr[1] "%d papers unpublished."
 
-#: sujets/admin.py:69
+#: sujets/admin.py:126
 msgid "Relancer le traitement des PDF (texte, OCR, compression)"
 msgstr "Reprocess PDFs (text, OCR, compression)"
 
-#: sujets/admin.py:76
+#: sujets/admin.py:133
 #, python-format
 msgid "%d PDF mis en file de traitement."
 msgid_plural "%d PDF mis en file de traitement."
 msgstr[0] "%d PDF queued for processing."
 msgstr[1] "%d PDFs queued for processing."
+
+#: sujets/importation.py:82
+msgid "Le tableau n'est ni en UTF-8 ni en Windows-1252."
+msgstr "The spreadsheet is neither UTF-8 nor Windows-1252."
+
+#: sujets/importation.py:95
+#, python-format
+msgid "Colonnes manquantes dans le tableau : %(colonnes)s."
+msgstr "Missing columns in the spreadsheet: %(colonnes)s."
+
+#: sujets/importation.py:109
+msgid "Le fichier envoyé n'est pas un ZIP valide."
+msgstr "The uploaded file is not a valid ZIP."
+
+#: sujets/importation.py:112
+msgid "Le ZIP décompressé dépasse la taille autorisée."
+msgstr "The unzipped content exceeds the allowed size."
+
+#: sujets/importation.py:118
+msgid "fichier trop volumineux"
+msgstr "file too large"
+
+#: sujets/importation.py:141
+msgid "plusieurs fichiers portent ce nom dans le lot"
+msgstr "several files in the batch have this name"
+
+#: sujets/importation.py:142
+msgid "fichier absent du lot"
+msgstr "file missing from the batch"
+
+#: sujets/importation.py:150
+msgid "ce fichier n'est pas un PDF"
+msgstr "this file is not a PDF"
+
+#: sujets/importation.py:155
+msgid "plusieurs fichiers : uniquement des photos JPG ou PNG"
+msgstr "several files: JPG or PNG photos only"
+
+#: sujets/importation.py:159
+#, python-format
+msgid "photo illisible : %(erreur)s"
+msgstr "unreadable photo: %(erreur)s"
+
+#: sujets/importation.py:172
+#, python-format
+msgid "examen inconnu « %(examen)s » (BTS ou HND)"
+msgstr "unknown exam “%(examen)s” (BTS or HND)"
+
+#: sujets/importation.py:174
+#, python-format
+msgid "année invalide « %(annee)s »"
+msgstr "invalid year “%(annee)s”"
+
+#: sujets/importation.py:178
+#, python-format
+msgid ""
+"session %(examen)s %(annee)s absente : créez-la d'abord avec sa date de fin "
+"officielle"
+msgstr ""
+"%(examen)s %(annee)s session missing: create it first with its official end "
+"date"
+
+#: sujets/importation.py:183
+#, python-format
+msgid "matière inconnue « %(matiere)s » pour le %(examen)s"
+msgstr "unknown subject “%(matiere)s” for the %(examen)s"
+
+#: sujets/importation.py:185
+msgid "cette matière ne vous est pas attribuée"
+msgstr "this subject is not assigned to you"
+
+#: sujets/importation.py:191
+#, python-format
+msgid "spécialité(s) non rattachée(s) à cette matière : %(codes)s"
+msgstr "specialty(ies) not linked to this subject: %(codes)s"
+
+#: sujets/importation.py:196
+#, python-format
+msgid "type d'épreuve invalide « %(type)s » (ecrite ou pratique)"
+msgstr "invalid paper type “%(type)s” (ecrite or pratique)"
+
+#: sujets/importation.py:198
+#, python-format
+msgid "durée invalide « %(duree)s » (en minutes)"
+msgstr "invalid duration “%(duree)s” (in minutes)"
+
+#: sujets/importation.py:200
+msgid "source obligatoire (CDC 10.1)"
+msgstr "source required"
+
+#: sujets/importation.py:205
+msgid ""
+"un sujet existe déjà pour cette session, cette matière et ce type d'épreuve"
+msgstr "a paper already exists for this session, subject and paper type"
+
+#: sujets/importation.py:222
+msgid "Le tableau ne contient aucune ligne."
+msgstr "The spreadsheet has no rows."
+
+#: sujets/importation.py:230
+msgid "colonne « fichier » vide"
+msgstr "empty “fichier” column"
+
+#: sujets/importation.py:258
+#, python-format
+msgid "Le ZIP doit contenir un (et un seul) fichier %(nom)s."
+msgstr "The ZIP must contain one (and only one) %(nom)s file."
 
 #: sujets/models.py:24
 #, python-format
@@ -881,6 +1008,166 @@ msgstr "Delete permanently"
 msgid "Annuler"
 msgstr "Cancel"
 
+#: templates/admin/sujets/sujet/importer.html:6 templates/base.html:88
+msgid "Accueil"
+msgstr "Home"
+
+#: templates/admin/sujets/sujet/importer.html:9
+msgid "Importer"
+msgstr "Import"
+
+#: templates/admin/sujets/sujet/importer.html:15
+msgid ""
+"Préparez un ZIP contenant le tableau sujets.csv et les fichiers des sujets, "
+"puis lancez d'abord une simulation."
+msgstr ""
+"Prepare a ZIP containing the sujets.csv spreadsheet and the paper files, "
+"then run a dry run first."
+
+#: templates/admin/sujets/sujet/importer.html:16
+msgid "Télécharger le modèle de tableau"
+msgstr "Download the spreadsheet template"
+
+#: templates/admin/sujets/sujet/importer.html:18
+msgid ""
+"Les sujets importés sont toujours en brouillon. Publiez-les ensuite avec "
+"l'action « Publier » : un sujet dont la session n'est pas terminée reste "
+"refusé."
+msgstr ""
+"Imported papers are always drafts. Then publish them with the “Publish” "
+"action: a paper whose session has not ended is still refused."
+
+#: templates/admin/sujets/sujet/importer.html:19
+msgid ""
+"La session (examen et année) et la matière doivent déjà exister. Une ligne "
+"qui les cite mal est refusée, rien n'est créé à sa place."
+msgstr ""
+"The session (exam and year) and the subject must already exist. A row that "
+"names them wrongly is refused; nothing is created in their place."
+
+#: templates/admin/sujets/sujet/importer.html:20
+msgid ""
+"Un sujet en plusieurs photos : listez-les dans la colonne fichier, séparées "
+"par |, dans l'ordre des pages."
+msgstr ""
+"A paper in several photos: list them in the fichier column, separated by |, "
+"in page order."
+
+#: templates/admin/sujets/sujet/importer.html:24
+msgid "Colonne"
+msgstr "Column"
+
+#: templates/admin/sujets/sujet/importer.html:24
+msgid "Contenu"
+msgstr "Content"
+
+#: templates/admin/sujets/sujet/importer.html:26
+msgid "Nom du PDF, ou des photos séparées par | (page1.jpg|page2.jpg)"
+msgstr "PDF name, or photos separated by | (page1.jpg|page2.jpg)"
+
+#: templates/admin/sujets/sujet/importer.html:27
+msgid "ou"
+msgstr "or"
+
+#: templates/admin/sujets/sujet/importer.html:28
+msgid "Année de la session, par exemple 2025"
+msgstr "Session year, for example 2025"
+
+#: templates/admin/sujets/sujet/importer.html:29
+msgid "Nom de la matière, tel qu'enregistré (français ou anglais)"
+msgstr "Subject name, as recorded (French or English)"
+
+#: templates/admin/sujets/sujet/importer.html:30
+msgid ""
+"Codes séparés par des virgules (CGE,BF). Vide : toutes les spécialités de la"
+" matière"
+msgstr ""
+"Codes separated by commas (CGE,BF). Empty: all specialties of the subject"
+
+#: templates/admin/sujets/sujet/importer.html:31
+msgid "Vide : le nom de la matière"
+msgstr "Empty: the subject name"
+
+#: templates/admin/sujets/sujet/importer.html:32
+msgid "ecrite ou pratique (vide : ecrite)"
+msgstr "ecrite or pratique (empty: ecrite)"
+
+#: templates/admin/sujets/sujet/importer.html:33
+msgid "En minutes, par exemple 240"
+msgstr "In minutes, for example 240"
+
+#: templates/admin/sujets/sujet/importer.html:34
+msgid "Par exemple : MINESUP, BTS session 2025"
+msgstr "For example: MINESUP, BTS 2025 session"
+
+#: templates/admin/sujets/sujet/importer.html:35
+msgid "Facultatif"
+msgstr "Optional"
+
+#: templates/admin/sujets/sujet/importer.html:42
+msgid "Lancer"
+msgstr "Run"
+
+#: templates/admin/sujets/sujet/importer.html:46
+msgid "Résultat de la simulation (rien n'a été enregistré)"
+msgstr "Dry-run result (nothing was saved)"
+
+#: templates/admin/sujets/sujet/importer.html:46
+msgid "Résultat de l'import"
+msgstr "Import result"
+
+#: templates/admin/sujets/sujet/importer.html:48
+#, python-format
+msgid "%(n)s prêt(s) à importer"
+msgstr "%(n)s ready to import"
+
+#: templates/admin/sujets/sujet/importer.html:48
+#, python-format
+msgid "%(n)s importé(s)"
+msgstr "%(n)s imported"
+
+#: templates/admin/sujets/sujet/importer.html:49
+#, python-format
+msgid "%(n)s doublon(s)"
+msgstr "%(n)s duplicate(s)"
+
+#: templates/admin/sujets/sujet/importer.html:50
+#, python-format
+msgid "%(n)s erreur(s)"
+msgstr "%(n)s error(s)"
+
+#: templates/admin/sujets/sujet/importer.html:53
+msgid "Ligne"
+msgstr "Row"
+
+#: templates/admin/sujets/sujet/importer.html:53
+msgid "Fichier"
+msgstr "File"
+
+#: templates/admin/sujets/sujet/importer.html:53
+msgid "Résultat"
+msgstr "Result"
+
+#: templates/admin/sujets/sujet/importer.html:53
+msgid "Détail"
+msgstr "Details"
+
+#: templates/admin/sujets/sujet/importer.html:60
+msgid "Prêt"
+msgstr "Ready"
+
+#: templates/admin/sujets/sujet/importer.html:61
+msgid "Importé"
+msgstr "Imported"
+
+#: templates/admin/sujets/sujet/importer.html:62
+msgid "Doublon ignoré"
+msgstr "Duplicate skipped"
+
+#: templates/admin/sujets/sujet/importer.html:63
+msgid "Erreur"
+msgstr "Error"
+
 #: templates/base.html:8
 msgid ""
 "Sujets BTS et HND des sessions passées, classés par spécialité, matière et "
@@ -948,10 +1235,6 @@ msgstr "Contact"
 #: templates/base.html:84
 msgid "Navigation mobile"
 msgstr "Mobile navigation"
-
-#: templates/base.html:88
-msgid "Accueil"
-msgstr "Home"
 
 #: templates/base.html:101
 msgid "Profil"

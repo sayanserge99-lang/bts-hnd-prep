@@ -8,8 +8,12 @@ Phase 0 (cadrage). Le squelette Django **tourne** :
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **89 tests verts** (12 publication, 10 recherche, 16 pages, 16 comptes, 4 langues, 12 retrait,
-  8 modération, 8 traitement PDF, 3 groupes). Les tests d'OCR demandent Tesseract/Ghostscript (Docker, CI).
+- `pytest` : **115 tests verts** (12 publication, 10 recherche, 16 pages, 16 comptes, 4 langues, 12 retrait,
+  8 modération, 8 traitement PDF, 26 import, 3 groupes). Les tests d'OCR demandent Tesseract/Ghostscript (Docker, CI).
+- **Import de sujets en lot** (`sujets/importation.py`) : ZIP = sujets.csv + PDF ou photos (plusieurs photos = un PDF
+  multipage). Admin « Sujets → Importer des sujets » (simulation par défaut, modèle CSV) et commande
+  `importer_sujets <zip|dossier> [--appliquer]`. Toujours en brouillon ; session et matière doivent exister ;
+  doublons (session+matière+type) ignorés ; modérateur limité à ses matières. Essai réel OK (photos → OCR → recherche).
 - **Celery** (service `worker`) : chaque PDF ajouté ou remplacé → texte (pypdf), OCR si scan (OCRmyPDF/Tesseract
   fra+eng), compression Ghostscript gardée si plus légère, nb de pages, index de recherche. Essai réel OK (1,9 s).
 - **Modérateurs limités à leurs matières** dans l'admin (`accounts/moderation.py`, 8 pages) ; matières attribuées
@@ -36,7 +40,8 @@ Phase 0 (cadrage). Le squelette Django **tourne** :
 
 1. Choix du VPS / hébergeur et du nom de domaine (Serge Alain), puis suivre `deploy/DEPLOIEMENT.md` (HTTPS non testé).
 2. Retours de Serge Alain sur les pages (pas encore reçus).
-3. Fin de la V1 : rédaction des pages légales (contenu de Serge Alain), collecte et saisie des vrais sujets.
+3. Fin de la V1 : rédaction des pages légales (contenu de Serge Alain), collecte des vrais sujets puis import en lot
+   (avant : saisir les sessions 2020-2026 avec leurs dates de fin officielles, et les matières de chaque spécialité).
    Puis V2 : corrigés, QCM, examens blancs, suivi de progression, PWA hors ligne.
 
 ## Repères

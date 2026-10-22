@@ -52,3 +52,8 @@
 - CI bloquée plus de 10 min à l'installation apt (reconstruction de man-db sur Ubuntu 24.04) → désactivée,
   installation en 10 s, passage vert (6394fb8). Les journaux de la CI ne sont pas lisibles sans connexion :
   impossible de confirmer depuis ici que les tests d'OCR n'y sont pas sautés (-rs les listerait).
+- Import de sujets en lot (demande de Serge Alain) : ZIP + sujets.csv, photos JPG/PNG assemblées en PDF (img2pdf),
+  simulation, doublons, modèle CSV, page d'admin, commande importer_sujets, Nginx 200 Mo sur cette page.
+  Défaut trouvé par un test : un tableau trop gros faisait planter la page (500) → message d'erreur. 26 tests.
+  Essai réel : session 2021 absente → 3 refus clairs ; une fois créée, 2 importés + 1 refus, OCR des 2 photos,
+  recherche OK. Données d'essai supprimées. 115/115 verts.

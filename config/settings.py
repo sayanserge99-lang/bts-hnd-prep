@@ -193,6 +193,10 @@ MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
 SUJETS_PAR_PAGE = 20
 
+# Import de sujets en lot (sujets.importation) : garde-fous contre un ZIP anormal.
+IMPORT_TAILLE_MAX_FICHIER = 50 * 1024 * 1024
+IMPORT_TAILLE_MAX_TOTALE = 500 * 1024 * 1024
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Drapeaux des fonctionnalités V2/V3 : présentes dans le code, masquées tant que False.

@@ -1,0 +1,72 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+  <a href="{% url 'admin:index' %}">{% translate "Accueil" %}</a>
+  &rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a>
+  &rsaquo; <a href="{% url 'admin:sujets_sujet_changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
+  &rsaquo; {% translate "Importer" %}
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+  <p>{% translate "Préparez un ZIP contenant le tableau sujets.csv et les fichiers des sujets, puis lancez d'abord une simulation." %}
+     <a href="{% url 'admin:sujets_sujet_modele_import' %}">{% translate "Télécharger le modèle de tableau" %}</a></p>
+  <ul>
+    <li>{% translate "Les sujets importés sont toujours en brouillon. Publiez-les ensuite avec l'action « Publier » : un sujet dont la session n'est pas terminée reste refusé." %}</li>
+    <li>{% translate "La session (examen et année) et la matière doivent déjà exister. Une ligne qui les cite mal est refusée, rien n'est créé à sa place." %}</li>
+    <li>{% translate "Un sujet en plusieurs photos : listez-les dans la colonne fichier, séparées par |, dans l'ordre des pages." %}</li>
+  </ul>
+
+  <table>
+    <thead><tr><th>{% translate "Colonne" %}</th><th>{% translate "Contenu" %}</th></tr></thead>
+    <tbody>
+      <tr><td>fichier *</td><td>{% translate "Nom du PDF, ou des photos séparées par | (page1.jpg|page2.jpg)" %}</td></tr>
+      <tr><td>examen *</td><td>BTS {% translate "ou" %} HND</td></tr>
+      <tr><td>annee *</td><td>{% translate "Année de la session, par exemple 2025" %}</td></tr>
+      <tr><td>matiere *</td><td>{% translate "Nom de la matière, tel qu'enregistré (français ou anglais)" %}</td></tr>
+      <tr><td>specialites</td><td>{% translate "Codes séparés par des virgules (CGE,BF). Vide : toutes les spécialités de la matière" %}</td></tr>
+      <tr><td>titre</td><td>{% translate "Vide : le nom de la matière" %}</td></tr>
+      <tr><td>type</td><td>{% translate "ecrite ou pratique (vide : ecrite)" %}</td></tr>
+      <tr><td>duree *</td><td>{% translate "En minutes, par exemple 240" %}</td></tr>
+      <tr><td>source *</td><td>{% translate "Par exemple : MINESUP, BTS session 2025" %}</td></tr>
+      <tr><td>bareme</td><td>{% translate "Facultatif" %}</td></tr>
+    </tbody>
+  </table>
+
+  <form method="post" enctype="multipart/form-data" style="margin-top: 20px">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="{% translate 'Lancer' %}" class="default">
+  </form>
+
+  {% if rapport %}
+    <h2>{% if simulation %}{% translate "Résultat de la simulation (rien n'a été enregistré)" %}{% else %}{% translate "Résultat de l'import" %}{% endif %}</h2>
+    <p>
+      {% if simulation %}{% blocktranslate with n=totaux.pret %}{{ n }} prêt(s) à importer{% endblocktranslate %}{% else %}{% blocktranslate with n=totaux.importe %}{{ n }} importé(s){% endblocktranslate %}{% endif %}
+      · {% blocktranslate with n=totaux.doublon %}{{ n }} doublon(s){% endblocktranslate %}
+      · {% blocktranslate with n=totaux.erreur %}{{ n }} erreur(s){% endblocktranslate %}
+    </p>
+    <table>
+      <thead><tr><th>{% translate "Ligne" %}</th><th>{% translate "Fichier" %}</th><th>{% translate "Résultat" %}</th><th>{% translate "Détail" %}</th></tr></thead>
+      <tbody>
+        {% for ligne in rapport %}
+          <tr>
+            <td>{{ ligne.numero }}</td>
+            <td>{{ ligne.fichier }}</td>
+            <td>
+              {% if ligne.statut == "pret" %}✅ {% translate "Prêt" %}
+              {% elif ligne.statut == "importe" %}✅ <a href="{% url 'admin:sujets_sujet_change' ligne.sujet_id %}">{% translate "Importé" %}</a>
+              {% elif ligne.statut == "doublon" %}⚠️ {% translate "Doublon ignoré" %}
+              {% else %}❌ {% translate "Erreur" %}{% endif %}
+            </td>
+            <td>{{ ligne.message }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+</div>
+{% endblock %}

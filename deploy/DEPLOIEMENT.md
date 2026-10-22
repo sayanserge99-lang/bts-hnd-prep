@@ -77,7 +77,22 @@ docker compose -f compose.prod.yaml --env-file .env.production exec -T db \
     sh -c 'pg_restore -U "$POSTGRES_USER" -d "$POSTGRES_DB" --clean' < sauvegardes/base_AAAA-MM-JJ_HHMM.dump
 ```
 
-## 6. Mettre à jour
+## 6. Importer des sujets en lot
+
+Depuis l'admin : **Sujets → Importer des sujets** (ZIP jusqu'à 200 Mo). Pour un très gros lot,
+copiez sur le serveur un dossier contenant `sujets.csv` et les fichiers, puis :
+
+```sh
+docker compose -f compose.prod.yaml --env-file .env.production cp ./mon-lot web:/tmp/mon-lot
+# Simulation (rien n'est enregistré), puis import réel :
+docker compose -f compose.prod.yaml --env-file .env.production exec web python manage.py importer_sujets /tmp/mon-lot
+docker compose -f compose.prod.yaml --env-file .env.production exec web python manage.py importer_sujets /tmp/mon-lot --appliquer
+```
+
+Les sujets arrivent en brouillon ; le worker fait l'OCR et la compression ; publiez-les ensuite
+avec l'action « Publier » de l'admin.
+
+## 7. Mettre à jour
 
 ```sh
 cd /srv/bts-hnd-prep

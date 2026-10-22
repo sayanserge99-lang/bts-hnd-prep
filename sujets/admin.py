@@ -1,11 +1,18 @@
+from collections import Counter
+
 from django import forms
 from django.contrib import admin, messages
+from django.core.exceptions import PermissionDenied
+from django.http import HttpResponse
+from django.template.response import TemplateResponse
+from django.urls import path
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import ngettext
 
 from accounts.moderation import LimiteAuxMatieresDuModerateur
 
+from . import importation
 from .models import Corrige, Favori, Sujet
 from .tasks import traiter_pdf_du_sujet
 
@@ -25,9 +32,59 @@ class SujetAdminForm(forms.ModelForm):
         return cleaned_data
 
 
+class ImportForm(forms.Form):
+    lot = forms.FileField(
+        label=_("Fichier ZIP"),
+        help_text=_("Le ZIP contient sujets.csv et les fichiers (PDF, ou photos JPG/PNG) qu'il cite."),
+    )
+    simulation = forms.BooleanField(
+        label=_("Simulation : vérifier sans rien enregistrer"), required=False, initial=True
+    )
+
+
 @admin.register(Sujet)
 class SujetAdmin(LimiteAuxMatieresDuModerateur, admin.ModelAdmin):
     form = SujetAdminForm
+    change_list_template = "admin/sujets/sujet/change_list.html"
+
+    def get_urls(self):
+        propres = [
+            path("importer/", self.admin_site.admin_view(self.vue_import), name="sujets_sujet_importer"),
+            path("importer/modele.csv", self.admin_site.admin_view(self.vue_modele), name="sujets_sujet_modele_import"),
+        ]
+        return propres + super().get_urls()
+
+    def vue_import(self, request):
+        if not self.has_add_permission(request):
+            raise PermissionDenied
+        form = ImportForm(request.POST or None, request.FILES or None)
+        rapport, simulation = None, True
+        if form.is_valid():
+            simulation = form.cleaned_data["simulation"]
+            try:
+                source = importation.SourceZip(form.cleaned_data["lot"])
+                rapport = importation.Importateur(request.user).importer(
+                    source, importation.tableau_du_zip(source), simulation=simulation
+                )
+            except importation.ImportImpossible as erreur:
+                form.add_error("lot", str(erreur))
+        contexte = {
+            **self.admin_site.each_context(request),
+            "opts": self.model._meta,
+            "title": _("Importer des sujets"),
+            "form": form,
+            "rapport": rapport,
+            "simulation": simulation,
+            "totaux": Counter(ligne.statut for ligne in rapport or []),
+        }
+        return TemplateResponse(request, "admin/sujets/sujet/importer.html", contexte)
+
+    def vue_modele(self, request):
+        if not self.has_add_permission(request):
+            raise PermissionDenied
+        reponse = HttpResponse(importation.modele_csv(), content_type="text/csv; charset=utf-8")
+        reponse["Content-Disposition"] = 'attachment; filename="sujets.csv"'
+        return reponse
     list_display = ("titre", "matiere", "session", "type_epreuve", "statut", "date_publication")
     list_filter = ("statut", "session__examen", "session__annee", "type_epreuve")
     search_fields = ("titre", "texte_extrait")
