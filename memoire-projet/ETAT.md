@@ -8,7 +8,10 @@ Phase 0 (cadrage). Le squelette Django **tourne** :
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **40 tests verts** (12 règle de publication, 10 recherche, 15 pages, 3 groupes de rôles).
+- `pytest` : **56 tests verts** (12 règle de publication, 10 recherche, 15 pages, 16 comptes, 3 groupes de rôles).
+- **Comptes V1** (`/compte/`) : inscription e-mail (consentement non précoché enregistré), connexion (bloquée 15 min
+  après 5 échecs, via Redis), mot de passe oublié (e-mail dans les logs en dev), espace perso (sujets récents,
+  favoris), modification du profil, export JSON et suppression du compte (CDC 10.2).
 - **Pages publiques V1** : accueil, catalogue (filtres année/spécialité/matière/type + recherche, HTMX), fiche sujet,
   PDF servi par une vue (jamais par MEDIA_URL), pages légales vides « à rédiger ».
   Tailwind v4 autonome (service `tailwind` du compose), HTMX 2.0.4 dans `static/js/`. Pas encore vues à l'écran par Claude.
@@ -17,10 +20,10 @@ Phase 0 (cadrage). Le squelette Django **tourne** :
 
 ## Prochaine étape
 
-1. Retours de Serge Alain sur les pages (http://localhost:8000 après `docker compose exec web python manage.py donnees_demo`).
-2. Comptes : inscription par e-mail, connexion, profil d'étude, consentements, favoris (V1).
-3. Traductions anglaises (fichiers .po) : les textes sont marqués `{% translate %}` mais pas encore traduits.
-4. Formulaire de demande de retrait ; puis Docker de production (Gunicorn, Nginx) et Celery (extraction du texte).
+1. Traductions anglaises (fichiers .po) : les textes sont marqués `{% translate %}` mais pas encore traduits.
+2. Formulaire de demande de retrait (CDC 10.1).
+3. Docker de production (Gunicorn, Nginx, envoi réel des e-mails) et Celery (extraction du texte des PDF).
+4. Retours de Serge Alain sur les pages (pas encore reçus).
 
 ## Repères
 

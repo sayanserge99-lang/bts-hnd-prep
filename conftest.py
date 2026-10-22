@@ -1,6 +1,7 @@
 from datetime import date, timedelta
 
 import pytest
+from django.core.cache import cache
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.utils import timezone
 
@@ -11,6 +12,14 @@ from sujets.models import Sujet
 @pytest.fixture(autouse=True)
 def media_temporaire(settings, tmp_path):
     settings.MEDIA_ROOT = tmp_path
+
+
+@pytest.fixture(autouse=True)
+def cache_isole(settings):
+    # Cache en mémoire propre à chaque test : pas de Redis partagé avec le serveur de développement,
+    # et aucun échec de connexion qui passe d'un test à l'autre.
+    settings.CACHES = {"default": {"BACKEND": "django.core.cache.backends.locmem.LocMemCache"}}
+    cache.clear()
 
 
 @pytest.fixture

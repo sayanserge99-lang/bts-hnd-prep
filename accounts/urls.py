@@ -1,0 +1,23 @@
+from django.urls import path
+from django.views.generic import TemplateView
+
+from . import views
+
+app_name = "accounts"
+
+urlpatterns = [
+    path("inscription/", views.inscription, name="inscription"),
+    path("connexion/", views.Connexion.as_view(), name="connexion"),
+    path("deconnexion/", views.deconnexion, name="deconnexion"),
+    path("mot-de-passe/", views.MotDePasseOublie.as_view(), name="mot_de_passe_oublie"),
+    path(
+        "mot-de-passe/envoye/",
+        TemplateView.as_view(template_name="accounts/mot_de_passe_envoye.html"),
+        name="mot_de_passe_envoye",
+    ),
+    path("mot-de-passe/<uidb64>/<token>/", views.NouveauMotDePasse.as_view(), name="nouveau_mot_de_passe"),
+    path("profil/", views.profil, name="profil"),
+    path("profil/modifier/", views.modifier_profil, name="modifier_profil"),
+    path("profil/mes-donnees/", views.exporter, name="exporter"),
+    path("profil/supprimer/", views.supprimer, name="supprimer"),
+]

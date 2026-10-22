@@ -1,0 +1,14 @@
+{% load i18n %}{% if user.is_authenticated %}
+<form id="favori" method="post" action="{% url 'sujets:favori' sujet.pk %}"
+      hx-post="{% url 'sujets:favori' sujet.pk %}" hx-target="#favori" hx-swap="outerHTML">
+  {% csrf_token %}
+  <button class="bouton-contour gap-2" aria-pressed="{% if est_favori %}true{% else %}false{% endif %}">
+    <svg viewBox="0 0 24 24" class="h-4 w-4" fill="{% if est_favori %}currentColor{% else %}none{% endif %}" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4V3Z"/></svg>
+    {% if est_favori %}{% translate "Retirer des favoris" %}{% else %}{% translate "Ajouter aux favoris" %}{% endif %}
+  </button>
+</form>
+{% else %}
+<a href="{% url 'accounts:connexion' %}?next={{ request.path|urlencode }}" class="bouton-contour gap-2">
+  {% translate "Se connecter pour garder ce sujet" %}
+</a>
+{% endif %}

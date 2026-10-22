@@ -30,3 +30,6 @@
 - Pages publiques V1 (accueil, catalogue, fiche, PDF, pages légales vides), commande `donnees_demo`, 15 tests.
   Corrigé avant test : le choix d'examen en HTMX aurait remplacé toute la page par le fragment → liens BTS/HND.
   Tailwind --watch inopérant sur un dossier Windows monté → recompilation en boucle toutes les 2 s. 40/40 tests verts.
+- Comptes V1 (inscription, connexion bloquée après 5 échecs via Redis, mot de passe oublié, espace perso,
+  favoris HTMX, export JSON, suppression). Corrigé avant test : le champ de spécialités groupées lisait la base
+  au chargement du code → groupes construits à chaque formulaire. Tests isolés du Redis de dev. 56/56 verts.

@@ -18,6 +18,7 @@
   <div class="mt-5 flex flex-wrap gap-3">
     <a href="{% url 'sujets:pdf' sujet.pk %}" class="bouton-plein" target="_blank" rel="noopener">{% translate "Lire le sujet (PDF)" %}</a>
     <a href="{% url 'sujets:pdf' sujet.pk %}?telecharger=1" class="bouton-contour">{% translate "Télécharger" %}</a>
+    {% include "sujets/_bouton_favori.html" %}
   </div>
 
   {# Fiche sujet (CDC 3.2) #}

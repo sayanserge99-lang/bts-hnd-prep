@@ -19,7 +19,7 @@ services:
       timeout: 5s
       retries: 10
 
-  # Réservé au cache et à Celery (pas encore utilisés par Django).
+  # Cache partagé (blocage des connexions) ; servira aussi à Celery.
   redis:
     image: redis:7-alpine
 
@@ -34,6 +34,7 @@ services:
       POSTGRES_PASSWORD: btshnd
       POSTGRES_HOST: db
       POSTGRES_PORT: "5432"
+      REDIS_URL: redis://redis:6379/0
     ports:
       - "8000:8000"
     # Le code est monté dans le conteneur : une modification recharge le serveur.

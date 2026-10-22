@@ -1,0 +1,7 @@
+{# Formulaire générique : erreurs globales puis champs. Variables : form, bouton. #}
+{% if form.non_field_errors %}
+  <div class="rounded-lg border border-red-300 bg-red-50 p-3 text-sm text-red-800" role="alert">{{ form.non_field_errors }}</div>
+{% endif %}
+{% for champ in form.hidden_fields %}{{ champ }}{% endfor %}
+{% for champ in form.visible_fields %}{{ champ.as_field_group }}{% endfor %}
+<button class="bouton-plein w-full sm:w-auto">{{ bouton }}</button>

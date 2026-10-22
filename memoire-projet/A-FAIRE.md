@@ -21,7 +21,11 @@
 - [ ] Celery, django-storages, Docker de production (Gunicorn, Nginx).
 - [ ] Créer un superutilisateur : `docker compose exec web python manage.py createsuperuser` (à faire par Serge Alain).
 - [x] Tailwind + HTMX, gabarit de base, sélecteur de langue, accueil, catalogue, fiche sujet, pages légales vides.
-- [ ] Comptes (inscription e-mail, connexion, profil, consentement non précoché, favoris) ; boutons absents du bandeau d'ici là.
+- [x] Comptes : inscription, connexion avec blocage, mot de passe oublié, espace perso, favoris, export, suppression.
+- [ ] Production : fournisseur d'e-mails (SMTP) pour la réinitialisation ; `EMAIL_BACKEND` par variable d'environnement.
+- [ ] Établissement dans le profil : à ajouter quand la liste des IPES sera saisie (partenaires.Etablissement).
+- [ ] Option « Partager mes résultats avec mon établissement » (CDC 10.6) : avec le tableau de bord IPES (V3).
+- [ ] La bascule FR/EN d'un utilisateur connecté ne met pas à jour sa langue enregistrée (seulement la page).
 - [ ] Traductions EN : `makemessages -l en` puis `compilemessages` (gettext installé dans l'image).
 - [ ] Rédiger les pages légales (mentions, confidentialité, CGV) et le formulaire de demande de retrait.
 - [ ] Décider le quota de téléchargement des visiteurs (CDC 7 : « limité ») ; aujourd'hui tout est ouvert.

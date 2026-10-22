@@ -31,14 +31,33 @@
         <a href="{% url 'accueil' %}#offres" class="hover:text-vert">{% translate "Offres" %}</a>
       </nav>
 
-      <form action="{% url 'set_language' %}" method="post" class="flex items-center rounded-lg border border-gris/50 text-sm">
-        {% csrf_token %}
-        <input type="hidden" name="next" value="{{ request.get_full_path }}">
-        <button name="language" value="fr" class="rounded-l-lg px-2.5 py-1.5 {% if LANGUE == 'fr' %}bg-vert-clair font-bold text-vert{% endif %}" {% if LANGUE == 'fr' %}aria-current="true"{% endif %}>FR</button>
-        <button name="language" value="en" class="rounded-r-lg px-2.5 py-1.5 {% if LANGUE == 'en' %}bg-vert-clair font-bold text-vert{% endif %}" {% if LANGUE == 'en' %}aria-current="true"{% endif %}>EN</button>
-      </form>
+      <div class="flex items-center gap-3">
+        <form action="{% url 'set_language' %}" method="post" class="flex items-center rounded-lg border border-gris/50 text-sm">
+          {% csrf_token %}
+          <input type="hidden" name="next" value="{{ request.get_full_path }}">
+          <button name="language" value="fr" class="rounded-l-lg px-2.5 py-1.5 {% if LANGUE == 'fr' %}bg-vert-clair font-bold text-vert{% endif %}" {% if LANGUE == 'fr' %}aria-current="true"{% endif %}>FR</button>
+          <button name="language" value="en" class="rounded-r-lg px-2.5 py-1.5 {% if LANGUE == 'en' %}bg-vert-clair font-bold text-vert{% endif %}" {% if LANGUE == 'en' %}aria-current="true"{% endif %}>EN</button>
+        </form>
+        <div class="hidden items-center gap-3 text-sm font-semibold md:flex">
+          {% if user.is_authenticated %}
+            <a href="{% url 'accounts:profil' %}" class="text-vert hover:underline">{% translate "Mon espace" %}</a>
+            <form method="post" action="{% url 'accounts:deconnexion' %}">{% csrf_token %}<button class="bouton-contour">{% translate "Déconnexion" %}</button></form>
+          {% else %}
+            <a href="{% url 'accounts:connexion' %}" class="text-vert hover:underline">{% translate "Se connecter" %}</a>
+            <a href="{% url 'accounts:inscription' %}" class="bouton-plein">{% translate "Créer un compte" %}</a>
+          {% endif %}
+        </div>
+      </div>
     </div>
   </header>
+
+  {% if messages %}
+    <div class="mx-auto mt-4 max-w-3xl space-y-2 px-4" role="status">
+      {% for message in messages %}
+        <p class="rounded-lg border px-4 py-2 text-sm {% if message.level_tag == 'error' %}border-red-300 bg-red-50 text-red-800{% else %}border-vert/30 bg-vert-clair text-vert-fonce{% endif %}">{{ message }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
 
   <main id="contenu" class="flex-1 pb-20 md:pb-0">
     {% block contenu %}{% endblock %}
@@ -62,7 +81,7 @@
   </footer>
 
   {# Barre de navigation du téléphone (maquette mobile). #}
-  <nav class="fixed inset-x-0 bottom-0 z-10 grid grid-cols-3 border-t border-bordure bg-white text-xs md:hidden" aria-label="{% translate 'Navigation mobile' %}">
+  <nav class="fixed inset-x-0 bottom-0 z-10 grid grid-cols-4 border-t border-bordure bg-white text-xs md:hidden" aria-label="{% translate 'Navigation mobile' %}">
     {% url 'accueil' as url_accueil %}{% url 'sujets:liste' as url_sujets %}
     <a href="{{ url_accueil }}" class="flex flex-col items-center gap-1 py-2 {% if request.path == url_accueil %}text-vert font-semibold{% endif %}">
       <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 11 12 4l9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1v-9Z"/></svg>
@@ -76,6 +95,11 @@
       <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg>
       <span>{% translate "Entraînement" %} <span class="badge-bientot">{% translate "Bientôt" %}</span></span>
     </span>
+    {% url 'accounts:profil' as url_profil %}
+    <a href="{% if user.is_authenticated %}{{ url_profil }}{% else %}{% url 'accounts:connexion' %}{% endif %}" class="flex flex-col items-center gap-1 py-2 {% if '/compte/' in request.path %}text-vert font-semibold{% endif %}">
+      <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+      {% translate "Profil" %}
+    </a>
   </nav>
 </body>
 </html>

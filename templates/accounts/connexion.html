@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titre %}{% translate "Se connecter" %} — BTS-HND Prep{% endblock %}
+
+{% block contenu %}
+<div class="mx-auto max-w-md px-4 py-8">
+  <h1 class="text-2xl font-bold">{% translate "Se connecter" %}</h1>
+  <form method="post" class="formulaire carte mt-6 space-y-4" novalidate>
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ next }}">
+    {% translate "Se connecter" as bouton %}
+    {% include "accounts/_formulaire.html" %}
+  </form>
+  <p class="mt-4 text-sm"><a class="text-vert underline" href="{% url 'accounts:mot_de_passe_oublie' %}">{% translate "Mot de passe oublié ?" %}</a></p>
+  <p class="mt-2 text-sm">{% translate "Pas encore de compte ?" %} <a class="font-semibold text-vert underline" href="{% url 'accounts:inscription' %}">{% translate "Créer un compte" %}</a></p>
+</div>
+{% endblock %}

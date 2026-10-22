@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.postgres",
+    "django.forms",
     "accounts",
     "catalogue",
     "sujets",
@@ -73,6 +74,27 @@ DATABASES = {
 }
 
 AUTH_USER_MODEL = "accounts.Utilisateur"
+LOGIN_URL = "accounts:connexion"
+LOGIN_REDIRECT_URL = "accounts:profil"
+LOGOUT_REDIRECT_URL = "accueil"
+
+# CDC 4 : limitation des tentatives de connexion (par adresse e-mail).
+CONNEXION_ESSAIS_MAX = 5
+CONNEXION_BLOCAGE_SECONDES = 15 * 60
+
+# Version des CGU et de la politique de confidentialité enregistrée avec chaque consentement (CDC 10.2).
+VERSION_POLITIQUES = "1.0"
+
+# Redis partagé entre les processus (indispensable au blocage des connexions en production).
+if os.environ.get("REDIS_URL"):
+    CACHES = {"default": {"BACKEND": "django.core.cache.backends.redis.RedisCache", "LOCATION": os.environ["REDIS_URL"]}}
+
+# En développement, les e-mails (réinitialisation du mot de passe) s'affichent dans les logs.
+EMAIL_BACKEND = os.environ.get("EMAIL_BACKEND", "django.core.mail.backends.console.EmailBackend")
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", "BTS-HND Prep <ne-pas-repondre@localhost>")
+
+# Les champs de formulaire utilisent templates/forms/champ.html.
+FORM_RENDERER = "config.formulaires.Rendu"
 
 PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.Argon2PasswordHasher",

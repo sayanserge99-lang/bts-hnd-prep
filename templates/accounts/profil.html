@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titre %}{% translate "Mon espace" %} — BTS-HND Prep{% endblock %}
+
+{% block contenu %}
+<div class="mx-auto max-w-3xl space-y-6 px-4 py-6">
+  <div>
+    <h1 class="text-2xl font-bold">{% blocktranslate with prenom=user.first_name %}Bonjour {{ prenom }}{% endblocktranslate %}</h1>
+    {% if profil %}
+      <p class="mt-1 text-gris">{{ profil.examen.code }} · {{ profil.specialite }}{% if profil.session_prevue %} · {% blocktranslate with annee=profil.session_prevue.annee %}session {{ annee }}{% endblocktranslate %}{% endif %}</p>
+    {% endif %}
+    <a href="{% url 'accounts:modifier_profil' %}" class="mt-2 inline-block text-sm text-vert underline">{% translate "Modifier mon profil" %}</a>
+  </div>
+
+  {% if profil %}
+  <section>
+    <h2 class="text-lg font-semibold">{% translate "Sujets récents de votre spécialité" %}</h2>
+    <ul class="mt-3 space-y-2">
+      {% for sujet in recents %}
+        <li><a href="{% url 'sujets:detail' sujet.pk %}" class="carte block hover:border-vert">{{ sujet.titre }} — {{ sujet.session.annee }}</a></li>
+      {% empty %}
+        <li class="text-sm text-gris">{% translate "Aucun sujet publié pour le moment." %}</li>
+      {% endfor %}
+    </ul>
+    <a href="{% url 'sujets:liste' %}?examen={{ profil.examen.code }}&specialite={{ profil.specialite.code }}" class="bouton-contour mt-3">{% translate "Tous les sujets de ma spécialité" %}</a>
+  </section>
+  {% endif %}
+
+  <section>
+    <h2 class="text-lg font-semibold">{% translate "Mes favoris" %}</h2>
+    <ul class="mt-3 space-y-2">
+      {% for favori in favoris %}
+        <li><a href="{% url 'sujets:detail' favori.sujet.pk %}" class="carte block hover:border-vert">{{ favori.sujet.titre }} — {{ favori.sujet.session.annee }}</a></li>
+      {% empty %}
+        <li class="text-sm text-gris">{% translate "Ajoutez des sujets à vos favoris depuis leur fiche pour les retrouver ici." %}</li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  {# CDC 10.2 : export et suppression depuis le profil. #}
+  <section class="carte space-y-2 text-sm">
+    <h2 class="text-base font-semibold">{% translate "Mes données" %}</h2>
+    <p class="text-gris">{% translate "Vous pouvez récupérer toutes vos données ou supprimer votre compte à tout moment." %}</p>
+    <div class="flex flex-wrap gap-3">
+      <a href="{% url 'accounts:exporter' %}" class="bouton-contour">{% translate "Télécharger mes données" %}</a>
+      <a href="{% url 'accounts:supprimer' %}" class="bouton-contour text-red-700">{% translate "Supprimer mon compte" %}</a>
+    </div>
+  </section>
+</div>
+{% endblock %}

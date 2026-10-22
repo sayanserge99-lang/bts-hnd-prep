@@ -13,6 +13,7 @@ urlpatterns = [
     path("", accueil, name="accueil"),
     path("specialites/", options_specialites, name="options_specialites"),
     path("sujets/", include("sujets.urls")),
+    path("compte/", include("accounts.urls")),
     # CDC 10 : pages légales accessibles depuis toutes les pages (contenu à rédiger).
     path("mentions-legales/", page("mentions_legales"), name="mentions_legales"),
     path("confidentialite/", page("confidentialite"), name="confidentialite"),

@@ -8,4 +8,5 @@ urlpatterns = [
     path("", views.liste, name="liste"),
     path("<int:pk>/", views.detail, name="detail"),
     path("<int:pk>/pdf/", views.pdf, name="pdf"),
+    path("<int:pk>/favori/", views.basculer_favori, name="favori"),
 ]

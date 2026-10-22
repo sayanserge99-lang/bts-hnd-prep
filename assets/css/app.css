@@ -45,4 +45,19 @@
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-vert;
   }
+
+  /* Champs générés par Django (templates/forms/champ.html) dans un <form class="formulaire">. */
+  .formulaire label {
+    @apply block text-sm font-medium;
+  }
+  .formulaire input:not([type="checkbox"]):not([type="hidden"]),
+  .formulaire select {
+    @apply champ mt-1;
+  }
+  .formulaire input[type="checkbox"] {
+    @apply mt-0.5 h-5 w-5 shrink-0 accent-vert;
+  }
+  .errorlist {
+    @apply mt-1 text-sm text-red-700;
+  }
 }

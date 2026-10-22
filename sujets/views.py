@@ -1,13 +1,15 @@
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db.models import Count, OuterRef, Subquery
 from django.http import FileResponse
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.text import slugify
+from django.views.decorators.http import require_POST
 
 from catalogue.models import Examen, Matiere, SpecialiteMatiere
 
-from .models import Sujet
+from .models import Favori, Sujet
 
 
 def examen_par_defaut(request):
@@ -78,7 +80,22 @@ def detail(request, pk):
         .select_related("specialite")
         .order_by("specialite__nom")
     )
-    return render(request, "sujets/detail.html", {"sujet": sujet, "coefficients": coefficients})
+    est_favori = request.user.is_authenticated and sujet.favoris.filter(utilisateur=request.user).exists()
+    return render(
+        request, "sujets/detail.html", {"sujet": sujet, "coefficients": coefficients, "est_favori": est_favori}
+    )
+
+
+@login_required
+@require_POST
+def basculer_favori(request, pk):
+    sujet = get_object_or_404(Sujet.objects.publies(), pk=pk)
+    favori, cree = Favori.objects.get_or_create(utilisateur=request.user, sujet=sujet)
+    if not cree:
+        favori.delete()
+    if est_requete_htmx(request):
+        return render(request, "sujets/_bouton_favori.html", {"sujet": sujet, "est_favori": cree})
+    return redirect("sujets:detail", pk=pk)
 
 
 def pdf(request, pk):
