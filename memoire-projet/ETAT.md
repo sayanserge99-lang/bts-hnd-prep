@@ -13,9 +13,9 @@ Phase 0 (cadrage). Le squelette Django **tourne** :
 
 ## Prochaine étape
 
-1. Docker (Django + PostgreSQL + Redis) pour le développement local et la production (Docker Desktop à installer).
-2. Recherche plein texte (SearchVectorField + index GIN).
-3. Templates Tailwind/HTMX/Alpine, pages publiques de la V1.
+1. Recherche plein texte (SearchVectorField + index GIN), testable maintenant sur PostgreSQL via Docker.
+2. Templates Tailwind/HTMX/Alpine, pages publiques de la V1 (accueil, catalogue des sujets).
+3. Docker de production (Gunicorn, Nginx), fichier séparé de compose.yaml.
 
 ## Repères
 

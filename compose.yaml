@@ -1,0 +1,46 @@
+# Environnement de développement : docker compose up
+# La configuration de production (Gunicorn, Nginx) viendra dans un fichier séparé.
+
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: btshnd
+      POSTGRES_USER: btshnd
+      POSTGRES_PASSWORD: btshnd
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U btshnd"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # Réservé au cache et à Celery (pas encore utilisés par Django).
+  redis:
+    image: redis:7-alpine
+
+  web:
+    build: .
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    environment:
+      DJANGO_DEBUG: "1"
+      DJANGO_ALLOWED_HOSTS: localhost,127.0.0.1
+      POSTGRES_DB: btshnd
+      POSTGRES_USER: btshnd
+      POSTGRES_PASSWORD: btshnd
+      POSTGRES_HOST: db
+      POSTGRES_PORT: "5432"
+    ports:
+      - "8000:8000"
+    # Le code est monté dans le conteneur : une modification recharge le serveur.
+    volumes:
+      - .:/app
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_started
+
+volumes:
+  postgres_data:
