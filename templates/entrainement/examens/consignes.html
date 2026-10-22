@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titre %}{{ examen.titre }} — BTS-HND Prep{% endblock %}
+
+{% block contenu %}
+<div class="mx-auto max-w-2xl space-y-5 px-4 py-6">
+  <a href="{% url 'entrainement:examens' %}" class="text-sm text-vert hover:underline">← {% translate "Examens blancs" %}</a>
+  <h1 class="text-2xl font-bold">{{ examen.titre }}</h1>
+  <dl class="carte grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-sm">
+    <dt class="text-gris">{% translate "Durée" %}</dt><dd>{% blocktranslate with h=examen.duree %}{{ h }} minutes{% endblocktranslate %}</dd>
+    <dt class="text-gris">{% translate "Sujet" %}</dt><dd>{{ examen.sujet.titre }} — {{ examen.sujet.session }}</dd>
+    {% if examen.questions.exists %}<dt class="text-gris">{% translate "Partie QCM" %}</dt><dd>{% blocktranslate count n=examen.questions.count %}{{ n }} question{% plural %}{{ n }} questions{% endblocktranslate %}, {% blocktranslate with p=examen.points_qcm %}sur {{ p }} points{% endblocktranslate %}</dd>{% endif %}
+  </dl>
+  {% if examen.bareme %}<div class="carte whitespace-pre-line text-sm">{{ examen.bareme }}</div>{% endif %}
+  <ul class="list-disc space-y-1 pl-5 text-sm text-gris">
+    <li>{% translate "Le minuteur démarre dès que vous commencez et ne s'arrête plus, même si vous fermez la page." %}</li>
+    <li>{% translate "Vos réponses sont enregistrées au fur et à mesure. Après une coupure, rouvrez l'épreuve : tout est conservé." %}</li>
+    <li>{% translate "À la fin du temps, la copie est rendue automatiquement. Vous comparerez ensuite votre copie au corrigé." %}</li>
+  </ul>
+  <form method="post" action="{% url 'entrainement:demarrer_examen' examen.pk %}">
+    {% csrf_token %}
+    <button class="bouton-plein w-full sm:w-auto">{% if en_cours %}{% translate "Reprendre l'épreuve" %}{% else %}{% translate "Commencer l'épreuve" %}{% endif %}</button>
+  </form>
+</div>
+{% endblock %}

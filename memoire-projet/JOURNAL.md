@@ -67,3 +67,8 @@
 - V2 module 2, QCM : quiz rapide, correction immédiate HTMX, révision des erreurs, admin (cohérence avant publication,
   actions), 14 questions de démo (4 types, formules), navigation activée. 17 tests ; essai réel avec un compte
   temporaire : 8 questions, explication absente avant réponse, 10/20, révision de 4 erreurs. 151/151 verts.
+- V2 module 3, examens blancs : modèle (points QCM, publié, CritereBareme), service examen_blanc.py, 7 vues,
+  minuteur JS, examen de démo. 14 tests ; contre-épreuve (contrôle du temps désactivé → 2 échecs) ; minuteur
+  vérifié avec Node + jsdom (compte à rebours, rouge < 5 min, hors ligne, remise auto) ; essai réel : 3/4 QCM,
+  4,5/6, corrigé après remise, note 15/20. Chaîne cassée par un 
+ dans un script d'édition, corrigée. 165/165.

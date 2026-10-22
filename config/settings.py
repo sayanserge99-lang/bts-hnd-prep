@@ -93,6 +93,9 @@ CONNEXION_BLOCAGE_SECONDES = 15 * 60
 # [À FIXER] : le quota exact reste à décider (CDC 7) ; 3 est une valeur d'attente.
 QUIZ_GRATUITS_PAR_JOUR = 3
 
+# Examens blancs : marge accordée après l'heure de fin pour une copie envoyée sur une connexion lente.
+EXAMEN_DELAI_GRACE_SECONDES = 90
+
 # CDC 10.1 : une demande de retrait masque le contenu tout de suite ; on en limite le nombre par adresse IP.
 DEMANDES_RETRAIT_PAR_JOUR = 3
 
@@ -207,7 +210,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 FONCTIONNALITES = {
     "corriges": True,
     "entrainement": True,
-    "examens_blancs": False,
+    "examens_blancs": True,
     "hors_ligne": False,
     "contributions": False,
     "forum": False,

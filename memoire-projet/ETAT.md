@@ -4,11 +4,15 @@
 
 ## Où on en est
 
-**V1 terminée côté code ; V2 en cours** (modules 1 et 2/5 faits : corrigés, QCM). Le projet tourne :
+**V1 terminée côté code ; V2 en cours** (modules 1 à 3/5 faits : corrigés, QCM, examens blancs). Le projet tourne :
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **151 tests verts** (dont 19 corrigés, 17 QCM).
+- `pytest` : **165 tests verts** (dont 19 corrigés, 17 QCM, 14 examens blancs).
+- **Examens blancs (V2, module 3)** `/entrainement/examens-blancs/` : consignes, heure de fin fixée sur le serveur,
+  minuteur (`static/js/examen.js`, testé dans jsdom), sauvegarde HTMX continue (changement, frappe, 30 s), reprise
+  après coupure, remise automatique à zéro ou au retour (90 s de marge), QCM corrigé à la remise, corrigé affiché
+  seulement après, auto-évaluation par critères (`CritereBareme`), note /20. Visible seulement si le sujet est publié.
 - **QCM (V2, module 2)** `/entrainement/` : matières de la spécialité, quiz rapide de 10 questions (matière ou chapitre),
   une question à la fois, correction immédiate + explication (HTMX), note /20, révision des erreurs (dernière réponse
   fausse), derniers quiz. Questions publiées par le modérateur seulement si cohérentes. Table `ReponseQuestion`.
@@ -45,9 +49,9 @@
 
 ## Prochaine étape
 
-1. V2, module 3 : examens blancs (durée réelle, minuteur, soumission automatique, QCM auto-corrigé,
-   partie rédactionnelle auto-évaluée, reprise après coupure). Puis 4 : suivi de progression ; 5 : PWA,
-   statistiques back-office, connexion Google.
+1. V2, module 4 : suivi de progression (historique, réussite par matière et chapitre, 3 points faibles avec
+   quiz conseillés, compte à rebours avant la session). Puis 5 : PWA hors ligne, statistiques back-office,
+   connexion Google.
 2. Choix du VPS / hébergeur et du nom de domaine (Serge Alain), puis suivre `deploy/DEPLOIEMENT.md` (HTTPS non testé).
    Retours de Serge Alain sur les pages (pas encore reçus).
 3. Fin de la V1 : rédaction des pages légales (contenu de Serge Alain), collecte des vrais sujets puis import en lot

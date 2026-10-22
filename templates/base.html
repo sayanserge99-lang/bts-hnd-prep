@@ -8,6 +8,7 @@
   <meta name="description" content="{% translate 'Sujets BTS et HND des sessions passées, classés par spécialité, matière et année.' %}">
   <link rel="stylesheet" href="{% static 'css/app.css' %}">
   <script src="{% static 'js/htmx.min.js' %}" defer></script>
+  {% block scripts %}{% endblock %}
 </head>
 <body class="flex min-h-screen flex-col bg-creme font-sans text-encre antialiased">
   <a href="#contenu" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:rounded focus:bg-white focus:px-3 focus:py-2">{% translate "Aller au contenu" %}</a>

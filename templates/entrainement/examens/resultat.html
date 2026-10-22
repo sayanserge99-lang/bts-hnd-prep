@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titre %}{% translate "Résultat" %} — {{ examen.titre }} — BTS-HND Prep{% endblock %}
+
+{% block contenu %}
+<div class="mx-auto max-w-2xl space-y-6 px-4 py-6">
+  <div class="carte text-center">
+    <p class="text-sm text-gris">{{ examen.titre }}</p>
+    <p class="mt-2 text-5xl font-extrabold">{{ tentative.note|floatformat:"-1" }}<span class="text-2xl text-gris">/20</span></p>
+    <p class="mt-1 text-xs text-gris">{% translate "Note indicative : la partie rédactionnelle est auto-évaluée." %}</p>
+  </div>
+
+  <table class="w-full overflow-hidden rounded-2xl border border-bordure bg-white text-sm">
+    <tbody>
+      {% if examen.points_qcm %}
+        <tr class="border-b border-bordure"><td class="px-4 py-2">{% translate "Partie QCM" %}</td><td class="px-4 py-2 text-right font-semibold">{{ tentative.reponses.points_qcm|floatformat:"-2" }} / {{ examen.points_qcm }}</td></tr>
+      {% endif %}
+      {% for critere, points in lignes %}
+        <tr class="border-b border-bordure"><td class="px-4 py-2">{{ critere.libelle }}</td><td class="px-4 py-2 text-right font-semibold">{{ points|floatformat:"-1" }} / {{ critere.points }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="flex flex-wrap gap-3">
+    <a href="{% url 'entrainement:auto_evaluation' tentative.pk %}" class="bouton-contour">{% translate "Revoir la correction" %}</a>
+    <a href="{% url 'entrainement:examens' %}" class="bouton-contour">{% translate "Autres examens blancs" %}</a>
+  </div>
+</div>
+{% endblock %}

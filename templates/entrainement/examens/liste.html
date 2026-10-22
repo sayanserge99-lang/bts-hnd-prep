@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titre %}{% translate "Examens blancs" %} — BTS-HND Prep{% endblock %}
+
+{% block contenu %}
+<div class="mx-auto max-w-3xl space-y-6 px-4 py-6">
+  <div>
+    <a href="{% url 'entrainement:accueil' %}" class="text-sm text-vert hover:underline">← {% translate "Entraînement" %}</a>
+    <h1 class="mt-2 text-2xl font-bold">{% translate "Examens blancs" %}</h1>
+    <p class="mt-1 text-gris">{% translate "Un vrai sujet, dans la durée réelle de l'épreuve. Le temps continue de tourner si vous quittez la page." %}</p>
+  </div>
+
+  {% if not acces %}
+    <p class="rounded-2xl bg-ambre-clair p-5">{% translate "Les examens blancs sont réservés aux abonnés du Pass session." %}
+      <a href="{% url 'accueil' %}#offres" class="font-semibold underline">{% translate "Voir le Pass session" %}</a></p>
+  {% endif %}
+
+  <ul class="space-y-3">
+    {% for examen in examens %}
+      <li class="carte flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <p class="font-semibold">{{ examen.titre }}</p>
+          <p class="text-sm text-gris">{{ examen.sujet.matiere }} · {% blocktranslate with annee=examen.sujet.session.annee %}Session {{ annee }}{% endblocktranslate %} · {% blocktranslate with h=examen.duree %}{{ h }} minutes{% endblocktranslate %}</p>
+        </div>
+        <a href="{% url 'entrainement:consignes' examen.pk %}" class="bouton-contour">{% translate "Voir les consignes" %}</a>
+      </li>
+    {% empty %}
+      <li class="carte text-gris">{% translate "Aucun examen blanc n'est encore disponible pour votre spécialité." %}</li>
+    {% endfor %}
+  </ul>
+
+  {% if passees %}
+    <section>
+      <h2 class="text-lg font-semibold">{% translate "Mes examens blancs" %}</h2>
+      <ul class="mt-3 space-y-2">
+        {% for passee in passees %}
+          <li>
+            {% if passee.note is not None %}
+              <a href="{% url 'entrainement:resultat_examen' passee.pk %}" class="carte flex justify-between hover:border-vert"><span>{{ passee.examen_blanc.titre }}</span><span class="font-semibold">{{ passee.note|floatformat:"-1" }}/20</span></a>
+            {% elif passee.fin %}
+              <a href="{% url 'entrainement:auto_evaluation' passee.pk %}" class="carte flex justify-between hover:border-vert"><span>{{ passee.examen_blanc.titre }}</span><span class="text-sm text-ambre">{% translate "Auto-évaluation à faire" %}</span></a>
+            {% else %}
+              <a href="{% url 'entrainement:epreuve' passee.pk %}" class="carte flex justify-between hover:border-vert"><span>{{ passee.examen_blanc.titre }}</span><span class="text-sm text-vert">{% translate "En cours : reprendre" %}</span></a>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+</div>
+{% endblock %}

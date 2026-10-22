@@ -6,7 +6,7 @@ from django.utils.translation import ngettext
 
 from accounts.moderation import LimiteAuxMatieresDuModerateur
 
-from .models import Choix, ExamenBlanc, Question, Quiz, ReponseQuestion, Tentative
+from .models import Choix, CritereBareme, ExamenBlanc, Question, Quiz, ReponseQuestion, Tentative
 
 
 class ChoixFormSet(BaseInlineFormSet):
@@ -74,11 +74,19 @@ class QuizAdmin(LimiteAuxMatieresDuModerateur, admin.ModelAdmin):
     filter_horizontal = ("questions",)
 
 
+class CritereBaremeInline(admin.TabularInline):
+    model = CritereBareme
+    extra = 3
+
+
 @admin.register(ExamenBlanc)
 class ExamenBlancAdmin(LimiteAuxMatieresDuModerateur, admin.ModelAdmin):
     chemins_matiere = ("sujet__matiere",)
-    list_display = ("titre", "sujet", "duree")
+    list_display = ("titre", "sujet", "duree", "points_qcm", "publie")
+    list_filter = ("publie",)
     filter_horizontal = ("questions",)
+    autocomplete_fields = ("sujet",)
+    inlines = [CritereBaremeInline]
 
 
 class ReponseQuestionInline(admin.TabularInline):

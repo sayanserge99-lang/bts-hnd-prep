@@ -8,7 +8,7 @@ from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 
 from catalogue.models import Chapitre, Examen, Matiere, Session, Specialite, SpecialiteMatiere
-from entrainement.models import Choix, Question
+from entrainement.models import Choix, CritereBareme, ExamenBlanc, Question
 from sujets.models import Corrige, Sujet
 
 SOURCE_DEMO = "Démonstration (sujet fictif)"
@@ -195,6 +195,7 @@ class Command(BaseCommand):
             self.stdout.write("Les sujets de démonstration sont déjà présents.")
             self.creer_corriges()
             self.creer_questions()
+            self.creer_examen_blanc()
             return
 
         with transaction.atomic():
@@ -249,6 +250,7 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS(f"{nombre} sujets de démonstration créés (session {ANNEE_FUTURE} en brouillon)."))
         self.creer_corriges()
         self.creer_questions()
+        self.creer_examen_blanc()
 
     def creer_corriges(self):
         if Corrige.objects.filter(titulaire_droits=SOURCE_DEMO).exists():
@@ -279,3 +281,22 @@ class Command(BaseCommand):
                         Choix.objects.create(question=question, texte=texte, est_correct=correct)
                     nombre += 1
         self.stdout.write(self.style.SUCCESS(f"{nombre} questions de démonstration créées."))
+
+    def creer_examen_blanc(self):
+        sujet = Sujet.objects.get(source=SOURCE_DEMO, session__examen__code="BTS", session__annee=2025, titre="Comptabilité générale")
+        if ExamenBlanc.objects.filter(sujet=sujet).exists():
+            return
+        examen = ExamenBlanc.objects.create(
+            titre="Examen blanc : Comptabilité générale 2025",
+            sujet=sujet,
+            duree=sujet.duree,
+            points_qcm=6,
+            publie=True,
+            bareme="Partie 1 : QCM (6 points).\nPartie 2 : exercices 1 et 2 du sujet, à rédiger (7 points chacun).",
+        )
+        examen.questions.set(
+            Question.objects.filter(chapitre__matiere=sujet.matiere, explication__startswith=MARQUE_QUESTION_DEMO).order_by("pk")[:4]
+        )
+        CritereBareme.objects.create(examen_blanc=examen, libelle="Exercice 1 : tableau d'amortissement", points=7, ordre=1)
+        CritereBareme.objects.create(examen_blanc=examen, libelle="Exercice 2 : écritures de régularisation", points=7, ordre=2)
+        self.stdout.write(self.style.SUCCESS("1 examen blanc de démonstration créé."))

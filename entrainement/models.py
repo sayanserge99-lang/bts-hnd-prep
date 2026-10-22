@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Q
 from django.utils import timezone
@@ -99,12 +100,24 @@ class Quiz(models.Model):
         return self.titre
 
 
+class ExamenBlancQuerySet(models.QuerySet):
+    def visibles(self):
+        # Un examen blanc reprend un sujet : il n'est visible que si ce sujet est publié (CDC 4.2).
+        return self.filter(publie=True, sujet__statut="publie")
+
+
 class ExamenBlanc(models.Model):
     titre = models.CharField(max_length=200)
     sujet = models.ForeignKey("sujets.Sujet", on_delete=models.PROTECT, related_name="examens_blancs")
-    duree = models.PositiveSmallIntegerField(_("durée (minutes)"))
-    bareme = models.TextField(_("barème"))
+    duree = models.PositiveSmallIntegerField(_("durée (minutes)"), help_text=_("Durée réelle de l'épreuve (CDC 3.5)."))
+    bareme = models.TextField(_("consignes"), blank=True, help_text=_("Affichées avant le départ du minuteur."))
     questions = models.ManyToManyField(Question, related_name="examens_blancs", blank=True)
+    points_qcm = models.PositiveSmallIntegerField(
+        _("points de la partie QCM"), default=0, help_text=_("La partie QCM est notée sur ces points ; 0 s'il n'y en a pas.")
+    )
+    publie = models.BooleanField(_("publié"), default=False)
+
+    objects = ExamenBlancQuerySet.as_manager()
 
     class Meta:
         verbose_name = _("examen blanc")
@@ -112,6 +125,31 @@ class ExamenBlanc(models.Model):
 
     def __str__(self):
         return self.titre
+
+    @property
+    def points_total(self):
+        return self.points_qcm + sum(critere.points for critere in self.criteres.all())
+
+    def clean(self):
+        if self.publie and self.sujet_id and self.sujet.statut != "publie":
+            raise ValidationError({"publie": _("Publiez d'abord le sujet : un examen blanc ne peut pas le dévoiler avant.")})
+
+
+class CritereBareme(models.Model):
+    """Partie rédactionnelle : l'étudiant s'auto-évalue critère par critère, corrigé sous les yeux (CDC 3.5)."""
+
+    examen_blanc = models.ForeignKey(ExamenBlanc, on_delete=models.CASCADE, related_name="criteres")
+    libelle = models.CharField(_("critère"), max_length=200)
+    points = models.PositiveSmallIntegerField()
+    ordre = models.PositiveSmallIntegerField(default=0)
+
+    class Meta:
+        verbose_name = _("critère du barème")
+        verbose_name_plural = _("critères du barème")
+        ordering = ["ordre", "pk"]
+
+    def __str__(self):
+        return f"{self.libelle} ({self.points})"
 
 
 class Tentative(models.Model):

@@ -49,5 +49,8 @@
   (qui garde l'ordre des questions) : nécessaire aux taux de réussite par chapitre (CDC 3.6). Écart assumé au CDC 6.
 - **Quiz** : pas de seconde chance après la correction ; la bonne réponse n'est jamais dans la page avant la réponse ;
   quota quotidien seulement une fois le paiement ouvert (comme l'accès partiel aux corrigés).
+- **Examens blancs** : l'heure de fin est fixée par le serveur au départ (le temps court pendant une coupure,
+  comme le jour de l'examen) ; le navigateur compte à rebours depuis le temps restant envoyé par le serveur ;
+  marge de 90 s pour une copie envoyée tard sur une connexion lente. Minuteur en JavaScript simple (pas d'Alpine).
 - **Interface** : Tailwind v4 en exécutable autonome (pas de Node), polices du système, HTMX servi localement ;
   les pages marchent aussi sans JavaScript (formulaire GET classique).
