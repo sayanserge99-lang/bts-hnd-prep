@@ -51,5 +51,12 @@ jobs:
       - name: Vérifier qu'aucune migration ne manque
         run: python manage.py makemigrations --check --dry-run
 
+      # Extrait les textes avant les tests : un texte affiché sans traduction anglaise
+      # apparaît alors vide dans le .po et fait échouer test_tous_les_textes_ont_une_traduction_anglaise.
+      - name: Extraire les textes à traduire
+        run: |
+          sudo apt-get install -y --no-install-recommends gettext
+          python manage.py makemessages -l en --ignore=.venv --ignore=static --ignore=staticfiles --ignore=media --no-obsolete
+
       - name: Lancer les tests
         run: pytest -v

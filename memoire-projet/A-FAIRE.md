@@ -28,7 +28,10 @@
 - [x] Traductions EN : 270 textes traduits, test de complétude.
 - [ ] Faire relire les traductions anglaises par un anglophone (vocabulaire HND : « past papers », « marking guide »).
 - [ ] Production : lancer `compilemessages` dans le Dockerfile au lieu de versionner le `.mo`.
-- [ ] Rédiger les pages légales (mentions, confidentialité, CGV) et le formulaire de demande de retrait.
+- [x] Formulaire de demande de retrait (sujets) avec actions d'admin Accepter / Refuser.
+- [ ] Rédiger les pages légales (mentions, confidentialité, CGV, contact) : contenu à fournir par Serge Alain / juriste.
+- [ ] Demande de retrait : lire l'IP réelle derrière Nginx (X-Forwarded-For) ; renseigner ADMINS pour être prévenu.
+- [ ] Demande de retrait des corrigés : à ajouter avec les corrigés (V2).
 - [ ] Décider le quota de téléchargement des visiteurs (CDC 7 : « limité ») ; aujourd'hui tout est ouvert.
 - [ ] Accueil : apparier spécialités BTS ↔ HND comme sur la maquette (aucun lien en base aujourd'hui).
 - [ ] Production : servir les PDF via Nginx (X-Accel-Redirect) après le contrôle de la vue `sujets:pdf`.

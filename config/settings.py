@@ -82,6 +82,9 @@ LOGOUT_REDIRECT_URL = "accueil"
 CONNEXION_ESSAIS_MAX = 5
 CONNEXION_BLOCAGE_SECONDES = 15 * 60
 
+# CDC 10.1 : une demande de retrait masque le contenu tout de suite ; on en limite le nombre par adresse IP.
+DEMANDES_RETRAIT_PAR_JOUR = 3
+
 # Version des CGU et de la politique de confidentialité enregistrée avec chaque consentement (CDC 10.2).
 VERSION_POLITIQUES = "1.0"
 

@@ -35,3 +35,6 @@
   au chargement du code → groupes construits à chaque formulaire. Tests isolés du Redis de dev. 56/56 verts.
 - Traductions anglaises : 270 textes, `.po` + `.mo`, test de complétude (contre-épreuve faite : une traduction
   vidée → le test échoue). Bascule FR/EN enregistrée dans le profil (vue `changer_langue`). 60/60 verts.
+- Demande de retrait : formulaire, masquage immédiat + 3 protections (certification, 3/jour/IP, accusé),
+  actions Accepter / Refuser. 11 tests, 71/71 verts. Trou trouvé dans le garde-fou des traductions
+  (il ne voyait pas les textes jamais extraits) → la CI lance makemessages avant pytest.

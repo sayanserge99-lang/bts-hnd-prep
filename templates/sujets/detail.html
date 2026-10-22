@@ -38,5 +38,10 @@
     {# CDC 10.1 : source obligatoire, affichée sur la fiche. #}
     <dt class="text-gris">{% translate "Source" %}</dt><dd>{{ sujet.source }}</dd>
   </dl>
+
+  {# CDC 10.1 : procédure de retrait pour tout ayant droit. #}
+  <p class="mt-6 text-xs text-gris">
+    <a href="{% url 'demande_de_retrait' %}?sujet={{ sujet.pk }}" class="underline">{% translate "Demander le retrait de ce document" %}</a>
+  </p>
 </article>
 {% endblock %}

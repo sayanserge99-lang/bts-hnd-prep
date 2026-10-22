@@ -1,0 +1,5 @@
+{% load i18n %}{% blocktranslate with nom=demande.demandeur_nom %}Bonjour {{ nom }},{% endblocktranslate %}
+
+{% blocktranslate with document=demande.sujet %}Nous avons bien reçu votre demande de retrait concernant « {{ document }} ». Le document est masqué en attendant notre examen ; nous vous répondrons par e-mail.{% endblocktranslate %}
+
+BTS-HND Prep

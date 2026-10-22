@@ -4,6 +4,7 @@ from django.views.generic import TemplateView
 
 from accounts.views import changer_langue
 from catalogue.views import accueil, options_specialites
+from communaute.views import demande_retrait
 
 
 def page(nom):
@@ -19,7 +20,12 @@ urlpatterns = [
     path("mentions-legales/", page("mentions_legales"), name="mentions_legales"),
     path("confidentialite/", page("confidentialite"), name="confidentialite"),
     path("conditions-de-vente/", page("conditions_de_vente"), name="conditions_de_vente"),
-    path("demande-de-retrait/", page("demande_de_retrait"), name="demande_de_retrait"),
+    path("demande-de-retrait/", demande_retrait, name="demande_de_retrait"),
+    path(
+        "demande-de-retrait/recue/",
+        TemplateView.as_view(template_name="communaute/demande_retrait_recue.html"),
+        name="demande_retrait_recue",
+    ),
     path("contact/", page("contact"), name="contact"),
     path("langue/", changer_langue, name="set_language"),
     path("admin/", admin.site.urls),

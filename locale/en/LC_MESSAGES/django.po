@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-22 12:18+0100\n"
+"POT-Creation-Date: 2026-10-22 12:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -134,31 +134,31 @@ msgstr "consent"
 msgid "affectation de modérateur"
 msgstr "moderator assignment"
 
-#: accounts/views.py:34
+#: accounts/views.py:35
 msgid "Bienvenue ! Votre compte est créé."
 msgstr "Welcome! Your account has been created."
 
-#: accounts/views.py:67
+#: accounts/views.py:68
 msgid "Ce compte n'a pas de profil d'étude."
 msgstr "This account has no study profile."
 
-#: accounts/views.py:72
+#: accounts/views.py:73
 msgid "Profil enregistré."
 msgstr "Profile saved."
 
-#: accounts/views.py:119
+#: accounts/views.py:120
 msgid "Ce compte est lié à des paiements : contactez-nous pour le supprimer."
 msgstr "This account is linked to payments: contact us to delete it."
 
-#: accounts/views.py:122
+#: accounts/views.py:123
 msgid "Votre compte et vos données ont été supprimés."
 msgstr "Your account and your data have been deleted."
 
-#: accounts/views.py:145
+#: accounts/views.py:157
 msgid "Mot de passe modifié. Vous pouvez vous connecter."
 msgstr "Password changed. You can now log in."
 
-#: catalogue/models.py:9 config/settings.py:112
+#: catalogue/models.py:9 config/settings.py:115
 msgid "Français"
 msgstr "French"
 
@@ -241,79 +241,126 @@ msgstr "title"
 msgid "chapitre"
 msgstr "chapter"
 
-#: communaute/models.py:16 paiements/models.py:53
+#: communaute/admin.py:27
+msgid "Accepter : supprimer le document"
+msgstr "Accept: delete the document"
+
+#: communaute/admin.py:33
+#, python-format
+msgid "%d demande acceptée."
+msgid_plural "%d demandes acceptées."
+msgstr[0] "%d request accepted."
+msgstr[1] "%d requests accepted."
+
+#: communaute/admin.py:36
+msgid "Refuser : republier le contenu"
+msgstr "Refuse: republish the content"
+
+#: communaute/admin.py:43
+#, python-format
+msgid "%d demande refusée."
+msgid_plural "%d demandes refusées."
+msgstr[0] "%d request refused."
+msgstr[1] "%d requests refused."
+
+#: communaute/forms.py:17
+msgid "Motif de la demande"
+msgstr "Reason for the request"
+
+#: communaute/forms.py:18
+msgid "Précisez vos droits sur ce document (auteur, éditeur, établissement…)."
+msgstr ""
+"Explain your rights over this document (author, publisher, institution…)."
+
+#: communaute/models.py:17 paiements/models.py:53
 msgid "En attente"
 msgstr "Pending"
 
-#: communaute/models.py:17
+#: communaute/models.py:18
 msgid "Validée"
 msgstr "Approved"
 
-#: communaute/models.py:18
+#: communaute/models.py:19
 msgid "Rejetée"
 msgstr "Rejected"
 
-#: communaute/models.py:22
+#: communaute/models.py:23
 msgid "année proposée"
 msgstr "proposed year"
 
-#: communaute/models.py:26
+#: communaute/models.py:27
 msgid "je certifie avoir le droit de partager ce document"
 msgstr "I certify that I have the right to share this document"
 
-#: communaute/models.py:31
+#: communaute/models.py:32
 msgid "Renseigné une fois validée."
 msgstr "Filled in once approved."
 
-#: communaute/models.py:36
+#: communaute/models.py:37
 msgid "contribution"
 msgstr "contribution"
 
-#: communaute/models.py:51
+#: communaute/models.py:52
 msgid "Ouvert"
 msgstr "Open"
 
-#: communaute/models.py:52
+#: communaute/models.py:53
 msgid "Traité"
 msgstr "Handled"
 
-#: communaute/models.py:53
+#: communaute/models.py:54
 msgid "Rejeté"
 msgstr "Rejected"
 
-#: communaute/models.py:63
+#: communaute/models.py:64
 msgid "signalement"
 msgstr "report"
 
-#: communaute/models.py:72
+#: communaute/models.py:73
 msgid "Reçue"
 msgstr "Received"
 
-#: communaute/models.py:73
+#: communaute/models.py:74
 msgid "Acceptée (contenu supprimé)"
 msgstr "Accepted (content deleted)"
 
-#: communaute/models.py:74
+#: communaute/models.py:75
 msgid "Refusée (contenu republié)"
 msgstr "Refused (content republished)"
 
-#: communaute/models.py:77
+#: communaute/models.py:78
 msgid "nom du demandeur"
 msgstr "requester's name"
 
-#: communaute/models.py:78
+#: communaute/models.py:79
 msgid "e-mail du demandeur"
 msgstr "requester's email"
 
-#: communaute/models.py:88
+#: communaute/models.py:86
+msgid ""
+"je certifie être titulaire des droits sur ce contenu ou mandaté par lui"
+msgstr ""
+"I certify that I hold the rights to this content or act on behalf of the "
+"rights holder"
+
+#: communaute/models.py:93
 msgid "demande de retrait"
 msgstr "takedown request"
 
-#: communaute/models.py:89
+#: communaute/models.py:94
 msgid "demandes de retrait"
 msgstr "takedown requests"
 
-#: config/settings.py:112
+#: communaute/views.py:30
+msgid ""
+"Trop de demandes envoyées aujourd'hui. Écrivez-nous depuis la page Contact."
+msgstr "Too many requests sent today. Write to us from the Contact page."
+
+#: communaute/views.py:35
+msgid "Votre demande de retrait a bien été reçue"
+msgstr "Your takedown request has been received"
+
+#: config/settings.py:115
 msgid "English"
 msgstr "English"
 
@@ -872,13 +919,14 @@ msgstr "Privacy"
 msgid "Conditions de vente"
 msgstr "Terms of sale"
 
-#: templates/base.html:77 templates/pages/demande_de_retrait.html:4
-#: templates/pages/demande_de_retrait.html:5
+#: templates/base.html:77 templates/communaute/demande_retrait.html:4
+#: templates/communaute/demande_retrait.html:8
+#: templates/communaute/demande_retrait_recue.html:4
 msgid "Demande de retrait"
 msgstr "Takedown request"
 
-#: templates/base.html:78 templates/pages/contact.html:4
-#: templates/pages/contact.html:5
+#: templates/base.html:78 templates/communaute/demande_retrait.html:22
+#: templates/pages/contact.html:4 templates/pages/contact.html:5
 msgid "Contact"
 msgstr "Contact"
 
@@ -1037,6 +1085,66 @@ msgid ""
 msgstr ""
 "No platform can guarantee exam success: we help you practise seriously."
 
+#: templates/communaute/demande_retrait.html:11
+msgid ""
+"Vous êtes titulaire des droits sur ce document et souhaitez qu'il soit "
+"retiré ? Le document est masqué dès réception de votre demande, le temps que"
+" nous l'examinions."
+msgstr ""
+"Do you hold the rights to this document and want it removed? The document is"
+" hidden as soon as we receive your request, while we review it."
+
+#: templates/communaute/demande_retrait.html:12
+msgid "Document concerné :"
+msgstr "Document concerned:"
+
+#: templates/communaute/demande_retrait.html:15
+msgid "Envoyer la demande"
+msgstr "Send the request"
+
+#: templates/communaute/demande_retrait.html:20
+msgid ""
+"Pour demander le retrait d'un sujet, ouvrez sa fiche puis cliquez sur « "
+"Demander le retrait de ce document », en bas de la page."
+msgstr ""
+"To request the removal of a paper, open its page and click “Request removal "
+"of this document” at the bottom."
+
+#: templates/communaute/demande_retrait.html:21
+msgid "Pour toute autre demande, écrivez-nous depuis la page Contact."
+msgstr "For any other request, write to us from the Contact page."
+
+#: templates/communaute/demande_retrait_recue.html:8
+msgid "Demande reçue"
+msgstr "Request received"
+
+#: templates/communaute/demande_retrait_recue.html:9
+msgid ""
+"Le document est masqué dès maintenant. Nous examinons votre demande et vous "
+"répondrons par e-mail."
+msgstr ""
+"The document is hidden from now on. We are reviewing your request and will "
+"reply by email."
+
+#: templates/communaute/demande_retrait_recue.html:10
+msgid "Retour à l'accueil"
+msgstr "Back to home"
+
+#: templates/communaute/email_accuse_retrait.txt:1
+#, python-format
+msgid "Bonjour %(nom)s,"
+msgstr "Hello %(nom)s,"
+
+#: templates/communaute/email_accuse_retrait.txt:3
+#, python-format
+msgid ""
+"Nous avons bien reçu votre demande de retrait concernant « %(document)s ». "
+"Le document est masqué en attendant notre examen ; nous vous répondrons par "
+"e-mail."
+msgstr ""
+"We have received your takedown request for “%(document)s”. The document is "
+"hidden while we review it; we will reply by email."
+
 #: templates/pages/conditions_de_vente.html:4
 #: templates/pages/conditions_de_vente.html:5
 msgid "Conditions générales de vente"
@@ -1044,7 +1152,6 @@ msgstr "Terms of sale"
 
 #: templates/pages/conditions_de_vente.html:8
 #: templates/pages/confidentialite.html:8 templates/pages/contact.html:8
-#: templates/pages/demande_de_retrait.html:8
 #: templates/pages/mentions_legales.html:8
 msgid "Contenu en cours de rédaction."
 msgstr "Content being written."
@@ -1143,6 +1250,10 @@ msgstr "Marking scheme"
 #: templates/sujets/detail.html:39
 msgid "Source"
 msgstr "Source"
+
+#: templates/sujets/detail.html:44
+msgid "Demander le retrait de ce document"
+msgstr "Request removal of this document"
 
 #: templates/sujets/liste.html:19
 msgid "Aucun sujet n'est encore disponible."

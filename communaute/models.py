@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
 from django.db.models import Q
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from sujets.models import Corrige, Sujet
@@ -81,8 +82,12 @@ class DemandeRetrait(models.Model):
         Corrige, on_delete=models.CASCADE, null=True, blank=True, related_name="demandes_retrait"
     )
     motif = models.TextField()
+    certifie_titulaire = models.BooleanField(
+        _("je certifie être titulaire des droits sur ce contenu ou mandaté par lui"), default=False
+    )
     statut = models.CharField(max_length=10, choices=Statut.choices, default=Statut.RECUE)
     cree_le = models.DateTimeField(auto_now_add=True)
+    traitee_le = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         verbose_name = _("demande de retrait")
@@ -101,3 +106,35 @@ class DemandeRetrait(models.Model):
                 Sujet.objects.filter(pk=self.sujet_id).update(statut=Sujet.Statut.MASQUE)
             else:
                 Corrige.objects.filter(pk=self.corrige_id).update(publication=Corrige.Publication.MASQUE)
+
+    def accepter(self):
+        """Le fichier est supprimé ; le contenu reste masqué et la demande garde la trace du retrait."""
+        if self.sujet_id:
+            self.sujet.fichier.delete(save=False)
+            Sujet.objects.filter(pk=self.sujet_id).update(fichier="")
+        else:
+            if self.corrige.fichier:
+                self.corrige.fichier.delete(save=False)
+            Corrige.objects.filter(pk=self.corrige_id).update(fichier="", contenu="[Retiré à la demande du titulaire des droits]")
+        self._clore(self.Statut.ACCEPTEE)
+
+    def refuser(self):
+        """Le contenu est republié, sauf si une autre demande sur le même contenu est encore ouverte."""
+        self._clore(self.Statut.REFUSEE)
+        autres = DemandeRetrait.objects.filter(
+            sujet_id=self.sujet_id, corrige_id=self.corrige_id, statut=self.Statut.RECUE
+        )
+        if autres.exists():
+            return
+        if self.sujet_id:
+            # Un sujet dont la session n'est pas terminée redevient brouillon : la règle de publication prime.
+            sujet = self.sujet
+            sujet.statut = Sujet.Statut.PUBLIE if sujet.peut_etre_publie() else Sujet.Statut.BROUILLON
+            sujet.save()
+        else:
+            Corrige.objects.filter(pk=self.corrige_id).update(publication=Corrige.Publication.PUBLIE)
+
+    def _clore(self, statut):
+        self.statut = statut
+        self.traitee_le = timezone.now()
+        self.save(update_fields=["statut", "traitee_le"])

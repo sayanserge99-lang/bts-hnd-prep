@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titre %}{% translate "Demande de retrait" %} — BTS-HND Prep{% endblock %}
+
+{% block contenu %}
+<div class="mx-auto max-w-md px-4 py-8">
+  <h1 class="text-2xl font-bold">{% translate "Demande de retrait" %}</h1>
+
+  {% if form %}
+    <p class="mt-2 text-gris">{% translate "Vous êtes titulaire des droits sur ce document et souhaitez qu'il soit retiré ? Le document est masqué dès réception de votre demande, le temps que nous l'examinions." %}</p>
+    <p class="carte mt-4 text-sm"><span class="text-gris">{% translate "Document concerné :" %}</span> <strong>{{ sujet.titre }} — {{ sujet.session }}</strong></p>
+    <form method="post" class="formulaire carte mt-4 space-y-4" novalidate>
+      {% csrf_token %}
+      {% translate "Envoyer la demande" as bouton %}
+      {% include "accounts/_formulaire.html" %}
+    </form>
+  {% else %}
+    <div class="carte mt-4 space-y-2 text-gris">
+      <p>{% translate "Pour demander le retrait d'un sujet, ouvrez sa fiche puis cliquez sur « Demander le retrait de ce document », en bas de la page." %}</p>
+      <p>{% translate "Pour toute autre demande, écrivez-nous depuis la page Contact." %}</p>
+      <a href="{% url 'contact' %}" class="bouton-contour">{% translate "Contact" %}</a>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
