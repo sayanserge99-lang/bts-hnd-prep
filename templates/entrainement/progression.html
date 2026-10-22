@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titre %}{% translate "Ma progression" %} — BTS-HND Prep{% endblock %}
+
+{% block contenu %}
+<div class="mx-auto max-w-3xl space-y-6 px-4 py-6">
+  <div>
+    <a href="{% url 'entrainement:accueil' %}" class="text-sm text-vert hover:underline">← {% translate "Entraînement" %}</a>
+    <h1 class="mt-2 text-2xl font-bold">{% translate "Ma progression" %}</h1>
+  </div>
+
+  {# CDC 3.6 : compte à rebours avant la session. #}
+  <section class="carte flex items-center gap-4">
+    {% if session %}
+      <p class="text-4xl font-extrabold text-vert">{{ jours }}</p>
+      <p>{% blocktranslate with nom=session count n=jours %}jour avant la session {{ nom }}{% plural %}jours avant la session {{ nom }}{% endblocktranslate %}
+        <span class="block text-sm text-gris">{% blocktranslate with date=session.date_debut|date:"j F Y" %}Début prévu le {{ date }}{% endblocktranslate %}</span></p>
+    {% else %}
+      <p class="text-gris">{% translate "La date de la prochaine session n'est pas encore connue." %}
+        <a href="{% url 'accounts:modifier_profil' %}" class="underline">{% translate "Indiquer ma session" %}</a></p>
+    {% endif %}
+  </section>
+
+  {% if completes and points_faibles %}
+    <section class="space-y-3">
+      <h2 class="text-lg font-semibold">{% translate "Mes points faibles" %}</h2>
+      {% for taux in points_faibles %}
+        <div class="carte space-y-3">
+          {% include "entrainement/_barre_taux.html" with libelle=taux.objet.titre %}
+          <p class="text-xs text-gris">{{ taux.objet.matiere.nom }}</p>
+          <form method="post" action="{% url 'entrainement:lancer' %}">
+            {% csrf_token %}
+            <input type="hidden" name="matiere" value="{{ taux.objet.matiere_id }}">
+            <input type="hidden" name="chapitre" value="{{ taux.objet.pk }}">
+            <button class="bouton-plein">{% translate "Quiz conseillé sur ce chapitre" %}</button>
+          </form>
+        </div>
+      {% endfor %}
+    </section>
+  {% elif completes and chapitres %}
+    <p class="carte text-sm text-gris">{% blocktranslate with n=reponses_minimum %}Vos points faibles apparaîtront quand vous aurez répondu à au moins {{ n }} questions d'un même chapitre.{% endblocktranslate %}</p>
+  {% endif %}
+
+  <section class="space-y-3">
+    <h2 class="text-lg font-semibold">{% translate "Réussite par matière" %}</h2>
+    {% for taux in matieres %}
+      <div class="carte">{% include "entrainement/_barre_taux.html" with libelle=taux.objet.nom %}</div>
+    {% empty %}
+      <p class="carte text-gris">{% translate "Faites un premier quiz pour voir votre progression." %}
+        <a href="{% url 'entrainement:accueil' %}" class="underline">{% translate "Lancer un quiz" %}</a></p>
+    {% endfor %}
+  </section>
+
+  {% if completes %}
+    {% if chapitres %}
+      <section class="space-y-3">
+        <h2 class="text-lg font-semibold">{% translate "Réussite par chapitre" %}</h2>
+        <div class="carte space-y-4">
+          {% for taux in chapitres %}
+            {% ifchanged taux.objet.matiere_id %}<p class="pt-2 text-xs font-semibold uppercase tracking-wide text-gris">{{ taux.objet.matiere.nom }}</p>{% endifchanged %}
+            {% include "entrainement/_barre_taux.html" with libelle=taux.objet.titre %}
+          {% endfor %}
+        </div>
+      </section>
+    {% endif %}
+  {% elif matieres %}
+    <p class="rounded-2xl bg-ambre-clair p-5 text-sm">{% translate "Le détail par chapitre et vos points faibles sont inclus dans le Pass session." %}
+      <a href="{% url 'accueil' %}#offres" class="font-semibold underline">{% translate "Voir le Pass session" %}</a></p>
+  {% endif %}
+
+  <section class="space-y-3">
+    <h2 class="text-lg font-semibold">{% translate "Historique" %}</h2>
+    <ul class="space-y-2">
+      {% for passee in historique %}
+        <li>
+          {% if passee.quiz %}
+            <a href="{% url 'entrainement:resultat' passee.pk %}" class="carte flex items-center justify-between gap-3 hover:border-vert">
+              <span><span class="block">{{ passee.quiz.titre }}</span><span class="text-xs text-gris">{% translate "Quiz" %} · {{ passee.fin|date:"j M Y, H:i" }}</span></span>
+              <span class="whitespace-nowrap font-semibold">{{ passee.note|floatformat:"-1" }}/20</span>
+            </a>
+          {% else %}
+            <a href="{% if passee.note is not None %}{% url 'entrainement:resultat_examen' passee.pk %}{% else %}{% url 'entrainement:auto_evaluation' passee.pk %}{% endif %}" class="carte flex items-center justify-between gap-3 hover:border-vert">
+              <span><span class="block">{{ passee.examen_blanc.titre }}</span><span class="text-xs text-gris">{% translate "Examen blanc" %} · {{ passee.fin|date:"j M Y, H:i" }}</span></span>
+              <span class="whitespace-nowrap font-semibold">{% if passee.note is not None %}{{ passee.note|floatformat:"-1" }}/20{% else %}<span class="text-sm font-normal text-ambre">{% translate "Auto-évaluation à faire" %}</span>{% endif %}</span>
+            </a>
+          {% endif %}
+        </li>
+      {% empty %}
+        <li class="carte text-gris">{% translate "Aucune tentative terminée pour le moment." %}</li>
+      {% endfor %}
+    </ul>
+    {% if historique.has_other_pages %}
+      <nav class="flex justify-between text-sm" aria-label="{% translate 'Pages' %}">
+        {% if historique.has_previous %}<a href="?page={{ historique.previous_page_number }}" class="bouton-contour">{% translate "Précédent" %}</a>{% else %}<span></span>{% endif %}
+        {% if historique.has_next %}<a href="?page={{ historique.next_page_number }}" class="bouton-contour">{% translate "Suivant" %}</a>{% endif %}
+      </nav>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.db import IntegrityError
 from django.db.models import Count, Prefetch, Q
 from django.shortcuts import get_object_or_404, redirect, render
@@ -9,7 +10,7 @@ from django.views.decorators.http import require_POST
 from catalogue.models import Chapitre, Matiere
 from sujets.views import est_requete_htmx
 
-from . import quiz
+from . import progression, quiz
 from .correction import est_correcte
 from .models import Question, Quiz, ReponseQuestion, Tentative
 
@@ -140,6 +141,34 @@ def repondre(request, pk):
     contexte = contexte_question(tentative, question, correction=donnee, derniere=derniere)
     gabarit = "entrainement/_correction.html" if est_requete_htmx(request) else "entrainement/question.html"
     return render(request, gabarit, contexte)
+
+
+@login_required
+def progression_etudiant(request):
+    """CDC 3.6 : historique, taux de réussite par matière et par chapitre, points faibles, compte à rebours."""
+    completes = progression.voit_les_statistiques_completes(request.user)
+    chapitres = progression.taux_par_chapitre(request.user) if completes else []
+    session = progression.prochaine_session(request.user)
+    historique = Paginator(
+        Tentative.objects.filter(utilisateur=request.user, fin__isnull=False)
+        .select_related("quiz__matiere", "examen_blanc__sujet__matiere")
+        .order_by("-fin"),
+        20,
+    ).get_page(request.GET.get("page"))
+    return render(
+        request,
+        "entrainement/progression.html",
+        {
+            "completes": completes,
+            "matieres": progression.taux_par_matiere(request.user),
+            "chapitres": chapitres,
+            "points_faibles": progression.points_faibles(request.user, chapitres) if completes else [],
+            "reponses_minimum": progression.REPONSES_MINIMUM,
+            "session": session,
+            "jours": progression.jours_restants(session),
+            "historique": historique,
+        },
+    )
 
 
 @login_required

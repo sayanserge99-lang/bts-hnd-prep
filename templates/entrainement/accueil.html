@@ -8,6 +8,10 @@
   <div>
     <h1 class="text-2xl font-bold">{% translate "Entraînement" %}</h1>
     <p class="mt-1 text-gris">{% translate "Quiz de 10 questions tirées au hasard, corrigées au fur et à mesure." %}</p>
+    <a href="{% url 'entrainement:progression' %}" class="carte mt-4 flex items-center justify-between hover:border-vert">
+      <span><span class="block font-semibold">{% translate "Ma progression" %}</span><span class="text-sm text-gris">{% translate "Réussite par chapitre, points faibles, jours avant la session" %}</span></span>
+      <span aria-hidden="true">→</span>
+    </a>
     {% if fonctionnalites.examens_blancs %}
       <a href="{% url 'entrainement:examens' %}" class="carte mt-4 flex items-center justify-between hover:border-vert">
         <span><span class="block font-semibold">{% translate "Examens blancs" %}</span><span class="text-sm text-gris">{% translate "Un vrai sujet, dans la durée réelle de l'épreuve" %}</span></span>

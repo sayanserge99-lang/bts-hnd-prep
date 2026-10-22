@@ -14,6 +14,7 @@ urlpatterns = [
     path("epreuve/<int:pk>/auto-evaluation/", views_examens.auto_evaluation, name="auto_evaluation"),
     path("epreuve/<int:pk>/resultat/", views_examens.resultat, name="resultat_examen"),
     path("", views.accueil, name="accueil"),
+    path("progression/", views.progression_etudiant, name="progression"),
     path("lancer/", views.lancer, name="lancer"),
     path("tentative/<int:pk>/", views.tentative, name="tentative"),
     path("tentative/<int:pk>/repondre/", views.repondre, name="repondre"),

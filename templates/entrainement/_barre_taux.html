@@ -1,0 +1,10 @@
+{% load i18n %}{# Variables : taux (objet Taux), libelle #}
+<div>
+  <div class="flex items-baseline justify-between gap-3 text-sm">
+    <span>{{ libelle }}</span>
+    <span class="whitespace-nowrap font-semibold">{{ taux.pourcentage }} % <span class="font-normal text-gris">({{ taux.justes }}/{{ taux.total }})</span></span>
+  </div>
+  <div class="mt-1 h-2 overflow-hidden rounded-full bg-bordure" role="img" aria-label="{% blocktranslate with p=taux.pourcentage %}{{ p }} % de réussite{% endblocktranslate %}">
+    <div class="h-full {% if taux.pourcentage < 50 %}bg-red-600{% elif taux.pourcentage < 75 %}bg-amber-500{% else %}bg-vert{% endif %}" style="width: {{ taux.pourcentage }}%"></div>
+  </div>
+</div>

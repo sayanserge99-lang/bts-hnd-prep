@@ -13,6 +13,27 @@
     <a href="{% url 'accounts:modifier_profil' %}" class="mt-2 inline-block text-sm text-vert underline">{% translate "Modifier mon profil" %}</a>
   </div>
 
+  {% if session %}
+    <p class="carte flex items-center gap-4">
+      <span class="text-3xl font-extrabold text-vert">{{ jours }}</span>
+      <span>{% blocktranslate with nom=session count n=jours %}jour avant la session {{ nom }}{% plural %}jours avant la session {{ nom }}{% endblocktranslate %}</span>
+    </p>
+  {% endif %}
+
+  {% if fonctionnalites.entrainement %}
+  <section>
+    <h2 class="text-lg font-semibold">{% translate "Mes derniers résultats" %}</h2>
+    <ul class="mt-3 space-y-2">
+      {% for resultat in resultats %}
+        <li class="carte flex justify-between gap-3"><span>{% if resultat.quiz %}{{ resultat.quiz.titre }}{% else %}{{ resultat.examen_blanc.titre }}{% endif %}</span><span class="font-semibold">{{ resultat.note|floatformat:"-1" }}/20</span></li>
+      {% empty %}
+        <li class="text-sm text-gris">{% translate "Faites un premier quiz pour voir votre progression." %}</li>
+      {% endfor %}
+    </ul>
+    <a href="{% url 'entrainement:progression' %}" class="bouton-contour mt-3">{% translate "Ma progression" %}</a>
+  </section>
+  {% endif %}
+
   {% if profil %}
   <section>
     <h2 class="text-lg font-semibold">{% translate "Sujets récents de votre spécialité" %}</h2>

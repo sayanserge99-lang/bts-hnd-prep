@@ -4,11 +4,15 @@
 
 ## Où on en est
 
-**V1 terminée côté code ; V2 en cours** (modules 1 à 3/5 faits : corrigés, QCM, examens blancs). Le projet tourne :
+**V1 terminée côté code ; V2 en cours** (modules 1 à 4/5 faits : corrigés, QCM, examens blancs, progression). Le projet tourne :
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **166 tests verts** (dont 19 corrigés, 17 QCM, 14 examens blancs).
+- `pytest` : **177 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression).
+- **Progression (V2, module 4)** `/entrainement/progression/` (`entrainement/progression.py`) : compte à rebours
+  (session prévue, sinon prochaine), taux par matière et par chapitre (table ReponseQuestion), 3 points faibles
+  (≥ 3 réponses, < 100 %) avec quiz conseillé, historique paginé. « Mon espace » : derniers résultats + compte à
+  rebours. Détail par chapitre et points faibles réservés au Premium une fois le paiement ouvert.
 - **Examens blancs (V2, module 3)** `/entrainement/examens-blancs/` : consignes, heure de fin fixée sur le serveur,
   minuteur (`static/js/examen.js`, testé dans jsdom), sauvegarde HTMX continue (changement, frappe, 30 s), reprise
   après coupure, remise automatique à zéro ou au retour (90 s de marge), QCM corrigé à la remise, corrigé affiché
@@ -49,9 +53,8 @@
 
 ## Prochaine étape
 
-1. V2, module 4 : suivi de progression (historique, réussite par matière et chapitre, 3 points faibles avec
-   quiz conseillés, compte à rebours avant la session). Puis 5 : PWA hors ligne, statistiques back-office,
-   connexion Google.
+1. V2, module 5 : PWA hors ligne (sujets favoris et quiz consultables sans connexion), statistiques du back-office
+   (inscrits, sujets les plus consultés, taux de conversion), connexion Google ; spécialités V2 (CDC 3.10).
 2. Choix du VPS / hébergeur et du nom de domaine (Serge Alain), puis suivre `deploy/DEPLOIEMENT.md` (HTTPS non testé).
    Retours de Serge Alain sur les pages (pas encore reçus).
 3. Fin de la V1 : rédaction des pages légales (contenu de Serge Alain), collecte des vrais sujets puis import en lot

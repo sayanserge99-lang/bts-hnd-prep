@@ -14,6 +14,8 @@ from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 from django.views.i18n import set_language
 
+from entrainement import progression
+from entrainement.models import Tentative
 from sujets.models import Sujet
 
 from .forms import ConnexionForm, InscriptionForm, ProfilForm, SuppressionForm
@@ -58,7 +60,22 @@ def profil(request):
             .order_by("-date_publication")[:5]
         )
     favoris = request.user.favoris.filter(sujet__statut=Sujet.Statut.PUBLIE).select_related("sujet__session", "sujet__matiere")
-    return render(request, "accounts/profil.html", {"profil": profil_etude, "recents": recents, "favoris": favoris})
+    session = progression.prochaine_session(request.user)
+    return render(
+        request,
+        "accounts/profil.html",
+        {
+            "profil": profil_etude,
+            "recents": recents,
+            "favoris": favoris,
+            # CDC 3.1 : le tableau de bord montre les derniers résultats.
+            "resultats": Tentative.objects.filter(utilisateur=request.user, note__isnull=False)
+            .select_related("quiz", "examen_blanc")
+            .order_by("-fin")[:3],
+            "session": session,
+            "jours": progression.jours_restants(session),
+        },
+    )
 
 
 @login_required

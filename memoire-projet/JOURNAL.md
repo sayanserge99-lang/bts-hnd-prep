@@ -75,3 +75,6 @@
 - Essai sur le Galaxy A15 de Serge Alain (USB, adb reverse) : accueil et corrigé OK, MathML OK. Défaut vu à l'écran :
   montants coupés dans les tableaux (« 12 000 / 000 ») → espace fine insécable entre groupes de chiffres
   (sujets/rendu.py, + 1 test) et marges réduites sur mobile. Cache du CSS en dev → ?v= ajouté si DEBUG.
+- V2 module 4, progression : service progression.py, page, « Mon espace » (derniers résultats, CDC 3.1). 11 tests,
+  verts du premier coup ; essai réel avec un compte temporaire (2 quiz) : compte à rebours BTS 2027, points
+  faibles, taux, historique. 177/177 verts.
