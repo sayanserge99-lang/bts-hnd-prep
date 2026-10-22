@@ -1,0 +1,55 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: btshnd
+          POSTGRES_USER: btshnd
+          POSTGRES_PASSWORD: btshnd
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U btshnd"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DJANGO_SECRET_KEY: ci-uniquement
+      DJANGO_DEBUG: "0"
+      POSTGRES_DB: btshnd
+      POSTGRES_USER: btshnd
+      POSTGRES_PASSWORD: btshnd
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: "5432"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Même version que l'image de production prévue (Django 5.2 supporte officiellement 3.13).
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Installer les dépendances
+        run: pip install -r requirements.txt
+
+      - name: Vérifier la configuration Django
+        run: python manage.py check
+
+      - name: Vérifier qu'aucune migration ne manque
+        run: python manage.py makemigrations --check --dry-run
+
+      - name: Lancer les tests
+        run: pytest -v

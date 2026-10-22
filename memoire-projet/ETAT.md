@@ -12,8 +12,8 @@ Phase 0 (cadrage). Le squelette Django **tourne** :
 
 ## Prochaine étape
 
-1. Docker (Django + PostgreSQL + Redis) et passage des tests sur PostgreSQL.
-2. GitHub Actions : lancer pytest à chaque push (exigé par le CDC).
+1. Vérifier le premier passage de GitHub Actions (onglet Actions du dépôt) : tests sur PostgreSQL 17 + Python 3.13, jamais encore exécutés sur PostgreSQL.
+2. Docker (Django + PostgreSQL + Redis) pour le développement local et la production.
 3. Recherche plein texte (SearchVectorField + index GIN), puis templates Tailwind/HTMX.
 
 ## Repères
