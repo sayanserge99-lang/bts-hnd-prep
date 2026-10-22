@@ -45,6 +45,8 @@ jobs:
       # Mêmes outils que l'image Docker : les tests d'OCR et de compression tournent aussi ici.
       - name: Installer les outils système
         run: |
+          # Sans cela, chaque installation reconstruit l'index des pages de manuel (plusieurs minutes).
+          sudo rm -f /var/lib/man-db/auto-update
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends gettext tesseract-ocr tesseract-ocr-fra tesseract-ocr-eng ghostscript
 
