@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import include, path
 from django.views.generic import TemplateView
 
+from accounts.views import changer_langue
 from catalogue.views import accueil, options_specialites
 
 
@@ -20,7 +21,7 @@ urlpatterns = [
     path("conditions-de-vente/", page("conditions_de_vente"), name="conditions_de_vente"),
     path("demande-de-retrait/", page("demande_de_retrait"), name="demande_de_retrait"),
     path("contact/", page("contact"), name="contact"),
-    path("i18n/", include("django.conf.urls.i18n")),
+    path("langue/", changer_langue, name="set_language"),
     path("admin/", admin.site.urls),
 ]
 # Volontairement aucune route vers MEDIA_URL : les PDF passent par sujets:pdf.

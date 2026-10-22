@@ -12,6 +12,7 @@ from django.urls import reverse_lazy
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
+from django.views.i18n import set_language
 
 from sujets.models import Sujet
 
@@ -122,6 +123,17 @@ def supprimer(request):
         messages.success(request, _("Votre compte et vos données ont été supprimés."))
         return redirect("accueil")
     return render(request, "accounts/supprimer.html", {"form": form})
+
+
+@require_POST
+def changer_langue(request):
+    """Bascule FR/EN de Django ; pour un utilisateur connecté, la langue choisie est aussi enregistrée."""
+    reponse = set_language(request)
+    langue = request.POST.get("language")
+    if request.user.is_authenticated and langue in dict(settings.LANGUAGES):
+        request.user.langue = langue
+        request.user.save(update_fields=["langue"])
+    return reponse
 
 
 @require_POST

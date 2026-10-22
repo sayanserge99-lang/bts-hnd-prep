@@ -8,7 +8,9 @@ Phase 0 (cadrage). Le squelette Django **tourne** :
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **56 tests verts** (12 règle de publication, 10 recherche, 15 pages, 16 comptes, 3 groupes de rôles).
+- `pytest` : **60 tests verts** (12 règle de publication, 10 recherche, 15 pages, 16 comptes, 4 langues, 3 groupes).
+- **Interface traduite en anglais** : 270 textes dans `locale/en/LC_MESSAGES/django.po` (+ `.mo` versionné).
+  Un test échoue si un texte n'a pas de traduction. La langue choisie est enregistrée dans le profil.
 - **Comptes V1** (`/compte/`) : inscription e-mail (consentement non précoché enregistré), connexion (bloquée 15 min
   après 5 échecs, via Redis), mot de passe oublié (e-mail dans les logs en dev), espace perso (sujets récents,
   favoris), modification du profil, export JSON et suppression du compte (CDC 10.2).
@@ -20,10 +22,9 @@ Phase 0 (cadrage). Le squelette Django **tourne** :
 
 ## Prochaine étape
 
-1. Traductions anglaises (fichiers .po) : les textes sont marqués `{% translate %}` mais pas encore traduits.
-2. Formulaire de demande de retrait (CDC 10.1).
-3. Docker de production (Gunicorn, Nginx, envoi réel des e-mails) et Celery (extraction du texte des PDF).
-4. Retours de Serge Alain sur les pages (pas encore reçus).
+1. Formulaire de demande de retrait (CDC 10.1).
+2. Docker de production (Gunicorn, Nginx, envoi réel des e-mails) et Celery (extraction du texte des PDF).
+3. Retours de Serge Alain sur les pages (pas encore reçus).
 
 ## Repères
 
@@ -40,5 +41,7 @@ Phase 0 (cadrage). Le squelette Django **tourne** :
 - Tests : `sujets/tests/test_regle_publication.py`, `sujets/tests/test_recherche.py`, `accounts/tests/test_groupes.py`.
 - Rôles : migration `accounts/migrations/0002_groupes_roles.py` ; le groupe Administrateur est
   resynchronisé avec toutes les permissions après chaque `migrate` (`accounts/signals.py`).
+- Nouveau texte à l'écran : `docker compose exec web python manage.py makemessages -l en --ignore=.venv --ignore=static --no-obsolete`,
+  traduire dans le .po, puis `docker compose exec web python manage.py compilemessages --ignore=.venv` et `docker compose restart web`.
 - Données fictives : `docker compose exec web python manage.py donnees_demo` (refusé si DEBUG=0).
 - Superutilisateur : pas encore créé (`docker compose exec web python manage.py createsuperuser`).

@@ -33,3 +33,5 @@
 - Comptes V1 (inscription, connexion bloquée après 5 échecs via Redis, mot de passe oublié, espace perso,
   favoris HTMX, export JSON, suppression). Corrigé avant test : le champ de spécialités groupées lisait la base
   au chargement du code → groupes construits à chaque formulaire. Tests isolés du Redis de dev. 56/56 verts.
+- Traductions anglaises : 270 textes, `.po` + `.mo`, test de complétude (contre-épreuve faite : une traduction
+  vidée → le test échoue). Bascule FR/EN enregistrée dans le profil (vue `changer_langue`). 60/60 verts.

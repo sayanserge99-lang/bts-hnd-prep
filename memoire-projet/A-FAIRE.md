@@ -25,8 +25,9 @@
 - [ ] Production : fournisseur d'e-mails (SMTP) pour la réinitialisation ; `EMAIL_BACKEND` par variable d'environnement.
 - [ ] Établissement dans le profil : à ajouter quand la liste des IPES sera saisie (partenaires.Etablissement).
 - [ ] Option « Partager mes résultats avec mon établissement » (CDC 10.6) : avec le tableau de bord IPES (V3).
-- [ ] La bascule FR/EN d'un utilisateur connecté ne met pas à jour sa langue enregistrée (seulement la page).
-- [ ] Traductions EN : `makemessages -l en` puis `compilemessages` (gettext installé dans l'image).
+- [x] Traductions EN : 270 textes traduits, test de complétude.
+- [ ] Faire relire les traductions anglaises par un anglophone (vocabulaire HND : « past papers », « marking guide »).
+- [ ] Production : lancer `compilemessages` dans le Dockerfile au lieu de versionner le `.mo`.
 - [ ] Rédiger les pages légales (mentions, confidentialité, CGV) et le formulaire de demande de retrait.
 - [ ] Décider le quota de téléchargement des visiteurs (CDC 7 : « limité ») ; aujourd'hui tout est ouvert.
 - [ ] Accueil : apparier spécialités BTS ↔ HND comme sur la maquette (aucun lien en base aujourd'hui).

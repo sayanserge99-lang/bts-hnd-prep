@@ -1,0 +1,1185 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-22 12:18+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: accounts/admin.py:19
+msgid "Identité"
+msgstr "Identity"
+
+#: accounts/admin.py:20
+msgid "Rôles"
+msgstr "Roles"
+
+#: accounts/admin.py:21
+msgid "Dates"
+msgstr "Dates"
+
+#: accounts/forms.py:31
+msgid "Spécialité préparée"
+msgstr "Specialty"
+
+#: accounts/forms.py:50
+msgid "J'accepte les conditions générales et la politique de confidentialité."
+msgstr "I accept the terms and conditions and the privacy policy."
+
+#: accounts/forms.py:57 accounts/forms.py:118
+msgid "Prénom"
+msgstr "First name"
+
+#: accounts/forms.py:57 accounts/forms.py:118
+msgid "Nom"
+msgstr "Last name"
+
+#: accounts/forms.py:68
+msgid "Un compte existe déjà avec cette adresse e-mail."
+msgstr "An account already exists with this email address."
+
+#: accounts/forms.py:84
+msgid "Adresse e-mail"
+msgstr "Email address"
+
+#: accounts/forms.py:89
+msgid ""
+"Trop de tentatives. Réessayez dans 15 minutes ou réinitialisez votre mot de "
+"passe."
+msgstr "Too many attempts. Try again in 15 minutes or reset your password."
+
+#: accounts/forms.py:112
+msgid "Session prévue"
+msgstr "Planned session"
+
+#: accounts/forms.py:134
+msgid "Cette session n'appartient pas à l'examen de votre spécialité."
+msgstr "This session does not belong to your specialty's exam."
+
+#: accounts/forms.py:149
+msgid "Mot de passe"
+msgstr "Password"
+
+#: accounts/forms.py:157
+msgid "Mot de passe incorrect."
+msgstr "Incorrect password."
+
+#: accounts/models.py:35
+msgid "adresse e-mail"
+msgstr "email address"
+
+#: accounts/models.py:37
+msgid "téléphone"
+msgstr "phone"
+
+#: accounts/models.py:37
+msgid "Facultatif, utilisé pour le paiement (V3)."
+msgstr "Optional, used for payment (V3)."
+
+#: accounts/models.py:47
+msgid "utilisateur"
+msgstr "user"
+
+#: accounts/models.py:55
+msgid "examen visé"
+msgstr "target exam"
+
+#: accounts/models.py:61
+msgid "session prévue"
+msgstr "planned session"
+
+#: accounts/models.py:65
+msgid "profil d'étude"
+msgstr "study profile"
+
+#: accounts/models.py:72
+msgid "Cette spécialité n'appartient pas à l'examen choisi."
+msgstr "This specialty does not belong to the chosen exam."
+
+#: accounts/models.py:77 templates/accounts/inscription.html:16
+msgid "Conditions générales"
+msgstr "Terms and conditions"
+
+#: accounts/models.py:78 templates/accounts/inscription.html:17
+#: templates/pages/confidentialite.html:4
+#: templates/pages/confidentialite.html:5
+msgid "Politique de confidentialité"
+msgstr "Privacy policy"
+
+#: accounts/models.py:79
+msgid "Partage des résultats avec l'établissement"
+msgstr "Sharing results with the institution"
+
+#: accounts/models.py:83
+msgid "version de la politique"
+msgstr "policy version"
+
+#: accounts/models.py:88
+msgid "consentement"
+msgstr "consent"
+
+#: accounts/models.py:105
+msgid "affectation de modérateur"
+msgstr "moderator assignment"
+
+#: accounts/views.py:34
+msgid "Bienvenue ! Votre compte est créé."
+msgstr "Welcome! Your account has been created."
+
+#: accounts/views.py:67
+msgid "Ce compte n'a pas de profil d'étude."
+msgstr "This account has no study profile."
+
+#: accounts/views.py:72
+msgid "Profil enregistré."
+msgstr "Profile saved."
+
+#: accounts/views.py:119
+msgid "Ce compte est lié à des paiements : contactez-nous pour le supprimer."
+msgstr "This account is linked to payments: contact us to delete it."
+
+#: accounts/views.py:122
+msgid "Votre compte et vos données ont été supprimés."
+msgstr "Your account and your data have been deleted."
+
+#: accounts/views.py:145
+msgid "Mot de passe modifié. Vous pouvez vous connecter."
+msgstr "Password changed. You can now log in."
+
+#: catalogue/models.py:9 config/settings.py:112
+msgid "Français"
+msgstr "French"
+
+#: catalogue/models.py:10
+msgid "Anglais"
+msgstr "English"
+
+#: catalogue/models.py:19 catalogue/models.py:77 catalogue/models.py:95
+msgid "nom"
+msgstr "name"
+
+#: catalogue/models.py:23
+msgid "examen"
+msgstr "exam"
+
+#: catalogue/models.py:41
+msgid "année"
+msgstr "year"
+
+#: catalogue/models.py:42
+msgid "date de début"
+msgstr "start date"
+
+#: catalogue/models.py:44
+msgid "date de fin officielle"
+msgstr "official end date"
+
+#: catalogue/models.py:45
+msgid ""
+"Aucun sujet de la session ne peut être publié avant le lendemain de cette "
+"date."
+msgstr ""
+"No paper from this session can be published before the day after this date."
+
+#: catalogue/models.py:51
+msgid "session"
+msgstr "session"
+
+#: catalogue/models.py:71
+msgid "Commerciale"
+msgstr "Commercial"
+
+#: catalogue/models.py:72
+msgid "Industrielle"
+msgstr "Industrial"
+
+#: catalogue/models.py:73
+msgid "Santé"
+msgstr "Health"
+
+#: catalogue/models.py:78
+msgid "filière"
+msgstr "field"
+
+#: catalogue/models.py:82
+msgid "spécialité"
+msgstr "specialty"
+
+#: catalogue/models.py:98
+msgid "matière"
+msgstr "subject"
+
+#: catalogue/models.py:110
+msgid "matière d'une spécialité"
+msgstr "subject of a specialty"
+
+#: catalogue/models.py:111
+msgid "matières des spécialités"
+msgstr "subjects of specialties"
+
+#: catalogue/models.py:121
+msgid "La spécialité et la matière doivent appartenir au même examen."
+msgstr "The specialty and the subject must belong to the same exam."
+
+#: catalogue/models.py:127
+msgid "titre"
+msgstr "title"
+
+#: catalogue/models.py:131
+msgid "chapitre"
+msgstr "chapter"
+
+#: communaute/models.py:16 paiements/models.py:53
+msgid "En attente"
+msgstr "Pending"
+
+#: communaute/models.py:17
+msgid "Validée"
+msgstr "Approved"
+
+#: communaute/models.py:18
+msgid "Rejetée"
+msgstr "Rejected"
+
+#: communaute/models.py:22
+msgid "année proposée"
+msgstr "proposed year"
+
+#: communaute/models.py:26
+msgid "je certifie avoir le droit de partager ce document"
+msgstr "I certify that I have the right to share this document"
+
+#: communaute/models.py:31
+msgid "Renseigné une fois validée."
+msgstr "Filled in once approved."
+
+#: communaute/models.py:36
+msgid "contribution"
+msgstr "contribution"
+
+#: communaute/models.py:51
+msgid "Ouvert"
+msgstr "Open"
+
+#: communaute/models.py:52
+msgid "Traité"
+msgstr "Handled"
+
+#: communaute/models.py:53
+msgid "Rejeté"
+msgstr "Rejected"
+
+#: communaute/models.py:63
+msgid "signalement"
+msgstr "report"
+
+#: communaute/models.py:72
+msgid "Reçue"
+msgstr "Received"
+
+#: communaute/models.py:73
+msgid "Acceptée (contenu supprimé)"
+msgstr "Accepted (content deleted)"
+
+#: communaute/models.py:74
+msgid "Refusée (contenu republié)"
+msgstr "Refused (content republished)"
+
+#: communaute/models.py:77
+msgid "nom du demandeur"
+msgstr "requester's name"
+
+#: communaute/models.py:78
+msgid "e-mail du demandeur"
+msgstr "requester's email"
+
+#: communaute/models.py:88
+msgid "demande de retrait"
+msgstr "takedown request"
+
+#: communaute/models.py:89
+msgid "demandes de retrait"
+msgstr "takedown requests"
+
+#: config/settings.py:112
+msgid "English"
+msgstr "English"
+
+#: entrainement/models.py:12
+msgid "Choix unique"
+msgstr "Single choice"
+
+#: entrainement/models.py:13
+msgid "Choix multiple"
+msgstr "Multiple choice"
+
+#: entrainement/models.py:14
+msgid "Vrai / faux"
+msgstr "True / false"
+
+#: entrainement/models.py:15
+msgid "Réponse courte"
+msgstr "Short answer"
+
+#: entrainement/models.py:18
+msgid "Facile"
+msgstr "Easy"
+
+#: entrainement/models.py:19
+msgid "Moyenne"
+msgstr "Medium"
+
+#: entrainement/models.py:20
+msgid "Difficile"
+msgstr "Hard"
+
+#: entrainement/models.py:23
+msgid "énoncé"
+msgstr "question text"
+
+#: entrainement/models.py:26
+msgid "Uniquement pour une réponse courte."
+msgstr "Only for a short answer."
+
+#: entrainement/models.py:33
+msgid "question"
+msgstr "question"
+
+#: entrainement/models.py:45 entrainement/models.py:46
+msgid "choix"
+msgstr "choice"
+
+#: entrainement/models.py:54
+msgid "Quiz rapide"
+msgstr "Quick quiz"
+
+#: entrainement/models.py:55
+msgid "Révision des erreurs"
+msgstr "Review mistakes"
+
+#: entrainement/models.py:63
+msgid "nombre de questions"
+msgstr "number of questions"
+
+#: entrainement/models.py:67 entrainement/models.py:68
+msgid "quiz"
+msgstr "quiz"
+
+#: entrainement/models.py:77 sujets/models.py:93
+msgid "durée (minutes)"
+msgstr "duration (minutes)"
+
+#: entrainement/models.py:78 sujets/models.py:94
+msgid "barème"
+msgstr "marking scheme"
+
+#: entrainement/models.py:82
+msgid "examen blanc"
+msgstr "mock exam"
+
+#: entrainement/models.py:83
+msgid "examens blancs"
+msgstr "mock exams"
+
+#: entrainement/models.py:97
+msgid "heure de fin prévue"
+msgstr "scheduled end time"
+
+#: entrainement/models.py:97
+msgid "Fixée par le serveur : le chrono reprend après une coupure."
+msgstr "Set by the server: the timer resumes after a connection loss."
+
+#: entrainement/models.py:104
+msgid "tentative"
+msgstr "attempt"
+
+#: paiements/models.py:14
+msgid "Durée en jours"
+msgstr "Duration in days"
+
+#: paiements/models.py:15 templates/catalogue/accueil.html:106
+msgid "Pass session"
+msgstr "Session pass"
+
+#: paiements/models.py:18
+msgid "prix (FCFA TTC)"
+msgstr "price (FCFA incl. tax)"
+
+#: paiements/models.py:24
+msgid "offre"
+msgstr "plan"
+
+#: paiements/models.py:43
+msgid "Aucune session à venir n'est enregistrée pour cet examen."
+msgstr "No upcoming session is recorded for this exam."
+
+#: paiements/models.py:54
+msgid "Réussi"
+msgstr "Successful"
+
+#: paiements/models.py:55
+msgid "Échoué"
+msgstr "Failed"
+
+#: paiements/models.py:59
+msgid "montant (FCFA)"
+msgstr "amount (FCFA)"
+
+#: paiements/models.py:61
+msgid "référence de l'agrégateur"
+msgstr "aggregator reference"
+
+#: paiements/models.py:67
+msgid "paiement"
+msgstr "payment"
+
+#: paiements/models.py:84
+msgid "code d'accès"
+msgstr "access code"
+
+#: paiements/models.py:85
+msgid "codes d'accès"
+msgstr "access codes"
+
+#: paiements/models.py:92
+msgid "Un établissement sans convention active ne peut pas recevoir de codes."
+msgstr "An institution without an active agreement cannot receive codes."
+
+#: paiements/models.py:98 partenaires/models.py:35
+msgid "Actif"
+msgstr "Active"
+
+#: paiements/models.py:99
+msgid "Expiré"
+msgstr "Expired"
+
+#: paiements/models.py:100
+msgid "Annulé"
+msgstr "Cancelled"
+
+#: paiements/models.py:112
+msgid "abonnement"
+msgstr "subscription"
+
+#: partenaires/models.py:22
+msgid "région"
+msgstr "region"
+
+#: partenaires/models.py:26
+msgid "établissement"
+msgstr "institution"
+
+#: partenaires/models.py:34
+msgid "En négociation"
+msgstr "Under negotiation"
+
+#: partenaires/models.py:36
+msgid "Résilié"
+msgstr "Terminated"
+
+#: partenaires/models.py:39
+msgid "convention signée (PDF)"
+msgstr "signed agreement (PDF)"
+
+#: partenaires/models.py:43
+msgid "taux de partage (%)"
+msgstr "revenue share (%)"
+
+#: partenaires/models.py:43
+msgid "Part des revenus reversée à l'IPES."
+msgstr "Share of revenue paid to the institution."
+
+#: partenaires/models.py:48
+msgid "partenariat"
+msgstr "partnership"
+
+#: sujets/admin.py:21
+msgid "Choisissez uniquement des spécialités rattachées à cette matière."
+msgstr "Choose only specialties linked to this subject."
+
+#: sujets/admin.py:34
+msgid "Publier les sujets sélectionnés"
+msgstr "Publish selected papers"
+
+#: sujets/admin.py:44
+#, python-format
+msgid "%d sujet publié."
+msgid_plural "%d sujets publiés."
+msgstr[0] "%d paper published."
+msgstr[1] "%d papers published."
+
+#: sujets/admin.py:51
+#, python-format
+msgid "%d sujet refusé : sa session n'est pas officiellement terminée."
+msgid_plural ""
+"%d sujets refusés : leur session n'est pas officiellement terminée."
+msgstr[0] "%d paper refused: its session has not officially ended."
+msgstr[1] "%d papers refused: their session has not officially ended."
+
+#: sujets/admin.py:59
+msgid "Dépublier les sujets sélectionnés"
+msgstr "Unpublish selected papers"
+
+#: sujets/admin.py:64
+#, python-format
+msgid "%d sujet dépublié."
+msgid_plural "%d sujets dépubliés."
+msgstr[0] "%d paper unpublished."
+msgstr[1] "%d papers unpublished."
+
+#: sujets/models.py:22
+#, python-format
+msgid ""
+"La session %(session)s se termine officiellement le %(date)s : ses sujets ne"
+" peuvent pas être publiés avant."
+msgstr ""
+"The %(session)s session officially ends on %(date)s: its papers cannot be "
+"published before then."
+
+#: sujets/models.py:76 sujets/models.py:164
+msgid "Brouillon"
+msgstr "Draft"
+
+#: sujets/models.py:77 sujets/models.py:165
+msgid "Publié"
+msgstr "Published"
+
+#: sujets/models.py:78 sujets/models.py:166
+msgid "Masqué (demande de retrait en cours)"
+msgstr "Hidden (takedown request pending)"
+
+#: sujets/models.py:81
+msgid "Écrite"
+msgstr "Written"
+
+#: sujets/models.py:82
+msgid "Pratique"
+msgstr "Practical"
+
+#: sujets/models.py:90
+msgid "Uniquement des spécialités auxquelles la matière est rattachée."
+msgstr "Only specialties the subject is linked to."
+
+#: sujets/models.py:92
+msgid "type d'épreuve"
+msgstr "paper type"
+
+#: sujets/models.py:95 sujets/models.py:175
+msgid "fichier PDF"
+msgstr "PDF file"
+
+#: sujets/models.py:96
+msgid "nombre de pages"
+msgstr "number of pages"
+
+#: sujets/models.py:97
+msgid "Rempli par la tâche d'extraction, sert à la recherche."
+msgstr "Filled in by the extraction task, used for search."
+
+#: sujets/models.py:99
+msgid "Exemple : MINESUP, BTS session 2025."
+msgstr "Example: MINESUP, HND 2025 session."
+
+#: sujets/models.py:108
+msgid "sujet"
+msgstr "paper"
+
+#: sujets/models.py:124
+msgid "La matière n'appartient pas à l'examen de la session."
+msgstr "The subject does not belong to the session's exam."
+
+#: sujets/models.py:159
+msgid "En préparation"
+msgstr "In preparation"
+
+#: sujets/models.py:160
+msgid "Proposé par la communauté"
+msgstr "Community answer"
+
+#: sujets/models.py:161
+msgid "Vérifié par un enseignant"
+msgstr "Verified by a teacher"
+
+#: sujets/models.py:169
+msgid "Plateforme"
+msgstr "Platform"
+
+#: sujets/models.py:170
+msgid "Enseignant"
+msgstr "Teacher"
+
+#: sujets/models.py:171
+msgid "Partagé"
+msgstr "Shared"
+
+#: sujets/models.py:180
+msgid "titulaire des droits"
+msgstr "rights holder"
+
+#: sujets/models.py:182
+msgid "régime de propriété"
+msgstr "ownership"
+
+#: sujets/models.py:191
+msgid "corrigé"
+msgstr "marking guide"
+
+#: sujets/models.py:213
+msgid "favori"
+msgstr "favourite"
+
+#: sujets/signals.py:21
+msgid "Une spécialité choisie n'est pas rattachée à la matière du sujet."
+msgstr "A chosen specialty is not linked to the paper's subject."
+
+#: templates/accounts/connexion.html:4 templates/accounts/connexion.html:8
+#: templates/accounts/connexion.html:12 templates/accounts/inscription.html:19
+#: templates/base.html:46
+msgid "Se connecter"
+msgstr "Log in"
+
+#: templates/accounts/connexion.html:15
+msgid "Mot de passe oublié ?"
+msgstr "Forgot your password?"
+
+#: templates/accounts/connexion.html:16
+msgid "Pas encore de compte ?"
+msgstr "No account yet?"
+
+#: templates/accounts/connexion.html:16 templates/accounts/inscription.html:4
+#: templates/accounts/inscription.html:8 templates/base.html:47
+msgid "Créer un compte"
+msgstr "Create an account"
+
+#: templates/accounts/email_reinitialisation.txt:1
+msgid "Bonjour,"
+msgstr "Hello,"
+
+#: templates/accounts/email_reinitialisation.txt:3
+msgid "Pour choisir un nouveau mot de passe, ouvrez ce lien :"
+msgstr "To choose a new password, open this link:"
+
+#: templates/accounts/email_reinitialisation.txt:6
+msgid ""
+"Si vous n'êtes pas à l'origine de cette demande, ignorez ce message : votre "
+"mot de passe ne change pas."
+msgstr ""
+"If you did not make this request, ignore this message: your password stays "
+"the same."
+
+#: templates/accounts/email_reinitialisation_sujet.txt:1
+msgid "Réinitialisation de votre mot de passe BTS-HND Prep"
+msgstr "Reset your BTS-HND Prep password"
+
+#: templates/accounts/inscription.html:9
+msgid "Gratuit. Nous ne demandons que le nécessaire."
+msgstr "Free. We only ask for what we need."
+
+#: templates/accounts/inscription.html:12
+msgid "Créer mon compte"
+msgstr "Create my account"
+
+#: templates/accounts/inscription.html:19
+msgid "Déjà inscrit ?"
+msgstr "Already registered?"
+
+#: templates/accounts/modifier_profil.html:4
+#: templates/accounts/modifier_profil.html:9 templates/accounts/profil.html:13
+msgid "Modifier mon profil"
+msgstr "Edit my profile"
+
+#: templates/accounts/modifier_profil.html:8 templates/accounts/profil.html:4
+#: templates/base.html:43
+msgid "Mon espace"
+msgstr "My space"
+
+#: templates/accounts/modifier_profil.html:12
+msgid "Enregistrer"
+msgstr "Save"
+
+#: templates/accounts/mot_de_passe_envoye.html:6
+msgid "Vérifiez votre boîte e-mail"
+msgstr "Check your inbox"
+
+#: templates/accounts/mot_de_passe_envoye.html:8
+msgid ""
+"Si un compte correspond à cette adresse, un lien de réinitialisation vient "
+"d'être envoyé. Pensez à regarder dans les courriers indésirables."
+msgstr ""
+"If an account matches this address, a reset link has just been sent. "
+"Remember to check your spam folder."
+
+#: templates/accounts/mot_de_passe_oublie.html:4
+#: templates/accounts/mot_de_passe_oublie.html:8
+msgid "Mot de passe oublié"
+msgstr "Forgot password"
+
+#: templates/accounts/mot_de_passe_oublie.html:9
+msgid ""
+"Indiquez votre adresse e-mail : nous vous enverrons un lien pour choisir un "
+"nouveau mot de passe."
+msgstr ""
+"Enter your email address: we will send you a link to choose a new password."
+
+#: templates/accounts/mot_de_passe_oublie.html:12
+msgid "Envoyer le lien"
+msgstr "Send the link"
+
+#: templates/accounts/nouveau_mot_de_passe.html:6
+msgid "Nouveau mot de passe"
+msgstr "New password"
+
+#: templates/accounts/nouveau_mot_de_passe.html:10
+msgid "Enregistrer le mot de passe"
+msgstr "Save password"
+
+#: templates/accounts/nouveau_mot_de_passe.html:14
+msgid "Ce lien n'est plus valable. Demandez-en un nouveau."
+msgstr "This link is no longer valid. Request a new one."
+
+#: templates/accounts/nouveau_mot_de_passe.html:15
+msgid "Nouveau lien"
+msgstr "New link"
+
+#: templates/accounts/profil.html:9
+#, python-format
+msgid "Bonjour %(prenom)s"
+msgstr "Hello %(prenom)s"
+
+#: templates/accounts/profil.html:11
+#, python-format
+msgid "session %(annee)s"
+msgstr "%(annee)s session"
+
+#: templates/accounts/profil.html:18
+msgid "Sujets récents de votre spécialité"
+msgstr "Recent papers for your specialty"
+
+#: templates/accounts/profil.html:23
+msgid "Aucun sujet publié pour le moment."
+msgstr "No papers published yet."
+
+#: templates/accounts/profil.html:26
+msgid "Tous les sujets de ma spécialité"
+msgstr "All papers for my specialty"
+
+#: templates/accounts/profil.html:31
+msgid "Mes favoris"
+msgstr "My favourites"
+
+#: templates/accounts/profil.html:36
+msgid ""
+"Ajoutez des sujets à vos favoris depuis leur fiche pour les retrouver ici."
+msgstr "Add papers to your favourites from their page to find them here."
+
+#: templates/accounts/profil.html:43
+msgid "Mes données"
+msgstr "My data"
+
+#: templates/accounts/profil.html:44
+msgid ""
+"Vous pouvez récupérer toutes vos données ou supprimer votre compte à tout "
+"moment."
+msgstr "You can download all your data or delete your account at any time."
+
+#: templates/accounts/profil.html:46
+msgid "Télécharger mes données"
+msgstr "Download my data"
+
+#: templates/accounts/profil.html:47 templates/accounts/supprimer.html:4
+#: templates/accounts/supprimer.html:8
+msgid "Supprimer mon compte"
+msgstr "Delete my account"
+
+#: templates/accounts/supprimer.html:9
+msgid ""
+"Votre compte, votre profil, vos favoris et vos consentements seront "
+"définitivement supprimés. Cette action est irréversible."
+msgstr ""
+"Your account, profile, favourites and consents will be permanently deleted. "
+"This cannot be undone."
+
+#: templates/accounts/supprimer.html:12
+msgid "Supprimer définitivement"
+msgstr "Delete permanently"
+
+#: templates/accounts/supprimer.html:15
+msgid "Annuler"
+msgstr "Cancel"
+
+#: templates/base.html:8
+msgid ""
+"Sujets BTS et HND des sessions passées, classés par spécialité, matière et "
+"année."
+msgstr "Past BTS and HND papers, sorted by specialty, subject and year."
+
+#: templates/base.html:13
+msgid "Aller au contenu"
+msgstr "Skip to content"
+
+#: templates/base.html:24
+msgid "Navigation principale"
+msgstr "Main navigation"
+
+#: templates/base.html:25 templates/base.html:92 templates/sujets/liste.html:4
+#: templates/sujets/liste.html:9
+msgid "Sujets"
+msgstr "Past papers"
+
+#: templates/base.html:27 templates/base.html:29 templates/base.html:96
+msgid "Entraînement"
+msgstr "Practice"
+
+#: templates/base.html:29 templates/base.html:96
+#: templates/sujets/detail.html:15
+msgid "Bientôt"
+msgstr "Soon"
+
+#: templates/base.html:31
+msgid "Offres"
+msgstr "Plans"
+
+#: templates/base.html:44
+msgid "Déconnexion"
+msgstr "Log out"
+
+#: templates/base.html:73
+msgid "Informations légales"
+msgstr "Legal information"
+
+#: templates/base.html:74 templates/pages/mentions_legales.html:4
+#: templates/pages/mentions_legales.html:5
+msgid "Mentions légales"
+msgstr "Legal notice"
+
+#: templates/base.html:75
+msgid "Confidentialité"
+msgstr "Privacy"
+
+#: templates/base.html:76
+msgid "Conditions de vente"
+msgstr "Terms of sale"
+
+#: templates/base.html:77 templates/pages/demande_de_retrait.html:4
+#: templates/pages/demande_de_retrait.html:5
+msgid "Demande de retrait"
+msgstr "Takedown request"
+
+#: templates/base.html:78 templates/pages/contact.html:4
+#: templates/pages/contact.html:5
+msgid "Contact"
+msgstr "Contact"
+
+#: templates/base.html:84
+msgid "Navigation mobile"
+msgstr "Mobile navigation"
+
+#: templates/base.html:88
+msgid "Accueil"
+msgstr "Home"
+
+#: templates/base.html:101
+msgid "Profil"
+msgstr "Profile"
+
+#: templates/catalogue/_options_specialites.html:1
+#: templates/sujets/liste.html:28
+msgid "Toutes les spécialités"
+msgstr "All specialties"
+
+#: templates/catalogue/accueil.html:10
+#, python-format
+msgid ""
+"Préparez le BTS et le HND avec les sujets des sessions %(debut)s à %(fin)s"
+msgstr ""
+"Prepare for the BTS and HND with past papers from %(debut)s to %(fin)s"
+
+#: templates/catalogue/accueil.html:12
+msgid "Préparez le BTS et le HND avec les sujets des sessions passées"
+msgstr "Prepare for the BTS and HND with past papers"
+
+#: templates/catalogue/accueil.html:16
+msgid ""
+"Tous les sujets classés par spécialité, matière et année, à consulter "
+"gratuitement."
+msgstr "All papers sorted by specialty, subject and year, free to read."
+
+#: templates/catalogue/accueil.html:17
+msgid "Corrigés et entraînement arrivent bientôt."
+msgstr "Marking guides and practice tests are coming soon."
+
+#: templates/catalogue/accueil.html:21 templates/sujets/liste.html:11
+msgid "Examen"
+msgstr "Exam"
+
+#: templates/catalogue/accueil.html:31 templates/sujets/liste.html:26
+msgid "Spécialité"
+msgstr "Specialty"
+
+#: templates/catalogue/accueil.html:36
+msgid "Voir les sujets"
+msgstr "See the papers"
+
+#: templates/catalogue/accueil.html:41
+msgid "Derniers sujets publiés"
+msgstr "Latest published papers"
+
+#: templates/catalogue/accueil.html:53
+msgid "Tout pour réviser au même endroit"
+msgstr "Everything you need to revise, in one place"
+
+#: templates/catalogue/accueil.html:56
+msgid "Sujets des sessions passées"
+msgstr "Past papers"
+
+#: templates/catalogue/accueil.html:57
+msgid ""
+"Classés par examen, spécialité, matière et année, consultables en PDF léger."
+msgstr ""
+"Sorted by exam, specialty, subject and year, available as lightweight PDFs."
+
+#: templates/catalogue/accueil.html:60
+msgid "Corrigés vérifiés"
+msgstr "Verified marking guides"
+
+#: templates/catalogue/accueil.html:61 templates/catalogue/accueil.html:66
+#: templates/catalogue/accueil.html:71
+msgid "Bientôt disponible"
+msgstr "Coming soon"
+
+#: templates/catalogue/accueil.html:62
+msgid ""
+"Rédigés ou relus par des enseignants, et signalés clairement quand ils "
+"viennent de la communauté."
+msgstr ""
+"Written or checked by teachers, and clearly labelled when they come from the"
+" community."
+
+#: templates/catalogue/accueil.html:65
+msgid "QCM et examens blancs"
+msgstr "MCQs and mock exams"
+
+#: templates/catalogue/accueil.html:67
+msgid ""
+"Entraînez-vous dans la durée réelle de l'épreuve, puis voyez vos points "
+"faibles par chapitre."
+msgstr ""
+"Practise within the real exam time, then see your weak points by chapter."
+
+#: templates/catalogue/accueil.html:70
+msgid "Même hors connexion"
+msgstr "Even offline"
+
+#: templates/catalogue/accueil.html:72
+msgid "Téléchargez vos sujets favoris et révisez sans consommer de données."
+msgstr "Download your favourite papers and revise without using data."
+
+#: templates/catalogue/accueil.html:80
+msgid "Spécialités disponibles"
+msgstr "Available specialties"
+
+#: templates/catalogue/accueil.html:81
+msgid "D'autres spécialités arrivent au fil des sessions."
+msgstr "More specialties are added session by session."
+
+#: templates/catalogue/accueil.html:95
+msgid "Choisissez votre formule"
+msgstr "Choose your plan"
+
+#: templates/catalogue/accueil.html:98
+msgid "Gratuit"
+msgstr "Free"
+
+#: templates/catalogue/accueil.html:101
+msgid "Tous les sujets en consultation"
+msgstr "Read all papers"
+
+#: templates/catalogue/accueil.html:102
+msgid "Téléchargement des sujets en PDF"
+msgstr "Download papers as PDF"
+
+#: templates/catalogue/accueil.html:108
+msgid "jusqu'à la fin de la prochaine session"
+msgstr "until the end of the next session"
+
+#: templates/catalogue/accueil.html:110
+msgid "Corrigés complets"
+msgstr "Full marking guides"
+
+#: templates/catalogue/accueil.html:111
+msgid "QCM illimités et examens blancs"
+msgstr "Unlimited MCQs and mock exams"
+
+#: templates/catalogue/accueil.html:112
+msgid "Suivi de vos points faibles"
+msgstr "Track your weak points"
+
+#: templates/catalogue/accueil.html:115
+msgid "Paiement bientôt disponible"
+msgstr "Payment coming soon"
+
+#: templates/catalogue/accueil.html:120
+msgid ""
+"Aucune plateforme ne peut garantir la réussite à l'examen : nous vous aidons"
+" à vous entraîner sérieusement."
+msgstr ""
+"No platform can guarantee exam success: we help you practise seriously."
+
+#: templates/pages/conditions_de_vente.html:4
+#: templates/pages/conditions_de_vente.html:5
+msgid "Conditions générales de vente"
+msgstr "Terms of sale"
+
+#: templates/pages/conditions_de_vente.html:8
+#: templates/pages/confidentialite.html:8 templates/pages/contact.html:8
+#: templates/pages/demande_de_retrait.html:8
+#: templates/pages/mentions_legales.html:8
+msgid "Contenu en cours de rédaction."
+msgstr "Content being written."
+
+#: templates/sujets/_bouton_favori.html:7
+msgid "Retirer des favoris"
+msgstr "Remove from favourites"
+
+#: templates/sujets/_bouton_favori.html:7
+msgid "Ajouter aux favoris"
+msgstr "Add to favourites"
+
+#: templates/sujets/_bouton_favori.html:12
+msgid "Se connecter pour garder ce sujet"
+msgstr "Log in to save this paper"
+
+#: templates/sujets/_resultats.html:3
+#, python-format
+msgid "%(total)s sujet"
+msgid_plural "%(total)s sujets"
+msgstr[0] "%(total)s paper"
+msgstr[1] "%(total)s papers"
+
+#: templates/sujets/_resultats.html:12
+#, python-format
+msgid "Session %(annee)s"
+msgstr "%(annee)s session"
+
+#: templates/sujets/_resultats.html:13
+#, python-format
+msgid "Matière commune à %(n)s spécialités"
+msgstr "Subject shared by %(n)s specialties"
+
+#: templates/sujets/_resultats.html:15
+msgid "Voir le sujet"
+msgstr "See the paper"
+
+#: templates/sujets/_resultats.html:18
+msgid "Aucun sujet ne correspond à ces critères."
+msgstr "No paper matches these criteria."
+
+#: templates/sujets/_resultats.html:23 templates/sujets/detail.html:33
+msgid "Pages"
+msgstr "Pages"
+
+#: templates/sujets/_resultats.html:25
+msgid "Précédent"
+msgstr "Previous"
+
+#: templates/sujets/_resultats.html:27
+#, python-format
+msgid "Page %(n)s sur %(total)s"
+msgstr "Page %(n)s of %(total)s"
+
+#: templates/sujets/_resultats.html:29
+msgid "Suivant"
+msgstr "Next"
+
+#: templates/sujets/detail.html:8
+msgid "Tous les sujets"
+msgstr "All papers"
+
+#: templates/sujets/detail.html:14
+msgid "Sujet"
+msgstr "Paper"
+
+#: templates/sujets/detail.html:15
+msgid "Corrigé"
+msgstr "Marking guide"
+
+#: templates/sujets/detail.html:19
+msgid "Lire le sujet (PDF)"
+msgstr "Read the paper (PDF)"
+
+#: templates/sujets/detail.html:20
+msgid "Télécharger"
+msgstr "Download"
+
+#: templates/sujets/detail.html:26
+msgid "Durée"
+msgstr "Duration"
+
+#: templates/sujets/detail.html:27
+#, python-format
+msgid "%(h)s minutes"
+msgstr "%(h)s minutes"
+
+#: templates/sujets/detail.html:29
+msgid "Coefficient"
+msgstr "Coefficient"
+
+#: templates/sujets/detail.html:36
+msgid "Barème"
+msgstr "Marking scheme"
+
+#: templates/sujets/detail.html:39
+msgid "Source"
+msgstr "Source"
+
+#: templates/sujets/liste.html:19
+msgid "Aucun sujet n'est encore disponible."
+msgstr "No papers are available yet."
+
+#: templates/sujets/liste.html:35
+msgid "Rechercher un sujet"
+msgstr "Search for a paper"
+
+#: templates/sujets/liste.html:37
+msgid "Matière, mot-clé…"
+msgstr "Subject, keyword…"
+
+#: templates/sujets/liste.html:40
+msgid "Année"
+msgstr "Year"
+
+#: templates/sujets/liste.html:43
+msgid "Toutes"
+msgstr "All"
+
+#: templates/sujets/liste.html:54
+msgid "Matière"
+msgstr "Subject"
+
+#: templates/sujets/liste.html:56
+msgid "Toutes les matières"
+msgstr "All subjects"
+
+#: templates/sujets/liste.html:62
+msgid "Type d'épreuve"
+msgstr "Paper type"
+
+#: templates/sujets/liste.html:64
+msgid "Tous les types"
+msgstr "All types"
+
+#: templates/sujets/liste.html:72
+msgid "Filtrer"
+msgstr "Filter"
