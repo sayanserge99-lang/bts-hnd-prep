@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-22 14:58+0100\n"
+"POT-Creation-Date: 2026-10-22 15:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -162,7 +162,7 @@ msgstr "Your account and your data have been deleted."
 msgid "Mot de passe modifié. Vous pouvez vous connecter."
 msgstr "Password changed. You can now log in."
 
-#: catalogue/models.py:9 config/settings.py:178
+#: catalogue/models.py:9 config/settings.py:182
 msgid "Français"
 msgstr "French"
 
@@ -368,9 +368,43 @@ msgstr "Too many requests sent today. Write to us from the Contact page."
 msgid "Votre demande de retrait a bien été reçue"
 msgstr "Your takedown request has been received"
 
-#: config/settings.py:178
+#: config/settings.py:182
 msgid "English"
 msgstr "English"
+
+#: entrainement/admin.py:45
+msgid "Publier les questions sélectionnées"
+msgstr "Publish selected questions"
+
+#: entrainement/admin.py:50
+#, python-format
+msgid "%d question publiée."
+msgid_plural "%d questions publiées."
+msgstr[0] "%d question published."
+msgstr[1] "%d questions published."
+
+#: entrainement/admin.py:57
+#, python-format
+msgid ""
+"%d question refusée : ses choix ou sa réponse attendue sont incomplets."
+msgid_plural ""
+"%d questions refusées : leurs choix ou leur réponse attendue sont "
+"incomplets."
+msgstr[0] ""
+"%d question refused: its choices or expected answer are incomplete."
+msgstr[1] ""
+"%d questions refused: their choices or expected answers are incomplete."
+
+#: entrainement/admin.py:65
+msgid "Retirer des quiz les questions sélectionnées"
+msgstr "Remove selected questions from quizzes"
+
+#: entrainement/admin.py:68
+#, python-format
+msgid "%d question retirée."
+msgid_plural "%d questions retirées."
+msgstr[0] "%d question removed."
+msgstr[1] "%d questions removed."
 
 #: entrainement/models.py:12
 msgid "Choix unique"
@@ -404,61 +438,122 @@ msgstr "Hard"
 msgid "énoncé"
 msgstr "question text"
 
-#: entrainement/models.py:26
-msgid "Uniquement pour une réponse courte."
-msgstr "Only for a short answer."
+#: entrainement/models.py:28
+msgid ""
+"Réponse courte uniquement. Plusieurs réponses acceptées : séparez-les par | "
+"(exemple : 40 %|40%|0,4)."
+msgstr ""
+"Short answer only. Several accepted answers: separate them with | (example: "
+"40 %|40%|0.4)."
 
-#: entrainement/models.py:33
+#: entrainement/models.py:30
+msgid "Affichée après la réponse (CDC 3.4)."
+msgstr "Shown after the answer."
+
+#: entrainement/models.py:34
+msgid "publiée"
+msgstr "published"
+
+#: entrainement/models.py:37
 msgid "question"
 msgstr "question"
 
-#: entrainement/models.py:45 entrainement/models.py:46
+#: entrainement/models.py:53
+msgid "Indiquez la réponse attendue."
+msgstr "Enter the expected answer."
+
+#: entrainement/models.py:55
+msgid "Une question vrai/faux a exactement deux choix (Vrai et Faux)."
+msgstr "A true/false question has exactly two choices (True and False)."
+
+#: entrainement/models.py:57
+msgid "Il faut au moins deux choix."
+msgstr "At least two choices are needed."
+
+#: entrainement/models.py:59
+msgid "Il faut exactement une bonne réponse."
+msgstr "Exactly one right answer is needed."
+
+#: entrainement/models.py:61
+msgid "Il faut au moins une bonne réponse."
+msgstr "At least one right answer is needed."
+
+#: entrainement/models.py:71 entrainement/models.py:72
 msgid "choix"
 msgstr "choice"
 
-#: entrainement/models.py:54
+#: entrainement/models.py:82
 msgid "Quiz rapide"
 msgstr "Quick quiz"
 
-#: entrainement/models.py:55
+#: entrainement/models.py:83
 msgid "Révision des erreurs"
 msgstr "Review mistakes"
 
-#: entrainement/models.py:63
+#: entrainement/models.py:91
 msgid "nombre de questions"
 msgstr "number of questions"
 
-#: entrainement/models.py:67 entrainement/models.py:68
+#: entrainement/models.py:95 entrainement/models.py:96
 msgid "quiz"
 msgstr "quiz"
 
-#: entrainement/models.py:77 sujets/models.py:95
+#: entrainement/models.py:105 sujets/models.py:95
 msgid "durée (minutes)"
 msgstr "duration (minutes)"
 
-#: entrainement/models.py:78 sujets/models.py:96
+#: entrainement/models.py:106 sujets/models.py:96
 msgid "barème"
 msgstr "marking scheme"
 
-#: entrainement/models.py:82
+#: entrainement/models.py:110
 msgid "examen blanc"
 msgstr "mock exam"
 
-#: entrainement/models.py:83
+#: entrainement/models.py:111
 msgid "examens blancs"
 msgstr "mock exams"
 
-#: entrainement/models.py:97
+#: entrainement/models.py:125
 msgid "heure de fin prévue"
 msgstr "scheduled end time"
 
-#: entrainement/models.py:97
+#: entrainement/models.py:125
 msgid "Fixée par le serveur : le chrono reprend après une coupure."
 msgstr "Set by the server: the timer resumes after a connection loss."
 
-#: entrainement/models.py:104
+#: entrainement/models.py:132
 msgid "tentative"
 msgstr "attempt"
+
+#: entrainement/models.py:156
+msgid "Identifiants des choix cochés, ou texte de la réponse courte."
+msgstr "IDs of the ticked choices, or the short answer text."
+
+#: entrainement/models.py:161
+msgid "réponse"
+msgstr "answer"
+
+#: entrainement/quiz.py:49
+#, python-format
+msgid "Révision : %(titre)s"
+msgstr "Review: %(titre)s"
+
+#: entrainement/views.py:61
+msgid ""
+"Vous avez fait tous vos quiz gratuits du jour. Revenez demain ou passez au "
+"Pass session."
+msgstr ""
+"You have used all your free quizzes for today. Come back tomorrow or get the"
+" Session pass."
+
+#: entrainement/views.py:72
+msgid "Aucune question disponible pour ce choix pour le moment."
+msgstr "No questions available for this choice yet."
+
+#: entrainement/views.py:126
+msgid "Choisissez une réponse avant de valider."
+msgstr "Choose an answer before submitting."
 
 #: paiements/models.py:14
 msgid "Durée en jours"
@@ -1219,6 +1314,7 @@ msgid "Fichier"
 msgstr "File"
 
 #: templates/admin/sujets/sujet/importer.html:53
+#: templates/entrainement/resultat.html:4
 msgid "Résultat"
 msgstr "Result"
 
@@ -1261,11 +1357,13 @@ msgstr "Main navigation"
 msgid "Sujets"
 msgstr "Past papers"
 
-#: templates/base.html:27 templates/base.html:29 templates/base.html:96
+#: templates/base.html:27 templates/base.html:29 templates/base.html:97
+#: templates/base.html:102 templates/entrainement/accueil.html:4
+#: templates/entrainement/accueil.html:9
 msgid "Entraînement"
 msgstr "Practice"
 
-#: templates/base.html:29 templates/base.html:96
+#: templates/base.html:29 templates/base.html:102
 #: templates/sujets/detail.html:19
 msgid "Bientôt"
 msgstr "Soon"
@@ -1310,7 +1408,7 @@ msgstr "Contact"
 msgid "Navigation mobile"
 msgstr "Mobile navigation"
 
-#: templates/base.html:101
+#: templates/base.html:108
 msgid "Profil"
 msgstr "Profile"
 
@@ -1394,6 +1492,10 @@ msgstr ""
 #: templates/catalogue/accueil.html:65
 msgid "QCM et examens blancs"
 msgstr "MCQs and mock exams"
+
+#: templates/catalogue/accueil.html:66
+msgid "Examens blancs bientôt"
+msgstr "Mock exams soon"
 
 #: templates/catalogue/accueil.html:67
 msgid ""
@@ -1520,6 +1622,122 @@ msgid ""
 msgstr ""
 "We have received your takedown request for “%(document)s”. The document is "
 "hidden while we review it; we will reply by email."
+
+#: templates/entrainement/_correction.html:4
+msgid "Bonne réponse !"
+msgstr "Correct!"
+
+#: templates/entrainement/_correction.html:6
+msgid "Ce n'est pas la bonne réponse."
+msgstr "That is not the right answer."
+
+#: templates/entrainement/_correction.html:12
+msgid "Votre réponse :"
+msgstr "Your answer:"
+
+#: templates/entrainement/_correction.html:13
+msgid "Réponse attendue :"
+msgstr "Expected answer:"
+
+#: templates/entrainement/_correction.html:21
+msgid "Votre choix"
+msgstr "Your choice"
+
+#: templates/entrainement/_correction.html:30
+msgid "Explication"
+msgstr "Explanation"
+
+#: templates/entrainement/_correction.html:36
+msgid "Voir mon résultat"
+msgstr "See my result"
+
+#: templates/entrainement/_correction.html:38
+msgid "Question suivante"
+msgstr "Next question"
+
+#: templates/entrainement/_formulaire_question.html:12
+msgid "Votre réponse"
+msgstr "Your answer"
+
+#: templates/entrainement/_formulaire_question.html:17
+msgid "Plusieurs réponses possibles."
+msgstr "Several answers possible."
+
+#: templates/entrainement/_formulaire_question.html:17
+msgid "Une seule réponse."
+msgstr "One answer only."
+
+#: templates/entrainement/_formulaire_question.html:28
+msgid "Valider"
+msgstr "Submit"
+
+#: templates/entrainement/accueil.html:10
+msgid "Quiz de 10 questions tirées au hasard, corrigées au fur et à mesure."
+msgstr "Quizzes of 10 random questions, marked as you go."
+
+#: templates/entrainement/accueil.html:12
+#, python-format
+msgid "%(n)s quiz gratuit restant aujourd'hui."
+msgid_plural "%(n)s quiz gratuits restants aujourd'hui."
+msgstr[0] "%(n)s free quiz left today."
+msgstr[1] "%(n)s free quizzes left today."
+
+#: templates/entrainement/accueil.html:20
+#, python-format
+msgid "%(n)s question"
+msgid_plural "%(n)s questions"
+msgstr[0] "%(n)s question"
+msgstr[1] "%(n)s questions"
+
+#: templates/entrainement/accueil.html:25
+msgid "Chapitre"
+msgstr "Chapter"
+
+#: templates/entrainement/accueil.html:27
+msgid "Toute la matière"
+msgstr "Whole subject"
+
+#: templates/entrainement/accueil.html:33
+msgid "Lancer un quiz"
+msgstr "Start a quiz"
+
+#: templates/entrainement/accueil.html:40
+#, python-format
+msgid "Réviser mon erreur (%(n)s)"
+msgid_plural "Réviser mes erreurs (%(n)s)"
+msgstr[0] "Review my mistake (%(n)s)"
+msgstr[1] "Review my mistakes (%(n)s)"
+
+#: templates/entrainement/accueil.html:45
+msgid ""
+"Aucune question n'est encore disponible pour votre spécialité. Revenez "
+"bientôt !"
+msgstr "No questions are available for your specialty yet. Come back soon!"
+
+#: templates/entrainement/accueil.html:50
+msgid "Mes derniers quiz"
+msgstr "My latest quizzes"
+
+#: templates/entrainement/resultat.html:11
+#, python-format
+msgid "%(justes)s bonne(s) réponse(s) sur %(total)s"
+msgstr "%(justes)s correct answer(s) out of %(total)s"
+
+#: templates/entrainement/resultat.html:17
+msgid "juste"
+msgstr "correct"
+
+#: templates/entrainement/resultat.html:17
+msgid "faux"
+msgstr "wrong"
+
+#: templates/entrainement/resultat.html:29
+msgid "Rejouer mes erreurs"
+msgstr "Replay my mistakes"
+
+#: templates/entrainement/resultat.html:32
+msgid "Retour à l'entraînement"
+msgstr "Back to practice"
 
 #: templates/pages/conditions_de_vente.html:4
 #: templates/pages/conditions_de_vente.html:5

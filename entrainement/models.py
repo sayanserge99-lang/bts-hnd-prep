@@ -23,17 +23,43 @@ class Question(models.Model):
     enonce = models.TextField(_("énoncé"))
     type = models.CharField(max_length=20, choices=Type.choices)
     reponse_attendue = models.CharField(
-        max_length=200, blank=True, help_text=_("Uniquement pour une réponse courte.")
+        max_length=200,
+        blank=True,
+        help_text=_("Réponse courte uniquement. Plusieurs réponses acceptées : séparez-les par | (exemple : 40 %|40%|0,4)."),
     )
-    explication = models.TextField(blank=True)
+    explication = models.TextField(blank=True, help_text=_("Affichée après la réponse (CDC 3.4)."))
     difficulte = models.PositiveSmallIntegerField(choices=Difficulte.choices, default=Difficulte.MOYENNE)
     langue = models.CharField(max_length=2, choices=Langue.choices)
+    # Validée par le modérateur de la matière : seule une question publiée entre dans les quiz.
+    publiee = models.BooleanField(_("publiée"), default=False)
 
     class Meta:
         verbose_name = _("question")
 
     def __str__(self):
         return self.enonce[:80]
+
+    @property
+    def reponse_affichee(self):
+        """Première des réponses acceptées : celle qu'on montre à l'étudiant après correction."""
+        return self.reponse_attendue.split("|")[0].strip()
+
+    def problemes(self, choix=None):
+        """Ce qui empêche de publier la question. `choix` : liste de (texte, est_correct), sinon ceux en base."""
+        if choix is None:
+            choix = list(self.choix.values_list("texte", "est_correct"))
+        bonnes = sum(1 for _texte, correct in choix if correct)
+        if self.type == self.Type.REPONSE_COURTE:
+            return [] if self.reponse_attendue.strip() else [_("Indiquez la réponse attendue.")]
+        if self.type == self.Type.VRAI_FAUX and len(choix) != 2:
+            return [_("Une question vrai/faux a exactement deux choix (Vrai et Faux).")]
+        if len(choix) < 2:
+            return [_("Il faut au moins deux choix.")]
+        if self.type in (self.Type.CHOIX_UNIQUE, self.Type.VRAI_FAUX) and bonnes != 1:
+            return [_("Il faut exactement une bonne réponse.")]
+        if self.type == self.Type.CHOIX_MULTIPLE and bonnes < 1:
+            return [_("Il faut au moins une bonne réponse.")]
+        return []
 
 
 class Choix(models.Model):
@@ -44,6 +70,8 @@ class Choix(models.Model):
     class Meta:
         verbose_name = _("choix")
         verbose_name_plural = _("choix")
+        # L'ordre saisi par l'enseignant (sinon PostgreSQL ne garantit aucun ordre).
+        ordering = ["pk"]
 
     def __str__(self):
         return self.texte
@@ -113,3 +141,28 @@ class Tentative(models.Model):
 
     def __str__(self):
         return f"{self.utilisateur} · {self.quiz or self.examen_blanc}"
+
+    @property
+    def ordre(self):
+        """Identifiants des questions, dans l'ordre où elles sont posées."""
+        return self.reponses.get("ordre", [])
+
+
+class ReponseQuestion(models.Model):
+    """Une réponse donnée à une question : base des statistiques par chapitre (CDC 3.6)."""
+
+    tentative = models.ForeignKey(Tentative, on_delete=models.CASCADE, related_name="reponses_donnees")
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name="reponses_donnees")
+    reponse = models.JSONField(help_text=_("Identifiants des choix cochés, ou texte de la réponse courte."))
+    correcte = models.BooleanField()
+    repondu_le = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _("réponse")
+        constraints = [
+            # Une seule réponse par question et par tentative : pas de seconde chance après la correction.
+            models.UniqueConstraint(fields=["tentative", "question"], name="une_reponse_par_question"),
+        ]
+
+    def __str__(self):
+        return f"{self.tentative} · {self.question} · {'✓' if self.correcte else '✗'}"

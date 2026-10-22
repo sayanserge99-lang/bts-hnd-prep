@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titre %}{% translate "Entraînement" %} — BTS-HND Prep{% endblock %}
+
+{% block contenu %}
+<div class="mx-auto max-w-3xl space-y-6 px-4 py-6">
+  <div>
+    <h1 class="text-2xl font-bold">{% translate "Entraînement" %}</h1>
+    <p class="mt-1 text-gris">{% translate "Quiz de 10 questions tirées au hasard, corrigées au fur et à mesure." %}</p>
+    {% if restants is not None %}
+      <p class="mt-2 text-sm">{% blocktranslate count n=restants %}{{ n }} quiz gratuit restant aujourd'hui.{% plural %}{{ n }} quiz gratuits restants aujourd'hui.{% endblocktranslate %}</p>
+    {% endif %}
+  </div>
+
+  {% for matiere in matieres %}
+    <section class="carte space-y-3">
+      <div class="flex flex-wrap items-baseline justify-between gap-2">
+        <h2 class="text-lg font-semibold">{{ matiere.nom }}</h2>
+        <span class="text-sm text-gris">{% blocktranslate count n=matiere.nb_questions %}{{ n }} question{% plural %}{{ n }} questions{% endblocktranslate %}</span>
+      </div>
+      <form method="post" action="{% url 'entrainement:lancer' %}" class="flex flex-wrap items-end gap-3">
+        {% csrf_token %}
+        <input type="hidden" name="matiere" value="{{ matiere.pk }}">
+        <label class="min-w-48 flex-1 text-sm font-medium">{% translate "Chapitre" %}
+          <select name="chapitre" class="champ mt-1">
+            <option value="">{% translate "Toute la matière" %}</option>
+            {% for chapitre in matiere.chapitres_actifs %}
+              <option value="{{ chapitre.pk }}">{{ chapitre.titre }} ({{ chapitre.nb }})</option>
+            {% endfor %}
+          </select>
+        </label>
+        <button class="bouton-plein">{% translate "Lancer un quiz" %}</button>
+      </form>
+      {% if matiere.nb_erreurs %}
+        <form method="post" action="{% url 'entrainement:lancer' %}">
+          {% csrf_token %}
+          <input type="hidden" name="matiere" value="{{ matiere.pk }}">
+          <input type="hidden" name="mode" value="revision">
+          <button class="bouton-contour">{% blocktranslate count n=matiere.nb_erreurs %}Réviser mon erreur ({{ n }}){% plural %}Réviser mes erreurs ({{ n }}){% endblocktranslate %}</button>
+        </form>
+      {% endif %}
+    </section>
+  {% empty %}
+    <p class="carte text-gris">{% translate "Aucune question n'est encore disponible pour votre spécialité. Revenez bientôt !" %}</p>
+  {% endfor %}
+
+  {% if dernieres %}
+    <section>
+      <h2 class="text-lg font-semibold">{% translate "Mes derniers quiz" %}</h2>
+      <ul class="mt-3 space-y-2">
+        {% for passee in dernieres %}
+          <li><a href="{% url 'entrainement:resultat' passee.pk %}" class="carte flex justify-between hover:border-vert">
+            <span>{{ passee.quiz.titre }}</span><span class="font-semibold">{{ passee.note|floatformat:"-1" }}/20</span>
+          </a></li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+</div>
+{% endblock %}

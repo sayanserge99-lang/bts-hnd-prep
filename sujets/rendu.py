@@ -63,3 +63,11 @@ def rendre(texte):
 
     html = markdown.markdown(FORMULE.sub(mettre_de_cote, texte), extensions=["tables", "fenced_code", "sane_lists"])
     return mark_safe(nh3.clean(REPERE.sub(remettre, html), tags=BALISES, attributes=ATTRIBUTS))
+
+
+def rendre_ligne(texte):
+    """Pour un texte court (choix de QCM) : même rendu, sans le paragraphe qui l'entoure."""
+    html = str(rendre(texte)).strip()
+    if html.startswith("<p>") and html.endswith("</p>") and html.count("<p>") == 1:
+        html = html[3:-4]
+    return mark_safe(html)

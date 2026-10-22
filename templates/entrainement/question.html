@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titre %}{{ tentative.quiz.titre }} — BTS-HND Prep{% endblock %}
+
+{% block contenu %}
+<div class="mx-auto max-w-2xl px-4 py-6">
+  <p class="text-sm text-gris">{{ tentative.quiz.matiere.nom }} · {{ tentative.quiz.titre }}</p>
+  <div class="mt-2 flex items-center gap-3">
+    <div class="h-2 flex-1 overflow-hidden rounded-full bg-bordure" role="progressbar" aria-valuemin="1" aria-valuemax="{{ total }}" aria-valuenow="{{ numero }}">
+      <div class="h-full bg-vert" style="width: {% widthratio numero total 100 %}%"></div>
+    </div>
+    <span class="text-sm font-semibold">{{ numero }}/{{ total }}</span>
+  </div>
+
+  <div id="zone-question" class="mt-6" aria-live="polite">
+    {% if correction %}
+      {% include "entrainement/_correction.html" %}
+    {% else %}
+      {% include "entrainement/_formulaire_question.html" %}
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

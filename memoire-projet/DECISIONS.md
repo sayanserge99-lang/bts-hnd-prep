@@ -45,5 +45,9 @@
 - **Corrigés** : en V2, le corrigé entier est visible par tous tant que le paiement est fermé ; la coupure
   « début gratuit / suite Premium » s'active seule avec PAIEMENT_ACTIF. Formules en MathML (pas de KaTeX :
   300 Ko de JS en moins). Tout le HTML final passe par nh3 (latex2mathml n'échappe pas 	ext{...}).
+- **Réponses aux quiz** : une table `ReponseQuestion` (une ligne par réponse) en plus du JSON de `Tentative`
+  (qui garde l'ordre des questions) : nécessaire aux taux de réussite par chapitre (CDC 3.6). Écart assumé au CDC 6.
+- **Quiz** : pas de seconde chance après la correction ; la bonne réponse n'est jamais dans la page avant la réponse ;
+  quota quotidien seulement une fois le paiement ouvert (comme l'accès partiel aux corrigés).
 - **Interface** : Tailwind v4 en exécutable autonome (pas de Node), polices du système, HTMX servi localement ;
   les pages marchent aussi sans JavaScript (formulaire GET classique).

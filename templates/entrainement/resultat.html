@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titre %}{% translate "Résultat" %} — {{ tentative.quiz.titre }} — BTS-HND Prep{% endblock %}
+
+{% block contenu %}
+<div class="mx-auto max-w-2xl space-y-6 px-4 py-6">
+  <div class="carte text-center">
+    <p class="text-sm text-gris">{{ tentative.quiz.matiere.nom }} · {{ tentative.quiz.titre }}</p>
+    <p class="mt-2 text-5xl font-extrabold">{{ tentative.note|floatformat:"-1" }}<span class="text-2xl text-gris">/20</span></p>
+    <p class="mt-1">{% blocktranslate with justes=justes total=reponses|length %}{{ justes }} bonne(s) réponse(s) sur {{ total }}{% endblocktranslate %}</p>
+  </div>
+
+  <ul class="space-y-2">
+    {% for reponse in reponses %}
+      <li class="carte flex items-start gap-3 p-4">
+        <span class="w-5 shrink-0 font-bold {% if reponse.correcte %}text-vert{% else %}text-red-700{% endif %}" aria-label="{% if reponse.correcte %}{% translate 'juste' %}{% else %}{% translate 'faux' %}{% endif %}">{% if reponse.correcte %}✓{% else %}✗{% endif %}</span>
+        <span><span class="block">{{ reponse.question.enonce|truncatechars:120 }}</span><span class="text-xs text-gris">{{ reponse.question.chapitre.titre }}</span></span>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <div class="flex flex-wrap gap-3">
+    {% if a_reviser %}
+      <form method="post" action="{% url 'entrainement:lancer' %}">
+        {% csrf_token %}
+        <input type="hidden" name="matiere" value="{{ tentative.quiz.matiere.pk }}">
+        <input type="hidden" name="mode" value="revision">
+        <button class="bouton-plein">{% translate "Rejouer mes erreurs" %}</button>
+      </form>
+    {% endif %}
+    <a href="{% url 'entrainement:accueil' %}" class="bouton-contour">{% translate "Retour à l'entraînement" %}</a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% load i18n corriges %}
+<div class="space-y-4">
+  {% if correction.correcte %}
+    <p class="rounded-lg bg-vert-clair p-3 font-semibold text-vert-fonce" role="status">✓ {% translate "Bonne réponse !" %}</p>
+  {% else %}
+    <p class="rounded-lg border border-red-300 bg-red-50 p-3 font-semibold text-red-800" role="status">✗ {% translate "Ce n'est pas la bonne réponse." %}</p>
+  {% endif %}
+
+  <div class="corrige text-lg font-medium">{{ question.enonce|mise_en_forme }}</div>
+
+  {% if question.type == "reponse_courte" %}
+    <p class="text-sm">{% translate "Votre réponse :" %} <strong>{{ correction.reponse }}</strong></p>
+    <p class="text-sm">{% translate "Réponse attendue :" %} <strong>{{ question.reponse_affichee }}</strong></p>
+  {% else %}
+    <ul class="space-y-2">
+      {% for choix in question.choix.all %}
+        <li class="carte flex items-start gap-3 p-4 {% if choix.est_correct %}border-vert bg-vert-clair{% elif choix.pk in correction.reponse %}border-red-300 bg-red-50{% endif %}">
+          <span class="w-5 shrink-0 font-bold" aria-hidden="true">{% if choix.est_correct %}✓{% elif choix.pk in correction.reponse %}✗{% endif %}</span>
+          <span>
+            {{ choix.texte|mise_en_forme_ligne }}
+            {% if choix.pk in correction.reponse %}<span class="block text-xs text-gris">{% translate "Votre choix" %}</span>{% endif %}
+          </span>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  {% if question.explication %}
+    <div class="carte text-sm">
+      <p class="font-semibold">{% translate "Explication" %}</p>
+      <div class="corrige mt-2">{{ question.explication|mise_en_forme }}</div>
+    </div>
+  {% endif %}
+
+  {% if derniere %}
+    <a href="{% url 'entrainement:resultat' tentative.pk %}" class="bouton-plein w-full sm:w-auto">{% translate "Voir mon résultat" %}</a>
+  {% else %}
+    <a href="{% url 'entrainement:tentative' tentative.pk %}" class="bouton-plein w-full sm:w-auto">{% translate "Question suivante" %}</a>
+  {% endif %}
+</div>

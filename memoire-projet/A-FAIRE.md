@@ -48,6 +48,8 @@
 - [ ] Alpine.js : pas encore nécessaire (ajouter quand il le sera : minuteur d'examen blanc, menus).
 - [x] Modérateurs limités à leurs matières (liste, fiches, actions, listes de choix), accès admin automatique.
 - [ ] V3 : rôle « Établissement » pour le tableau de bord IPES (CDC 10.6), absent des 3 rôles du CDC section 7.
+- [x] QCM V2 : quiz rapide, correction immédiate, révision des erreurs, cohérence des questions, quota prêt.
+- [ ] Fixer QUIZ_GRATUITS_PAR_JOUR (CDC 7 : quotas « restent à fixer »).
 - [x] Corrigés V2 : rendu Markdown/MathML sûr, badges, filtre, signalement, retrait, aperçu admin.
 - [ ] Corrige : décider si on ajoute `verifie_par` (FK utilisateur) pour tracer la vérification.
 - [ ] V3 : filigrane nominatif et lien temporaire sur le PDF du corrigé Premium (CDC 4).

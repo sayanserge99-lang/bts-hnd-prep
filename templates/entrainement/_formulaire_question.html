@@ -1,0 +1,29 @@
+{% load i18n corriges %}
+{# Aucune bonne réponse dans ce HTML : elle n'arrive qu'avec la correction. #}
+<form method="post" action="{% url 'entrainement:repondre' tentative.pk %}"
+      hx-post="{% url 'entrainement:repondre' tentative.pk %}" hx-target="#zone-question" class="space-y-4">
+  {% csrf_token %}
+  <input type="hidden" name="question" value="{{ question.pk }}">
+  <div class="corrige text-lg font-medium">{{ question.enonce|mise_en_forme }}</div>
+
+  {% if erreur %}<p class="rounded-lg border border-red-300 bg-red-50 p-3 text-sm text-red-800" role="alert">{{ erreur }}</p>{% endif %}
+
+  {% if question.type == "reponse_courte" %}
+    <label class="block text-sm font-medium" for="reponse">{% translate "Votre réponse" %}</label>
+    <input id="reponse" name="reponse" class="champ" autocomplete="off" autofocus>
+  {% else %}
+    <fieldset class="space-y-2">
+      <legend class="mb-2 text-sm text-gris">
+        {% if question.type == "choix_multiple" %}{% translate "Plusieurs réponses possibles." %}{% else %}{% translate "Une seule réponse." %}{% endif %}
+      </legend>
+      {% for choix in question.choix.all %}
+        <label class="carte flex cursor-pointer items-start gap-3 p-4 has-checked:border-vert has-checked:bg-vert-clair">
+          <input type="{% if question.type == 'choix_multiple' %}checkbox{% else %}radio{% endif %}" name="choix" value="{{ choix.pk }}" class="mt-1 h-5 w-5 shrink-0 accent-vert">
+          <span>{{ choix.texte|mise_en_forme_ligne }}</span>
+        </label>
+      {% endfor %}
+    </fieldset>
+  {% endif %}
+
+  <button class="bouton-plein w-full sm:w-auto">{% translate "Valider" %}</button>
+</form>

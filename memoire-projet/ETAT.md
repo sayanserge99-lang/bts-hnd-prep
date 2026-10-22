@@ -4,11 +4,15 @@
 
 ## Où on en est
 
-**V1 terminée côté code ; V2 en cours** (module 1/5 fait : corrigés). Le projet tourne :
+**V1 terminée côté code ; V2 en cours** (modules 1 et 2/5 faits : corrigés, QCM). Le projet tourne :
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **134 tests verts** (dont 19 corrigés). Les tests d'OCR demandent Tesseract/Ghostscript (Docker, CI).
+- `pytest` : **151 tests verts** (dont 19 corrigés, 17 QCM).
+- **QCM (V2, module 2)** `/entrainement/` : matières de la spécialité, quiz rapide de 10 questions (matière ou chapitre),
+  une question à la fois, correction immédiate + explication (HTMX), note /20, révision des erreurs (dernière réponse
+  fausse), derniers quiz. Questions publiées par le modérateur seulement si cohérentes. Table `ReponseQuestion`.
+  Limite de quiz par jour prête (QUIZ_GRATUITS_PAR_JOUR, [À FIXER]), active seulement avec PAIEMENT_ACTIF. Les tests d'OCR demandent Tesseract/Ghostscript (Docker, CI).
 - **Corrigés (V2, module 1)** : onglets Sujet/Corrigé, Markdown + tableaux + formules en MathML (`sujets/rendu.py`,
   nettoyé par nh3), badges vérifié/communauté/en préparation + filtre dans la liste, avertissement, signalement
   (connecté), demande de retrait d'un corrigé, aperçu dans l'admin. Règle de publication appliquée aux corrigés.
@@ -41,8 +45,9 @@
 
 ## Prochaine étape
 
-1. V2, module 2 : QCM (banque de questions, quiz rapide de 10, correction immédiate, révision des erreurs).
-   Puis 3 : examens blancs ; 4 : suivi de progression ; 5 : PWA, statistiques back-office, connexion Google.
+1. V2, module 3 : examens blancs (durée réelle, minuteur, soumission automatique, QCM auto-corrigé,
+   partie rédactionnelle auto-évaluée, reprise après coupure). Puis 4 : suivi de progression ; 5 : PWA,
+   statistiques back-office, connexion Google.
 2. Choix du VPS / hébergeur et du nom de domaine (Serge Alain), puis suivre `deploy/DEPLOIEMENT.md` (HTTPS non testé).
    Retours de Serge Alain sur les pages (pas encore reçus).
 3. Fin de la V1 : rédaction des pages légales (contenu de Serge Alain), collecte des vrais sujets puis import en lot

@@ -24,7 +24,7 @@
       <nav class="hidden items-center gap-6 text-sm font-medium md:flex" aria-label="{% translate 'Navigation principale' %}">
         <a href="{% url 'sujets:liste' %}" class="hover:text-vert">{% translate "Sujets" %}</a>
         {% if fonctionnalites.entrainement %}
-          <a href="#" class="hover:text-vert">{% translate "Entraînement" %}</a>
+          <a href="{% url 'entrainement:accueil' %}" class="hover:text-vert">{% translate "Entraînement" %}</a>
         {% else %}
           <span class="text-gris">{% translate "Entraînement" %} <span class="badge-bientot">{% translate "Bientôt" %}</span></span>
         {% endif %}
@@ -91,10 +91,17 @@
       <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 6.5C10.5 5 8 4.5 3.5 4.5v14c4.5 0 7 .5 8.5 2 1.5-1.5 4-2 8.5-2v-14C16 4.5 13.5 5 12 6.5Zm0 0v14"/></svg>
       {% translate "Sujets" %}
     </a>
-    <span class="flex flex-col items-center gap-1 py-2 text-gris">
-      <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg>
-      <span>{% translate "Entraînement" %} <span class="badge-bientot">{% translate "Bientôt" %}</span></span>
-    </span>
+    {% if fonctionnalites.entrainement %}
+      <a href="{% url 'entrainement:accueil' %}" class="flex flex-col items-center gap-1 py-2 {% if '/entrainement/' in request.path %}text-vert font-semibold{% endif %}">
+        <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg>
+        {% translate "Entraînement" %}
+      </a>
+    {% else %}
+      <span class="flex flex-col items-center gap-1 py-2 text-gris">
+        <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg>
+        <span>{% translate "Entraînement" %} <span class="badge-bientot">{% translate "Bientôt" %}</span></span>
+      </span>
+    {% endif %}
     {% url 'accounts:profil' as url_profil %}
     <a href="{% if user.is_authenticated %}{{ url_profil }}{% else %}{% url 'accounts:connexion' %}{% endif %}" class="flex flex-col items-center gap-1 py-2 {% if '/compte/' in request.path %}text-vert font-semibold{% endif %}">
       <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg>

@@ -63,7 +63,7 @@
     </div>
     <div class="carte">
       <h3 class="font-semibold">{% translate "QCM et examens blancs" %}</h3>
-      {% if not fonctionnalites.entrainement %}<span class="badge-bientot mt-1">{% translate "Bientôt disponible" %}</span>{% endif %}
+      {% if not fonctionnalites.entrainement %}<span class="badge-bientot mt-1">{% translate "Bientôt disponible" %}</span>{% elif not fonctionnalites.examens_blancs %}<span class="badge-bientot mt-1">{% translate "Examens blancs bientôt" %}</span>{% endif %}
       <p class="mt-2 text-sm text-gris">{% translate "Entraînez-vous dans la durée réelle de l'épreuve, puis voyez vos points faibles par chapitre." %}</p>
     </div>
     <div class="carte">

@@ -64,3 +64,6 @@
   l'inverse) → nettoyage nh3 de tout le HTML final avec une liste MathML ; contre-épreuve faite.
   Défauts corrigés en route : refus de retrait republiait un corrigé sans la règle ; acceptation ne vidait pas
   le début du corrigé ; chaînes de formules non brutes (, 	) dans donnees_demo. 134/134 verts.
+- V2 module 2, QCM : quiz rapide, correction immédiate HTMX, révision des erreurs, admin (cohérence avant publication,
+  actions), 14 questions de démo (4 types, formules), navigation activée. 17 tests ; essai réel avec un compte
+  temporaire : 8 questions, explication absente avant réponse, 10/20, révision de 4 erreurs. 151/151 verts.

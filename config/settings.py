@@ -89,6 +89,10 @@ LOGOUT_REDIRECT_URL = "accueil"
 CONNEXION_ESSAIS_MAX = 5
 CONNEXION_BLOCAGE_SECONDES = 15 * 60
 
+# CDC 3.8 : quiz par jour de l'offre gratuite, appliqué seulement une fois le paiement ouvert.
+# [À FIXER] : le quota exact reste à décider (CDC 7) ; 3 est une valeur d'attente.
+QUIZ_GRATUITS_PAR_JOUR = 3
+
 # CDC 10.1 : une demande de retrait masque le contenu tout de suite ; on en limite le nombre par adresse IP.
 DEMANDES_RETRAIT_PAR_JOUR = 3
 
@@ -202,7 +206,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Drapeaux des fonctionnalités V2/V3 : présentes dans le code, masquées tant que False.
 FONCTIONNALITES = {
     "corriges": True,
-    "entrainement": False,
+    "entrainement": True,
     "examens_blancs": False,
     "hors_ligne": False,
     "contributions": False,
