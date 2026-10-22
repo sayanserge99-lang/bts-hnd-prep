@@ -6,4 +6,7 @@ def fonctionnalites(request):
     return {
         "fonctionnalites": settings.FONCTIONNALITES,
         "paiement_actif": settings.PAIEMENT_ACTIF,
+        # En développement, le CSS change souvent : on empêche le téléphone de garder l'ancien en cache.
+        # En production, ManifestStaticFilesStorage donne déjà un nom unique à chaque version.
+        "mode_developpement": settings.DEBUG,
     }

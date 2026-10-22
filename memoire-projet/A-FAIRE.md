@@ -56,7 +56,8 @@
 - [ ] Corrige : décider si on ajoute `verifie_par` (FK utilisateur) pour tracer la vérification.
 - [ ] V3 : filigrane nominatif et lien temporaire sur le PDF du corrigé Premium (CDC 4).
 - [ ] Rendu : les $ à l'intérieur d'un bloc de code sont pris pour des formules (limite connue).
-- [ ] Vérifier à l'écran l'affichage MathML des formules (Chrome, Firefox, navigateur Android).
+- [x] Affichage MathML vérifié sur Chrome Android (Galaxy A15) : fraction et tableaux OK.
+- [ ] Vérifier aussi sur Firefox et sur l'ancien navigateur Samsung Internet.
 - [ ] Forum (V3) : pas encore modélisé.
 
 ## Étude de faisabilité (reporté, « on les fera le moment venu »)

@@ -73,6 +73,14 @@ def test_une_formule_mal_ecrite_ne_casse_pas_la_page():
     assert "<code>" in rendre("$\\frac{1}{$ et la suite")
 
 
+def test_un_montant_ne_se_coupe_pas_en_bout_de_ligne():
+    html = rendre("| Base | Annuité |\n|---|---|\n| 12 000 000 | 4 800 000 |\n\nEn 2025 et 2026, 3 exercices.")
+
+    assert "12 000 000" in html and "4 800 000" in html
+    # Seules les espaces entre chiffres groupés par trois changent.
+    assert "2025 et 2026, 3 exercices" in html
+
+
 def test_un_prix_en_dollars_n_est_pas_une_formule():
     assert "<math" not in rendre("Entre 5 $ et 10 $ par mois.")
 

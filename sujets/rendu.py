@@ -18,6 +18,10 @@ from latex2mathml.converter import convert as latex_vers_mathml
 FORMULE = re.compile(r"\$\$(.+?)\$\$|\$([^\s$](?:[^$\n]*?[^\s$])?)\$", re.DOTALL)
 # Repère sans caractère spécial Markdown, remplacé par la formule avant le nettoyage.
 REPERE = re.compile(r"FORMULEMATH(\d+)FIN")
+# Espace des milliers (« 12 000 000 ») : remplacée par une espace fine insécable, pour qu'un montant
+# ne soit jamais coupé en bout de ligne sur un téléphone.
+MILLIERS = re.compile(r"(?<=\d) (?=\d{3}(?!\d))")
+ESPACE_FINE_INSECABLE = " "
 
 # Attention : latex2mathml recopie tel quel le contenu de \text{...}, balises comprises.
 # Tout le HTML final (formules incluses) passe donc par nh3, avec les seules balises MathML utiles.
@@ -61,7 +65,9 @@ def rendre(texte):
             # Une formule mal écrite s'affiche telle quelle au lieu de faire planter la page.
             return f"<code>{escape(latex)}</code>"
 
-    html = markdown.markdown(FORMULE.sub(mettre_de_cote, texte), extensions=["tables", "fenced_code", "sane_lists"])
+    # Les formules sont mises de côté d'abord : LaTeX gère ses propres espaces.
+    texte = MILLIERS.sub(ESPACE_FINE_INSECABLE, FORMULE.sub(mettre_de_cote, texte))
+    html = markdown.markdown(texte, extensions=["tables", "fenced_code", "sane_lists"])
     return mark_safe(nh3.clean(REPERE.sub(remettre, html), tags=BALISES, attributes=ATTRIBUTS))
 
 

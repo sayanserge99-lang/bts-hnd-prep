@@ -8,7 +8,7 @@
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **165 tests verts** (dont 19 corrigés, 17 QCM, 14 examens blancs).
+- `pytest` : **166 tests verts** (dont 19 corrigés, 17 QCM, 14 examens blancs).
 - **Examens blancs (V2, module 3)** `/entrainement/examens-blancs/` : consignes, heure de fin fixée sur le serveur,
   minuteur (`static/js/examen.js`, testé dans jsdom), sauvegarde HTMX continue (changement, frappe, 30 s), reprise
   après coupure, remise automatique à zéro ou au retour (90 s de marge), QCM corrigé à la remise, corrigé affiché
@@ -80,5 +80,9 @@
   Le shell Django 5.2 affiche une ligne d'import : utiliser `shell --no-imports -c` pour lire une valeur.
 - Celery ne se recharge pas tout seul : après une modification de `sujets/tasks.py` ou `traitement_pdf.py`,
   `docker compose restart worker`. Journal : `docker compose logs -f worker`.
+- Tester sur le téléphone de Serge Alain (Galaxy A15, débogage USB activé) : télécharger les platform-tools
+  (https://dl.google.com/android/repository/platform-tools-latest-windows.zip), puis `adb reverse tcp:8000 tcp:8000`
+  et ouvrir http://localhost:8000 dans Chrome. Captures : `adb shell screencap -p /sdcard/x.png` puis `adb pull`.
+  (adb était dans le scratchpad de la session du 22/10 : à retélécharger.) Éviter les captures inutiles (notifications privées).
 - Données fictives : `docker compose exec web python manage.py donnees_demo` (refusé si DEBUG=0).
 - Superutilisateur : pas encore créé (`docker compose exec web python manage.py createsuperuser`).

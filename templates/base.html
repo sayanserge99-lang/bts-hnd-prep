@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block titre %}BTS-HND Prep{% endblock %}</title>
   <meta name="description" content="{% translate 'Sujets BTS et HND des sessions passées, classés par spécialité, matière et année.' %}">
-  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+  <link rel="stylesheet" href="{% static 'css/app.css' %}{% if mode_developpement %}?v={% now 'U' %}{% endif %}">
   <script src="{% static 'js/htmx.min.js' %}" defer></script>
   {% block scripts %}{% endblock %}
 </head>

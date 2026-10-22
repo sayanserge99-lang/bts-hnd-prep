@@ -72,3 +72,6 @@
   vérifié avec Node + jsdom (compte à rebours, rouge < 5 min, hors ligne, remise auto) ; essai réel : 3/4 QCM,
   4,5/6, corrigé après remise, note 15/20. Chaîne cassée par un 
  dans un script d'édition, corrigée. 165/165.
+- Essai sur le Galaxy A15 de Serge Alain (USB, adb reverse) : accueil et corrigé OK, MathML OK. Défaut vu à l'écran :
+  montants coupés dans les tableaux (« 12 000 / 000 ») → espace fine insécable entre groupes de chiffres
+  (sujets/rendu.py, + 1 test) et marges réduites sur mobile. Cache du CSS en dev → ?v= ajouté si DEBUG.

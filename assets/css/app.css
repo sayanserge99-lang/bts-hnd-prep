@@ -81,9 +81,8 @@
     @apply block w-full overflow-x-auto rounded-lg border border-bordure bg-white text-sm;
   }
   .corrige th, .corrige td {
-    @apply border-b border-bordure px-3 py-2 text-left;
-  }
-  .corrige pre {
+    @apply border-b border-bordure px-2 py-2 text-left sm:px-3;
+  }  .corrige pre {
     @apply overflow-x-auto rounded-lg bg-encre p-3 text-sm text-white;
   }
   .corrige code {
