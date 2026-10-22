@@ -18,3 +18,5 @@
 - Ajout de la migration des groupes (Étudiant, Modérateur, Administrateur) + 3 tests.
   Défaut trouvé par le test : l'Administrateur n'avait pas les permissions des modèles migrés
   après lui → resynchronisation par signal `post_migrate`. 15/15 tests verts.
+
+- `git init`, `.gitattributes` (LF), premier commit 61249a5 sur `main`. Pas encore de dépôt distant.
