@@ -7,14 +7,15 @@
 Phase 0 (cadrage). Le squelette Django **tourne** :
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` ; `migrate` appliqué sur SQLite (`db.sqlite3`) ;
-- `pytest` : **15 tests verts** (12 règle de publication, 3 groupes de rôles).
+- `pytest` : **15 tests verts** (12 règle de publication, 3 groupes de rôles), en local (SQLite) et sur GitHub Actions (PostgreSQL 17, Python 3.13).
+- Dépôt public : https://github.com/sayanserge99-lang/bts-hnd-prep — résultats CI lisibles sans connexion via l'API GitHub.
 - Contre-épreuve faite : en désactivant la règle de publication, 7 tests échouent.
 
 ## Prochaine étape
 
-1. Vérifier le premier passage de GitHub Actions (onglet Actions du dépôt) : tests sur PostgreSQL 17 + Python 3.13, jamais encore exécutés sur PostgreSQL.
-2. Docker (Django + PostgreSQL + Redis) pour le développement local et la production.
-3. Recherche plein texte (SearchVectorField + index GIN), puis templates Tailwind/HTMX.
+1. Docker (Django + PostgreSQL + Redis) pour le développement local et la production (Docker Desktop à installer).
+2. Recherche plein texte (SearchVectorField + index GIN).
+3. Templates Tailwind/HTMX/Alpine, pages publiques de la V1.
 
 ## Repères
 
