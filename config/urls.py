@@ -3,7 +3,7 @@ from django.urls import include, path
 from django.views.generic import TemplateView
 
 from accounts.views import changer_langue
-from catalogue.views import accueil, options_specialites
+from catalogue.views import accueil, hors_ligne, manifeste, options_specialites, service_worker
 from communaute.views import demande_retrait
 
 
@@ -13,6 +13,9 @@ def page(nom):
 
 urlpatterns = [
     path("", accueil, name="accueil"),
+    path("sw.js", service_worker, name="service_worker"),
+    path("manifest.webmanifest", manifeste, name="manifeste"),
+    path("hors-ligne/", hors_ligne, name="hors_ligne"),
     path("specialites/", options_specialites, name="options_specialites"),
     path("sujets/", include("sujets.urls")),
     path("compte/", include("accounts.urls")),

@@ -48,6 +48,9 @@
 - [ ] Alpine.js : pas encore nécessaire (ajouter quand il le sera : minuteur d'examen blanc, menus).
 - [x] Modérateurs limités à leurs matières (liste, fiches, actions, listes de choix), accès admin automatique.
 - [ ] V3 : rôle « Établissement » pour le tableau de bord IPES (CDC 10.6), absent des 3 rôles du CDC section 7.
+- [x] Hors ligne V2 : installable, sujets gardés (fiche, corrigé, PDF), quiz téléchargés + synchronisés.
+- [ ] Hors ligne : essai réel sur téléphone ; un sujet retiré (demande de retrait) reste sur les téléphones qui l'ont gardé.
+- [ ] Hors ligne : compter les consultations de PDF (statistiques) — les lectures hors ligne ne sont pas vues.
 - [x] Progression V2 : taux par matière/chapitre, points faibles + quiz conseillé, compte à rebours, historique.
 - [x] Examens blancs V2 : minuteur serveur, sauvegarde continue, reprise, remise auto, auto-évaluation.
 - [ ] Examens blancs : tester le minuteur sur un vrai téléphone (mise en veille, changement d'onglet).

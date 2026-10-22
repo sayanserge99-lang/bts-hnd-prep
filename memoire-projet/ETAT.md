@@ -8,7 +8,12 @@
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **177 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression).
+- `pytest` : **189 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne).
+- **Hors ligne (V2, module 5a)** : site installable (manifest, icônes `static/icons/`), service worker servi par Django
+  (`/sw.js`, template `pwa/sw.js`), bouton « Garder hors ligne » sur la fiche (fiche + corrigé + PDF en cache),
+  quiz téléchargeables (`/entrainement/hors-ligne/quiz/`) joués sans réseau, synchronisés et recorrigés par le
+  serveur, page `/hors-ligne/`. JS `static/js/hors-ligne.js` testé dans jsdom (défaut trouvé et corrigé).
+  **Pas encore essayé sur le téléphone** : le Galaxy s'est déconnecté avant l'essai (adb « no devices »).
 - **Progression (V2, module 4)** `/entrainement/progression/` (`entrainement/progression.py`) : compte à rebours
   (session prévue, sinon prochaine), taux par matière et par chapitre (table ReponseQuestion), 3 points faibles
   (≥ 3 réponses, < 100 %) avec quiz conseillé, historique paginé. « Mon espace » : derniers résultats + compte à
@@ -53,9 +58,10 @@
 
 ## Prochaine étape
 
-1. V2, module 5 : PWA hors ligne (sujets favoris et quiz consultables sans connexion), statistiques du back-office
-   (inscrits, sujets les plus consultés, taux de conversion), connexion Google ; spécialités V2 (CDC 3.10).
-2. Choix du VPS / hébergeur et du nom de domaine (Serge Alain), puis suivre `deploy/DEPLOIEMENT.md` (HTTPS non testé).
+1. Essayer le hors ligne sur le Galaxy A15 (garder un sujet, `docker compose stop web`, rouvrir la fiche et /hors-ligne/).
+2. V2, module 5b : statistiques du back-office (inscrits, sujets les plus consultés, taux de conversion),
+   connexion Google (identifiants à créer par Serge Alain) ; spécialités V2 (CDC 3.10).
+3. Choix du VPS / hébergeur et du nom de domaine (Serge Alain), puis suivre `deploy/DEPLOIEMENT.md` (HTTPS non testé).
    Retours de Serge Alain sur les pages (pas encore reçus).
 3. Fin de la V1 : rédaction des pages légales (contenu de Serge Alain), collecte des vrais sujets puis import en lot
    (avant : saisir les sessions 2020-2026 avec leurs dates de fin officielles, et les matières de chaque spécialité).

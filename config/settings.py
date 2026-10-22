@@ -211,7 +211,7 @@ FONCTIONNALITES = {
     "corriges": True,
     "entrainement": True,
     "examens_blancs": True,
-    "hors_ligne": False,
+    "hors_ligne": True,
     "contributions": False,
     "forum": False,
 }

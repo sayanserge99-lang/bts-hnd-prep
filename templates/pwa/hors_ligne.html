@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titre %}{% translate "Hors ligne" %} — BTS-HND Prep{% endblock %}
+
+{% block contenu %}
+{# Page gardée sur le téléphone par le service worker : elle s'affiche aussi sans réseau. #}
+<div id="page-hors-ligne" class="mx-auto max-w-2xl space-y-6 px-4 py-6"
+     data-texte-aucun-sujet="{% translate 'Aucun sujet gardé. Ouvrez la fiche d’un sujet et touchez « Garder hors ligne ».' %}"
+     data-texte-aucun-quiz="{% translate 'Aucun quiz téléchargé. Dans Entraînement, touchez « Télécharger pour le hors ligne ».' %}"
+     data-texte-jouer="{% translate 'Jouer' %}"
+     data-texte-reprendre="{% translate 'Reprendre' %}"
+     data-texte-oublier="{% translate 'Retirer' %}"
+     data-texte-valider="{% translate 'Valider' %}"
+     data-texte-suivante="{% translate 'Question suivante' %}"
+     data-texte-juste="{% translate 'Bonne réponse !' %}"
+     data-texte-faux="{% translate 'Ce n’est pas la bonne réponse.' %}"
+     data-texte-attendue="{% translate 'Réponse attendue :' %}"
+     data-texte-en-attente="{% translate 'Terminé : sera envoyé au retour du réseau' %}"
+     data-texte-synchronise="{% translate 'Envoyé · %s/20' %}">
+  <div>
+    <h1 class="text-2xl font-bold">{% translate "Hors ligne" %}</h1>
+    <p class="mt-1 text-gris">{% translate "Ce qui est gardé sur ce téléphone reste consultable sans connexion. Vos réponses aux quiz sont envoyées dès que le réseau revient." %}</p>
+  </div>
+
+  <p id="sans-javascript" class="carte text-gris">{% translate "Le mode hors ligne demande un navigateur récent avec JavaScript activé." %}</p>
+
+  <div id="contenu-hors-ligne" class="hidden space-y-6">
+    <div id="lecteur-quiz" class="carte hidden space-y-4" aria-live="polite"></div>
+
+    <section>
+      <h2 class="text-lg font-semibold">{% translate "Sujets gardés" %}</h2>
+      <ul id="sujets-gardes" class="mt-3 space-y-2"></ul>
+    </section>
+
+    <section>
+      <h2 class="text-lg font-semibold">{% translate "Quiz téléchargés" %}</h2>
+      <ul id="quiz-telecharges" class="mt-3 space-y-2"></ul>
+    </section>
+  </div>
+</div>
+{% endblock %}

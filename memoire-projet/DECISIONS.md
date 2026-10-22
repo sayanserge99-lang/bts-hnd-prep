@@ -52,5 +52,9 @@
 - **Examens blancs** : l'heure de fin est fixée par le serveur au départ (le temps court pendant une coupure,
   comme le jour de l'examen) ; le navigateur compte à rebours depuis le temps restant envoyé par le serveur ;
   marge de 90 s pour une copie envoyée tard sur une connexion lente. Minuteur en JavaScript simple (pas d'Alpine).
+- **Hors ligne** : service worker servi par Django (adresses statiques exactes, version liée aux fichiers) ;
+  réseau d'abord, copie gardée en secours ; seules les pages publiques (/ et /sujets/) sont gardées au passage,
+  jamais /compte/, /entrainement/ ni /admin/. Un quiz téléchargé contient ses réponses (correction sans réseau) :
+  accepté pour de l'entraînement ; le serveur recorrige tout à la synchronisation et compte le quiz dans le quota.
 - **Interface** : Tailwind v4 en exécutable autonome (pas de Node), polices du système, HTMX servi localement ;
   les pages marchent aussi sans JavaScript (formulaire GET classique).

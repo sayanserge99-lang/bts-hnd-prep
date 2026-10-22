@@ -1,0 +1,16 @@
+{% load static i18n %}{% get_current_language as LANGUE %}{% translate "Sujets BTS et HND des sessions passées, classés par spécialité, matière et année." as description %}{
+  "name": "BTS-HND Prep",
+  "short_name": "BTS-HND Prep",
+  "description": "{{ description|escapejs }}",
+  "lang": "{{ LANGUE }}",
+  "start_url": "/?source=application",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f7f8f3",
+  "theme_color": "#0f6b4f",
+  "icons": [
+    {"src": "{% static 'icons/icone-192.png' %}", "sizes": "192x192", "type": "image/png"},
+    {"src": "{% static 'icons/icone-512.png' %}", "sizes": "512x512", "type": "image/png"},
+    {"src": "{% static 'icons/icone-masquable-512.png' %}", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}

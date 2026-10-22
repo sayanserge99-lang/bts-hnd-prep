@@ -78,3 +78,7 @@
 - V2 module 4, progression : service progression.py, page, « Mon espace » (derniers résultats, CDC 3.1). 11 tests,
   verts du premier coup ; essai réel avec un compte temporaire (2 quiz) : compte à rebours BTS 2027, points
   faibles, taux, historique. 177/177 verts.
+- V2 module 5a, hors ligne : icônes (Pillow), manifest, service worker, bouton Garder hors ligne, quiz
+  téléchargeables + synchronisation recorrigée, page /hors-ligne/. 12 tests ; JS vérifié (node --check) et lecteur
+  de quiz joué dans jsdom : défaut trouvé (form.reponse indisponible) → querySelector. 189/189 verts.
+  Essai sur le Galaxy impossible : téléphone déconnecté (adb no devices).

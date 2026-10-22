@@ -1,6 +1,8 @@
 /* Source Tailwind : compilée dans static/css/app.css par le service « tailwind » du compose.yaml. */
 @import "tailwindcss" source(none);
 @source "../../templates";
+/* Le lecteur de quiz hors ligne (static/js/hors-ligne.js) construit aussi des éléments stylés. */
+@source "../../static/js/hors-ligne.js";
 
 /* Couleurs des maquettes. Polices du système : aucune police à télécharger (CDC 4, < 300 Ko). */
 @theme {

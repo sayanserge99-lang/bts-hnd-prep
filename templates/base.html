@@ -8,6 +8,13 @@
   <meta name="description" content="{% translate 'Sujets BTS et HND des sessions passées, classés par spécialité, matière et année.' %}">
   <link rel="stylesheet" href="{% static 'css/app.css' %}{% if mode_developpement %}?v={% now 'U' %}{% endif %}">
   <script src="{% static 'js/htmx.min.js' %}" defer></script>
+  {% if fonctionnalites.hors_ligne %}
+    {# CDC 4 : installable sur l'écran d'accueil, sujets et quiz consultables sans connexion. #}
+    <link rel="manifest" href="{% url 'manifeste' %}">
+    <meta name="theme-color" content="#0f6b4f">
+    <link rel="apple-touch-icon" href="{% static 'icons/icone-192.png' %}">
+    <script src="{% static 'js/hors-ligne.js' %}" defer></script>
+  {% endif %}
   {% block scripts %}{% endblock %}
 </head>
 <body class="flex min-h-screen flex-col bg-creme font-sans text-encre antialiased">

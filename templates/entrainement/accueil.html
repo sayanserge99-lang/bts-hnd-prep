@@ -8,6 +8,12 @@
   <div>
     <h1 class="text-2xl font-bold">{% translate "Entraînement" %}</h1>
     <p class="mt-1 text-gris">{% translate "Quiz de 10 questions tirées au hasard, corrigées au fur et à mesure." %}</p>
+    {% if fonctionnalites.hors_ligne %}
+      <a href="{% url 'hors_ligne' %}" class="carte mt-4 flex items-center justify-between hover:border-vert">
+        <span><span class="block font-semibold">{% translate "Hors ligne" %}</span><span class="text-sm text-gris">{% translate "Sujets et quiz gardés sur ce téléphone" %}</span></span>
+        <span aria-hidden="true">→</span>
+      </a>
+    {% endif %}
     <a href="{% url 'entrainement:progression' %}" class="carte mt-4 flex items-center justify-between hover:border-vert">
       <span><span class="block font-semibold">{% translate "Ma progression" %}</span><span class="text-sm text-gris">{% translate "Réussite par chapitre, points faibles, jours avant la session" %}</span></span>
       <span aria-hidden="true">→</span>
@@ -33,7 +39,7 @@
         {% csrf_token %}
         <input type="hidden" name="matiere" value="{{ matiere.pk }}">
         <label class="min-w-48 flex-1 text-sm font-medium">{% translate "Chapitre" %}
-          <select name="chapitre" class="champ mt-1">
+          <select id="chapitre-{{ matiere.pk }}" name="chapitre" class="champ mt-1">
             <option value="">{% translate "Toute la matière" %}</option>
             {% for chapitre in matiere.chapitres_actifs %}
               <option value="{{ chapitre.pk }}">{{ chapitre.titre }} ({{ chapitre.nb }})</option>
@@ -41,6 +47,12 @@
           </select>
         </label>
         <button class="bouton-plein">{% translate "Lancer un quiz" %}</button>
+        {% if fonctionnalites.hors_ligne %}
+          <button type="button" class="bouton-contour hidden" data-telecharger-quiz data-matiere="{{ matiere.pk }}"
+                  data-chapitre="#chapitre-{{ matiere.pk }}" data-url="{% url 'entrainement:quiz_hors_ligne' %}"
+                  data-texte-telecharge="{% translate 'Téléchargé ✓ : à retrouver dans Hors ligne' %}"
+                  data-texte-erreur="{% translate 'Téléchargement impossible : vérifiez la connexion.' %}">{% translate "Télécharger pour le hors ligne" %}</button>
+        {% endif %}
       </form>
       {% if matiere.nb_erreurs %}
         <form method="post" action="{% url 'entrainement:lancer' %}">

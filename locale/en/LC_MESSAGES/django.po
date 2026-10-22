@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-22 16:07+0100\n"
+"POT-Creation-Date: 2026-10-22 16:26+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -584,7 +584,7 @@ msgstr ""
 "You have used all your free quizzes for today. Come back tomorrow or get the"
 " Session pass."
 
-#: entrainement/views.py:73
+#: entrainement/views.py:73 entrainement/views_hors_ligne.py:65
 msgid "Aucune question disponible pour ce choix pour le moment."
 msgstr "No questions available for this choice yet."
 
@@ -600,6 +600,10 @@ msgstr "Mock exams are reserved for Session pass subscribers."
 #: entrainement/views_examens.py:91
 msgid "Épreuve terminée : réponses non enregistrées."
 msgstr "Exam over: answers not saved."
+
+#: entrainement/views_hors_ligne.py:62
+msgid "Vous avez fait tous vos quiz gratuits du jour."
+msgstr "You have used all your free quizzes for today."
 
 #: paiements/models.py:14
 msgid "Durée en jours"
@@ -1056,7 +1060,7 @@ msgstr "Thank you! The teacher will review this part."
 
 #: templates/accounts/connexion.html:4 templates/accounts/connexion.html:8
 #: templates/accounts/connexion.html:12 templates/accounts/inscription.html:19
-#: templates/base.html:47
+#: templates/base.html:54
 msgid "Se connecter"
 msgstr "Log in"
 
@@ -1069,7 +1073,7 @@ msgid "Pas encore de compte ?"
 msgstr "No account yet?"
 
 #: templates/accounts/connexion.html:16 templates/accounts/inscription.html:4
-#: templates/accounts/inscription.html:8 templates/base.html:48
+#: templates/accounts/inscription.html:8 templates/base.html:55
 msgid "Créer un compte"
 msgstr "Create an account"
 
@@ -1111,7 +1115,7 @@ msgid "Modifier mon profil"
 msgstr "Edit my profile"
 
 #: templates/accounts/modifier_profil.html:8 templates/accounts/profil.html:4
-#: templates/base.html:44
+#: templates/base.html:51
 msgid "Mon espace"
 msgstr "My space"
 
@@ -1190,7 +1194,7 @@ msgstr "My latest results"
 msgid "Faites un premier quiz pour voir votre progression."
 msgstr "Take a first quiz to see your progress."
 
-#: templates/accounts/profil.html:33 templates/entrainement/accueil.html:12
+#: templates/accounts/profil.html:33 templates/entrainement/accueil.html:18
 #: templates/entrainement/progression.html:4
 #: templates/entrainement/progression.html:10
 msgid "Ma progression"
@@ -1252,7 +1256,7 @@ msgstr "Delete permanently"
 msgid "Annuler"
 msgstr "Cancel"
 
-#: templates/admin/sujets/sujet/importer.html:6 templates/base.html:89
+#: templates/admin/sujets/sujet/importer.html:6 templates/base.html:96
 msgid "Accueil"
 msgstr "Home"
 
@@ -1420,73 +1424,73 @@ msgid ""
 "année."
 msgstr "Past BTS and HND papers, sorted by specialty, subject and year."
 
-#: templates/base.html:14
+#: templates/base.html:21
 msgid "Aller au contenu"
 msgstr "Skip to content"
 
-#: templates/base.html:25
+#: templates/base.html:32
 msgid "Navigation principale"
 msgstr "Main navigation"
 
-#: templates/base.html:26 templates/base.html:93 templates/sujets/liste.html:4
-#: templates/sujets/liste.html:9
+#: templates/base.html:33 templates/base.html:100
+#: templates/sujets/liste.html:4 templates/sujets/liste.html:9
 msgid "Sujets"
 msgstr "Past papers"
 
-#: templates/base.html:28 templates/base.html:30 templates/base.html:98
-#: templates/base.html:103 templates/entrainement/accueil.html:4
+#: templates/base.html:35 templates/base.html:37 templates/base.html:105
+#: templates/base.html:110 templates/entrainement/accueil.html:4
 #: templates/entrainement/accueil.html:9
 #: templates/entrainement/examens/liste.html:9
 #: templates/entrainement/progression.html:9
 msgid "Entraînement"
 msgstr "Practice"
 
-#: templates/base.html:30 templates/base.html:103
+#: templates/base.html:37 templates/base.html:110
 #: templates/sujets/detail.html:19
 msgid "Bientôt"
 msgstr "Soon"
 
-#: templates/base.html:32
+#: templates/base.html:39
 msgid "Offres"
 msgstr "Plans"
 
-#: templates/base.html:45
+#: templates/base.html:52
 msgid "Déconnexion"
 msgstr "Log out"
 
-#: templates/base.html:74
+#: templates/base.html:81
 msgid "Informations légales"
 msgstr "Legal information"
 
-#: templates/base.html:75 templates/pages/mentions_legales.html:4
+#: templates/base.html:82 templates/pages/mentions_legales.html:4
 #: templates/pages/mentions_legales.html:5
 msgid "Mentions légales"
 msgstr "Legal notice"
 
-#: templates/base.html:76
+#: templates/base.html:83
 msgid "Confidentialité"
 msgstr "Privacy"
 
-#: templates/base.html:77
+#: templates/base.html:84
 msgid "Conditions de vente"
 msgstr "Terms of sale"
 
-#: templates/base.html:78 templates/communaute/demande_retrait.html:4
+#: templates/base.html:85 templates/communaute/demande_retrait.html:4
 #: templates/communaute/demande_retrait.html:8
 #: templates/communaute/demande_retrait_recue.html:4
 msgid "Demande de retrait"
 msgstr "Takedown request"
 
-#: templates/base.html:79 templates/communaute/demande_retrait.html:22
+#: templates/base.html:86 templates/communaute/demande_retrait.html:22
 #: templates/pages/contact.html:4 templates/pages/contact.html:5
 msgid "Contact"
 msgstr "Contact"
 
-#: templates/base.html:85
+#: templates/base.html:92
 msgid "Navigation mobile"
 msgstr "Mobile navigation"
 
-#: templates/base.html:109
+#: templates/base.html:116
 msgid "Profil"
 msgstr "Profile"
 
@@ -1706,7 +1710,7 @@ msgstr ""
 msgid "%(p)s %% de réussite"
 msgstr "%(p)s%% success"
 
-#: templates/entrainement/_correction.html:4
+#: templates/entrainement/_correction.html:4 templates/pwa/hors_ligne.html:16
 msgid "Bonne réponse !"
 msgstr "Correct!"
 
@@ -1718,7 +1722,7 @@ msgstr "That is not the right answer."
 msgid "Votre réponse :"
 msgstr "Your answer:"
 
-#: templates/entrainement/_correction.html:13
+#: templates/entrainement/_correction.html:13 templates/pwa/hors_ligne.html:18
 msgid "Réponse attendue :"
 msgstr "Expected answer:"
 
@@ -1734,7 +1738,7 @@ msgstr "Explanation"
 msgid "Voir mon résultat"
 msgstr "See my result"
 
-#: templates/entrainement/_correction.html:38
+#: templates/entrainement/_correction.html:38 templates/pwa/hors_ligne.html:15
 msgid "Question suivante"
 msgstr "Next question"
 
@@ -1752,6 +1756,7 @@ msgid "Une seule réponse."
 msgstr "One answer only."
 
 #: templates/entrainement/_formulaire_question.html:28
+#: templates/pwa/hors_ligne.html:14
 msgid "Valider"
 msgstr "Submit"
 
@@ -1759,29 +1764,38 @@ msgstr "Submit"
 msgid "Quiz de 10 questions tirées au hasard, corrigées au fur et à mesure."
 msgstr "Quizzes of 10 random questions, marked as you go."
 
-#: templates/entrainement/accueil.html:12
+#: templates/entrainement/accueil.html:13 templates/pwa/hors_ligne.html:4
+#: templates/pwa/hors_ligne.html:22
+msgid "Hors ligne"
+msgstr "Offline"
+
+#: templates/entrainement/accueil.html:13
+msgid "Sujets et quiz gardés sur ce téléphone"
+msgstr "Papers and quizzes kept on this phone"
+
+#: templates/entrainement/accueil.html:18
 msgid "Réussite par chapitre, points faibles, jours avant la session"
 msgstr "Success by chapter, weak points, days before the session"
 
-#: templates/entrainement/accueil.html:17
+#: templates/entrainement/accueil.html:23
 #: templates/entrainement/examens/consignes.html:8
 #: templates/entrainement/examens/liste.html:4
 #: templates/entrainement/examens/liste.html:10
 msgid "Examens blancs"
 msgstr "Mock exams"
 
-#: templates/entrainement/accueil.html:17
+#: templates/entrainement/accueil.html:23
 msgid "Un vrai sujet, dans la durée réelle de l'épreuve"
 msgstr "A real paper, in the real exam time"
 
-#: templates/entrainement/accueil.html:22
+#: templates/entrainement/accueil.html:28
 #, python-format
 msgid "%(n)s quiz gratuit restant aujourd'hui."
 msgid_plural "%(n)s quiz gratuits restants aujourd'hui."
 msgstr[0] "%(n)s free quiz left today."
 msgstr[1] "%(n)s free quizzes left today."
 
-#: templates/entrainement/accueil.html:30
+#: templates/entrainement/accueil.html:36
 #: templates/entrainement/examens/consignes.html:13
 #, python-format
 msgid "%(n)s question"
@@ -1789,33 +1803,45 @@ msgid_plural "%(n)s questions"
 msgstr[0] "%(n)s question"
 msgstr[1] "%(n)s questions"
 
-#: templates/entrainement/accueil.html:35
+#: templates/entrainement/accueil.html:41
 msgid "Chapitre"
 msgstr "Chapter"
 
-#: templates/entrainement/accueil.html:37
+#: templates/entrainement/accueil.html:43
 msgid "Toute la matière"
 msgstr "Whole subject"
 
-#: templates/entrainement/accueil.html:43
+#: templates/entrainement/accueil.html:49
 #: templates/entrainement/progression.html:51
 msgid "Lancer un quiz"
 msgstr "Start a quiz"
 
-#: templates/entrainement/accueil.html:50
+#: templates/entrainement/accueil.html:53
+msgid "Téléchargé ✓ : à retrouver dans Hors ligne"
+msgstr "Downloaded ✓: find it in Offline"
+
+#: templates/entrainement/accueil.html:54
+msgid "Téléchargement impossible : vérifiez la connexion."
+msgstr "Download failed: check your connection."
+
+#: templates/entrainement/accueil.html:54
+msgid "Télécharger pour le hors ligne"
+msgstr "Download for offline"
+
+#: templates/entrainement/accueil.html:62
 #, python-format
 msgid "Réviser mon erreur (%(n)s)"
 msgid_plural "Réviser mes erreurs (%(n)s)"
 msgstr[0] "Review my mistake (%(n)s)"
 msgstr[1] "Review my mistakes (%(n)s)"
 
-#: templates/entrainement/accueil.html:55
+#: templates/entrainement/accueil.html:67
 msgid ""
 "Aucune question n'est encore disponible pour votre spécialité. Revenez "
 "bientôt !"
 msgstr "No questions are available for your specialty yet. Come back soon!"
 
-#: templates/entrainement/accueil.html:60
+#: templates/entrainement/accueil.html:72
 msgid "Mes derniers quiz"
 msgstr "My latest quizzes"
 
@@ -1869,13 +1895,13 @@ msgid "Voir ma note"
 msgstr "See my mark"
 
 #: templates/entrainement/examens/consignes.html:11
-#: templates/sujets/detail.html:34
+#: templates/sujets/detail.html:44
 msgid "Durée"
 msgstr "Duration"
 
 #: templates/entrainement/examens/consignes.html:11
 #: templates/entrainement/examens/liste.html:24
-#: templates/sujets/detail.html:35
+#: templates/sujets/detail.html:45
 #, python-format
 msgid "%(h)s minutes"
 msgstr "%(h)s minutes"
@@ -2091,7 +2117,7 @@ msgid "Aucune tentative terminée pour le moment."
 msgstr "No completed attempts yet."
 
 #: templates/entrainement/progression.html:94
-#: templates/sujets/_resultats.html:34 templates/sujets/detail.html:41
+#: templates/sujets/_resultats.html:34 templates/sujets/detail.html:51
 msgid "Pages"
 msgstr "Pages"
 
@@ -2136,6 +2162,64 @@ msgstr "Terms of sale"
 #: templates/pages/mentions_legales.html:8
 msgid "Contenu en cours de rédaction."
 msgstr "Content being written."
+
+#: templates/pwa/hors_ligne.html:9
+msgid ""
+"Aucun sujet gardé. Ouvrez la fiche d’un sujet et touchez « Garder hors ligne"
+" »."
+msgstr "No papers kept. Open a paper and tap “Keep offline”."
+
+#: templates/pwa/hors_ligne.html:10
+msgid ""
+"Aucun quiz téléchargé. Dans Entraînement, touchez « Télécharger pour le hors"
+" ligne »."
+msgstr "No quizzes downloaded. In Practice, tap “Download for offline”."
+
+#: templates/pwa/hors_ligne.html:11
+msgid "Jouer"
+msgstr "Play"
+
+#: templates/pwa/hors_ligne.html:12
+msgid "Reprendre"
+msgstr "Resume"
+
+#: templates/pwa/hors_ligne.html:13
+msgid "Retirer"
+msgstr "Remove"
+
+#: templates/pwa/hors_ligne.html:17
+msgid "Ce n’est pas la bonne réponse."
+msgstr "That is not the right answer."
+
+#: templates/pwa/hors_ligne.html:19
+msgid "Terminé : sera envoyé au retour du réseau"
+msgstr "Finished: will be sent when the connection returns"
+
+#: templates/pwa/hors_ligne.html:20
+#, python-format
+msgid "Envoyé · %%s/20"
+msgstr "Sent · %%s/20"
+
+#: templates/pwa/hors_ligne.html:23
+msgid ""
+"Ce qui est gardé sur ce téléphone reste consultable sans connexion. Vos "
+"réponses aux quiz sont envoyées dès que le réseau revient."
+msgstr ""
+"What is kept on this phone stays available offline. Your quiz answers are "
+"sent as soon as the connection returns."
+
+#: templates/pwa/hors_ligne.html:26
+msgid ""
+"Le mode hors ligne demande un navigateur récent avec JavaScript activé."
+msgstr "Offline mode needs a recent browser with JavaScript enabled."
+
+#: templates/pwa/hors_ligne.html:32
+msgid "Sujets gardés"
+msgstr "Kept papers"
+
+#: templates/pwa/hors_ligne.html:37
+msgid "Quiz téléchargés"
+msgstr "Downloaded quizzes"
 
 #: templates/sujets/_bouton_favori.html:7
 msgid "Retirer des favoris"
@@ -2188,7 +2272,7 @@ msgstr "Send"
 msgid "Se connecter pour signaler une erreur"
 msgstr "Log in to report a mistake"
 
-#: templates/sujets/_corrige.html:49 templates/sujets/detail.html:52
+#: templates/sujets/_corrige.html:49 templates/sujets/detail.html:62
 msgid "Demander le retrait de ce document"
 msgstr "Request removal of this document"
 
@@ -2250,15 +2334,27 @@ msgstr "Read the paper (PDF)"
 msgid "Télécharger"
 msgstr "Download"
 
+#: templates/sujets/detail.html:36 templates/sujets/detail.html:38
+msgid "Garder hors ligne"
+msgstr "Keep offline"
+
 #: templates/sujets/detail.html:37
+msgid "Gardé hors ligne ✓ (toucher pour retirer)"
+msgstr "Kept offline ✓ (tap to remove)"
+
+#: templates/sujets/detail.html:38
+msgid "Impossible : vérifiez la connexion et la place libre."
+msgstr "Not possible: check your connection and free space."
+
+#: templates/sujets/detail.html:47
 msgid "Coefficient"
 msgstr "Coefficient"
 
-#: templates/sujets/detail.html:44
+#: templates/sujets/detail.html:54
 msgid "Barème"
 msgstr "Marking scheme"
 
-#: templates/sujets/detail.html:47
+#: templates/sujets/detail.html:57
 msgid "Source"
 msgstr "Source"
 
