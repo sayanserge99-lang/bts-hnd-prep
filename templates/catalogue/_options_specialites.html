@@ -1,0 +1,3 @@
+{% load i18n %}<option value="">{% translate "Toutes les spécialités" %}</option>
+{% for specialite in specialites %}<option value="{{ specialite.code }}">{{ specialite.nom }}</option>
+{% endfor %}

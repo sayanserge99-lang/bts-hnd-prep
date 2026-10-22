@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block contenu %}
+<section class="mx-auto grid max-w-6xl gap-10 px-4 py-10 md:grid-cols-2 md:items-center md:py-16">
+  <div>
+    <p class="inline-block rounded bg-vert-clair px-2 py-1 text-xs font-semibold uppercase tracking-wide text-vert">BTS en français · HND in English</p>
+    <h1 class="mt-4 text-4xl font-extrabold leading-tight tracking-tight md:text-5xl">
+      {% if annees.debut %}
+        {% blocktranslate with debut=annees.debut fin=annees.fin %}Préparez le BTS et le HND avec les sujets des sessions {{ debut }} à {{ fin }}{% endblocktranslate %}
+      {% else %}
+        {% translate "Préparez le BTS et le HND avec les sujets des sessions passées" %}
+      {% endif %}
+    </h1>
+    <p class="mt-4 text-lg text-gris">
+      {% translate "Tous les sujets classés par spécialité, matière et année, à consulter gratuitement." %}
+      {% if not fonctionnalites.corriges %}{% translate "Corrigés et entraînement arrivent bientôt." %}{% endif %}
+    </p>
+
+    <form id="choix" action="{% url 'sujets:liste' %}" method="get" class="carte mt-6 grid gap-4 sm:grid-cols-[auto_1fr]">
+      <label class="text-sm font-medium">{% translate "Examen" %}
+        <select name="examen" class="champ mt-1"
+                hx-get="{% url 'options_specialites' %}" hx-target="#choix-specialite" hx-trigger="change">
+          {% for examen in examens %}
+            <option value="{{ examen.code }}" {% if examen.code == code_examen %}selected{% endif %}>
+              {{ examen.code }} — {% if examen.langue == "fr" %}français{% else %}English{% endif %}
+            </option>
+          {% endfor %}
+        </select>
+      </label>
+      <label class="text-sm font-medium">{% translate "Spécialité" %}
+        <select id="choix-specialite" name="specialite" class="champ mt-1">
+          {% include "catalogue/_options_specialites.html" with specialites=specialites_examen %}
+        </select>
+      </label>
+      <div><button class="bouton-plein">{% translate "Voir les sujets" %}</button></div>
+    </form>
+  </div>
+
+  {% if derniers_sujets %}
+  <div class="hidden flex-col gap-4 md:flex" aria-label="{% translate 'Derniers sujets publiés' %}">
+    {% for sujet in derniers_sujets %}
+      <a href="{% url 'sujets:detail' sujet.pk %}" class="carte block shadow-sm transition hover:shadow-md {% if forloop.counter == 2 %}ml-8{% endif %}">
+        <p class="font-semibold">{{ sujet.titre }} — {{ sujet.session.annee }}</p>
+        <p class="mt-1 text-sm text-gris">{{ sujet.session.examen.code }} · {{ sujet.matiere }} · {{ sujet.get_type_epreuve_display }}</p>
+      </a>
+    {% endfor %}
+  </div>
+  {% endif %}
+</section>
+
+<section class="mx-auto max-w-6xl px-4 py-8">
+  <h2 class="text-2xl font-bold">{% translate "Tout pour réviser au même endroit" %}</h2>
+  <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="carte">
+      <h3 class="font-semibold">{% translate "Sujets des sessions passées" %}</h3>
+      <p class="mt-2 text-sm text-gris">{% translate "Classés par examen, spécialité, matière et année, consultables en PDF léger." %}</p>
+    </div>
+    <div class="carte">
+      <h3 class="font-semibold">{% translate "Corrigés vérifiés" %}</h3>
+      {% if not fonctionnalites.corriges %}<span class="badge-bientot mt-1">{% translate "Bientôt disponible" %}</span>{% endif %}
+      <p class="mt-2 text-sm text-gris">{% translate "Rédigés ou relus par des enseignants, et signalés clairement quand ils viennent de la communauté." %}</p>
+    </div>
+    <div class="carte">
+      <h3 class="font-semibold">{% translate "QCM et examens blancs" %}</h3>
+      {% if not fonctionnalites.entrainement %}<span class="badge-bientot mt-1">{% translate "Bientôt disponible" %}</span>{% endif %}
+      <p class="mt-2 text-sm text-gris">{% translate "Entraînez-vous dans la durée réelle de l'épreuve, puis voyez vos points faibles par chapitre." %}</p>
+    </div>
+    <div class="carte">
+      <h3 class="font-semibold">{% translate "Même hors connexion" %}</h3>
+      {% if not fonctionnalites.hors_ligne %}<span class="badge-bientot mt-1">{% translate "Bientôt disponible" %}</span>{% endif %}
+      <p class="mt-2 text-sm text-gris">{% translate "Téléchargez vos sujets favoris et révisez sans consommer de données." %}</p>
+    </div>
+  </div>
+</section>
+
+{% if specialites %}
+<section class="mx-auto max-w-6xl px-4 py-8">
+  <div class="flex flex-wrap items-end justify-between gap-2">
+    <h2 class="text-2xl font-bold">{% translate "Spécialités disponibles" %}</h2>
+    <p class="text-sm text-gris">{% translate "D'autres spécialités arrivent au fil des sessions." %}</p>
+  </div>
+  <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    {% for specialite in specialites %}
+      <a href="{% url 'sujets:liste' %}?examen={{ specialite.examen.code }}&specialite={{ specialite.code }}" class="carte block hover:border-vert">
+        <p class="font-semibold">{{ specialite.nom }}</p>
+        <p class="mt-1 text-sm text-gris">{{ specialite.examen.code }}</p>
+      </a>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<section id="offres" class="mx-auto max-w-6xl px-4 py-8">
+  <h2 class="text-2xl font-bold">{% translate "Choisissez votre formule" %}</h2>
+  <div class="mt-6 grid gap-4 md:grid-cols-2">
+    <div class="carte">
+      <p class="font-semibold">{% translate "Gratuit" %}</p>
+      <p class="mt-1 text-3xl font-extrabold">0 FCFA</p>
+      <ul class="mt-4 list-disc space-y-1 pl-5 text-sm text-gris">
+        <li>{% translate "Tous les sujets en consultation" %}</li>
+        <li>{% translate "Téléchargement des sujets en PDF" %}</li>
+      </ul>
+    </div>
+    <div class="carte border-2 border-vert">
+      <p class="font-semibold">{% translate "Pass session" %}</p>
+      {# Prix : hypothèse de l'étude de faisabilité, à confirmer par l'enquête. #}
+      <p class="mt-1 text-3xl font-extrabold">5 000 FCFA <span class="text-sm font-normal text-gris">{% translate "jusqu'à la fin de la prochaine session" %}</span></p>
+      <ul class="mt-4 list-disc space-y-1 pl-5 text-sm text-gris">
+        <li>{% translate "Corrigés complets" %}</li>
+        <li>{% translate "QCM illimités et examens blancs" %}</li>
+        <li>{% translate "Suivi de vos points faibles" %}</li>
+      </ul>
+      {% if not paiement_actif %}
+        <p class="mt-4 inline-block rounded-lg border border-dashed border-gris/60 px-4 py-2 text-sm text-gris">{% translate "Paiement bientôt disponible" %}</p>
+      {% endif %}
+    </div>
+  </div>
+  {# CDC 10.7 : aucune promesse de réussite. #}
+  <p class="mt-4 text-sm text-gris">{% translate "Aucune plateforme ne peut garantir la réussite à l'examen : nous vous aidons à vous entraîner sérieusement." %}</p>
+</section>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% load i18n %}
+<p class="text-sm text-gris">
+  {% blocktranslate count total=page.paginator.count %}{{ total }} sujet{% plural %}{{ total }} sujets{% endblocktranslate %}
+  {% if specialite %}· {{ examen.code }} · {{ specialite.nom }}{% endif %}
+</p>
+
+<ul class="mt-3 space-y-3">
+  {% for sujet in page %}
+    <li class="carte">
+      <h2 class="text-lg font-semibold">{{ sujet.titre }}</h2>
+      <p class="mt-1 text-sm text-gris">
+        {% blocktranslate with annee=sujet.session.annee %}Session {{ annee }}{% endblocktranslate %}
+        · {% if sujet.nb_specialites > 1 %}{% blocktranslate with n=sujet.nb_specialites %}Matière commune à {{ n }} spécialités{% endblocktranslate %}{% else %}{{ sujet.get_type_epreuve_display }}{% endif %}
+      </p>
+      <a href="{% url 'sujets:detail' sujet.pk %}" class="bouton-contour mt-3">{% translate "Voir le sujet" %}</a>
+    </li>
+  {% empty %}
+    <li class="carte text-gris">{% translate "Aucun sujet ne correspond à ces critères." %}</li>
+  {% endfor %}
+</ul>
+
+{% if page.has_other_pages %}
+  <nav class="mt-6 flex items-center justify-between text-sm" aria-label="{% translate 'Pages' %}">
+    {% if page.has_previous %}
+      <a href="{% querystring page=page.previous_page_number %}" hx-get="{% querystring page=page.previous_page_number %}" hx-target="#resultats" hx-push-url="true" class="bouton-contour">{% translate "Précédent" %}</a>
+    {% else %}<span></span>{% endif %}
+    <span class="text-gris">{% blocktranslate with n=page.number total=page.paginator.num_pages %}Page {{ n }} sur {{ total }}{% endblocktranslate %}</span>
+    {% if page.has_next %}
+      <a href="{% querystring page=page.next_page_number %}" hx-get="{% querystring page=page.next_page_number %}" hx-target="#resultats" hx-push-url="true" class="bouton-contour">{% translate "Suivant" %}</a>
+    {% else %}<span></span>{% endif %}
+  </nav>
+{% endif %}

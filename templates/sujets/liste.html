@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titre %}{% translate "Sujets" %} {{ examen.code }} — BTS-HND Prep{% endblock %}
+
+{% block contenu %}
+<div class="mx-auto max-w-3xl px-4 py-6">
+  <div class="flex items-center justify-between gap-4">
+    <h1 class="text-2xl font-bold">{% translate "Sujets" %}</h1>
+    {# Changer d'examen recharge la page : spécialités, matières et années en dépendent. #}
+    <nav class="flex rounded-lg border border-gris/50 text-sm font-semibold" aria-label="{% translate 'Examen' %}">
+      {% for autre in examens %}
+        <a href="{% url 'sujets:liste' %}?examen={{ autre.code }}" class="px-3 py-1.5 {% if autre == examen %}bg-vert text-white{% endif %} {% if forloop.first %}rounded-l-lg{% else %}rounded-r-lg{% endif %}" {% if autre == examen %}aria-current="page"{% endif %}>{{ autre.code }}</a>
+      {% endfor %}
+    </nav>
+  </div>
+
+  {% if not examen %}
+    <p class="mt-4 text-gris">{% translate "Aucun sujet n'est encore disponible." %}</p>
+  {% else %}
+    {# Sans JavaScript : formulaire GET classique. Avec HTMX : seuls les résultats sont rechargés. #}
+    <form action="{% url 'sujets:liste' %}" method="get" class="mt-4 space-y-4"
+          hx-get="{% url 'sujets:liste' %}" hx-target="#resultats" hx-push-url="true"
+          hx-trigger="change, submit, keyup changed delay:400ms from:#q">
+      <input type="hidden" name="examen" value="{{ examen.code }}">
+      <label class="block text-sm font-medium">{% translate "Spécialité" %}
+        <select name="specialite" class="champ mt-1">
+          <option value="">{% translate "Toutes les spécialités" %}</option>
+          {% for option in specialites %}
+            <option value="{{ option.code }}" {% if option == specialite %}selected{% endif %}>{{ option.nom }}</option>
+          {% endfor %}
+        </select>
+      </label>
+
+      <label class="block text-sm font-medium" for="q">{% translate "Rechercher un sujet" %}</label>
+      <input id="q" name="q" type="search" value="{{ filtres.q }}" class="champ -mt-3"
+             placeholder="{% translate 'Matière, mot-clé…' %}" autocomplete="off">
+
+      <fieldset class="-mx-4 overflow-x-auto px-4">
+        <legend class="sr-only">{% translate "Année" %}</legend>
+        <div class="flex gap-2 whitespace-nowrap">
+          <label class="cursor-pointer rounded-full border border-gris/50 px-4 py-1.5 text-sm font-medium has-checked:border-vert has-checked:bg-vert has-checked:text-white">
+            <input type="radio" name="annee" value="" class="sr-only" {% if not filtres.annee %}checked{% endif %}>{% translate "Toutes" %}
+          </label>
+          {% for annee in annees %}
+            <label class="cursor-pointer rounded-full border border-gris/50 px-4 py-1.5 text-sm font-medium has-checked:border-vert has-checked:bg-vert has-checked:text-white">
+              <input type="radio" name="annee" value="{{ annee }}" class="sr-only" {% if filtres.annee == annee|stringformat:"d" %}checked{% endif %}>{{ annee }}
+            </label>
+          {% endfor %}
+        </div>
+      </fieldset>
+
+      <div class="grid gap-3 sm:grid-cols-2">
+        <label class="text-sm font-medium">{% translate "Matière" %}
+          <select name="matiere" class="champ mt-1">
+            <option value="">{% translate "Toutes les matières" %}</option>
+            {% for matiere in matieres %}
+              <option value="{{ matiere.pk }}" {% if filtres.matiere == matiere.pk|stringformat:"d" %}selected{% endif %}>{{ matiere.nom }}</option>
+            {% endfor %}
+          </select>
+        </label>
+        <label class="text-sm font-medium">{% translate "Type d'épreuve" %}
+          <select name="type" class="champ mt-1">
+            <option value="">{% translate "Tous les types" %}</option>
+            {% for valeur, libelle in types %}
+              <option value="{{ valeur }}" {% if filtres.type == valeur %}selected{% endif %}>{{ libelle }}</option>
+            {% endfor %}
+          </select>
+        </label>
+      </div>
+
+      <noscript><button class="bouton-plein">{% translate "Filtrer" %}</button></noscript>
+    </form>
+
+    <div id="resultats" class="mt-6" aria-live="polite">
+      {% include "sujets/_resultats.html" %}
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

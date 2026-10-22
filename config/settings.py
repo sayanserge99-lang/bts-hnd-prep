@@ -51,6 +51,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "config.context_processors.fonctionnalites",
             ],
         },
     },
@@ -89,14 +90,20 @@ LANGUAGE_CODE = "fr"
 LANGUAGES = [("fr", _("Français")), ("en", _("English"))]
 LOCALE_PATHS = [BASE_DIR / "locale"]
 MODELTRANSLATION_DEFAULT_LANGUAGE = "fr"
+# Une spécialité HND peut n'avoir qu'un nom anglais (et inversement) : on affiche l'autre langue.
+MODELTRANSLATION_FALLBACK_LANGUAGES = {"default": ("fr", "en")}
 TIME_ZONE = "Africa/Douala"
 USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
+STATICFILES_DIRS = [BASE_DIR / "static"]
+# Les PDF ne sont jamais servis directement depuis MEDIA_ROOT : ils passent par une vue
+# qui vérifie la publication (sinon un sujet non publié serait lisible par son URL).
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
+SUJETS_PAR_PAGE = 20
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 

@@ -1,0 +1,48 @@
+/* Source Tailwind : compilée dans static/css/app.css par le service « tailwind » du compose.yaml. */
+@import "tailwindcss" source(none);
+@source "../../templates";
+
+/* Couleurs des maquettes. Polices du système : aucune police à télécharger (CDC 4, < 300 Ko). */
+@theme {
+  --color-vert: #0f6b4f;
+  --color-vert-fonce: #0b5540;
+  --color-vert-clair: #e3f1ea;
+  --color-creme: #f7f8f3;
+  --color-encre: #14201c;
+  --color-gris: #5b6660;
+  --color-bordure: #d9ddd6;
+  --color-ambre: #7a5a00;
+  --color-ambre-clair: #fdf0c8;
+  --color-bleu: #2856a8;
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+@utility bouton {
+  @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-semibold transition-colors;
+}
+
+@utility bouton-plein {
+  @apply bouton bg-vert text-white hover:bg-vert-fonce;
+}
+
+@utility bouton-contour {
+  @apply bouton border border-gris/50 bg-white text-encre hover:border-encre;
+}
+
+@utility carte {
+  @apply rounded-2xl border border-bordure bg-white p-5;
+}
+
+@utility badge-bientot {
+  @apply inline-block rounded bg-bordure/60 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-gris;
+}
+
+@utility champ {
+  @apply w-full rounded-lg border border-gris/50 bg-white px-3 py-2 text-base text-encre;
+}
+
+@layer base {
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-vert;
+  }
+}

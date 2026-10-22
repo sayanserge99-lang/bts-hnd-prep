@@ -27,3 +27,6 @@
 - Recherche plein texte : champ `recherche` + index GIN, config `fr_unaccent`, commande `reindexer_recherche`, 10 tests.
   Bogue trouvé par le test de classement : `SearchRank("recherche")` recalculait le vecteur et perdait les poids → `F("recherche")`.
   SQLite retiré (PostgreSQL uniquement), port 5432 ouvert dans compose.yaml. 25/25 tests verts.
+- Pages publiques V1 (accueil, catalogue, fiche, PDF, pages légales vides), commande `donnees_demo`, 15 tests.
+  Corrigé avant test : le choix d'examen en HTMX aurait remplacé toute la page par le fragment → liens BTS/HND.
+  Tailwind --watch inopérant sur un dossier Windows monté → recompilation en boucle toutes les 2 s. 40/40 tests verts.

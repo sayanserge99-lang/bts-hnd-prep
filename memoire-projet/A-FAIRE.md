@@ -20,7 +20,14 @@
 - [x] Docker de développement : `Dockerfile` (Python 3.13), `compose.yaml` (web, PostgreSQL 17, Redis 7).
 - [ ] Celery, django-storages, Docker de production (Gunicorn, Nginx).
 - [ ] Créer un superutilisateur : `docker compose exec web python manage.py createsuperuser` (à faire par Serge Alain).
-- [ ] Tailwind + HTMX + Alpine, templates de base, sélecteur de langue.
+- [x] Tailwind + HTMX, gabarit de base, sélecteur de langue, accueil, catalogue, fiche sujet, pages légales vides.
+- [ ] Comptes (inscription e-mail, connexion, profil, consentement non précoché, favoris) ; boutons absents du bandeau d'ici là.
+- [ ] Traductions EN : `makemessages -l en` puis `compilemessages` (gettext installé dans l'image).
+- [ ] Rédiger les pages légales (mentions, confidentialité, CGV) et le formulaire de demande de retrait.
+- [ ] Décider le quota de téléchargement des visiteurs (CDC 7 : « limité ») ; aujourd'hui tout est ouvert.
+- [ ] Accueil : apparier spécialités BTS ↔ HND comme sur la maquette (aucun lien en base aujourd'hui).
+- [ ] Production : servir les PDF via Nginx (X-Accel-Redirect) après le contrôle de la vue `sujets:pdf`.
+- [ ] Alpine.js : pas encore nécessaire (ajouter quand il le sera : minuteur d'examen blanc, menus).
 - [ ] Permissions modérateur limitées à ses matières (AffectationModerateur) dans l'admin.
 - [ ] Corrige : décider si on ajoute `verifie_par` (FK utilisateur) pour tracer la vérification.
 - [ ] Forum (V3) : pas encore modélisé.

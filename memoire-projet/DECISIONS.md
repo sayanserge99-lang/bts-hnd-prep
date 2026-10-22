@@ -38,3 +38,7 @@
   plein texte (index GIN, unaccent) en dépend. Conforme au CDC (« PostgreSQL comme base unique »).
 - **Recherche** : titre et nom de matière pèsent plus (poids A) que le texte extrait (poids C) ;
   chaque mot vaut comme début de mot ; accents ignorés en français ; tous les mots sont exigés.
+- **PDF des sujets** : jamais servis par MEDIA_URL ; uniquement par la vue `sujets:pdf`, qui exige le statut publié
+  (sinon un sujet non publié serait lisible en devinant son adresse). Testé.
+- **Interface** : Tailwind v4 en exécutable autonome (pas de Node), polices du système, HTMX servi localement ;
+  les pages marchent aussi sans JavaScript (formulaire GET classique).

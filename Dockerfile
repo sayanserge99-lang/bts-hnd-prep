@@ -6,6 +6,18 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PIP_NO_CACHE_DIR=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1
 
+# gettext : compilation des traductions FR/EN (compilemessages).
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends gettext \
+    && rm -rf /var/lib/apt/lists/*
+
+# Tailwind CSS en exécutable autonome : pas besoin de Node.js (CDC 5).
+ARG TAILWIND_VERSION=v4.1.11
+ARG TARGETARCH
+RUN case "$TARGETARCH" in arm64) arch=arm64 ;; *) arch=x64 ;; esac \
+    && python -c "import urllib.request; urllib.request.urlretrieve('https://github.com/tailwindlabs/tailwindcss/releases/download/${TAILWIND_VERSION}/tailwindcss-linux-${arch}', '/usr/local/bin/tailwindcss')" \
+    && chmod +x /usr/local/bin/tailwindcss
+
 WORKDIR /app
 
 COPY requirements.txt .
