@@ -42,3 +42,6 @@
   sécurité, SMTP, ADMINS. Essayée en local : PDF publié OK, brouillon 404 par vue, /media/ et /fichiers-proteges/,
   en-tête forgé sans effet ; check --deploy propre (ajouté à la CI). Sauvegarde testée : 66 sujets restaurés,
   66 PDF dans l'archive. Vérification faussée une fois par la ligne d'import du shell Django → refaite. 73/73 verts.
+- Inventaire des espaces : public, étudiant, administration (modérateur + admin) ; un 4e (IPES, V3) sans rôle au CDC.
+- Modérateurs limités à leurs matières + accès admin automatique selon le groupe. 8 tests ; contre-épreuve :
+  restriction désactivée → 6 échecs. 81/81 verts.

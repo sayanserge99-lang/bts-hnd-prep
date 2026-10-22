@@ -1,5 +1,5 @@
 from django.apps import AppConfig
-from django.db.models.signals import post_migrate
+from django.db.models.signals import m2m_changed, post_migrate
 
 
 class AccountsConfig(AppConfig):
@@ -8,6 +8,10 @@ class AccountsConfig(AppConfig):
     verbose_name = "Comptes"
 
     def ready(self):
-        from .signals import synchroniser_administrateur
+        from .models import Utilisateur
+        from .signals import ouvrir_l_administration, synchroniser_administrateur
 
         post_migrate.connect(synchroniser_administrateur, dispatch_uid="accounts.synchroniser_administrateur")
+        m2m_changed.connect(
+            ouvrir_l_administration, sender=Utilisateur.groups.through, dispatch_uid="accounts.ouvrir_l_administration"
+        )

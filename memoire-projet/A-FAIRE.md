@@ -38,7 +38,8 @@
 - [ ] Décider le quota de téléchargement des visiteurs (CDC 7 : « limité ») ; aujourd'hui tout est ouvert.
 - [ ] Accueil : apparier spécialités BTS ↔ HND comme sur la maquette (aucun lien en base aujourd'hui).
 - [ ] Alpine.js : pas encore nécessaire (ajouter quand il le sera : minuteur d'examen blanc, menus).
-- [ ] Permissions modérateur limitées à ses matières (AffectationModerateur) dans l'admin.
+- [x] Modérateurs limités à leurs matières (liste, fiches, actions, listes de choix), accès admin automatique.
+- [ ] V3 : rôle « Établissement » pour le tableau de bord IPES (CDC 10.6), absent des 3 rôles du CDC section 7.
 - [ ] Corrige : décider si on ajoute `verifie_par` (FK utilisateur) pour tracer la vérification.
 - [ ] Forum (V3) : pas encore modélisé.
 

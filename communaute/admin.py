@@ -2,23 +2,30 @@ from django.contrib import admin, messages
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import ngettext
 
+from accounts.moderation import LimiteAuxMatieresDuModerateur
+
 from .models import Contribution, DemandeRetrait, Signalement
+
+# Un signalement ou une demande de retrait vise un sujet ou un corrigé.
+CIBLES = ("sujet__matiere", "corrige__sujet__matiere")
 
 
 @admin.register(Contribution)
-class ContributionAdmin(admin.ModelAdmin):
+class ContributionAdmin(LimiteAuxMatieresDuModerateur, admin.ModelAdmin):
     list_display = ("matiere", "annee", "utilisateur", "statut", "cree_le")
     list_filter = ("statut",)
 
 
 @admin.register(Signalement)
-class SignalementAdmin(admin.ModelAdmin):
+class SignalementAdmin(LimiteAuxMatieresDuModerateur, admin.ModelAdmin):
+    chemins_matiere = CIBLES
     list_display = ("__str__", "utilisateur", "statut", "cree_le")
     list_filter = ("statut",)
 
 
 @admin.register(DemandeRetrait)
-class DemandeRetraitAdmin(admin.ModelAdmin):
+class DemandeRetraitAdmin(LimiteAuxMatieresDuModerateur, admin.ModelAdmin):
+    chemins_matiere = CIBLES
     list_display = ("__str__", "demandeur_nom", "demandeur_email", "certifie_titulaire", "statut", "cree_le")
     list_filter = ("statut",)
     readonly_fields = ("traitee_le",)

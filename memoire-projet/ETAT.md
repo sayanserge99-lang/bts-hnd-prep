@@ -8,7 +8,9 @@ Phase 0 (cadrage). Le squelette Django **tourne** :
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **73 tests verts** (12 publication, 10 recherche, 16 pages, 16 comptes, 4 langues, 12 retrait, 3 groupes).
+- `pytest` : **81 tests verts** (12 publication, 10 recherche, 16 pages, 16 comptes, 4 langues, 12 retrait, 8 modération, 3 groupes).
+- **Modérateurs limités à leurs matières** dans l'admin (`accounts/moderation.py`, 8 pages) ; matières attribuées
+  depuis la fiche de l'utilisateur ; entrer dans le groupe Modérateur/Administrateur ouvre l'accès à /admin/.
 - **Production prête** (`compose.prod.yaml`, `deploy/`) : Gunicorn + Nginx, PDF via X-Accel-Redirect, IP via X-Real-IP,
   SMTP, `check --deploy` propre (et dans la CI), sauvegarde quotidienne testée (restauration OK).
   Essayée en local sur le port 8080 avec un `.env.production` de test (non versionné). Pas encore sur un vrai serveur.

@@ -6,8 +6,16 @@ from .forms import UtilisateurChangeForm, UtilisateurCreationForm
 from .models import AffectationModerateur, Consentement, ProfilEtude, Utilisateur
 
 
+class AffectationModerateurInline(admin.TabularInline):
+    model = AffectationModerateur
+    fk_name = "moderateur"
+    extra = 1
+    verbose_name_plural = _("Matières modérées (rôle Modérateur)")
+
+
 @admin.register(Utilisateur)
 class UtilisateurAdmin(UserAdmin):
+    inlines = [AffectationModerateurInline]
     form = UtilisateurChangeForm
     add_form = UtilisateurCreationForm
     ordering = ("email",)

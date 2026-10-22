@@ -4,6 +4,8 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import ngettext
 
+from accounts.moderation import LimiteAuxMatieresDuModerateur
+
 from .models import Corrige, Favori, Sujet
 
 
@@ -23,7 +25,7 @@ class SujetAdminForm(forms.ModelForm):
 
 
 @admin.register(Sujet)
-class SujetAdmin(admin.ModelAdmin):
+class SujetAdmin(LimiteAuxMatieresDuModerateur, admin.ModelAdmin):
     form = SujetAdminForm
     list_display = ("titre", "matiere", "session", "type_epreuve", "statut", "date_publication")
     list_filter = ("statut", "session__examen", "session__annee", "type_epreuve")
@@ -65,7 +67,8 @@ class SujetAdmin(admin.ModelAdmin):
 
 
 @admin.register(Corrige)
-class CorrigeAdmin(admin.ModelAdmin):
+class CorrigeAdmin(LimiteAuxMatieresDuModerateur, admin.ModelAdmin):
+    chemins_matiere = ("sujet__matiere",)
     list_display = ("sujet", "statut", "publication", "auteur", "titulaire_droits")
     list_filter = ("statut", "publication")
 

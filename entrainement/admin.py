@@ -1,5 +1,7 @@
 from django.contrib import admin
 
+from accounts.moderation import LimiteAuxMatieresDuModerateur
+
 from .models import Choix, ExamenBlanc, Question, Quiz, Tentative
 
 
@@ -9,20 +11,22 @@ class ChoixInline(admin.TabularInline):
 
 
 @admin.register(Question)
-class QuestionAdmin(admin.ModelAdmin):
+class QuestionAdmin(LimiteAuxMatieresDuModerateur, admin.ModelAdmin):
+    chemins_matiere = ("chapitre__matiere",)
     list_display = ("__str__", "chapitre", "type", "difficulte", "langue")
     list_filter = ("type", "difficulte", "langue", "chapitre__matiere")
     inlines = [ChoixInline]
 
 
 @admin.register(Quiz)
-class QuizAdmin(admin.ModelAdmin):
+class QuizAdmin(LimiteAuxMatieresDuModerateur, admin.ModelAdmin):
     list_display = ("titre", "mode", "matiere", "chapitre", "nb_questions")
     filter_horizontal = ("questions",)
 
 
 @admin.register(ExamenBlanc)
-class ExamenBlancAdmin(admin.ModelAdmin):
+class ExamenBlancAdmin(LimiteAuxMatieresDuModerateur, admin.ModelAdmin):
+    chemins_matiere = ("sujet__matiere",)
     list_display = ("titre", "sujet", "duree")
     filter_horizontal = ("questions",)
 
