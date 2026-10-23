@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-23 11:49+0100\n"
+"POT-Creation-Date: 2026-10-23 12:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -992,7 +992,7 @@ msgstr "attempt"
 msgid "Identifiants des choix cochés, ou texte de la réponse courte."
 msgstr "IDs of the ticked choices, or the short answer text."
 
-#: entrainement/models.py:231 forum/models.py:52 forum/models.py:57
+#: entrainement/models.py:231 forum/models.py:53 forum/models.py:58
 msgid "réponse"
 msgstr "answer"
 
@@ -1085,8 +1085,8 @@ msgid "Votre question"
 msgstr "Your question"
 
 #: forum/forms.py:13
-msgid "Détails"
-msgstr "Details"
+msgid "Détails (facultatif)"
+msgstr "Details (optional)"
 
 #: forum/forms.py:15
 msgid ""
@@ -1109,31 +1109,31 @@ msgstr "Why are you reporting this message?"
 msgid "Facultatif : le sujet dont parle la question."
 msgstr "Optional: the paper the question is about."
 
-#: forum/models.py:30
+#: forum/models.py:31
 msgid "détails"
 msgstr "details"
 
-#: forum/models.py:33
+#: forum/models.py:34
 msgid "Choisie par l'auteur de la question : celle qui l'a aidé."
 msgstr "Chosen by the person who asked: the one that helped."
 
-#: forum/models.py:35 forum/models.py:53
+#: forum/models.py:36 forum/models.py:54
 msgid "masquée"
 msgstr "hidden"
 
-#: forum/models.py:42
+#: forum/models.py:43
 msgid "discussion"
 msgstr "discussion"
 
-#: forum/models.py:69
+#: forum/models.py:70
 msgid "traité"
 msgstr "handled"
 
-#: forum/models.py:73
+#: forum/models.py:74
 msgid "signalement du forum"
 msgstr "forum report"
 
-#: forum/models.py:74 templates/admin/statistiques.html:61
+#: forum/models.py:75 templates/admin/statistiques.html:61
 msgid "signalements du forum"
 msgstr "forum reports"
 

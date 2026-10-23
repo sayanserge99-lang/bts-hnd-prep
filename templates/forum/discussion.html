@@ -11,7 +11,7 @@
     <h1 class="text-xl font-bold">{{ discussion.titre }}</h1>
     <p class="text-sm text-gris">{{ discussion.auteur.first_name|default:_("Un étudiant") }} · {{ discussion.cree_le|date:"d/m/Y H:i" }}
       {% if discussion.sujet %} · <a href="{% url 'sujets:detail' discussion.sujet_id %}" class="text-vert underline">{{ discussion.sujet.titre }} {{ discussion.sujet.session.annee }}</a>{% endif %}</p>
-    <div class="corrige">{{ discussion.texte|message }}</div>
+    {% if discussion.texte %}<div class="corrige">{{ discussion.texte|message }}</div>{% endif %}
     {% include "forum/_signaler.html" with auteur=discussion.auteur type_cible="discussion" cible_pk=discussion.pk %}
   </article>
 

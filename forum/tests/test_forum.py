@@ -112,6 +112,15 @@ def test_seul_l_auteur_choisit_la_reponse_qui_l_a_aide(client, awa, ben, questio
     assert question.reponse_acceptee is None
 
 
+def test_une_question_courte_sans_details(client, awa, compta_generale):
+    client.force_login(awa)
+    page = client.get(reverse("forum:nouvelle", args=[compta_generale.pk])).content.decode()
+    assert "Détails (facultatif)" in page
+    client.post(reverse("forum:nouvelle", args=[compta_generale.pk]), {"titre": "Comment définit-on un algorithme ?", "texte": ""})
+    discussion = Discussion.objects.get()
+    assert client.get(reverse("forum:discussion", args=[discussion.pk])).status_code == 200
+
+
 def test_limite_quotidienne(client, settings, awa, compta_generale):
     settings.FORUM_MESSAGES_PAR_JOUR = 1
     client.force_login(awa)

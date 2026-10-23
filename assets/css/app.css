@@ -53,7 +53,8 @@
     @apply block text-sm font-medium;
   }
   .formulaire input:not([type="checkbox"]):not([type="hidden"]),
-  .formulaire select {
+  .formulaire select,
+  .formulaire textarea {
     @apply champ mt-1;
   }
   .formulaire input[type="checkbox"] {

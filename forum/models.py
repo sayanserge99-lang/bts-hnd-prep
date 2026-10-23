@@ -27,7 +27,8 @@ class Discussion(models.Model):
     )
     auteur = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="discussions")
     titre = models.CharField(_("question"), max_length=200)
-    texte = models.TextField(_("détails"), max_length=LONGUEUR_MAX)
+    # Facultatif : une question courte se suffit souvent à elle-même.
+    texte = models.TextField(_("détails"), max_length=LONGUEUR_MAX, blank=True)
     reponse_acceptee = models.ForeignKey(
         "Reponse", on_delete=models.SET_NULL, null=True, blank=True, related_name="+",
         help_text=_("Choisie par l'auteur de la question : celle qui l'a aidé."),

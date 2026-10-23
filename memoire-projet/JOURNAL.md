@@ -123,3 +123,6 @@
   → confirmation posée après. Calcul « lendemain de l'abonnement en cours » mis en commun. 12 tests ; 1 échec
   (bouton absent : has_change_permission n'est pas dans le contexte de la liste admin). Contre-épreuve : la base
   refuse aussi le second usage (OneToOne). 303/303 verts.
+- 23/10 : capture de Serge Alain (forum) : champ « Détails » invisible → le CSS des formulaires ne stylait pas les
+  textarea (tous les champs multilignes du site touchés : forum, contributions) ; « Détails » rendu facultatif.
+  Vérifié par capture (Chrome sans écran). 304/304 verts.

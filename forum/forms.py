@@ -10,7 +10,7 @@ class DiscussionForm(forms.ModelForm):
     class Meta:
         model = Discussion
         fields = ("titre", "texte")
-        labels = {"titre": _("Votre question"), "texte": _("Détails")}
+        labels = {"titre": _("Votre question"), "texte": _("Détails (facultatif)")}
         help_texts = {
             "titre": _("Une phrase : par exemple « Comment calculer l'annuité d'un amortissement dégressif ? »"),
             "texte": AIDE,
