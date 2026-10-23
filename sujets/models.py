@@ -4,7 +4,7 @@ from django.conf import settings
 from django.contrib.postgres.indexes import GinIndex
 from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector, SearchVectorField
 from django.core.exceptions import ValidationError
-from django.db import models, transaction
+from django.db import IntegrityError, models, transaction
 from django.db.models import F, Q, Value
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -279,6 +279,38 @@ class Corrige(models.Model):
     def save(self, *args, **kwargs):
         self.verifier_publication()
         super().save(*args, **kwargs)
+
+
+class ConsultationJour(models.Model):
+    """Compteur anonyme des consultations d'un sujet, par jour (statistiques du back-office, CDC 3.9).
+
+    Aucune donnée personnelle (CDC 10.2 : minimisation) : ni qui, ni d'où, seulement combien.
+    """
+
+    sujet = models.ForeignKey(Sujet, on_delete=models.CASCADE, related_name="consultations")
+    jour = models.DateField()
+    fiches = models.PositiveIntegerField(default=0)
+    pdf = models.PositiveIntegerField(_("PDF ouverts ou téléchargés"), default=0)
+
+    class Meta:
+        verbose_name = _("consultations du jour")
+        verbose_name_plural = _("consultations par jour")
+        constraints = [models.UniqueConstraint(fields=["sujet", "jour"], name="consultation_unique_par_jour")]
+
+    @classmethod
+    def compter(cls, sujet, champ, utilisateur):
+        # L'équipe consulte beaucoup en relisant : elle fausserait le classement.
+        if utilisateur.is_authenticated and utilisateur.is_staff:
+            return
+        jour = timezone.localdate()
+        if cls.objects.filter(sujet=sujet, jour=jour).update(**{champ: F(champ) + 1}):
+            return
+        try:
+            with transaction.atomic():
+                cls.objects.create(sujet=sujet, jour=jour, **{champ: 1})
+        except IntegrityError:
+            # Deux visiteurs au même instant : la ligne du jour vient d'être créée par l'autre.
+            cls.objects.filter(sujet=sujet, jour=jour).update(**{champ: F(champ) + 1})
 
 
 class Favori(models.Model):

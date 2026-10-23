@@ -1,10 +1,16 @@
 from django.contrib import admin
 from django.urls import include, path
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 
 from accounts.views import changer_langue
-from catalogue.views import accueil, hors_ligne, manifeste, options_specialites, service_worker
+from catalogue.views import accueil, hors_ligne, manifeste, options_specialites, service_worker, statistiques
 from communaute.views import demande_retrait
+
+
+admin.site.site_header = _("BTS-HND Prep — Administration")
+admin.site.site_title = _("BTS-HND Prep")
+admin.site.index_title = _("Tableau de bord")
 
 
 def page(nom):
@@ -32,6 +38,8 @@ urlpatterns = [
     ),
     path("contact/", page("contact"), name="contact"),
     path("langue/", changer_langue, name="set_language"),
+    # Avant admin.site.urls : sinon l'admin prendrait « statistiques » pour une application.
+    path("admin/statistiques/", admin.site.admin_view(statistiques), name="statistiques"),
     path("admin/", admin.site.urls),
 ]
 # Volontairement aucune route vers MEDIA_URL : les PDF passent par sujets:pdf.

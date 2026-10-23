@@ -1,0 +1,11 @@
+{% load i18n %}{# Tuile : valeur, libellé, évolution par rapport à la période précédente. Variables : indicateur, libelle. #}
+<div class="stats-tuile">
+  <div class="valeur">{{ indicateur.valeur }}</div>
+  <div class="libelle">{{ libelle }}</div>
+  {% if indicateur.evolution is not None %}
+    <div class="evolution">
+      {% if indicateur.evolution > 0 %}▲ +{{ indicateur.evolution }}{% elif indicateur.evolution < 0 %}▼ {{ indicateur.evolution }}{% else %}= {% endif %}
+      {% blocktranslate with n=indicateur.precedente %}(contre {{ n }}){% endblocktranslate %}
+    </div>
+  {% endif %}
+</div>

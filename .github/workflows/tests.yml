@@ -71,6 +71,8 @@ jobs:
       - name: Extraire les textes à traduire
         run: |
           python manage.py makemessages -l en --ignore=.venv --ignore=static --ignore=staticfiles --ignore=media --no-obsolete
+          # Un .po mal formé ne se compile pas (et l'anglais ne s'affiche plus) : on le refuse ici.
+          msgfmt --check-format -o /dev/null locale/en/LC_MESSAGES/django.po
 
       # -rs affiche les tests sautés : les tests d'OCR ne doivent pas l'être ici.
       - name: Lancer les tests

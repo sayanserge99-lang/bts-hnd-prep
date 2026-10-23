@@ -1,0 +1,81 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+  /* Couleurs de l'admin Django (claires et sombres) : le tableau de bord suit le thème choisi. */
+  .stats-tuiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); gap: 1rem; margin: 1rem 0 2rem; }
+  .stats-tuile { border: 1px solid var(--hairline-color); border-radius: 8px; padding: 1rem; background: var(--body-bg); }
+  .stats-tuile .valeur { font-size: 2rem; font-weight: 700; color: var(--body-fg); line-height: 1.1; }
+  .stats-tuile .libelle { color: var(--body-quiet-color); font-size: 0.85rem; }
+  .stats-tuile .evolution { color: var(--body-quiet-color); font-size: 0.8rem; margin-top: 0.25rem; }
+  .stats-tuile.a-traiter .valeur { color: var(--error-fg); }
+  .stats-barre { display: block; height: 8px; border-radius: 0 4px 4px 0; background: var(--secondary); min-width: 2px; }
+  .stats-table { width: 100%; }
+  .stats-table td.nombre, .stats-table th.nombre { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .stats-table td.barre { width: 35%; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+  <p>{% blocktranslate with n=periode date=debut|date:"j F Y" %}Sur les {{ n }} derniers jours (depuis le {{ date }}), comparé aux {{ n }} jours d'avant.{% endblocktranslate %}</p>
+
+  <h2>{% translate "Étudiants" %}</h2>
+  <div class="stats-tuiles">
+    <div class="stats-tuile"><div class="valeur">{{ inscrits }}</div><div class="libelle">{% translate "inscrits au total" %}</div>
+      <div class="evolution">{% for ligne in par_examen %}{{ ligne.examen__code }} : {{ ligne.n }}{% if not forloop.last %} · {% endif %}{% endfor %}</div></div>
+    {% include "admin/_tuile_statistique.html" with indicateur=nouveaux libelle=_("nouveaux inscrits") %}
+    <div class="stats-tuile"><div class="valeur">{{ actifs }}</div><div class="libelle">{% translate "étudiants actifs (quiz ou examen terminé)" %}</div></div>
+    {% include "admin/_tuile_statistique.html" with indicateur=quiz libelle=_("quiz terminés") %}
+    {% include "admin/_tuile_statistique.html" with indicateur=examens libelle=_("examens blancs terminés") %}
+  </div>
+
+  <h2>{% translate "À traiter" %}</h2>
+  <div class="stats-tuiles">
+    <a class="stats-tuile{% if a_traiter.retraits %} a-traiter{% endif %}" href="{% url 'admin:communaute_demanderetrait_changelist' %}?statut__exact=recue"><div class="valeur">{{ a_traiter.retraits }}</div><div class="libelle">{% translate "demandes de retrait reçues" %}</div></a>
+    <a class="stats-tuile{% if a_traiter.signalements %} a-traiter{% endif %}" href="{% url 'admin:communaute_signalement_changelist' %}?statut__exact=ouvert"><div class="valeur">{{ a_traiter.signalements }}</div><div class="libelle">{% translate "erreurs signalées à vérifier" %}</div></a>
+    <a class="stats-tuile{% if a_traiter.contributions %} a-traiter{% endif %}" href="{% url 'admin:communaute_contribution_changelist' %}?statut__exact=en_attente"><div class="valeur">{{ a_traiter.contributions }}</div><div class="libelle">{% translate "contributions en attente" %}</div></a>
+  </div>
+
+  <h2>{% translate "Contenu" %}</h2>
+  <div class="stats-tuiles">
+    <div class="stats-tuile"><div class="valeur">{{ contenu.sujets }}</div><div class="libelle">{% translate "sujets publiés" %}</div><div class="evolution">{% blocktranslate with n=contenu.brouillons %}{{ n }} en brouillon{% endblocktranslate %}</div></div>
+    <div class="stats-tuile"><div class="valeur">{{ contenu.corriges }}</div><div class="libelle">{% translate "corrigés visibles" %}</div></div>
+    <div class="stats-tuile"><div class="valeur">{{ contenu.questions }}</div><div class="libelle">{% translate "questions publiées" %}</div></div>
+  </div>
+
+  <h2>{% translate "Sujets les plus consultés" %}</h2>
+  {% if top %}
+    {# Un tableau : chiffres exacts lisibles ; la barre (une seule couleur) aide seulement à comparer. #}
+    <table class="stats-table">
+      <thead><tr><th>{% translate "Sujet" %}</th><th class="nombre">{% translate "Fiches" %}</th><th class="nombre">{% translate "PDF" %}</th><th class="nombre">{% translate "Total" %}</th><th aria-hidden="true"></th></tr></thead>
+      <tbody>
+        {% for ligne in top %}
+          <tr>
+            <td><a href="{% url 'admin:sujets_sujet_change' ligne.sujet.pk %}">{{ ligne.sujet }}</a></td>
+            <td class="nombre">{{ ligne.nb_fiches }}</td>
+            <td class="nombre">{{ ligne.nb_pdf }}</td>
+            <td class="nombre"><strong>{{ ligne.total }}</strong></td>
+            <td class="barre" aria-hidden="true"><span class="stats-barre" style="width: {{ ligne.part }}%" title="{{ ligne.total }}"></span></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>{% translate "Aucune consultation sur la période." %}</p>
+  {% endif %}
+
+  <h2>{% translate "Revenus et conversion" %}</h2>
+  {% if revenus %}
+    <div class="stats-tuiles">
+      <div class="stats-tuile"><div class="valeur">{{ revenus.montant }}</div><div class="libelle">{% translate "FCFA encaissés" %}</div></div>
+      <div class="stats-tuile"><div class="valeur">{{ revenus.abonnes }}</div><div class="libelle">{% translate "abonnés en cours" %}</div></div>
+      <div class="stats-tuile"><div class="valeur">{{ revenus.conversion }} %</div><div class="libelle">{% translate "taux de conversion (abonnés / inscrits)" %}</div></div>
+    </div>
+  {% else %}
+    <p>{% translate "Le paiement n'est pas encore ouvert (structure et NIU à renseigner) : pas de revenus à afficher." %}</p>
+  {% endif %}
+</div>
+{% endblock %}

@@ -19,7 +19,7 @@ from catalogue.models import Examen, Matiere, SpecialiteMatiere
 from communaute.models import Signalement
 from paiements.acces import lit_le_corrige_complet
 
-from .models import Corrige, Favori, Sujet
+from .models import ConsultationJour, Corrige, Favori, Sujet
 
 
 def examen_par_defaut(request):
@@ -114,6 +114,7 @@ def detail(request, pk):
         .select_related("specialite")
         .order_by("specialite__nom")
     )
+    ConsultationJour.compter(sujet, "fiches", request.user)
     est_favori = request.user.is_authenticated and sujet.favoris.filter(utilisateur=request.user).exists()
     corriges = sujet.corriges.visibles() if settings.FONCTIONNALITES["corriges"] else Corrige.objects.none()
     return render(
@@ -157,6 +158,7 @@ def envoyer_pdf(request, fichier, nom):
 
 def pdf(request, pk):
     sujet = get_object_or_404(Sujet.objects.publies().select_related("session"), pk=pk)
+    ConsultationJour.compter(sujet, "pdf", request.user)
     return envoyer_pdf(request, sujet.fichier, f"{slugify(sujet.titre)}-{sujet.session.annee}.pdf")
 
 

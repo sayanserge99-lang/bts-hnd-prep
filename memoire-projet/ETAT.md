@@ -8,7 +8,11 @@
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **189 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne).
+- `pytest` : **199 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne, 10 statistiques).
+- **Statistiques (V2, module 5b)** `/admin/statistiques/` (administrateurs seulement, lien dans l'en-tête de l'admin) :
+  inscrits, nouveaux, actifs, quiz et examens sur 30 j comparés aux 30 j d'avant, à traiter, contenu, sujets les plus
+  consultés (compteur anonyme `ConsultationJour`, équipe non comptée), revenus et conversion quand le paiement est ouvert.
+  Admin renommée « BTS-HND Prep — Administration ».
 - **Hors ligne (V2, module 5a)** : site installable (manifest, icônes `static/icons/`), service worker servi par Django
   (`/sw.js`, template `pwa/sw.js`), bouton « Garder hors ligne » sur la fiche (fiche + corrigé + PDF en cache),
   quiz téléchargeables (`/entrainement/hors-ligne/quiz/`) joués sans réseau, synchronisés et recorrigés par le
@@ -59,8 +63,8 @@
 ## Prochaine étape
 
 1. Essayer le hors ligne sur le Galaxy A15 (garder un sujet, `docker compose stop web`, rouvrir la fiche et /hors-ligne/).
-2. V2, module 5b : statistiques du back-office (inscrits, sujets les plus consultés, taux de conversion),
-   connexion Google (identifiants à créer par Serge Alain) ; spécialités V2 (CDC 3.10).
+2. V2, fin : connexion Google (identifiants OAuth à créer par Serge Alain dans la console Google) ;
+   spécialités V2 (CDC 3.10 : RH, logistique, réseaux, santé) = données à saisir, pas de code.
 3. Choix du VPS / hébergeur et du nom de domaine (Serge Alain), puis suivre `deploy/DEPLOIEMENT.md` (HTTPS non testé).
    Retours de Serge Alain sur les pages (pas encore reçus).
 3. Fin de la V1 : rédaction des pages légales (contenu de Serge Alain), collecte des vrais sujets puis import en lot
@@ -83,7 +87,7 @@
 - Rôles : migration `accounts/migrations/0002_groupes_roles.py` ; le groupe Administrateur est
   resynchronisé avec toutes les permissions après chaque `migrate` (`accounts/signals.py`).
 - Nouveau texte à l'écran : `docker compose exec web python manage.py makemessages -l en --ignore=.venv --ignore=static --no-obsolete`,
-  traduire dans le .po, puis `docker compose exec web python manage.py compilemessages --ignore=.venv` et `docker compose restart web`.
+  traduire dans le .po (retirer aussi les lignes « #| » des traductions devinées), puis `docker compose exec web python manage.py compilemessages --ignore=.venv` et `docker compose restart web`.
 - Production locale : `docker compose -f compose.prod.yaml --env-file .env.production up -d --build` → http://localhost:8080.
   Sous Git Bash, `export MSYS_NO_PATHCONV=1` avant `deploy/sauvegarde.sh` (sinon /app devient un chemin Windows).
   Le shell Django 5.2 affiche une ligne d'import : utiliser `shell --no-imports -c` pour lire une valeur.

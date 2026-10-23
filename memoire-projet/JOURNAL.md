@@ -82,3 +82,7 @@
   téléchargeables + synchronisation recorrigée, page /hors-ligne/. 12 tests ; JS vérifié (node --check) et lecteur
   de quiz joué dans jsdom : défaut trouvé (form.reponse indisponible) → querySelector. 189/189 verts.
   Essai sur le Galaxy impossible : téléphone déconnecté (adb no devices).
+- 23/10 : V2 module 5b, statistiques : ConsultationJour (anonyme), service statistiques.py, page admin, lien d'en-tête,
+  admin renommée. 10 tests ; 2 défauts trouvés par les tests (annotation nommée comme le champ ; clé « sujet »
+  écrasée par l'identifiant). Rendu vérifié par capture (Chrome sans écran dans Docker). .po cassé par des lignes
+  « #| msgid_plural » orphelines → nettoyées, et la CI vérifie désormais le .po avec msgfmt. 199/199 verts.

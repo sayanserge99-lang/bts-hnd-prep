@@ -1,0 +1,18 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+{# Copie du gabarit de Django 5.2, avec le lien vers les statistiques (CDC 3.9) pour les administrateurs. #}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+{% block branding %}
+<div id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Django administration') }}</a></div>
+{% if user.is_anonymous %}
+  {% include "admin/color_theme_toggle.html" %}
+{% endif %}
+{% endblock %}
+
+{% block nav-global %}
+  {% if est_administrateur %}
+    <a href="{% url 'statistiques' %}" style="color: var(--header-link-color); margin-left: 1.5rem; font-weight: 600;">📊 {% translate "Statistiques" %}</a>
+  {% endif %}
+{% endblock %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-22 16:26+0100\n"
+"POT-Creation-Date: 2026-10-23 07:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -245,6 +245,10 @@ msgstr "title"
 msgid "chapitre"
 msgstr "chapter"
 
+#: catalogue/views.py:65 templates/admin/base_site.html:16
+msgid "Statistiques"
+msgstr "Statistics"
+
 #: communaute/admin.py:34
 msgid "Accepter : supprimer le document"
 msgstr "Accept: delete the document"
@@ -371,6 +375,18 @@ msgstr "Your takedown request has been received"
 #: config/settings.py:185
 msgid "English"
 msgstr "English"
+
+#: config/urls.py:11
+msgid "BTS-HND Prep — Administration"
+msgstr "BTS-HND Prep — Administration"
+
+#: config/urls.py:12
+msgid "BTS-HND Prep"
+msgstr "BTS-HND Prep"
+
+#: config/urls.py:13
+msgid "Tableau de bord"
+msgstr "Dashboard"
 
 #: entrainement/admin.py:45
 msgid "Publier les questions sélectionnées"
@@ -1042,7 +1058,19 @@ msgstr "ownership"
 msgid "corrigé"
 msgstr "marking guide"
 
-#: sujets/models.py:290
+#: sujets/models.py:293
+msgid "PDF ouverts ou téléchargés"
+msgstr "PDFs opened or downloaded"
+
+#: sujets/models.py:296
+msgid "consultations du jour"
+msgstr "daily views"
+
+#: sujets/models.py:297
+msgid "consultations par jour"
+msgstr "views per day"
+
+#: sujets/models.py:322
 msgid "favori"
 msgstr "favourite"
 
@@ -1050,11 +1078,11 @@ msgstr "favourite"
 msgid "Une spécialité choisie n'est pas rattachée à la matière du sujet."
 msgstr "A chosen specialty is not linked to the paper's subject."
 
-#: sujets/views.py:179
+#: sujets/views.py:181
 msgid "Décrivez l'erreur en quelques mots (10 caractères au moins)."
 msgstr "Describe the mistake in a few words (at least 10 characters)."
 
-#: sujets/views.py:183
+#: sujets/views.py:185
 msgid "Merci ! L'enseignant relira ce passage."
 msgstr "Thank you! The teacher will review this part."
 
@@ -1256,6 +1284,140 @@ msgstr "Delete permanently"
 msgid "Annuler"
 msgstr "Cancel"
 
+#: templates/admin/_tuile_statistique.html:8
+#, python-format
+msgid "(contre %(n)s)"
+msgstr "(vs %(n)s)"
+
+#: templates/admin/base_site.html:5
+msgid "Django site admin"
+msgstr "Django site admin"
+
+#: templates/admin/base_site.html:8
+msgid "Django administration"
+msgstr "Django administration"
+
+#: templates/admin/statistiques.html:23
+#, python-format
+msgid ""
+"Sur les %(n)s derniers jours (depuis le %(date)s), comparé aux %(n)s jours "
+"d'avant."
+msgstr ""
+"Over the last %(n)s days (since %(date)s), compared with the %(n)s days "
+"before."
+
+#: templates/admin/statistiques.html:25
+msgid "Étudiants"
+msgstr "Students"
+
+#: templates/admin/statistiques.html:27
+msgid "inscrits au total"
+msgstr "registered in total"
+
+#: templates/admin/statistiques.html:29
+msgid "nouveaux inscrits"
+msgstr "new registrations"
+
+#: templates/admin/statistiques.html:30
+msgid "étudiants actifs (quiz ou examen terminé)"
+msgstr "active students (quiz or exam finished)"
+
+#: templates/admin/statistiques.html:31
+msgid "quiz terminés"
+msgstr "quizzes finished"
+
+#: templates/admin/statistiques.html:32
+msgid "examens blancs terminés"
+msgstr "mock exams finished"
+
+#: templates/admin/statistiques.html:35
+msgid "À traiter"
+msgstr "To handle"
+
+#: templates/admin/statistiques.html:37
+msgid "demandes de retrait reçues"
+msgstr "takedown requests received"
+
+#: templates/admin/statistiques.html:38
+msgid "erreurs signalées à vérifier"
+msgstr "reported mistakes to check"
+
+#: templates/admin/statistiques.html:39
+msgid "contributions en attente"
+msgstr "contributions pending"
+
+#: templates/admin/statistiques.html:42
+#: templates/admin/sujets/sujet/importer.html:24
+msgid "Contenu"
+msgstr "Content"
+
+#: templates/admin/statistiques.html:44
+msgid "sujets publiés"
+msgstr "published papers"
+
+#: templates/admin/statistiques.html:44
+#, python-format
+msgid "%(n)s en brouillon"
+msgstr "%(n)s in draft"
+
+#: templates/admin/statistiques.html:45
+msgid "corrigés visibles"
+msgstr "visible marking guides"
+
+#: templates/admin/statistiques.html:46
+msgid "questions publiées"
+msgstr "published questions"
+
+#: templates/admin/statistiques.html:49
+msgid "Sujets les plus consultés"
+msgstr "Most viewed papers"
+
+#: templates/admin/statistiques.html:53
+#: templates/entrainement/examens/consignes.html:12
+#: templates/sujets/detail.html:15
+msgid "Sujet"
+msgstr "Paper"
+
+#: templates/admin/statistiques.html:53
+msgid "Fiches"
+msgstr "Pages"
+
+#: templates/admin/statistiques.html:53
+msgid "PDF"
+msgstr "PDF"
+
+#: templates/admin/statistiques.html:53
+msgid "Total"
+msgstr "Total"
+
+#: templates/admin/statistiques.html:67
+msgid "Aucune consultation sur la période."
+msgstr "No views over the period."
+
+#: templates/admin/statistiques.html:70
+msgid "Revenus et conversion"
+msgstr "Revenue and conversion"
+
+#: templates/admin/statistiques.html:73
+msgid "FCFA encaissés"
+msgstr "FCFA received"
+
+#: templates/admin/statistiques.html:74
+msgid "abonnés en cours"
+msgstr "current subscribers"
+
+#: templates/admin/statistiques.html:75
+msgid "taux de conversion (abonnés / inscrits)"
+msgstr "conversion rate (subscribers / registered)"
+
+#: templates/admin/statistiques.html:78
+msgid ""
+"Le paiement n'est pas encore ouvert (structure et NIU à renseigner) : pas de"
+" revenus à afficher."
+msgstr ""
+"Payment is not open yet (company and tax number to fill in): no revenue to "
+"show."
+
 #: templates/admin/sujets/sujet/importer.html:6 templates/base.html:96
 msgid "Accueil"
 msgstr "Home"
@@ -1304,10 +1466,6 @@ msgstr ""
 #: templates/admin/sujets/sujet/importer.html:24
 msgid "Colonne"
 msgstr "Column"
-
-#: templates/admin/sujets/sujet/importer.html:24
-msgid "Contenu"
-msgstr "Content"
 
 #: templates/admin/sujets/sujet/importer.html:26
 msgid "Nom du PDF, ou des photos séparées par | (page1.jpg|page2.jpg)"
@@ -1905,11 +2063,6 @@ msgstr "Duration"
 #, python-format
 msgid "%(h)s minutes"
 msgstr "%(h)s minutes"
-
-#: templates/entrainement/examens/consignes.html:12
-#: templates/sujets/detail.html:15
-msgid "Sujet"
-msgstr "Paper"
 
 #: templates/entrainement/examens/consignes.html:13
 #: templates/entrainement/examens/resultat.html:17

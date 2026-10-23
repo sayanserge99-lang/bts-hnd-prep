@@ -5,11 +5,16 @@ from django.db.models import Q
 from catalogue.models import Chapitre, Matiere
 
 
+def est_administrateur(utilisateur):
+    """Superutilisateur ou membre du groupe Administrateur (CDC 7)."""
+    if not utilisateur.is_authenticated:
+        return False
+    return utilisateur.is_superuser or utilisateur.groups.filter(name="Administrateur").exists()
+
+
 def est_limite_a_ses_matieres(utilisateur):
     """Vrai pour un modérateur ; faux pour un administrateur (groupe ou superutilisateur)."""
-    if utilisateur.is_superuser:
-        return False
-    return not utilisateur.groups.filter(name="Administrateur").exists()
+    return not est_administrateur(utilisateur)
 
 
 def matieres_de(utilisateur):

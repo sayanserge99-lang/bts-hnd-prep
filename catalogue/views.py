@@ -1,8 +1,15 @@
 import hashlib
 
+from django.contrib import admin
+from django.core.exceptions import PermissionDenied
 from django.db.models import Max, Min
 from django.shortcuts import render
 from django.templatetags.static import static
+from django.utils.translation import gettext as _
+
+from accounts.moderation import est_administrateur
+
+from .statistiques import tableau_de_bord
 
 from sujets.models import Sujet
 from sujets.views import examen_par_defaut
@@ -46,6 +53,17 @@ def manifeste(request):
 def hors_ligne(request):
     """Page gardée sur le téléphone : sujets et quiz téléchargés, consultables sans connexion."""
     return render(request, "pwa/hors_ligne.html")
+
+
+def statistiques(request):
+    """CDC 3.9 : statistiques du back-office, réservées aux administrateurs (pas aux modérateurs)."""
+    if not est_administrateur(request.user):
+        raise PermissionDenied
+    return render(
+        request,
+        "admin/statistiques.html",
+        {**admin.site.each_context(request), "title": _("Statistiques"), **tableau_de_bord()},
+    )
 
 
 def options_specialites(request):
