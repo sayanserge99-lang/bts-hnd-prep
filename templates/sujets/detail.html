@@ -39,6 +39,21 @@
     {% endif %}
   </div>
 
+  {% if nb_questions %}
+    {# Quiz sur cette épreuve : les questions tirées de ce sujet. #}
+    <div class="carte mt-6 flex flex-wrap items-center justify-between gap-3">
+      <p><span class="font-semibold">{% translate "Entraînez-vous sur cette épreuve" %}</span><br>
+        <span class="text-sm text-gris">{% blocktranslate count n=nb_questions %}{{ n }} question tirée de ce sujet, corrigée tout de suite.{% plural %}{{ n }} questions tirées de ce sujet, corrigées tout de suite.{% endblocktranslate %}</span></p>
+      {% if user.is_authenticated %}
+        <form method="post" action="{% url 'entrainement:lancer_sujet' sujet.pk %}">{% csrf_token %}
+          <button class="bouton-plein">{% translate "Quiz sur cette épreuve" %}</button>
+        </form>
+      {% else %}
+        <a href="{% url 'accounts:connexion' %}?next={{ request.path|urlencode }}" class="bouton-contour">{% translate "Se connecter pour faire le quiz" %}</a>
+      {% endif %}
+    </div>
+  {% endif %}
+
   {# Fiche sujet (CDC 3.2) #}
   <dl class="carte mt-6 grid grid-cols-[auto_1fr] gap-x-6 gap-y-3 text-sm">
     <dt class="text-gris">{% translate "Durée" %}</dt>

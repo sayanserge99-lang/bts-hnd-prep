@@ -1,0 +1,9 @@
+{% extends "admin/change_list.html" %}
+{% load i18n %}
+
+{% block object-tools-items %}
+  {% if has_add_permission %}
+    <li><a href="{% url 'admin:entrainement_question_importer' %}">{% translate "Importer des questions" %}</a></li>
+  {% endif %}
+  {{ block.super }}
+{% endblock %}

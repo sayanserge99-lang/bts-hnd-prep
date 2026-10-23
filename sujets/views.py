@@ -134,6 +134,7 @@ def detail(request, pk):
             "corriges": corriges,
             "en_preparation": sujet.corriges.filter(statut=Corrige.Statut.EN_PREPARATION).exists(),
             "complet": lit_le_corrige_complet(request.user),
+            "nb_questions": sujet.questions.visibles().count() if settings.FONCTIONNALITES["entrainement"] else 0,
         },
     )
 

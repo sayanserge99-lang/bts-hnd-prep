@@ -8,7 +8,7 @@
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **238 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
+- `pytest` : **251 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
   10 statistiques, 16 Google).
 - **Connexion Google (V2)** `accounts/google.py` : OpenID Connect sans dépendance (state, PKCE, nonce ; vérifie iss,
   aud, exp, email_verified). Compte existant → connecté ; sinon page « Dernière étape » (spécialité + consentement
@@ -20,9 +20,12 @@
   convention de partenariat active ; voit les résultats des étudiants confirmés qui ont activé « Partager mes
   résultats » (consentement révocable, tracé). Étudiant confirmé : page « Épreuves de mon établissement »,
   PDF servi après contrôle (404 sinon). Lien « Mon établissement » dans l'en-tête des responsables.
-- **Question en attente (23/10)** : quiz liés à une épreuve — 3 options proposées (questions rattachées à un sujet
-  + bouton « Quiz sur cette épreuve », import CSV de questions, brouillons générés par IA validés par un enseignant).
-  J'ai conseillé 1 + 2 d'abord ; **réponse de Serge Alain attendue**.
+- **Quiz sur une épreuve (23/10, options 1 + 2 choisies par Serge Alain)** : `Question.sujet` (facultatif) ;
+  bouton « Quiz sur cette épreuve » sur la fiche du sujet (toutes ses questions, max 40, mode `sujet` du Quiz).
+  Filtre unique `filtre_questions_visibles` / `Question.objects.visibles()` : une question liée à un sujet non
+  publié (ou masqué) n'entre dans **aucun** quiz (contre-épreuve faite). Import CSV des questions dans l'admin
+  (Questions → Importer des questions) : `entrainement/importation.py`, simulation, doublons, cohérence vérifiée,
+  toujours en brouillon, modérateur limité. Option 3 (IA) reportée. Démo : questions d'algorithmique liées au sujet 2025.
 - **Demandes de Serge Alain (23/10)** : informatique en premier (`Specialite.ordre`, IG et SWE = 1, contenu de démo
   complet : 3 matières BTS + Database Systems HND, questions, 2 corrigés, examen blanc) ; Entraînement montre toutes
   les matières (« bientôt » si pas de questions) ; établissement facultatif dans le profil (IAI-Cameroun, HINTEL

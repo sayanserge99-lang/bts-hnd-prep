@@ -59,12 +59,12 @@ class Ligne:
     sujet_id: int | None = None
 
 
-def modele_csv():
-    """Tableau vide avec une ligne d'exemple, à ouvrir dans Excel."""
+def modele_csv(colonnes=COLONNES, exemples=(EXEMPLE,)):
+    """Tableau vide avec des lignes d'exemple, à ouvrir dans Excel."""
     sortie = io.StringIO()
-    ecrivain = csv.DictWriter(sortie, fieldnames=COLONNES, delimiter=";")
+    ecrivain = csv.DictWriter(sortie, fieldnames=colonnes, delimiter=";")
     ecrivain.writeheader()
-    ecrivain.writerow(EXEMPLE)
+    ecrivain.writerows(exemples)
     # BOM : Excel reconnaît alors l'UTF-8 et affiche correctement les accents.
     return "﻿" + sortie.getvalue()
 
@@ -84,7 +84,7 @@ def _decoder(contenu):
     raise ImportImpossible(_("Le tableau n'est ni en UTF-8 ni en Windows-1252."))
 
 
-def lire_tableau(contenu):
+def lire_tableau(contenu, colonnes=COLONNES, obligatoires=COLONNES_OBLIGATOIRES):
     texte = _decoder(contenu)
     try:
         separateur = csv.Sniffer().sniff(texte.splitlines()[0], delimiters=";,\t").delimiter
@@ -92,11 +92,11 @@ def lire_tableau(contenu):
         separateur = ";"
     lecteur = csv.DictReader(io.StringIO(texte), delimiter=separateur)
     entetes = {_normaliser(nom): nom for nom in (lecteur.fieldnames or [])}
-    manquantes = COLONNES_OBLIGATOIRES - entetes.keys()
+    manquantes = obligatoires - entetes.keys()
     if manquantes:
         raise ImportImpossible(_("Colonnes manquantes dans le tableau : %(colonnes)s.") % {"colonnes": ", ".join(sorted(manquantes))})
     return [
-        {colonne: (rangee.get(entetes[colonne]) or "").strip() if colonne in entetes else "" for colonne in COLONNES}
+        {colonne: (rangee.get(entetes[colonne]) or "").strip() if colonne in entetes else "" for colonne in colonnes}
         for rangee in lecteur
     ]
 

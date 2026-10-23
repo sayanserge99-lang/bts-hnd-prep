@@ -18,6 +18,7 @@ urlpatterns = [
     path("hors-ligne/quiz/", views_hors_ligne.telecharger_quiz, name="quiz_hors_ligne"),
     path("hors-ligne/synchroniser/<int:pk>/", views_hors_ligne.synchroniser, name="synchroniser_hors_ligne"),
     path("lancer/", views.lancer, name="lancer"),
+    path("sujet/<int:pk>/quiz/", views.lancer_sujet, name="lancer_sujet"),
     path("tentative/<int:pk>/", views.tentative, name="tentative"),
     path("tentative/<int:pk>/repondre/", views.repondre, name="repondre"),
     path("tentative/<int:pk>/resultat/", views.resultat, name="resultat"),

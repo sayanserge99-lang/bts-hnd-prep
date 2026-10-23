@@ -99,3 +99,8 @@
   des étudiants, convention active pour publier). ResponsableEtablissement, EpreuveInterne, validation dans
   ProfilEtude, consentement de partage, 7 vues, 3 pages. 14 tests verts du premier coup, 54 textes traduits.
   238/238 verts. Question posée par Serge Alain : quiz à partir d'une épreuve → 3 options proposées, réponse attendue.
+- 23/10 : Serge Alain choisit les options 1 + 2 (quiz sur une épreuve, import CSV de questions). Question.sujet,
+  filtre de visibilité commun à tous les quiz, bouton sur la fiche, import CSV dans l'admin (lecture du tableau
+  partagée avec l'import de sujets). 13 tests ; 2 échecs au premier passage venaient des tests (la règle de
+  publication a bloqué ma publication forcée d'un sujet en cours — elle marche ; statut RETIRE inexistant → MASQUE).
+  Contre-épreuve : filtre affaibli → 2 échecs. 251/251 verts.

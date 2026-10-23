@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-23 09:00+0100\n"
+"POT-Creation-Date: 2026-10-23 09:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -441,18 +441,35 @@ msgstr "BTS-HND Prep"
 msgid "Tableau de bord"
 msgstr "Dashboard"
 
-#: entrainement/admin.py:45
+#: entrainement/admin.py:46
+msgid "Tableau CSV des questions"
+msgstr "CSV table of questions"
+
+#: entrainement/admin.py:48
+msgid "Simulation seulement (rien n'est enregistré)"
+msgstr "Dry run only (nothing is saved)"
+
+#: entrainement/admin.py:79
+msgid "Le tableau dépasse 5 Mo."
+msgstr "The table is larger than 5 MB."
+
+#: entrainement/admin.py:86
+#: templates/admin/entrainement/question/change_list.html:6
+msgid "Importer des questions"
+msgstr "Import questions"
+
+#: entrainement/admin.py:101
 msgid "Publier les questions sélectionnées"
 msgstr "Publish selected questions"
 
-#: entrainement/admin.py:50
+#: entrainement/admin.py:106
 #, python-format
 msgid "%d question publiée."
 msgid_plural "%d questions publiées."
 msgstr[0] "%d question published."
 msgstr[1] "%d questions published."
 
-#: entrainement/admin.py:57
+#: entrainement/admin.py:113
 #, python-format
 msgid ""
 "%d question refusée : ses choix ou sa réponse attendue sont incomplets."
@@ -464,50 +481,131 @@ msgstr[0] ""
 msgstr[1] ""
 "%d questions refused: their choices or expected answers are incomplete."
 
-#: entrainement/admin.py:65
+#: entrainement/admin.py:121
 msgid "Retirer des quiz les questions sélectionnées"
 msgstr "Remove selected questions from quizzes"
 
-#: entrainement/admin.py:68
+#: entrainement/admin.py:124
 #, python-format
 msgid "%d question retirée."
 msgid_plural "%d questions retirées."
 msgstr[0] "%d question removed."
 msgstr[1] "%d questions removed."
 
-#: entrainement/models.py:13
+#: entrainement/importation.py:84
+msgid "colonne bonnes : « vrai » ou « faux » pour une question vrai/faux"
+msgstr "column bonnes: “vrai” or “faux” for a true/false question"
+
+#: entrainement/importation.py:91
+#, python-format
+msgid "colonne bonnes : « %(lettres)s » ne correspond à aucun choix rempli"
+msgstr "column bonnes: “%(lettres)s” does not match any filled-in choice"
+
+#: entrainement/importation.py:98 sujets/importation.py:174
+#, python-format
+msgid "examen inconnu « %(examen)s » (BTS ou HND)"
+msgstr "unknown exam “%(examen)s” (BTS or HND)"
+
+#: entrainement/importation.py:101 sujets/importation.py:185
+#, python-format
+msgid "matière inconnue « %(matiere)s » pour le %(examen)s"
+msgstr "unknown subject “%(matiere)s” for the %(examen)s"
+
+#: entrainement/importation.py:103 sujets/importation.py:187
+msgid "cette matière ne vous est pas attribuée"
+msgstr "this subject is not assigned to you"
+
+#: entrainement/importation.py:106
+#, python-format
+msgid ""
+"chapitre inconnu « %(chapitre)s » : ajoutez-le d'abord à la matière dans "
+"l'admin"
+msgstr ""
+"unknown chapter “%(chapitre)s”: add it to the subject in the admin first"
+
+#: entrainement/importation.py:110
+#, python-format
+msgid ""
+"type invalide « %(type)s » (choix_unique, choix_multiple, vrai_faux ou "
+"reponse_courte)"
+msgstr ""
+"invalid type “%(type)s” (choix_unique, choix_multiple, vrai_faux or "
+"reponse_courte)"
+
+#: entrainement/importation.py:112
+msgid "énoncé vide"
+msgstr "empty question text"
+
+#: entrainement/importation.py:115
+#, python-format
+msgid "difficulté invalide « %(difficulte)s » (1, 2 ou 3)"
+msgstr "invalid difficulty “%(difficulte)s” (1, 2 or 3)"
+
+#: entrainement/importation.py:118
+#, python-format
+msgid "langue invalide « %(langue)s » (fr ou en)"
+msgstr "invalid language “%(langue)s” (fr or en)"
+
+#: entrainement/importation.py:123 sujets/importation.py:176
+#, python-format
+msgid "année invalide « %(annee)s »"
+msgstr "invalid year “%(annee)s”"
+
+#: entrainement/importation.py:131
+#, python-format
+msgid ""
+"aucun sujet %(examen)s %(annee)s de cette matière : importez d'abord le "
+"sujet"
+msgstr ""
+"no %(examen)s %(annee)s paper for this subject: import the paper first"
+
+#: entrainement/importation.py:146
+msgid "cette question existe déjà dans ce chapitre"
+msgstr "this question already exists in this chapter"
+
+#: entrainement/importation.py:153 sujets/importation.py:230
+msgid "Le tableau ne contient aucune ligne."
+msgstr "The spreadsheet has no rows."
+
+#: entrainement/models.py:29
 msgid "Choix unique"
 msgstr "Single choice"
 
-#: entrainement/models.py:14
+#: entrainement/models.py:30
 msgid "Choix multiple"
 msgstr "Multiple choice"
 
-#: entrainement/models.py:15
+#: entrainement/models.py:31
 msgid "Vrai / faux"
 msgstr "True / false"
 
-#: entrainement/models.py:16
+#: entrainement/models.py:32
 msgid "Réponse courte"
 msgstr "Short answer"
 
-#: entrainement/models.py:19
+#: entrainement/models.py:35
 msgid "Facile"
 msgstr "Easy"
 
-#: entrainement/models.py:20
+#: entrainement/models.py:36
 msgid "Moyenne"
 msgstr "Medium"
 
-#: entrainement/models.py:21
+#: entrainement/models.py:37
 msgid "Difficile"
 msgstr "Hard"
 
-#: entrainement/models.py:24
+#: entrainement/models.py:46
+msgid ""
+"Facultatif : le sujet dont la question est tirée (« Quiz sur cette épreuve "
+"»)."
+msgstr "Optional: the paper the question comes from (“Quiz on this paper”)."
+
+#: entrainement/models.py:48
 msgid "énoncé"
 msgstr "question text"
 
-#: entrainement/models.py:29
+#: entrainement/models.py:53
 msgid ""
 "Réponse courte uniquement. Plusieurs réponses acceptées : séparez-les par | "
 "(exemple : 40 %|40%|0,4)."
@@ -515,137 +613,145 @@ msgstr ""
 "Short answer only. Several accepted answers: separate them with | (example: "
 "40 %|40%|0.4)."
 
-#: entrainement/models.py:31
+#: entrainement/models.py:55
 msgid "Affichée après la réponse (CDC 3.4)."
 msgstr "Shown after the answer."
 
-#: entrainement/models.py:35 partenaires/models.py:110
+#: entrainement/models.py:59 partenaires/models.py:110
 msgid "publiée"
 msgstr "published"
 
-#: entrainement/models.py:38
+#: entrainement/models.py:64
 msgid "question"
 msgstr "question"
 
-#: entrainement/models.py:54
+#: entrainement/models.py:71
+msgid "Ce sujet n'est pas de la même matière que le chapitre."
+msgstr "This paper is not in the same subject as the chapter."
+
+#: entrainement/models.py:84
 msgid "Indiquez la réponse attendue."
 msgstr "Enter the expected answer."
 
-#: entrainement/models.py:56
+#: entrainement/models.py:86
 msgid "Une question vrai/faux a exactement deux choix (Vrai et Faux)."
 msgstr "A true/false question has exactly two choices (True and False)."
 
-#: entrainement/models.py:58
+#: entrainement/models.py:88
 msgid "Il faut au moins deux choix."
 msgstr "At least two choices are needed."
 
-#: entrainement/models.py:60
+#: entrainement/models.py:90
 msgid "Il faut exactement une bonne réponse."
 msgstr "Exactly one right answer is needed."
 
-#: entrainement/models.py:62
+#: entrainement/models.py:92
 msgid "Il faut au moins une bonne réponse."
 msgstr "At least one right answer is needed."
 
-#: entrainement/models.py:72 entrainement/models.py:73
+#: entrainement/models.py:102 entrainement/models.py:103
 msgid "choix"
 msgstr "choice"
 
-#: entrainement/models.py:83
+#: entrainement/models.py:113
 msgid "Quiz rapide"
 msgstr "Quick quiz"
 
-#: entrainement/models.py:84
+#: entrainement/models.py:114
 msgid "Révision des erreurs"
 msgstr "Review mistakes"
 
-#: entrainement/models.py:92
+#: entrainement/models.py:115
+msgid "Quiz sur une épreuve"
+msgstr "Quiz on a paper"
+
+#: entrainement/models.py:124
 msgid "nombre de questions"
 msgstr "number of questions"
 
-#: entrainement/models.py:96 entrainement/models.py:97
+#: entrainement/models.py:128 entrainement/models.py:129
 msgid "quiz"
 msgstr "quiz"
 
-#: entrainement/models.py:112 sujets/models.py:95
+#: entrainement/models.py:144 sujets/models.py:95
 msgid "durée (minutes)"
 msgstr "duration (minutes)"
 
-#: entrainement/models.py:112
+#: entrainement/models.py:144
 msgid "Durée réelle de l'épreuve (CDC 3.5)."
 msgstr "Real duration of the paper."
 
-#: entrainement/models.py:113
+#: entrainement/models.py:145
 msgid "consignes"
 msgstr "instructions"
 
-#: entrainement/models.py:113
+#: entrainement/models.py:145
 msgid "Affichées avant le départ du minuteur."
 msgstr "Shown before the timer starts."
 
-#: entrainement/models.py:116
+#: entrainement/models.py:148
 msgid "points de la partie QCM"
 msgstr "points for the MCQ part"
 
-#: entrainement/models.py:116
+#: entrainement/models.py:148
 msgid "La partie QCM est notée sur ces points ; 0 s'il n'y en a pas."
 msgstr "The MCQ part is marked out of these points; 0 if there is none."
 
-#: entrainement/models.py:118
+#: entrainement/models.py:150
 msgid "publié"
 msgstr "published"
 
-#: entrainement/models.py:123
+#: entrainement/models.py:155
 msgid "examen blanc"
 msgstr "mock exam"
 
-#: entrainement/models.py:124
+#: entrainement/models.py:156
 msgid "examens blancs"
 msgstr "mock exams"
 
-#: entrainement/models.py:135
+#: entrainement/models.py:167
 msgid ""
 "Publiez d'abord le sujet : un examen blanc ne peut pas le dévoiler avant."
 msgstr "Publish the paper first: a mock exam must not reveal it before then."
 
-#: entrainement/models.py:142
+#: entrainement/models.py:174
 msgid "critère"
 msgstr "criterion"
 
-#: entrainement/models.py:147
+#: entrainement/models.py:179
 msgid "critère du barème"
 msgstr "marking criterion"
 
-#: entrainement/models.py:148
+#: entrainement/models.py:180
 msgid "critères du barème"
 msgstr "marking criteria"
 
-#: entrainement/models.py:163
+#: entrainement/models.py:195
 msgid "heure de fin prévue"
 msgstr "scheduled end time"
 
-#: entrainement/models.py:163
+#: entrainement/models.py:195
 msgid "Fixée par le serveur : le chrono reprend après une coupure."
 msgstr "Set by the server: the timer resumes after a connection loss."
 
-#: entrainement/models.py:170
+#: entrainement/models.py:202
 msgid "tentative"
 msgstr "attempt"
 
-#: entrainement/models.py:194
+#: entrainement/models.py:226
 msgid "Identifiants des choix cochés, ou texte de la réponse courte."
 msgstr "IDs of the ticked choices, or the short answer text."
 
-#: entrainement/models.py:199
+#: entrainement/models.py:231
 msgid "réponse"
 msgstr "answer"
 
-#: entrainement/quiz.py:49
+#: entrainement/quiz.py:54
 #, python-format
 msgid "Révision : %(titre)s"
 msgstr "Review: %(titre)s"
 
-#: entrainement/views.py:64
+#: entrainement/views.py:67 entrainement/views.py:89
 msgid ""
 "Vous avez fait tous vos quiz gratuits du jour. Revenez demain ou passez au "
 "Pass session."
@@ -653,11 +759,12 @@ msgstr ""
 "You have used all your free quizzes for today. Come back tomorrow or get the"
 " Session pass."
 
-#: entrainement/views.py:75 entrainement/views_hors_ligne.py:65
+#: entrainement/views.py:78 entrainement/views.py:93
+#: entrainement/views_hors_ligne.py:65
 msgid "Aucune question disponible pour ce choix pour le moment."
 msgstr "No questions available for this choice yet."
 
-#: entrainement/views.py:129
+#: entrainement/views.py:147
 msgid "Choisissez une réponse avant de valider."
 msgstr "Choose an answer before submitting."
 
@@ -999,16 +1106,6 @@ msgstr "several files: JPG or PNG photos only"
 msgid "photo illisible : %(erreur)s"
 msgstr "unreadable photo: %(erreur)s"
 
-#: sujets/importation.py:174
-#, python-format
-msgid "examen inconnu « %(examen)s » (BTS ou HND)"
-msgstr "unknown exam “%(examen)s” (BTS or HND)"
-
-#: sujets/importation.py:176
-#, python-format
-msgid "année invalide « %(annee)s »"
-msgstr "invalid year “%(annee)s”"
-
 #: sujets/importation.py:180
 #, python-format
 msgid ""
@@ -1017,15 +1114,6 @@ msgid ""
 msgstr ""
 "%(examen)s %(annee)s session missing: create it first with its official end "
 "date"
-
-#: sujets/importation.py:185
-#, python-format
-msgid "matière inconnue « %(matiere)s » pour le %(examen)s"
-msgstr "unknown subject “%(matiere)s” for the %(examen)s"
-
-#: sujets/importation.py:187
-msgid "cette matière ne vous est pas attribuée"
-msgstr "this subject is not assigned to you"
 
 #: sujets/importation.py:193
 #, python-format
@@ -1055,10 +1143,6 @@ msgstr "unknown institution “%(nom)s”: add it in the admin first"
 msgid ""
 "un sujet existe déjà pour cette session, cette matière et ce type d'épreuve"
 msgstr "a paper already exists for this session, subject and paper type"
-
-#: sujets/importation.py:230
-msgid "Le tableau ne contient aucune ligne."
-msgstr "The spreadsheet has no rows."
 
 #: sujets/importation.py:238
 msgid "colonne « fichier » vide"
@@ -1222,15 +1306,17 @@ msgstr "favourite"
 msgid "Une spécialité choisie n'est pas rattachée à la matière du sujet."
 msgstr "A chosen specialty is not linked to the paper's subject."
 
-#: sujets/views.py:187
+#: sujets/views.py:188
 msgid "Décrivez l'erreur en quelques mots (10 caractères au moins)."
 msgstr "Describe the mistake in a few words (at least 10 characters)."
 
-#: sujets/views.py:191
+#: sujets/views.py:192
 msgid "Merci ! L'enseignant relira ce passage."
 msgstr "Thank you! The teacher will review this part."
 
 #: templates/accounts/_bouton_google.html:4
+#: templates/admin/entrainement/question/importer.html:26
+#: templates/admin/entrainement/question/importer.html:29
 #: templates/admin/sujets/sujet/importer.html:27
 msgid "ou"
 msgstr "or"
@@ -1499,6 +1585,196 @@ msgstr "Django site admin"
 msgid "Django administration"
 msgstr "Django administration"
 
+#: templates/admin/entrainement/question/importer.html:6
+#: templates/admin/sujets/sujet/importer.html:6 templates/base.html:97
+msgid "Accueil"
+msgstr "Home"
+
+#: templates/admin/entrainement/question/importer.html:9
+#: templates/admin/sujets/sujet/importer.html:9
+msgid "Importer"
+msgstr "Import"
+
+#: templates/admin/entrainement/question/importer.html:15
+msgid ""
+"Remplissez le tableau dans Excel (une question par ligne), enregistrez-le en"
+" CSV, puis lancez d'abord une simulation."
+msgstr ""
+"Fill in the table in Excel (one question per row), save it as CSV, then run "
+"a dry run first."
+
+#: templates/admin/entrainement/question/importer.html:16
+#: templates/admin/sujets/sujet/importer.html:16
+msgid "Télécharger le modèle de tableau"
+msgstr "Download the spreadsheet template"
+
+#: templates/admin/entrainement/question/importer.html:18
+msgid ""
+"Les questions importées sont en brouillon. Publiez-les ensuite avec l'action"
+" « Publier les questions sélectionnées »."
+msgstr ""
+"Imported questions are drafts. Then publish them with the “Publish selected "
+"questions” action."
+
+#: templates/admin/entrainement/question/importer.html:19
+msgid ""
+"Une question rattachée à un sujet reste invisible tant que ce sujet n'est "
+"pas publié : vous pouvez préparer les questions d'une session en cours."
+msgstr ""
+"A question linked to a paper stays hidden until that paper is published: you"
+" can prepare questions for an ongoing session."
+
+#: templates/admin/entrainement/question/importer.html:20
+msgid ""
+"La matière, le chapitre et le sujet doivent déjà exister. Une ligne "
+"incohérente (pas de bonne réponse, lettre inconnue…) est refusée."
+msgstr ""
+"The subject, chapter and paper must already exist. An inconsistent row (no "
+"correct answer, unknown letter…) is rejected."
+
+#: templates/admin/entrainement/question/importer.html:24
+#: templates/admin/sujets/sujet/importer.html:24
+msgid "Colonne"
+msgstr "Column"
+
+#: templates/admin/entrainement/question/importer.html:24
+#: templates/admin/statistiques.html:63
+#: templates/admin/sujets/sujet/importer.html:24
+msgid "Contenu"
+msgstr "Content"
+
+#: templates/admin/entrainement/question/importer.html:27
+#: templates/admin/sujets/sujet/importer.html:29
+msgid "Nom de la matière, tel qu'enregistré (français ou anglais)"
+msgstr "Subject name, as recorded (French or English)"
+
+#: templates/admin/entrainement/question/importer.html:28
+msgid "Titre du chapitre, tel qu'enregistré dans la matière"
+msgstr "Chapter title, as recorded in the subject"
+
+#: templates/admin/entrainement/question/importer.html:30
+msgid "La question. Formules entre $ … $ comme dans les corrigés"
+msgstr "The question. Formulas between $ … $ as in marking guides"
+
+#: templates/admin/entrainement/question/importer.html:31
+msgid "Les réponses proposées (inutile pour vrai/faux et réponse courte)"
+msgstr "The proposed answers (not needed for true/false and short answer)"
+
+#: templates/admin/entrainement/question/importer.html:32
+msgid ""
+"Lettre de la bonne réponse (B), plusieurs pour un choix multiple (A,C), vrai"
+" ou faux pour un vrai/faux"
+msgstr ""
+"Letter of the correct answer (B), several for multiple choice (A,C), vrai or"
+" faux for true/false"
+
+#: templates/admin/entrainement/question/importer.html:33
+#, python-format
+msgid ""
+"Réponse courte : plusieurs réponses acceptées séparées par | (40 "
+"%%|40%%|0,4)"
+msgstr ""
+"Short answer: several accepted answers separated by | (40 %%|40%%|0.4)"
+
+#: templates/admin/entrainement/question/importer.html:34
+msgid "Affichée après la réponse"
+msgstr "Shown after the answer"
+
+#: templates/admin/entrainement/question/importer.html:35
+msgid "1 facile, 2 moyenne, 3 difficile (vide : 2)"
+msgstr "1 easy, 2 medium, 3 hard (empty: 2)"
+
+#: templates/admin/entrainement/question/importer.html:36
+msgid "fr ou en (vide : fr pour le BTS, en pour le HND)"
+msgstr "fr or en (empty: fr for BTS, en for HND)"
+
+#: templates/admin/entrainement/question/importer.html:37
+msgid ""
+"Facultatif : année du sujet dont la question est tirée (même examen et même "
+"matière). Elle apparaît alors dans « Quiz sur cette épreuve »"
+msgstr ""
+"Optional: year of the paper the question comes from (same exam and subject)."
+" It then appears in “Quiz on this paper”"
+
+#: templates/admin/entrainement/question/importer.html:44
+#: templates/admin/sujets/sujet/importer.html:43
+msgid "Lancer"
+msgstr "Run"
+
+#: templates/admin/entrainement/question/importer.html:48
+#: templates/admin/sujets/sujet/importer.html:47
+msgid "Résultat de la simulation (rien n'a été enregistré)"
+msgstr "Dry-run result (nothing was saved)"
+
+#: templates/admin/entrainement/question/importer.html:48
+#: templates/admin/sujets/sujet/importer.html:47
+msgid "Résultat de l'import"
+msgstr "Import result"
+
+#: templates/admin/entrainement/question/importer.html:50
+#: templates/admin/sujets/sujet/importer.html:49
+#, python-format
+msgid "%(n)s prêt(s) à importer"
+msgstr "%(n)s ready to import"
+
+#: templates/admin/entrainement/question/importer.html:50
+#: templates/admin/sujets/sujet/importer.html:49
+#, python-format
+msgid "%(n)s importé(s)"
+msgstr "%(n)s imported"
+
+#: templates/admin/entrainement/question/importer.html:51
+#: templates/admin/sujets/sujet/importer.html:50
+#, python-format
+msgid "%(n)s doublon(s)"
+msgstr "%(n)s duplicate(s)"
+
+#: templates/admin/entrainement/question/importer.html:52
+#: templates/admin/sujets/sujet/importer.html:51
+#, python-format
+msgid "%(n)s erreur(s)"
+msgstr "%(n)s error(s)"
+
+#: templates/admin/entrainement/question/importer.html:55
+#: templates/admin/sujets/sujet/importer.html:54
+msgid "Ligne"
+msgstr "Row"
+
+#: templates/admin/entrainement/question/importer.html:55
+msgid "Question"
+msgstr "Question"
+
+#: templates/admin/entrainement/question/importer.html:55
+#: templates/admin/sujets/sujet/importer.html:54
+#: templates/entrainement/examens/resultat.html:4
+#: templates/entrainement/resultat.html:4
+msgid "Résultat"
+msgstr "Result"
+
+#: templates/admin/entrainement/question/importer.html:55
+#: templates/admin/sujets/sujet/importer.html:54
+msgid "Détail"
+msgstr "Details"
+
+#: templates/admin/entrainement/question/importer.html:62
+#: templates/admin/sujets/sujet/importer.html:61
+msgid "Prêt"
+msgstr "Ready"
+
+#: templates/admin/entrainement/question/importer.html:63
+msgid "Importée"
+msgstr "Imported"
+
+#: templates/admin/entrainement/question/importer.html:64
+#: templates/admin/sujets/sujet/importer.html:63
+msgid "Doublon ignoré"
+msgstr "Duplicate skipped"
+
+#: templates/admin/entrainement/question/importer.html:65
+#: templates/admin/sujets/sujet/importer.html:64
+msgid "Erreur"
+msgstr "Error"
+
 #: templates/admin/statistiques.html:23
 #, python-format
 msgid ""
@@ -1584,11 +1860,6 @@ msgstr "reported mistakes to check"
 msgid "contributions en attente"
 msgstr "contributions pending"
 
-#: templates/admin/statistiques.html:63
-#: templates/admin/sujets/sujet/importer.html:24
-msgid "Contenu"
-msgstr "Content"
-
 #: templates/admin/statistiques.html:65
 msgid "sujets publiés"
 msgstr "published papers"
@@ -1656,14 +1927,6 @@ msgstr ""
 "Payment is not open yet (company and tax number to fill in): no revenue to "
 "show."
 
-#: templates/admin/sujets/sujet/importer.html:6 templates/base.html:97
-msgid "Accueil"
-msgstr "Home"
-
-#: templates/admin/sujets/sujet/importer.html:9
-msgid "Importer"
-msgstr "Import"
-
 #: templates/admin/sujets/sujet/importer.html:15
 msgid ""
 "Préparez un ZIP contenant le tableau sujets.csv et les fichiers des sujets, "
@@ -1671,10 +1934,6 @@ msgid ""
 msgstr ""
 "Prepare a ZIP containing the sujets.csv spreadsheet and the paper files, "
 "then run a dry run first."
-
-#: templates/admin/sujets/sujet/importer.html:16
-msgid "Télécharger le modèle de tableau"
-msgstr "Download the spreadsheet template"
 
 #: templates/admin/sujets/sujet/importer.html:18
 msgid ""
@@ -1701,10 +1960,6 @@ msgstr ""
 "A paper in several photos: list them in the fichier column, separated by |, "
 "in page order."
 
-#: templates/admin/sujets/sujet/importer.html:24
-msgid "Colonne"
-msgstr "Column"
-
 #: templates/admin/sujets/sujet/importer.html:26
 msgid "Nom du PDF, ou des photos séparées par | (page1.jpg|page2.jpg)"
 msgstr "PDF name, or photos separated by | (page1.jpg|page2.jpg)"
@@ -1712,10 +1967,6 @@ msgstr "PDF name, or photos separated by | (page1.jpg|page2.jpg)"
 #: templates/admin/sujets/sujet/importer.html:28
 msgid "Année de la session, par exemple 2025"
 msgstr "Session year, for example 2025"
-
-#: templates/admin/sujets/sujet/importer.html:29
-msgid "Nom de la matière, tel qu'enregistré (français ou anglais)"
-msgstr "Subject name, as recorded (French or English)"
 
 #: templates/admin/sujets/sujet/importer.html:30
 msgid ""
@@ -1751,71 +2002,13 @@ msgid ""
 msgstr ""
 "Optional: name of the institution that provided the paper (as recorded)"
 
-#: templates/admin/sujets/sujet/importer.html:43
-msgid "Lancer"
-msgstr "Run"
-
-#: templates/admin/sujets/sujet/importer.html:47
-msgid "Résultat de la simulation (rien n'a été enregistré)"
-msgstr "Dry-run result (nothing was saved)"
-
-#: templates/admin/sujets/sujet/importer.html:47
-msgid "Résultat de l'import"
-msgstr "Import result"
-
-#: templates/admin/sujets/sujet/importer.html:49
-#, python-format
-msgid "%(n)s prêt(s) à importer"
-msgstr "%(n)s ready to import"
-
-#: templates/admin/sujets/sujet/importer.html:49
-#, python-format
-msgid "%(n)s importé(s)"
-msgstr "%(n)s imported"
-
-#: templates/admin/sujets/sujet/importer.html:50
-#, python-format
-msgid "%(n)s doublon(s)"
-msgstr "%(n)s duplicate(s)"
-
-#: templates/admin/sujets/sujet/importer.html:51
-#, python-format
-msgid "%(n)s erreur(s)"
-msgstr "%(n)s error(s)"
-
-#: templates/admin/sujets/sujet/importer.html:54
-msgid "Ligne"
-msgstr "Row"
-
 #: templates/admin/sujets/sujet/importer.html:54
 msgid "Fichier"
 msgstr "File"
 
-#: templates/admin/sujets/sujet/importer.html:54
-#: templates/entrainement/examens/resultat.html:4
-#: templates/entrainement/resultat.html:4
-msgid "Résultat"
-msgstr "Result"
-
-#: templates/admin/sujets/sujet/importer.html:54
-msgid "Détail"
-msgstr "Details"
-
-#: templates/admin/sujets/sujet/importer.html:61
-msgid "Prêt"
-msgstr "Ready"
-
 #: templates/admin/sujets/sujet/importer.html:62
 msgid "Importé"
 msgstr "Imported"
-
-#: templates/admin/sujets/sujet/importer.html:63
-msgid "Doublon ignoré"
-msgstr "Duplicate skipped"
-
-#: templates/admin/sujets/sujet/importer.html:64
-msgid "Erreur"
-msgstr "Error"
 
 #: templates/base.html:8
 msgid ""
@@ -2297,13 +2490,13 @@ msgid "Voir ma note"
 msgstr "See my mark"
 
 #: templates/entrainement/examens/consignes.html:11
-#: templates/sujets/detail.html:44
+#: templates/sujets/detail.html:59
 msgid "Durée"
 msgstr "Duration"
 
 #: templates/entrainement/examens/consignes.html:11
 #: templates/entrainement/examens/liste.html:24
-#: templates/sujets/detail.html:45
+#: templates/sujets/detail.html:60
 #, python-format
 msgid "%(h)s minutes"
 msgstr "%(h)s minutes"
@@ -2515,7 +2708,7 @@ msgid "Aucune tentative terminée pour le moment."
 msgstr "No completed attempts yet."
 
 #: templates/entrainement/progression.html:94
-#: templates/sujets/_resultats.html:34 templates/sujets/detail.html:51
+#: templates/sujets/_resultats.html:34 templates/sujets/detail.html:66
 msgid "Pages"
 msgstr "Pages"
 
@@ -2805,7 +2998,7 @@ msgstr "Send"
 msgid "Se connecter pour signaler une erreur"
 msgstr "Log in to report a mistake"
 
-#: templates/sujets/_corrige.html:49 templates/sujets/detail.html:63
+#: templates/sujets/_corrige.html:49 templates/sujets/detail.html:78
 msgid "Demander le retrait de ce document"
 msgstr "Request removal of this document"
 
@@ -2879,19 +3072,38 @@ msgstr "Kept offline ✓ (tap to remove)"
 msgid "Impossible : vérifiez la connexion et la place libre."
 msgstr "Not possible: check your connection and free space."
 
-#: templates/sujets/detail.html:47
+#: templates/sujets/detail.html:45
+msgid "Entraînez-vous sur cette épreuve"
+msgstr "Practise on this paper"
+
+#: templates/sujets/detail.html:46
+#, python-format
+msgid "%(n)s question tirée de ce sujet, corrigée tout de suite."
+msgid_plural "%(n)s questions tirées de ce sujet, corrigées tout de suite."
+msgstr[0] "%(n)s question from this paper, marked straight away."
+msgstr[1] "%(n)s questions from this paper, marked straight away."
+
+#: templates/sujets/detail.html:49
+msgid "Quiz sur cette épreuve"
+msgstr "Quiz on this paper"
+
+#: templates/sujets/detail.html:52
+msgid "Se connecter pour faire le quiz"
+msgstr "Log in to take the quiz"
+
+#: templates/sujets/detail.html:62
 msgid "Coefficient"
 msgstr "Coefficient"
 
-#: templates/sujets/detail.html:54
+#: templates/sujets/detail.html:69
 msgid "Barème"
 msgstr "Marking scheme"
 
-#: templates/sujets/detail.html:57
+#: templates/sujets/detail.html:72
 msgid "Source"
 msgstr "Source"
 
-#: templates/sujets/detail.html:58 templates/sujets/liste.html:71
+#: templates/sujets/detail.html:73 templates/sujets/liste.html:71
 msgid "Fourni par"
 msgstr "Provided by"
 

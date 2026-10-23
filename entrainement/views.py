@@ -2,17 +2,18 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db import IntegrityError
-from django.db.models import Case, Count, Prefetch, Q, When
+from django.db.models import Case, Count, Prefetch, When
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
 from catalogue.models import Chapitre, Matiere
+from sujets.models import Sujet
 from sujets.views import est_requete_htmx
 
 from . import progression, quiz
 from .correction import est_correcte
-from .models import Question, Quiz, ReponseQuestion, Tentative
+from .models import Question, Quiz, ReponseQuestion, Tentative, filtre_questions_visibles
 
 
 def matieres_proposees(utilisateur):
@@ -24,9 +25,11 @@ def matieres_proposees(utilisateur):
     profil = getattr(utilisateur, "profil", None)
     if profil:
         matieres = matieres.filter(specialites=profil.specialite)
-    chapitres = Chapitre.objects.annotate(nb=Count("questions", filter=Q(questions__publiee=True))).filter(nb__gt=0)
+    chapitres = Chapitre.objects.annotate(nb=Count("questions", filter=filtre_questions_visibles("questions__"))).filter(nb__gt=0)
     return (
-        matieres.annotate(nb_questions=Count("chapitres__questions", filter=Q(chapitres__questions__publiee=True), distinct=True))
+        matieres.annotate(
+            nb_questions=Count("chapitres__questions", filter=filtre_questions_visibles("chapitres__questions__"), distinct=True)
+        )
         .prefetch_related(Prefetch("chapitres", queryset=chapitres.order_by("ordre"), to_attr="chapitres_actifs"))
         .order_by("examen__code", Case(When(nb_questions=0, then=1), default=0), "nom")
         .distinct()
@@ -74,6 +77,21 @@ def lancer(request):
     if tentative is None:
         messages.info(request, _("Aucune question disponible pour ce choix pour le moment."))
         return redirect("entrainement:accueil")
+    return redirect("entrainement:tentative", pk=tentative.pk)
+
+
+@login_required
+@require_POST
+def lancer_sujet(request, pk):
+    """« Quiz sur cette épreuve » : les questions tirées d'un sujet publié."""
+    sujet = get_object_or_404(Sujet.objects.publies().select_related("session", "matiere"), pk=pk)
+    if quiz.quiz_restants_aujourd_hui(request.user) == 0:
+        messages.error(request, _("Vous avez fait tous vos quiz gratuits du jour. Revenez demain ou passez au Pass session."))
+        return redirect("sujets:detail", pk=sujet.pk)
+    tentative = quiz.lancer_quiz_sujet(request.user, sujet)
+    if tentative is None:
+        messages.info(request, _("Aucune question disponible pour ce choix pour le moment."))
+        return redirect("sujets:detail", pk=sujet.pk)
     return redirect("entrainement:tentative", pk=tentative.pk)
 
 

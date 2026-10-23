@@ -482,6 +482,8 @@ class Command(BaseCommand):
             publie=True, bareme="Partie 1 : QCM (6 points).\nPartie 2 : exercices du sujet, à rédiger (7 points chacun).",
         )
         examen.questions.set(Question.objects.filter(chapitre__matiere=sujet.matiere).order_by("pk")[:4])
+        # « Quiz sur cette épreuve » : les questions d'algorithmique sont rattachées au sujet 2025.
+        Question.objects.filter(chapitre__matiere=sujet.matiere).update(sujet=sujet)
         CritereBareme.objects.create(examen_blanc=examen, libelle="Exercice 1 : algorithme de recherche", points=7, ordre=1)
         CritereBareme.objects.create(examen_blanc=examen, libelle="Exercice 2 : fonction récursive", points=7, ordre=2)
         self.stdout.write(self.style.SUCCESS(

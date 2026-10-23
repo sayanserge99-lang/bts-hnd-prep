@@ -8,6 +8,22 @@ from django.utils.translation import gettext_lazy as _
 from catalogue.models import Langue
 
 
+def filtre_questions_visibles(prefixe=""):
+    """Questions qui peuvent entrer dans un quiz : publiées, et dont le sujet éventuel est publié.
+
+    Une question tirée d'un sujet en dévoile le contenu : elle suit la visibilité du sujet (CDC 4.2),
+    sinon un quiz rapide de la matière ferait fuiter un sujet dont la session n'est pas terminée.
+    """
+    return Q(**{f"{prefixe}publiee": True}) & (
+        Q(**{f"{prefixe}sujet__isnull": True}) | Q(**{f"{prefixe}sujet__statut": "publie"})
+    )
+
+
+class QuestionQuerySet(models.QuerySet):
+    def visibles(self):
+        return self.filter(filtre_questions_visibles())
+
+
 class Question(models.Model):
     class Type(models.TextChoices):
         CHOIX_UNIQUE = "choix_unique", _("Choix unique")
@@ -21,6 +37,14 @@ class Question(models.Model):
         DIFFICILE = 3, _("Difficile")
 
     chapitre = models.ForeignKey("catalogue.Chapitre", on_delete=models.PROTECT, related_name="questions")
+    sujet = models.ForeignKey(
+        "sujets.Sujet",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="questions",
+        help_text=_("Facultatif : le sujet dont la question est tirée (« Quiz sur cette épreuve »)."),
+    )
     enonce = models.TextField(_("énoncé"))
     type = models.CharField(max_length=20, choices=Type.choices)
     reponse_attendue = models.CharField(
@@ -34,11 +58,17 @@ class Question(models.Model):
     # Validée par le modérateur de la matière : seule une question publiée entre dans les quiz.
     publiee = models.BooleanField(_("publiée"), default=False)
 
+    objects = QuestionQuerySet.as_manager()
+
     class Meta:
         verbose_name = _("question")
 
     def __str__(self):
         return self.enonce[:80]
+
+    def clean(self):
+        if self.sujet_id and self.chapitre_id and self.sujet.matiere_id != self.chapitre.matiere_id:
+            raise ValidationError({"sujet": _("Ce sujet n'est pas de la même matière que le chapitre.")})
 
     @property
     def reponse_affichee(self):
@@ -82,6 +112,7 @@ class Quiz(models.Model):
     class Mode(models.TextChoices):
         RAPIDE = "rapide", _("Quiz rapide")
         REVISION = "revision", _("Révision des erreurs")
+        SUJET = "sujet", _("Quiz sur une épreuve")
 
     titre = models.CharField(max_length=200)
     mode = models.CharField(max_length=10, choices=Mode.choices)
@@ -89,6 +120,7 @@ class Quiz(models.Model):
     chapitre = models.ForeignKey(
         "catalogue.Chapitre", on_delete=models.PROTECT, null=True, blank=True, related_name="quiz"
     )
+    sujet = models.ForeignKey("sujets.Sujet", on_delete=models.SET_NULL, null=True, blank=True, related_name="quiz")
     nb_questions = models.PositiveSmallIntegerField(_("nombre de questions"), default=10)
     questions = models.ManyToManyField(Question, related_name="quiz")
 

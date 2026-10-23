@@ -68,5 +68,8 @@
   publier une épreuve interne exige une convention de partenariat active (et une convention résiliée les masque) ;
   résultats visibles seulement des étudiants confirmés ayant consenti, consentement révocable et gardé (CDC 10.2).
   Les épreuves internes ne sont pas des sujets officiels : la règle de date de fin de session ne les concerne pas.
+- **Questions tirées d'un sujet** (23/10) : elles suivent la visibilité du sujet partout (quiz de l'épreuve,
+  quiz rapide, révision, hors ligne, compteurs), via un seul filtre ; on peut donc les préparer pendant la session.
+  Import CSV : chapitre et sujet doivent exister (pas de création automatique, pour éviter les doublons de frappe).
 - **Interface** : Tailwind v4 en exécutable autonome (pas de Node), polices du système, HTMX servi localement ;
   les pages marchent aussi sans JavaScript (formulaire GET classique).

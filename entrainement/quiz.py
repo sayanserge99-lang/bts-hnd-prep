@@ -13,10 +13,12 @@ from paiements.acces import a_un_abonnement_actif
 from .models import Question, Quiz, ReponseQuestion, Tentative
 
 QUESTIONS_PAR_QUIZ = 10
+# Quiz sur une épreuve : toutes ses questions, dans l'ordre du sujet, jusqu'à cette limite.
+QUESTIONS_PAR_QUIZ_SUJET = 40
 
 
 def questions_publiees():
-    return Question.objects.filter(publiee=True)
+    return Question.objects.visibles()
 
 
 def quiz_restants_aujourd_hui(utilisateur):
@@ -40,16 +42,22 @@ def erreurs_a_reviser(utilisateur):
 
 
 @transaction.atomic
-def creer_tentative(utilisateur, questions, mode, matiere, chapitre=None):
+def creer_tentative(utilisateur, questions, mode, matiere, chapitre=None, sujet=None):
     questions = list(questions)
     if not questions:
         return None
-    titre = chapitre.titre if chapitre else matiere.nom
+    if sujet:
+        titre = f"{sujet.titre} — {sujet.session.annee}"
+    else:
+        titre = chapitre.titre if chapitre else matiere.nom
+        if mode == Quiz.Mode.REVISION:
+            titre = _("Révision : %(titre)s") % {"titre": titre}
     quiz = Quiz.objects.create(
-        titre=titre if mode == Quiz.Mode.RAPIDE else _("Révision : %(titre)s") % {"titre": titre},
+        titre=titre,
         mode=mode,
         matiere=matiere,
         chapitre=chapitre,
+        sujet=sujet,
         nb_questions=len(questions),
     )
     quiz.questions.set(questions)
@@ -63,6 +71,15 @@ def lancer_quiz_rapide(utilisateur, matiere, chapitre=None):
     if chapitre:
         questions = questions.filter(chapitre=chapitre)
     return creer_tentative(utilisateur, questions.order_by("?")[:QUESTIONS_PAR_QUIZ], Quiz.Mode.RAPIDE, matiere, chapitre)
+
+
+def questions_du_sujet(sujet):
+    return questions_publiees().filter(sujet=sujet).order_by("chapitre__ordre", "pk")
+
+
+def lancer_quiz_sujet(utilisateur, sujet):
+    questions = questions_du_sujet(sujet)[:QUESTIONS_PAR_QUIZ_SUJET]
+    return creer_tentative(utilisateur, questions, Quiz.Mode.SUJET, sujet.matiere, sujet=sujet)
 
 
 def lancer_revision(utilisateur, matiere):

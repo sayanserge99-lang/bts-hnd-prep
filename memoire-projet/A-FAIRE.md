@@ -52,7 +52,9 @@
 - [x] Espace établissement + épreuves internes (validation des étudiants, convention active, résultats partagés).
 - [ ] Créer les comptes responsables d'IAI-Cameroun et HINTEL et saisir leurs conventions (admin, Serge Alain).
 - [ ] Épreuves internes : pas encore dans le mode hors ligne, ni d'avis aux étudiants quand une épreuve est publiée.
-- [ ] Quiz liés à une épreuve : attendre le choix de Serge Alain (1 questions par sujet, 2 import CSV, 3 brouillons IA).
+- [x] Quiz sur une épreuve (questions rattachées à un sujet) + import CSV des questions.
+- [ ] Option 3 : brouillons de questions générés par IA depuis le texte du PDF, validés par un enseignant (plus tard).
+- [ ] Quiz sur une épreuve : pas encore téléchargeable hors ligne (seuls les quiz par matière/chapitre le sont).
 - [x] Connexion Google V2 (code prêt, inactive sans identifiants).
 - [ ] Créer les identifiants OAuth Google (Serge Alain) et essayer la connexion en vrai.
 - [ ] Un compte créé avec Google ne peut pas utiliser « mot de passe oublié » (pas de mot de passe) : ajouter
