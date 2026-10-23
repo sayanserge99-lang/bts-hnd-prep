@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-23 08:15+0100\n"
+"POT-Creation-Date: 2026-10-23 08:46+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,61 +34,69 @@ msgstr "Roles"
 msgid "Dates"
 msgstr "Dates"
 
-#: accounts/forms.py:31
+#: accounts/forms.py:32
 msgid "Spécialité préparée"
 msgstr "Specialty"
 
-#: accounts/forms.py:50 accounts/forms.py:94
+#: accounts/forms.py:41
+msgid "Mon établissement"
+msgstr "My institution"
+
+#: accounts/forms.py:42
+msgid "Autre / non listé"
+msgstr "Other / not listed"
+
+#: accounts/forms.py:62 accounts/forms.py:109
 msgid "J'accepte les conditions générales et la politique de confidentialité."
 msgstr "I accept the terms and conditions and the privacy policy."
 
-#: accounts/forms.py:57 accounts/forms.py:89 accounts/forms.py:150
+#: accounts/forms.py:69 accounts/forms.py:103 accounts/forms.py:166
 msgid "Prénom"
 msgstr "First name"
 
-#: accounts/forms.py:57 accounts/forms.py:90 accounts/forms.py:150
+#: accounts/forms.py:69 accounts/forms.py:104 accounts/forms.py:166
 msgid "Nom"
 msgstr "Last name"
 
-#: accounts/forms.py:68
+#: accounts/forms.py:80
 msgid "Un compte existe déjà avec cette adresse e-mail."
 msgstr "An account already exists with this email address."
 
-#: accounts/forms.py:91
+#: accounts/forms.py:105
 msgid "Langue"
 msgstr "Language"
 
-#: accounts/forms.py:116
+#: accounts/forms.py:131
 msgid "Adresse e-mail"
 msgstr "Email address"
 
-#: accounts/forms.py:121
+#: accounts/forms.py:136
 msgid ""
 "Trop de tentatives. Réessayez dans 15 minutes ou réinitialisez votre mot de "
 "passe."
 msgstr "Too many attempts. Try again in 15 minutes or reset your password."
 
-#: accounts/forms.py:144
+#: accounts/forms.py:160
 msgid "Session prévue"
 msgstr "Planned session"
 
-#: accounts/forms.py:166
+#: accounts/forms.py:183
 msgid "Cette session n'appartient pas à l'examen de votre spécialité."
 msgstr "This session does not belong to your specialty's exam."
 
-#: accounts/forms.py:181
+#: accounts/forms.py:199
 msgid "Mot de passe"
 msgstr "Password"
 
-#: accounts/forms.py:189
+#: accounts/forms.py:207
 msgid "Pour confirmer, tapez votre adresse e-mail"
 msgstr "To confirm, type your email address"
 
-#: accounts/forms.py:197
+#: accounts/forms.py:215
 msgid "Ce n'est pas l'adresse e-mail de ce compte."
 msgstr "This is not the email address of this account."
 
-#: accounts/forms.py:200
+#: accounts/forms.py:218
 msgid "Mot de passe incorrect."
 msgstr "Incorrect password."
 
@@ -195,7 +203,7 @@ msgstr "French"
 msgid "Anglais"
 msgstr "English"
 
-#: catalogue/models.py:19 catalogue/models.py:77 catalogue/models.py:95
+#: catalogue/models.py:19 catalogue/models.py:77 catalogue/models.py:98
 msgid "nom"
 msgstr "name"
 
@@ -242,31 +250,39 @@ msgstr "Health"
 msgid "filière"
 msgstr "field"
 
-#: catalogue/models.py:82
+#: catalogue/models.py:80
+msgid "ordre d'affichage"
+msgstr "display order"
+
+#: catalogue/models.py:80
+msgid "Plus petit = affiché en premier."
+msgstr "Smaller = shown first."
+
+#: catalogue/models.py:84
 msgid "spécialité"
 msgstr "specialty"
 
-#: catalogue/models.py:98
+#: catalogue/models.py:101
 msgid "matière"
 msgstr "subject"
 
-#: catalogue/models.py:110
+#: catalogue/models.py:113
 msgid "matière d'une spécialité"
 msgstr "subject of a specialty"
 
-#: catalogue/models.py:111
+#: catalogue/models.py:114
 msgid "matières des spécialités"
 msgstr "subjects of specialties"
 
-#: catalogue/models.py:121
+#: catalogue/models.py:124
 msgid "La spécialité et la matière doivent appartenir au même examen."
 msgstr "The specialty and the subject must belong to the same exam."
 
-#: catalogue/models.py:127
+#: catalogue/models.py:130
 msgid "titre"
 msgstr "title"
 
-#: catalogue/models.py:131
+#: catalogue/models.py:134
 msgid "chapitre"
 msgstr "chapter"
 
@@ -617,7 +633,7 @@ msgstr "answer"
 msgid "Révision : %(titre)s"
 msgstr "Review: %(titre)s"
 
-#: entrainement/views.py:62
+#: entrainement/views.py:64
 msgid ""
 "Vous avez fait tous vos quiz gratuits du jour. Revenez demain ou passez au "
 "Pass session."
@@ -625,11 +641,11 @@ msgstr ""
 "You have used all your free quizzes for today. Come back tomorrow or get the"
 " Session pass."
 
-#: entrainement/views.py:73 entrainement/views_hors_ligne.py:65
+#: entrainement/views.py:75 entrainement/views_hors_ligne.py:65
 msgid "Aucune question disponible pour ce choix pour le moment."
 msgstr "No questions available for this choice yet."
 
-#: entrainement/views.py:127
+#: entrainement/views.py:129
 msgid "Choisissez une réponse avant de valider."
 msgstr "Choose an answer before submitting."
 
@@ -698,7 +714,7 @@ msgstr "access codes"
 msgid "Un établissement sans convention active ne peut pas recevoir de codes."
 msgstr "An institution without an active agreement cannot receive codes."
 
-#: paiements/models.py:98 partenaires/models.py:35
+#: paiements/models.py:98 partenaires/models.py:37
 msgid "Actif"
 msgstr "Active"
 
@@ -714,35 +730,35 @@ msgstr "Cancelled"
 msgid "abonnement"
 msgstr "subscription"
 
-#: partenaires/models.py:22
+#: partenaires/models.py:23
 msgid "région"
 msgstr "region"
 
-#: partenaires/models.py:26
+#: partenaires/models.py:27
 msgid "établissement"
 msgstr "institution"
 
-#: partenaires/models.py:34
+#: partenaires/models.py:36
 msgid "En négociation"
 msgstr "Under negotiation"
 
-#: partenaires/models.py:36
+#: partenaires/models.py:38
 msgid "Résilié"
 msgstr "Terminated"
 
-#: partenaires/models.py:39
+#: partenaires/models.py:41
 msgid "convention signée (PDF)"
 msgstr "signed agreement (PDF)"
 
-#: partenaires/models.py:43
+#: partenaires/models.py:45
 msgid "taux de partage (%)"
 msgstr "revenue share (%)"
 
-#: partenaires/models.py:43
+#: partenaires/models.py:45
 msgid "Part des revenus reversée à l'IPES."
 msgstr "Share of revenue paid to the institution."
 
-#: partenaires/models.py:48
+#: partenaires/models.py:50
 msgid "partenariat"
 msgstr "partnership"
 
@@ -843,59 +859,59 @@ msgstr[0] ""
 msgstr[1] ""
 "%d marking guides refused: their paper's session has not officially ended."
 
-#: sujets/importation.py:82
+#: sujets/importation.py:84
 msgid "Le tableau n'est ni en UTF-8 ni en Windows-1252."
 msgstr "The spreadsheet is neither UTF-8 nor Windows-1252."
 
-#: sujets/importation.py:95
+#: sujets/importation.py:97
 #, python-format
 msgid "Colonnes manquantes dans le tableau : %(colonnes)s."
 msgstr "Missing columns in the spreadsheet: %(colonnes)s."
 
-#: sujets/importation.py:109
+#: sujets/importation.py:111
 msgid "Le fichier envoyé n'est pas un ZIP valide."
 msgstr "The uploaded file is not a valid ZIP."
 
-#: sujets/importation.py:112
+#: sujets/importation.py:114
 msgid "Le ZIP décompressé dépasse la taille autorisée."
 msgstr "The unzipped content exceeds the allowed size."
 
-#: sujets/importation.py:118
+#: sujets/importation.py:120
 msgid "fichier trop volumineux"
 msgstr "file too large"
 
-#: sujets/importation.py:141
+#: sujets/importation.py:143
 msgid "plusieurs fichiers portent ce nom dans le lot"
 msgstr "several files in the batch have this name"
 
-#: sujets/importation.py:142
+#: sujets/importation.py:144
 msgid "fichier absent du lot"
 msgstr "file missing from the batch"
 
-#: sujets/importation.py:150
+#: sujets/importation.py:152
 msgid "ce fichier n'est pas un PDF"
 msgstr "this file is not a PDF"
 
-#: sujets/importation.py:155
+#: sujets/importation.py:157
 msgid "plusieurs fichiers : uniquement des photos JPG ou PNG"
 msgstr "several files: JPG or PNG photos only"
 
-#: sujets/importation.py:159
+#: sujets/importation.py:161
 #, python-format
 msgid "photo illisible : %(erreur)s"
 msgstr "unreadable photo: %(erreur)s"
 
-#: sujets/importation.py:172
+#: sujets/importation.py:174
 #, python-format
 msgid "examen inconnu « %(examen)s » (BTS ou HND)"
 msgstr "unknown exam “%(examen)s” (BTS or HND)"
 
-#: sujets/importation.py:174
+#: sujets/importation.py:176
 #, python-format
 msgid "année invalide « %(annee)s »"
 msgstr "invalid year “%(annee)s”"
 
-#: sujets/importation.py:178
+#: sujets/importation.py:180
 #, python-format
 msgid ""
 "session %(examen)s %(annee)s absente : créez-la d'abord avec sa date de fin "
@@ -904,48 +920,53 @@ msgstr ""
 "%(examen)s %(annee)s session missing: create it first with its official end "
 "date"
 
-#: sujets/importation.py:183
+#: sujets/importation.py:185
 #, python-format
 msgid "matière inconnue « %(matiere)s » pour le %(examen)s"
 msgstr "unknown subject “%(matiere)s” for the %(examen)s"
 
-#: sujets/importation.py:185
+#: sujets/importation.py:187
 msgid "cette matière ne vous est pas attribuée"
 msgstr "this subject is not assigned to you"
 
-#: sujets/importation.py:191
+#: sujets/importation.py:193
 #, python-format
 msgid "spécialité(s) non rattachée(s) à cette matière : %(codes)s"
 msgstr "specialty(ies) not linked to this subject: %(codes)s"
 
-#: sujets/importation.py:196
+#: sujets/importation.py:198
 #, python-format
 msgid "type d'épreuve invalide « %(type)s » (ecrite ou pratique)"
 msgstr "invalid paper type “%(type)s” (ecrite or pratique)"
 
-#: sujets/importation.py:198
+#: sujets/importation.py:200
 #, python-format
 msgid "durée invalide « %(duree)s » (en minutes)"
 msgstr "invalid duration “%(duree)s” (in minutes)"
 
-#: sujets/importation.py:200
+#: sujets/importation.py:202
 msgid "source obligatoire (CDC 10.1)"
 msgstr "source required"
 
-#: sujets/importation.py:205
+#: sujets/importation.py:207
+#, python-format
+msgid "établissement inconnu « %(nom)s » : ajoutez-le d'abord dans l'admin"
+msgstr "unknown institution “%(nom)s”: add it in the admin first"
+
+#: sujets/importation.py:212
 msgid ""
 "un sujet existe déjà pour cette session, cette matière et ce type d'épreuve"
 msgstr "a paper already exists for this session, subject and paper type"
 
-#: sujets/importation.py:222
+#: sujets/importation.py:230
 msgid "Le tableau ne contient aucune ligne."
 msgstr "The spreadsheet has no rows."
 
-#: sujets/importation.py:230
+#: sujets/importation.py:238
 msgid "colonne « fichier » vide"
 msgstr "empty “fichier” column"
 
-#: sujets/importation.py:258
+#: sujets/importation.py:266
 #, python-format
 msgid "Le ZIP doit contenir un (et un seul) fichier %(nom)s."
 msgstr "The ZIP must contain one (and only one) %(nom)s file."
@@ -959,15 +980,15 @@ msgstr ""
 "The %(session)s session officially ends on %(date)s: its papers cannot be "
 "published before then."
 
-#: sujets/models.py:78 sujets/models.py:210
+#: sujets/models.py:78 sujets/models.py:214
 msgid "Brouillon"
 msgstr "Draft"
 
-#: sujets/models.py:79 sujets/models.py:211
+#: sujets/models.py:79 sujets/models.py:215
 msgid "Publié"
 msgstr "Published"
 
-#: sujets/models.py:80 sujets/models.py:212
+#: sujets/models.py:80 sujets/models.py:216
 msgid "Masqué (demande de retrait en cours)"
 msgstr "Hidden (takedown request pending)"
 
@@ -991,7 +1012,7 @@ msgstr "paper type"
 msgid "barème"
 msgstr "marking scheme"
 
-#: sujets/models.py:97 sujets/models.py:233
+#: sujets/models.py:97 sujets/models.py:237
 msgid "fichier PDF"
 msgstr "PDF file"
 
@@ -1007,43 +1028,51 @@ msgstr "Filled in by the extraction task, used for search."
 msgid "Exemple : MINESUP, BTS session 2025."
 msgstr "Example: MINESUP, HND 2025 session."
 
-#: sujets/models.py:110
+#: sujets/models.py:104
+msgid "fourni par"
+msgstr "provided by"
+
+#: sujets/models.py:104
+msgid "Établissement qui a transmis le sujet (filtre du catalogue)."
+msgstr "Institution that provided the paper (catalogue filter)."
+
+#: sujets/models.py:114
 msgid "sujet"
 msgstr "paper"
 
-#: sujets/models.py:132
+#: sujets/models.py:136
 msgid "La matière n'appartient pas à l'examen de la session."
 msgstr "The subject does not belong to the session's exam."
 
-#: sujets/models.py:205
+#: sujets/models.py:209
 msgid "En préparation"
 msgstr "In preparation"
 
-#: sujets/models.py:206 templates/entrainement/examens/auto_evaluation.html:37
+#: sujets/models.py:210 templates/entrainement/examens/auto_evaluation.html:37
 #: templates/sujets/_corrige.html:10 templates/sujets/_resultats.html:20
-#: templates/sujets/liste.html:75
+#: templates/sujets/liste.html:85
 msgid "Proposé par la communauté"
 msgstr "Community answer"
 
-#: sujets/models.py:207 templates/entrainement/examens/auto_evaluation.html:37
+#: sujets/models.py:211 templates/entrainement/examens/auto_evaluation.html:37
 #: templates/sujets/_corrige.html:8 templates/sujets/_resultats.html:18
-#: templates/sujets/liste.html:74
+#: templates/sujets/liste.html:84
 msgid "Vérifié par un enseignant"
 msgstr "Verified by a teacher"
 
-#: sujets/models.py:215
+#: sujets/models.py:219
 msgid "Plateforme"
 msgstr "Platform"
 
-#: sujets/models.py:216
+#: sujets/models.py:220
 msgid "Enseignant"
 msgstr "Teacher"
 
-#: sujets/models.py:217
+#: sujets/models.py:221
 msgid "Partagé"
 msgstr "Shared"
 
-#: sujets/models.py:220
+#: sujets/models.py:224
 #, python-brace-format
 msgid ""
 "Markdown : **gras**, listes, tableaux (| a | b |), code entre ```. Formules "
@@ -1052,50 +1081,50 @@ msgstr ""
 "Markdown: **bold**, lists, tables (| a | b |), code between ```. Formulas: "
 "$x^2$ inline, $$\\frac{a}{b}$$ on its own line."
 
-#: sujets/models.py:226
+#: sujets/models.py:230
 msgid "début du corrigé"
 msgstr "start of the marking guide"
 
-#: sujets/models.py:227
+#: sujets/models.py:231
 msgid "Visible par tous (par exemple l'exercice 1). "
 msgstr "Visible to everyone (for example question 1). "
 
-#: sujets/models.py:230
+#: sujets/models.py:234
 msgid "suite du corrigé"
 msgstr "rest of the marking guide"
 
-#: sujets/models.py:231
+#: sujets/models.py:235
 msgid ""
 "Réservée aux abonnés une fois le paiement ouvert (CDC 3.3) ; visible par "
 "tous d'ici là."
 msgstr ""
 "Reserved for subscribers once payment opens; visible to everyone until then."
 
-#: sujets/models.py:237
+#: sujets/models.py:241
 msgid "titulaire des droits"
 msgstr "rights holder"
 
-#: sujets/models.py:239
+#: sujets/models.py:243
 msgid "régime de propriété"
 msgstr "ownership"
 
-#: sujets/models.py:250
+#: sujets/models.py:254
 msgid "corrigé"
 msgstr "marking guide"
 
-#: sujets/models.py:293
+#: sujets/models.py:297
 msgid "PDF ouverts ou téléchargés"
 msgstr "PDFs opened or downloaded"
 
-#: sujets/models.py:296
+#: sujets/models.py:300
 msgid "consultations du jour"
 msgstr "daily views"
 
-#: sujets/models.py:297
+#: sujets/models.py:301
 msgid "consultations par jour"
 msgstr "views per day"
 
-#: sujets/models.py:322
+#: sujets/models.py:326
 msgid "favori"
 msgstr "favourite"
 
@@ -1103,11 +1132,11 @@ msgstr "favourite"
 msgid "Une spécialité choisie n'est pas rattachée à la matière du sujet."
 msgstr "A chosen specialty is not linked to the paper's subject."
 
-#: sujets/views.py:181
+#: sujets/views.py:187
 msgid "Décrivez l'erreur en quelques mots (10 caractères au moins)."
 msgstr "Describe the mistake in a few words (at least 10 characters)."
 
-#: sujets/views.py:185
+#: sujets/views.py:191
 msgid "Merci ! L'enseignant relira ce passage."
 msgstr "Thank you! The teacher will review this part."
 
@@ -1380,86 +1409,122 @@ msgid "examens blancs terminés"
 msgstr "mock exams finished"
 
 #: templates/admin/statistiques.html:35
+msgid "Par établissement"
+msgstr "By institution"
+
+#: templates/admin/statistiques.html:39
+msgid "Établissement"
+msgstr "Institution"
+
+#: templates/admin/statistiques.html:39
+msgid "Inscrits"
+msgstr "Registered"
+
+#: templates/admin/statistiques.html:39
+#, python-format
+msgid "Actifs (%(n)s j)"
+msgstr "Active (%(n)s d)"
+
+#: templates/admin/statistiques.html:39
+#, python-format
+msgid "Réussite aux questions (%(n)s j)"
+msgstr "Question success (%(n)s d)"
+
+#: templates/admin/statistiques.html:43
+msgid "Non renseigné"
+msgstr "Not given"
+
+#: templates/admin/statistiques.html:51
+msgid ""
+"Par ordre alphabétique : ce n'est pas un classement des établissements (CDC "
+"10.6)."
+msgstr "In alphabetical order: this is not a ranking of institutions."
+
+#: templates/admin/statistiques.html:53
+msgid "Aucun étudiant inscrit pour le moment."
+msgstr "No students registered yet."
+
+#: templates/admin/statistiques.html:56
 msgid "À traiter"
 msgstr "To handle"
 
-#: templates/admin/statistiques.html:37
+#: templates/admin/statistiques.html:58
 msgid "demandes de retrait reçues"
 msgstr "takedown requests received"
 
-#: templates/admin/statistiques.html:38
+#: templates/admin/statistiques.html:59
 msgid "erreurs signalées à vérifier"
 msgstr "reported mistakes to check"
 
-#: templates/admin/statistiques.html:39
+#: templates/admin/statistiques.html:60
 msgid "contributions en attente"
 msgstr "contributions pending"
 
-#: templates/admin/statistiques.html:42
+#: templates/admin/statistiques.html:63
 #: templates/admin/sujets/sujet/importer.html:24
 msgid "Contenu"
 msgstr "Content"
 
-#: templates/admin/statistiques.html:44
+#: templates/admin/statistiques.html:65
 msgid "sujets publiés"
 msgstr "published papers"
 
-#: templates/admin/statistiques.html:44
+#: templates/admin/statistiques.html:65
 #, python-format
 msgid "%(n)s en brouillon"
 msgstr "%(n)s in draft"
 
-#: templates/admin/statistiques.html:45
+#: templates/admin/statistiques.html:66
 msgid "corrigés visibles"
 msgstr "visible marking guides"
 
-#: templates/admin/statistiques.html:46
+#: templates/admin/statistiques.html:67
 msgid "questions publiées"
 msgstr "published questions"
 
-#: templates/admin/statistiques.html:49
+#: templates/admin/statistiques.html:70
 msgid "Sujets les plus consultés"
 msgstr "Most viewed papers"
 
-#: templates/admin/statistiques.html:53
+#: templates/admin/statistiques.html:74
 #: templates/entrainement/examens/consignes.html:12
 #: templates/sujets/detail.html:15
 msgid "Sujet"
 msgstr "Paper"
 
-#: templates/admin/statistiques.html:53
+#: templates/admin/statistiques.html:74
 msgid "Fiches"
 msgstr "Pages"
 
-#: templates/admin/statistiques.html:53
+#: templates/admin/statistiques.html:74
 msgid "PDF"
 msgstr "PDF"
 
-#: templates/admin/statistiques.html:53
+#: templates/admin/statistiques.html:74
 msgid "Total"
 msgstr "Total"
 
-#: templates/admin/statistiques.html:67
+#: templates/admin/statistiques.html:88
 msgid "Aucune consultation sur la période."
 msgstr "No views over the period."
 
-#: templates/admin/statistiques.html:70
+#: templates/admin/statistiques.html:91
 msgid "Revenus et conversion"
 msgstr "Revenue and conversion"
 
-#: templates/admin/statistiques.html:73
+#: templates/admin/statistiques.html:94
 msgid "FCFA encaissés"
 msgstr "FCFA received"
 
-#: templates/admin/statistiques.html:74
+#: templates/admin/statistiques.html:95
 msgid "abonnés en cours"
 msgstr "current subscribers"
 
-#: templates/admin/statistiques.html:75
+#: templates/admin/statistiques.html:96
 msgid "taux de conversion (abonnés / inscrits)"
 msgstr "conversion rate (subscribers / registered)"
 
-#: templates/admin/statistiques.html:78
+#: templates/admin/statistiques.html:99
 msgid ""
 "Le paiement n'est pas encore ouvert (structure et NIU à renseigner) : pas de"
 " revenus à afficher."
@@ -1555,69 +1620,76 @@ msgstr "For example: MINESUP, BTS 2025 session"
 msgid "Facultatif"
 msgstr "Optional"
 
-#: templates/admin/sujets/sujet/importer.html:42
+#: templates/admin/sujets/sujet/importer.html:36
+msgid ""
+"Facultatif : nom de l'établissement qui a fourni le sujet (tel "
+"qu'enregistré)"
+msgstr ""
+"Optional: name of the institution that provided the paper (as recorded)"
+
+#: templates/admin/sujets/sujet/importer.html:43
 msgid "Lancer"
 msgstr "Run"
 
-#: templates/admin/sujets/sujet/importer.html:46
+#: templates/admin/sujets/sujet/importer.html:47
 msgid "Résultat de la simulation (rien n'a été enregistré)"
 msgstr "Dry-run result (nothing was saved)"
 
-#: templates/admin/sujets/sujet/importer.html:46
+#: templates/admin/sujets/sujet/importer.html:47
 msgid "Résultat de l'import"
 msgstr "Import result"
 
-#: templates/admin/sujets/sujet/importer.html:48
+#: templates/admin/sujets/sujet/importer.html:49
 #, python-format
 msgid "%(n)s prêt(s) à importer"
 msgstr "%(n)s ready to import"
 
-#: templates/admin/sujets/sujet/importer.html:48
+#: templates/admin/sujets/sujet/importer.html:49
 #, python-format
 msgid "%(n)s importé(s)"
 msgstr "%(n)s imported"
 
-#: templates/admin/sujets/sujet/importer.html:49
+#: templates/admin/sujets/sujet/importer.html:50
 #, python-format
 msgid "%(n)s doublon(s)"
 msgstr "%(n)s duplicate(s)"
 
-#: templates/admin/sujets/sujet/importer.html:50
+#: templates/admin/sujets/sujet/importer.html:51
 #, python-format
 msgid "%(n)s erreur(s)"
 msgstr "%(n)s error(s)"
 
-#: templates/admin/sujets/sujet/importer.html:53
+#: templates/admin/sujets/sujet/importer.html:54
 msgid "Ligne"
 msgstr "Row"
 
-#: templates/admin/sujets/sujet/importer.html:53
+#: templates/admin/sujets/sujet/importer.html:54
 msgid "Fichier"
 msgstr "File"
 
-#: templates/admin/sujets/sujet/importer.html:53
+#: templates/admin/sujets/sujet/importer.html:54
 #: templates/entrainement/examens/resultat.html:4
 #: templates/entrainement/resultat.html:4
 msgid "Résultat"
 msgstr "Result"
 
-#: templates/admin/sujets/sujet/importer.html:53
+#: templates/admin/sujets/sujet/importer.html:54
 msgid "Détail"
 msgstr "Details"
 
-#: templates/admin/sujets/sujet/importer.html:60
+#: templates/admin/sujets/sujet/importer.html:61
 msgid "Prêt"
 msgstr "Ready"
 
-#: templates/admin/sujets/sujet/importer.html:61
+#: templates/admin/sujets/sujet/importer.html:62
 msgid "Importé"
 msgstr "Imported"
 
-#: templates/admin/sujets/sujet/importer.html:62
+#: templates/admin/sujets/sujet/importer.html:63
 msgid "Doublon ignoré"
 msgstr "Duplicate skipped"
 
-#: templates/admin/sujets/sujet/importer.html:63
+#: templates/admin/sujets/sujet/importer.html:64
 msgid "Erreur"
 msgstr "Error"
 
@@ -1998,7 +2070,7 @@ msgid_plural "%(n)s quiz gratuits restants aujourd'hui."
 msgstr[0] "%(n)s free quiz left today."
 msgstr[1] "%(n)s free quizzes left today."
 
-#: templates/entrainement/accueil.html:36
+#: templates/entrainement/accueil.html:38
 #: templates/entrainement/examens/consignes.html:13
 #, python-format
 msgid "%(n)s question"
@@ -2006,45 +2078,47 @@ msgid_plural "%(n)s questions"
 msgstr[0] "%(n)s question"
 msgstr[1] "%(n)s questions"
 
-#: templates/entrainement/accueil.html:41
+#: templates/entrainement/accueil.html:38
+msgid "Questions bientôt disponibles"
+msgstr "Questions coming soon"
+
+#: templates/entrainement/accueil.html:44
 msgid "Chapitre"
 msgstr "Chapter"
 
-#: templates/entrainement/accueil.html:43
+#: templates/entrainement/accueil.html:46
 msgid "Toute la matière"
 msgstr "Whole subject"
 
-#: templates/entrainement/accueil.html:49
+#: templates/entrainement/accueil.html:52
 #: templates/entrainement/progression.html:51
 msgid "Lancer un quiz"
 msgstr "Start a quiz"
 
-#: templates/entrainement/accueil.html:53
+#: templates/entrainement/accueil.html:56
 msgid "Téléchargé ✓ : à retrouver dans Hors ligne"
 msgstr "Downloaded ✓: find it in Offline"
 
-#: templates/entrainement/accueil.html:54
+#: templates/entrainement/accueil.html:57
 msgid "Téléchargement impossible : vérifiez la connexion."
 msgstr "Download failed: check your connection."
 
-#: templates/entrainement/accueil.html:54
+#: templates/entrainement/accueil.html:57
 msgid "Télécharger pour le hors ligne"
 msgstr "Download for offline"
 
-#: templates/entrainement/accueil.html:62
+#: templates/entrainement/accueil.html:66
 #, python-format
 msgid "Réviser mon erreur (%(n)s)"
 msgid_plural "Réviser mes erreurs (%(n)s)"
 msgstr[0] "Review my mistake (%(n)s)"
 msgstr[1] "Review my mistakes (%(n)s)"
 
-#: templates/entrainement/accueil.html:67
-msgid ""
-"Aucune question n'est encore disponible pour votre spécialité. Revenez "
-"bientôt !"
-msgstr "No questions are available for your specialty yet. Come back soon!"
+#: templates/entrainement/accueil.html:71
+msgid "Aucune matière n'est encore enregistrée pour votre spécialité."
+msgstr "No subjects are recorded for your specialty yet."
 
-#: templates/entrainement/accueil.html:72
+#: templates/entrainement/accueil.html:76
 msgid "Mes derniers quiz"
 msgstr "My latest quizzes"
 
@@ -2470,7 +2544,7 @@ msgstr "Send"
 msgid "Se connecter pour signaler une erreur"
 msgstr "Log in to report a mistake"
 
-#: templates/sujets/_corrige.html:49 templates/sujets/detail.html:62
+#: templates/sujets/_corrige.html:49 templates/sujets/detail.html:63
 msgid "Demander le retrait de ce document"
 msgstr "Request removal of this document"
 
@@ -2520,7 +2594,7 @@ msgid "Sujet ou corrigé"
 msgstr "Paper or marking guide"
 
 #: templates/sujets/detail.html:17 templates/sujets/detail.html:19
-#: templates/sujets/liste.html:71
+#: templates/sujets/liste.html:81
 msgid "Corrigé"
 msgstr "Marking guide"
 
@@ -2555,6 +2629,10 @@ msgstr "Marking scheme"
 #: templates/sujets/detail.html:57
 msgid "Source"
 msgstr "Source"
+
+#: templates/sujets/detail.html:58 templates/sujets/liste.html:71
+msgid "Fourni par"
+msgstr "Provided by"
 
 #: templates/sujets/liste.html:19
 msgid "Aucun sujet n'est encore disponible."
@@ -2593,9 +2671,13 @@ msgid "Tous les types"
 msgstr "All types"
 
 #: templates/sujets/liste.html:73
+msgid "Tous les établissements"
+msgstr "All institutions"
+
+#: templates/sujets/liste.html:83
 msgid "Avec ou sans corrigé"
 msgstr "With or without a marking guide"
 
-#: templates/sujets/liste.html:81
+#: templates/sujets/liste.html:91
 msgid "Filtrer"
 msgstr "Filter"

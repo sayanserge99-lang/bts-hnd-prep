@@ -55,6 +55,7 @@
     {% endif %}
     {# CDC 10.1 : source obligatoire, affichée sur la fiche. #}
     <dt class="text-gris">{% translate "Source" %}</dt><dd>{{ sujet.source }}</dd>
+    {% if sujet.fourni_par %}<dt class="text-gris">{% translate "Fourni par" %}</dt><dd>{{ sujet.fourni_par.nom }}</dd>{% endif %}
   </dl>
 
   {# CDC 10.1 : procédure de retrait pour tout ayant droit. #}

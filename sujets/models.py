@@ -99,6 +99,10 @@ class Sujet(models.Model):
     texte_extrait = models.TextField(blank=True, help_text=_("Rempli par la tâche d'extraction, sert à la recherche."))
     recherche = SearchVectorField(null=True, editable=False)
     source = models.CharField(max_length=200, help_text=_("Exemple : MINESUP, BTS session 2025."))
+    fourni_par = models.ForeignKey(
+        "partenaires.Etablissement", on_delete=models.SET_NULL, null=True, blank=True, related_name="sujets_fournis",
+        verbose_name=_("fourni par"), help_text=_("Établissement qui a transmis le sujet (filtre du catalogue)."),
+    )
     statut = models.CharField(max_length=10, choices=Statut.choices, default=Statut.BROUILLON)
     date_publication = models.DateTimeField(null=True, blank=True, editable=False)
     cree_le = models.DateTimeField(auto_now_add=True)

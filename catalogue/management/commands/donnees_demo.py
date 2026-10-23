@@ -9,6 +9,7 @@ from django.db import transaction
 
 from catalogue.models import Chapitre, Examen, Matiere, Session, Specialite, SpecialiteMatiere
 from entrainement.models import Choix, CritereBareme, ExamenBlanc, Question
+from partenaires.models import Etablissement
 from sujets.models import Corrige, Sujet
 
 SOURCE_DEMO = "Démonstration (sujet fictif)"
@@ -64,6 +65,121 @@ MARQUE_QUESTION_DEMO = "(Démonstration)"
 VRAI_FAUX = [("Vrai", True), ("Faux", False)]
 FAUX_VRAI = [("Vrai", False), ("Faux", True)]
 FALSE_TRUE = [("True", False), ("False", True)]
+
+# (examen, champ du nom, spécialité, [(matière, coefficient, texte du sujet)])
+MATIERES_INFORMATIQUE = [
+    ("BTS", "nom_fr", "IG", [
+        ("Bases de données", 4, "Modèle relationnel, clés primaires et étrangères, requêtes SQL, jointures et agrégats."),
+        ("Réseaux et systèmes", 3, "Modèle OSI, adressage IPv4, masques de sous-réseau, protocoles TCP et UDP."),
+    ]),
+    ("HND", "nom_en", "SWE", [
+        ("Database Systems", 4, "Relational model, normalisation, SQL queries, joins and transactions."),
+    ]),
+]
+
+# (examen, matière, [(chapitre, [(type, énoncé, choix, réponse attendue, explication)])])
+QUESTIONS_INFORMATIQUE = [
+    ("BTS", "Algorithmique et programmation", [
+        ("Algorithmes de base", [
+            ("choix_unique", "Combien de comparaisons fait au pire une recherche dichotomique dans un tableau trié de 1 024 éléments ?",
+             [("10", False), ("11", True), ("512", False), ("1 024", False)], "",
+             r"Chaque étape divise l'intervalle par deux : $\log_2(1024) + 1 = 11$ comparaisons au pire."),
+            ("vrai_faux", "Le tri par insertion est efficace sur un tableau déjà presque trié.", VRAI_FAUX, "",
+             "Il fait alors très peu de décalages : sa complexité se rapproche de $O(n)$."),
+            ("reponse_courte", "Que vaut la variable `s` après : `s = 0` puis `pour i de 1 à 4 : s = s + i` ?", [], "10",
+             "1 + 2 + 3 + 4 = 10."),
+        ]),
+        ("Structures de données", [
+            ("choix_unique", "Quelle structure suit le principe « dernier entré, premier sorti » ?",
+             [("La pile", True), ("La file", False), ("L'arbre binaire", False), ("Le tableau trié", False)], "",
+             "La pile (LIFO) ; la file est « premier entré, premier sorti » (FIFO)."),
+            ("choix_multiple", "Lesquelles de ces opérations se font en temps constant sur une pile ?",
+             [("Empiler", True), ("Dépiler", True), ("Rechercher un élément quelconque", False), ("Lire le sommet", True)], "",
+             "Rechercher un élément oblige à parcourir la pile : temps proportionnel à sa taille."),
+        ]),
+    ]),
+    ("BTS", "Bases de données", [
+        ("Modèle relationnel", [
+            ("choix_unique", "Quel rôle joue une clé étrangère ?",
+             [("Elle relie une ligne à une ligne d'une autre table", True), ("Elle rend la table plus rapide", False),
+              ("Elle chiffre les données", False), ("Elle remplace la clé primaire", False)], "",
+             "Elle référence la clé primaire d'une autre table et garantit l'intégrité référentielle."),
+            ("vrai_faux", "Une clé primaire peut contenir la valeur NULL.", FAUX_VRAI, "",
+             "Une clé primaire identifie chaque ligne : elle est unique et jamais NULL."),
+        ]),
+        ("Requêtes SQL", [
+            ("choix_unique", "Quelle clause filtre les groupes après un `GROUP BY` ?",
+             [("HAVING", True), ("WHERE", False), ("ORDER BY", False), ("LIMIT", False)], "",
+             "`WHERE` filtre les lignes avant le regroupement ; `HAVING` filtre les groupes après."),
+            ("reponse_courte", "Quel mot-clé SQL supprime les doublons dans le résultat d'un `SELECT` ?", [], "DISTINCT",
+             "`SELECT DISTINCT ville FROM client;`"),
+        ]),
+    ]),
+    ("HND", "Programming", [
+        ("Control structures", [
+            ("choix_unique", "How many times does `for i in range(2, 10, 3)` run its body?",
+             [("2", False), ("3", True), ("4", False), ("8", False)], "", "i takes the values 2, 5 and 8."),
+            ("vrai_faux", "A `while` loop may run zero times.", [("True", True), ("False", False)], "",
+             "The condition is checked before the first iteration."),
+        ]),
+    ]),
+    ("HND", "Database Systems", [
+        ("SQL", [
+            ("choix_unique", "Which join returns only the rows that match in both tables?",
+             [("INNER JOIN", True), ("LEFT JOIN", False), ("FULL OUTER JOIN", False), ("CROSS JOIN", False)], "",
+             "INNER JOIN keeps only matching rows; outer joins also keep unmatched ones."),
+            ("reponse_courte", "Which SQL keyword sorts the result of a query? (two words)", [], "ORDER BY",
+             "`SELECT name FROM student ORDER BY name;`"),
+        ]),
+    ]),
+]
+
+CORRIGES_INFORMATIQUE = [
+    ("Algorithmique et programmation",
+     r"""## Exercice 1 : recherche du maximum
+
+On parcourt le tableau une seule fois en gardant le plus grand élément vu :
+
+```
+fonction maximum(t : tableau d'entiers) : entier
+    max ← t[0]
+    pour i de 1 à longueur(t) - 1 faire
+        si t[i] > max alors
+            max ← t[i]
+        fin si
+    fin pour
+    retourner max
+fin fonction
+```
+
+Complexité : $O(n)$, une comparaison par élément.
+""",
+     r"""## Exercice 2 : factorielle récursive
+
+```python
+def factorielle(n):
+    if n <= 1:          # cas de base : sans lui, la récursion ne s'arrête jamais
+        return 1
+    return n * factorielle(n - 1)
+```
+
+Pour $n = 5$ : $5! = 5 \times 4 \times 3 \times 2 \times 1 = 120$.
+"""),
+    ("Bases de données",
+     r"""## Exercice 1 : nombre de commandes par client
+
+```sql
+SELECT c.nom, COUNT(cmd.id) AS nb_commandes
+FROM client c
+LEFT JOIN commande cmd ON cmd.client_id = c.id
+GROUP BY c.nom
+HAVING COUNT(cmd.id) >= 3
+ORDER BY nb_commandes DESC;
+```
+
+Le `LEFT JOIN` garde aussi les clients sans commande (compte à 0) ; `HAVING` filtre après le regroupement.
+""", ""),
+]
 
 # (examen, matière, [(chapitre, [(type, énoncé, choix, réponse attendue, explication)])])
 QUESTIONS = [
@@ -196,6 +312,7 @@ class Command(BaseCommand):
             self.creer_corriges()
             self.creer_questions()
             self.creer_examen_blanc()
+            self.creer_informatique()
             return
 
         with transaction.atomic():
@@ -251,6 +368,7 @@ class Command(BaseCommand):
         self.creer_corriges()
         self.creer_questions()
         self.creer_examen_blanc()
+        self.creer_informatique()
 
     def creer_corriges(self):
         if Corrige.objects.filter(titulaire_droits=SOURCE_DEMO).exists():
@@ -300,3 +418,72 @@ class Command(BaseCommand):
         CritereBareme.objects.create(examen_blanc=examen, libelle="Exercice 1 : tableau d'amortissement", points=7, ordre=1)
         CritereBareme.objects.create(examen_blanc=examen, libelle="Exercice 2 : écritures de régularisation", points=7, ordre=2)
         self.stdout.write(self.style.SUCCESS("1 examen blanc de démonstration créé."))
+
+    def creer_informatique(self):
+        """Spécialité de lancement (demande de Serge Alain) : informatique en premier, avec du contenu complet."""
+        # Établissements cités par Serge Alain ; la ville de HINTEL reste à compléter dans l'admin.
+        iai, _ = Etablissement.objects.get_or_create(nom="IAI-Cameroun", defaults={"ville": "Yaoundé", "region": "centre"})
+        Etablissement.objects.get_or_create(nom="HINTEL")
+        Specialite.objects.filter(code__in=["IG", "SWE"]).update(ordre=1)
+
+        if Matiere.objects.filter(nom_fr="Bases de données").exists():
+            return
+        nombre_sujets = 0
+        for examen_code, champ_nom, specialite_code, matieres in MATIERES_INFORMATIQUE:
+            examen = Examen.objects.get(code=examen_code)
+            specialite = Specialite.objects.get(examen=examen, code=specialite_code)
+            for nom, coefficient, texte in matieres:
+                matiere = Matiere.objects.create(examen=examen, **{champ_nom: nom})
+                SpecialiteMatiere.objects.create(specialite=specialite, matiere=matiere, coefficient=coefficient)
+                for session in Session.objects.filter(examen=examen):
+                    sujet = Sujet(
+                        titre=nom, session=session, matiere=matiere, type_epreuve=Sujet.TypeEpreuve.ECRITE,
+                        duree=240, nb_pages=1, texte_extrait=texte, source=SOURCE_DEMO,
+                        fourni_par=iai if session.annee >= 2025 and examen_code == "BTS" else None,
+                        statut=Sujet.Statut.BROUILLON if session.annee == ANNEE_FUTURE else Sujet.Statut.PUBLIE,
+                    )
+                    sujet.fichier.save(f"demo-{examen_code}-{session.annee}.pdf", ContentFile(pdf_demo(nom, session.annee)), save=False)
+                    sujet.save()
+                    sujet.specialites.set([specialite])
+                    nombre_sujets += 1
+        # Les sujets d'algorithmique de 2025-2026, déjà créés, sont eux aussi « fournis par » l'IAI.
+        Sujet.objects.filter(source=SOURCE_DEMO, titre="Algorithmique et programmation", session__annee__gte=2025).update(fourni_par=iai)
+
+        nombre_questions = 0
+        for examen_code, matiere_nom, chapitres in QUESTIONS_INFORMATIQUE:
+            champ = "nom_fr" if examen_code == "BTS" else "nom_en"
+            matiere = Matiere.objects.get(examen__code=examen_code, **{champ: matiere_nom})
+            for ordre, (titre, questions) in enumerate(chapitres, start=1):
+                champ_titre = "titre_fr" if examen_code == "BTS" else "titre_en"
+                chapitre = Chapitre.objects.create(matiere=matiere, ordre=ordre, **{champ_titre: titre})
+                for type_question, enonce, choix, attendue, explication in questions:
+                    question = Question.objects.create(
+                        chapitre=chapitre, type=type_question, enonce=enonce, reponse_attendue=attendue,
+                        explication=f"{MARQUE_QUESTION_DEMO} {explication}",
+                        langue="fr" if examen_code == "BTS" else "en", publiee=True,
+                    )
+                    for texte, correct in choix:
+                        Choix.objects.create(question=question, texte=texte, est_correct=correct)
+                    nombre_questions += 1
+
+        for matiere_nom, debut, suite in CORRIGES_INFORMATIQUE:
+            sujet = Sujet.objects.get(source=SOURCE_DEMO, session__examen__code="BTS", session__annee=2025, titre=matiere_nom)
+            Corrige.objects.create(
+                sujet=sujet, statut=Corrige.Statut.VERIFIE, publication=Corrige.Publication.PUBLIE,
+                auteur="Mme Exemple, enseignante d'informatique (fictif)", titulaire_droits=SOURCE_DEMO,
+                regime_propriete=Corrige.RegimePropriete.PLATEFORME, partie_gratuite=debut, contenu=suite,
+            )
+
+        sujet = Sujet.objects.get(
+            source=SOURCE_DEMO, session__examen__code="BTS", session__annee=2025, titre="Algorithmique et programmation"
+        )
+        examen = ExamenBlanc.objects.create(
+            titre="Examen blanc : Algorithmique et programmation 2025", sujet=sujet, duree=sujet.duree, points_qcm=6,
+            publie=True, bareme="Partie 1 : QCM (6 points).\nPartie 2 : exercices du sujet, à rédiger (7 points chacun).",
+        )
+        examen.questions.set(Question.objects.filter(chapitre__matiere=sujet.matiere).order_by("pk")[:4])
+        CritereBareme.objects.create(examen_blanc=examen, libelle="Exercice 1 : algorithme de recherche", points=7, ordre=1)
+        CritereBareme.objects.create(examen_blanc=examen, libelle="Exercice 2 : fonction récursive", points=7, ordre=2)
+        self.stdout.write(self.style.SUCCESS(
+            f"Informatique : {nombre_sujets} sujets, {nombre_questions} questions, {len(CORRIGES_INFORMATIQUE)} corrigés, 1 examen blanc."
+        ))

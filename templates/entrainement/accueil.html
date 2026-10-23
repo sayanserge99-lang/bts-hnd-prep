@@ -30,11 +30,14 @@
   </div>
 
   {% for matiere in matieres %}
+    {# Sans profil d'étude (compte de l'équipe), toutes les matières : on les regroupe par examen. #}
+    {% if not user.profil %}{% ifchanged matiere.examen_id %}<h2 class="pt-2 text-sm font-semibold uppercase tracking-wide text-gris">{{ matiere.examen.code }}</h2>{% endifchanged %}{% endif %}
     <section class="carte space-y-3">
       <div class="flex flex-wrap items-baseline justify-between gap-2">
         <h2 class="text-lg font-semibold">{{ matiere.nom }}</h2>
-        <span class="text-sm text-gris">{% blocktranslate count n=matiere.nb_questions %}{{ n }} question{% plural %}{{ n }} questions{% endblocktranslate %}</span>
+        <span class="text-sm text-gris">{% if matiere.nb_questions %}{% blocktranslate count n=matiere.nb_questions %}{{ n }} question{% plural %}{{ n }} questions{% endblocktranslate %}{% else %}<span class="badge-bientot">{% translate "Questions bientôt disponibles" %}</span>{% endif %}</span>
       </div>
+      {% if matiere.nb_questions %}
       <form method="post" action="{% url 'entrainement:lancer' %}" class="flex flex-wrap items-end gap-3">
         {% csrf_token %}
         <input type="hidden" name="matiere" value="{{ matiere.pk }}">
@@ -54,6 +57,7 @@
                   data-texte-erreur="{% translate 'Téléchargement impossible : vérifiez la connexion.' %}">{% translate "Télécharger pour le hors ligne" %}</button>
         {% endif %}
       </form>
+      {% endif %}
       {% if matiere.nb_erreurs %}
         <form method="post" action="{% url 'entrainement:lancer' %}">
           {% csrf_token %}
@@ -64,7 +68,7 @@
       {% endif %}
     </section>
   {% empty %}
-    <p class="carte text-gris">{% translate "Aucune question n'est encore disponible pour votre spécialité. Revenez bientôt !" %}</p>
+    <p class="carte text-gris">{% translate "Aucune matière n'est encore enregistrée pour votre spécialité." %}</p>
   {% endfor %}
 
   {% if dernieres %}

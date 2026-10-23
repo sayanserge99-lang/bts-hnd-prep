@@ -88,7 +88,7 @@ class SujetAdmin(LimiteAuxMatieresDuModerateur, admin.ModelAdmin):
         reponse["Content-Disposition"] = 'attachment; filename="sujets.csv"'
         return reponse
     list_display = ("titre", "matiere", "session", "type_epreuve", "statut", "date_publication")
-    list_filter = ("statut", "session__examen", "session__annee", "type_epreuve")
+    list_filter = ("statut", "session__examen", "session__annee", "type_epreuve", "fourni_par")
     search_fields = ("titre", "texte_extrait")
     filter_horizontal = ("specialites",)
     actions = ["publier", "depublier", "retraiter_pdf"]

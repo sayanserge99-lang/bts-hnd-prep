@@ -76,10 +76,13 @@ class Specialite(models.Model):
     code = models.CharField(max_length=20)
     nom = models.CharField(_("nom"), max_length=200)
     filiere = models.CharField(_("filière"), max_length=20, choices=Filiere.choices)
+    # Les spécialités prioritaires (lancement) s'affichent en premier partout sur le site.
+    ordre = models.PositiveSmallIntegerField(_("ordre d'affichage"), default=100, help_text=_("Plus petit = affiché en premier."))
     matieres = models.ManyToManyField("Matiere", through="SpecialiteMatiere", related_name="specialites")
 
     class Meta:
         verbose_name = _("spécialité")
+        ordering = ["ordre", "nom"]
         constraints = [
             models.UniqueConstraint(fields=["examen", "code"], name="specialite_code_unique_par_examen"),
         ]

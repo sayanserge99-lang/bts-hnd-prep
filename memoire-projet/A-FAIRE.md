@@ -48,6 +48,9 @@
 - [ ] Alpine.js : pas encore nécessaire (ajouter quand il le sera : minuteur d'examen blanc, menus).
 - [x] Modérateurs limités à leurs matières (liste, fiches, actions, listes de choix), accès admin automatique.
 - [ ] V3 : rôle « Établissement » pour le tableau de bord IPES (CDC 10.6), absent des 3 rôles du CDC section 7.
+- [x] Informatique en premier, toutes les matières dans Entraînement, établissement dans le profil, stats et filtre.
+- [ ] Compléter la ville et la région de HINTEL dans l'admin ; ajouter les autres IPES.
+- [ ] Espace établissement + épreuves internes (étape 2 de la demande « par établissement »).
 - [x] Connexion Google V2 (code prêt, inactive sans identifiants).
 - [ ] Créer les identifiants OAuth Google (Serge Alain) et essayer la connexion en vrai.
 - [ ] Un compte créé avec Google ne peut pas utiliser « mot de passe oublié » (pas de mot de passe) : ajouter

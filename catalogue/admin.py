@@ -22,7 +22,8 @@ class SpecialiteMatiereInline(admin.TabularInline):
 
 @admin.register(Specialite)
 class SpecialiteAdmin(TranslationAdmin):
-    list_display = ("nom", "examen", "filiere")
+    list_display = ("nom", "examen", "filiere", "ordre")
+    list_editable = ("ordre",)
     list_filter = ("examen", "filiere")
     inlines = [SpecialiteMatiereInline]
 

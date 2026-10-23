@@ -17,16 +17,18 @@ class Etablissement(models.Model):
         SUD = "sud", "Sud"
         SUD_OUEST = "sud_ouest", "Sud-Ouest"
 
-    nom = models.CharField(max_length=200)
-    ville = models.CharField(max_length=100)
-    region = models.CharField(_("région"), max_length=20, choices=Region.choices)
+    nom = models.CharField(max_length=200, unique=True)
+    # Facultatives : un établissement cité par les étudiants peut être ajouté avant de connaître son adresse.
+    ville = models.CharField(max_length=100, blank=True)
+    region = models.CharField(_("région"), max_length=20, choices=Region.choices, blank=True)
     contact = models.CharField(max_length=200, blank=True)
 
     class Meta:
         verbose_name = _("établissement")
+        ordering = ["nom"]
 
     def __str__(self):
-        return f"{self.nom} ({self.ville})"
+        return f"{self.nom} ({self.ville})" if self.ville else self.nom
 
 
 class Partenariat(models.Model):

@@ -188,7 +188,19 @@ def test_un_moderateur_n_importe_que_dans_ses_matieres(catalogue, bts, compta_ge
 
 def test_modele_de_tableau():
     contenu = modele_csv()
-    assert contenu.startswith("﻿" + ENTETE)
+    assert contenu.startswith("﻿" + ENTETE + ";fourni_par")
+
+
+def test_colonne_fourni_par(catalogue):
+    from partenaires.models import Etablissement
+
+    iai = Etablissement.objects.create(nom="IAI-Cameroun")
+    entete = ENTETE + ";fourni_par"
+    rapport = importer(lot([LIGNE + ";iai-cameroun"], entete=entete))
+    assert Sujet.objects.get(pk=rapport[0].sujet_id).fourni_par == iai
+
+    inconnu = importer(lot([LIGNE.replace("compta.pdf", "autre.pdf") + ";Inconnu"], {"autre.pdf": PDF}, entete=entete))
+    assert inconnu[0].statut == "erreur" and "établissement inconnu" in inconnu[0].message
 
 
 def test_page_d_import_de_l_admin(admin_client, catalogue):

@@ -19,11 +19,12 @@ from django.utils.translation import gettext as _
 
 from accounts.moderation import est_limite_a_ses_matieres, matieres_de
 from catalogue.models import Examen, Matiere, Session
+from partenaires.models import Etablissement
 
 from .models import Sujet
 
 NOM_TABLEAU = "sujets.csv"
-COLONNES = ["fichier", "examen", "annee", "matiere", "specialites", "titre", "type", "duree", "source", "bareme"]
+COLONNES = ["fichier", "examen", "annee", "matiere", "specialites", "titre", "type", "duree", "source", "bareme", "fourni_par"]
 COLONNES_OBLIGATOIRES = {"fichier", "examen", "annee", "matiere", "duree", "source"}
 EXTENSIONS_IMAGES = {".jpg", ".jpeg", ".png"}
 EXEMPLE = {
@@ -37,6 +38,7 @@ EXEMPLE = {
     "duree": "240",
     "source": "MINESUP, BTS session 2025",
     "bareme": "",
+    "fourni_par": "",
 }
 
 
@@ -198,6 +200,11 @@ class Importateur:
             raise ValueError(_("durée invalide « %(duree)s » (en minutes)") % {"duree": rangee["duree"]})
         if not rangee["source"]:
             raise ValueError(_("source obligatoire (CDC 10.1)"))
+        fourni_par = None
+        if rangee["fourni_par"]:
+            fourni_par = Etablissement.objects.filter(nom__iexact=rangee["fourni_par"]).first()
+            if fourni_par is None:
+                raise ValueError(_("établissement inconnu « %(nom)s » : ajoutez-le d'abord dans l'admin") % {"nom": rangee["fourni_par"]})
 
         # CDC 3.7 : même session, même matière, même type d'épreuve = doublon probable.
         cle = (session.pk, matiere.pk, type_epreuve)
@@ -214,6 +221,7 @@ class Importateur:
             "duree": int(rangee["duree"]),
             "source": rangee["source"],
             "bareme": rangee["bareme"],
+            "fourni_par": fourni_par,
         }
 
     def importer(self, source, contenu_tableau, simulation=True):

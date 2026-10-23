@@ -67,6 +67,16 @@
             {% endfor %}
           </select>
         </label>
+        {% if etablissements %}
+        <label class="text-sm font-medium">{% translate "Fourni par" %}
+          <select name="fourni_par" class="champ mt-1">
+            <option value="">{% translate "Tous les établissements" %}</option>
+            {% for etablissement in etablissements %}
+              <option value="{{ etablissement.pk }}" {% if filtres.fourni_par == etablissement.pk|stringformat:"d" %}selected{% endif %}>{{ etablissement.nom }}</option>
+            {% endfor %}
+          </select>
+        </label>
+        {% endif %}
         {% if fonctionnalites.corriges %}
         <label class="text-sm font-medium">{% translate "Corrigé" %}
           <select name="corrige" class="champ mt-1">

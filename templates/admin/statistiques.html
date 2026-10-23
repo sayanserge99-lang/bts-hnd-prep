@@ -32,6 +32,27 @@
     {% include "admin/_tuile_statistique.html" with indicateur=examens libelle=_("examens blancs terminés") %}
   </div>
 
+  <h2>{% translate "Par établissement" %}</h2>
+  {% if par_etablissement %}
+    {# CDC 10.6 : ordre alphabétique, jamais un classement ; visible par l'administrateur seulement. #}
+    <table class="stats-table">
+      <thead><tr><th>{% translate "Établissement" %}</th><th class="nombre">{% translate "Inscrits" %}</th><th class="nombre">{% blocktranslate with n=periode %}Actifs ({{ n }} j){% endblocktranslate %}</th><th class="nombre">{% blocktranslate with n=periode %}Réussite aux questions ({{ n }} j){% endblocktranslate %}</th></tr></thead>
+      <tbody>
+        {% for ligne in par_etablissement %}
+          <tr>
+            <td>{% if ligne.etablissement %}{{ ligne.etablissement.nom }}{% else %}<em>{% translate "Non renseigné" %}</em>{% endif %}</td>
+            <td class="nombre">{{ ligne.inscrits }}</td>
+            <td class="nombre">{{ ligne.actifs }}</td>
+            <td class="nombre">{% if ligne.reussite is not None %}{{ ligne.reussite }} %{% else %}—{% endif %}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <p class="help">{% translate "Par ordre alphabétique : ce n'est pas un classement des établissements (CDC 10.6)." %}</p>
+  {% else %}
+    <p>{% translate "Aucun étudiant inscrit pour le moment." %}</p>
+  {% endif %}
+
   <h2>{% translate "À traiter" %}</h2>
   <div class="stats-tuiles">
     <a class="stats-tuile{% if a_traiter.retraits %} a-traiter{% endif %}" href="{% url 'admin:communaute_demanderetrait_changelist' %}?statut__exact=recue"><div class="valeur">{{ a_traiter.retraits }}</div><div class="libelle">{% translate "demandes de retrait reçues" %}</div></a>

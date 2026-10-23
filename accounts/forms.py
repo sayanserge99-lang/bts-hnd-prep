@@ -9,6 +9,7 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from catalogue.models import Session, Specialite
+from partenaires.models import Etablissement
 
 from .models import Consentement, ProfilEtude, Utilisateur
 
@@ -27,8 +28,18 @@ class UtilisateurChangeForm(UserChangeForm):
 
 def champ_specialite():
     return forms.ModelChoiceField(
-        queryset=Specialite.objects.select_related("examen").order_by("examen__code", "nom"),
+        queryset=Specialite.objects.select_related("examen").order_by("examen__code", "ordre", "nom"),
         label=_("Spécialité préparée"),
+    )
+
+
+def champ_etablissement():
+    # Facultatif (CDC 10.2 : collecte minimale) ; sert aux statistiques et, plus tard, à l'espace établissement.
+    return forms.ModelChoiceField(
+        queryset=Etablissement.objects.all(),
+        required=False,
+        label=_("Mon établissement"),
+        empty_label=_("Autre / non listé"),
     )
 
 
@@ -45,6 +56,7 @@ def regrouper_par_examen(champ):
 
 class InscriptionForm(UserCreationForm):
     specialite = champ_specialite()
+    etablissement = champ_etablissement()
     # CDC 10.2 : case non précochée, consentement enregistré avec sa version.
     accepte_conditions = forms.BooleanField(
         label=_("J'accepte les conditions générales et la politique de confidentialité."),
@@ -71,14 +83,16 @@ class InscriptionForm(UserCreationForm):
     @transaction.atomic
     def save(self, commit=True):
         utilisateur = super().save(commit=True)
-        preparer_etudiant(utilisateur, self.cleaned_data["specialite"])
+        preparer_etudiant(utilisateur, self.cleaned_data["specialite"], self.cleaned_data["etablissement"])
         return utilisateur
 
 
-def preparer_etudiant(utilisateur, specialite):
+def preparer_etudiant(utilisateur, specialite, etablissement=None):
     """Rôle Étudiant, profil d'étude et consentements (CDC 10.2), quelle que soit la façon de s'inscrire."""
     utilisateur.groups.add(Group.objects.get(name="Étudiant"))
-    ProfilEtude.objects.create(utilisateur=utilisateur, examen=specialite.examen, specialite=specialite)
+    ProfilEtude.objects.create(
+        utilisateur=utilisateur, examen=specialite.examen, specialite=specialite, etablissement=etablissement
+    )
     for objet in (Consentement.Objet.CGU, Consentement.Objet.CONFIDENTIALITE):
         Consentement.objects.create(utilisateur=utilisateur, objet=objet, version=settings.VERSION_POLITIQUES)
 
@@ -90,6 +104,7 @@ class FinInscriptionGoogleForm(forms.Form):
     last_name = forms.CharField(label=_("Nom"), max_length=150)
     langue = forms.ChoiceField(label=_("Langue"), choices=Utilisateur._meta.get_field("langue").choices)
     specialite = champ_specialite()
+    etablissement = champ_etablissement()
     accepte_conditions = forms.BooleanField(
         label=_("J'accepte les conditions générales et la politique de confidentialité."), required=True
     )
@@ -107,7 +122,7 @@ class FinInscriptionGoogleForm(forms.Form):
         # Pas de mot de passe : ce compte se connecte avec Google.
         utilisateur.set_unusable_password()
         utilisateur.save()
-        preparer_etudiant(utilisateur, donnees["specialite"])
+        preparer_etudiant(utilisateur, donnees["specialite"], donnees["etablissement"])
         return utilisateur
 
 
@@ -140,6 +155,7 @@ class ProfilForm(forms.ModelForm):
     """Identité et profil d'étude, sur un même formulaire."""
 
     specialite = champ_specialite()
+    etablissement = champ_etablissement()
     session_prevue = forms.ModelChoiceField(
         queryset=Session.objects.none(), required=False, label=_("Session prévue")
     )
@@ -154,6 +170,7 @@ class ProfilForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         regrouper_par_examen(self.fields["specialite"])
         self.fields["specialite"].initial = profil.specialite_id
+        self.fields["etablissement"].initial = profil.etablissement_id
         self.fields["session_prevue"].initial = profil.session_prevue_id
         self.fields["session_prevue"].queryset = (
             Session.objects.filter(date_fin_officielle__gte=timezone.localdate()).select_related("examen").order_by("annee")
@@ -173,6 +190,7 @@ class ProfilForm(forms.ModelForm):
         self.profil.examen = specialite.examen
         self.profil.specialite = specialite
         self.profil.session_prevue = self.cleaned_data["session_prevue"]
+        self.profil.etablissement = self.cleaned_data["etablissement"]
         self.profil.save()
         return utilisateur
 

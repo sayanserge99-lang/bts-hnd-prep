@@ -18,6 +18,7 @@ from catalogue.models import Examen, Matiere, SpecialiteMatiere
 
 from communaute.models import Signalement
 from paiements.acces import lit_le_corrige_complet
+from partenaires.models import Etablissement
 
 from .models import ConsultationJour, Corrige, Favori, Sujet
 
@@ -55,7 +56,7 @@ def liste(request):
     if examen is None:
         return render(request, "sujets/liste.html", {"examen": None})
 
-    specialites = examen.specialites.order_by("nom")
+    specialites = examen.specialites.all()
     specialite = specialites.filter(code=request.GET.get("specialite")).first()
 
     # Seuls les sujets publiés sont visibles : jamais un brouillon ni un sujet masqué.
@@ -76,6 +77,7 @@ def liste(request):
         "type": request.GET.get("type", ""),
         "q": request.GET.get("q", "").strip(),
         "corrige": request.GET.get("corrige", ""),
+        "fourni_par": request.GET.get("fourni_par", ""),
     }
     if specialite:
         sujets = sujets.filter(specialites=specialite)
@@ -85,6 +87,8 @@ def liste(request):
         sujets = sujets.filter(matiere_id=int(filtres["matiere"]))
     if filtres["corrige"] in (Corrige.Statut.VERIFIE, Corrige.Statut.COMMUNAUTE):
         sujets = sujets.filter(statut_corrige=filtres["corrige"])
+    if filtres["fourni_par"].isdigit():
+        sujets = sujets.filter(fourni_par_id=int(filtres["fourni_par"]))
     if filtres["type"] in Sujet.TypeEpreuve.values:
         sujets = sujets.filter(type_epreuve=filtres["type"])
     if filtres["q"]:
@@ -98,6 +102,8 @@ def liste(request):
         "specialite": specialite,
         "annees": publies.order_by("-session__annee").values_list("session__annee", flat=True).distinct(),
         "matieres": Matiere.objects.filter(sujets__in=publies).distinct().order_by("nom"),
+        # Seulement les établissements qui ont fourni au moins un sujet publié de cet examen.
+        "etablissements": Etablissement.objects.filter(sujets_fournis__in=publies).distinct(),
         "types": Sujet.TypeEpreuve.choices,
         "filtres": filtres,
         "page": page,
@@ -107,7 +113,7 @@ def liste(request):
 
 
 def detail(request, pk):
-    sujet = get_object_or_404(Sujet.objects.publies().select_related("session__examen", "matiere"), pk=pk)
+    sujet = get_object_or_404(Sujet.objects.publies().select_related("session__examen", "matiere", "fourni_par"), pk=pk)
     # Le coefficient dépend de la spécialité (décision du point 7).
     coefficients = (
         SpecialiteMatiere.objects.filter(matiere=sujet.matiere, specialite__in=sujet.specialites.all())

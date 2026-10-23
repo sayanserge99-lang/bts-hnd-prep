@@ -90,3 +90,8 @@
   preparer_etudiant. Problème repéré avant le code : un compte Google sans mot de passe ne pouvait pas se
   supprimer → confirmation par e-mail. 16 tests verts du premier coup ; contre-épreuve (email_verified retiré
   → 1 échec). Guide console Google ajouté. 215/215 verts.
+- 23/10 : demande de Serge Alain (capture Entraînement : pas d'informatique, matières manquantes, par établissement).
+  Questions posées → réponses : 4 usages par établissement, lancer avec l'informatique. Fait : ordre des spécialités,
+  contenu de démo informatique, toutes les matières, établissement dans le profil, stats par établissement,
+  fourni_par (filtre, fiche, import). Erreur en route : constantes VRAI_FAUX utilisées avant leur définition dans
+  donnees_demo → corrigé. 9 tests ajoutés, 224/224 verts.

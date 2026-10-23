@@ -4,13 +4,14 @@ from dataclasses import dataclass
 from datetime import timedelta
 
 from django.conf import settings
-from django.db.models import Count, F, Sum
+from django.db.models import Count, F, Q, Sum
 from django.utils import timezone
 
 from accounts.models import ProfilEtude, Utilisateur
 from communaute.models import Contribution, DemandeRetrait, Signalement
-from entrainement.models import Question, Tentative
+from entrainement.models import Question, ReponseQuestion, Tentative
 from paiements.models import Abonnement, Paiement
+from partenaires.models import Etablissement
 from sujets.models import ConsultationJour, Corrige, Sujet
 
 PERIODE_JOURS = 30
@@ -27,6 +28,39 @@ class Indicateur:
         if self.precedente is None:
             return None
         return self.valeur - self.precedente
+
+
+def par_etablissement(etudiants, debut):
+    """Inscrits, actifs et réussite par établissement déclaré, pour l'administrateur seulement.
+
+    Ordre alphabétique, jamais un classement : CDC 10.6 (neutralité entre établissements).
+    """
+    cle = "utilisateur__profil__etablissement"
+    inscrits = dict(
+        ProfilEtude.objects.filter(utilisateur__in=etudiants).values_list("etablissement").annotate(n=Count("pk"))
+    )
+    actifs = dict(
+        Tentative.objects.filter(fin__date__gte=debut, utilisateur__in=etudiants)
+        .values_list(cle).annotate(n=Count("utilisateur", distinct=True))
+    )
+    reponses = {
+        ligne[f"tentative__{cle}"]: ligne
+        for ligne in ReponseQuestion.objects.filter(repondu_le__date__gte=debut, tentative__utilisateur__in=etudiants)
+        .values(f"tentative__{cle}")
+        .annotate(total=Count("pk"), justes=Count("pk", filter=Q(correcte=True)))
+    }
+    noms = Etablissement.objects.in_bulk([identifiant for identifiant in inscrits if identifiant])
+    lignes = []
+    for identifiant, nombre in inscrits.items():
+        detail = reponses.get(identifiant, {"total": 0, "justes": 0})
+        lignes.append({
+            "etablissement": noms.get(identifiant),
+            "inscrits": nombre,
+            "actifs": actifs.get(identifiant, 0),
+            "reussite": round(100 * detail["justes"] / detail["total"]) if detail["total"] else None,
+        })
+    # « Non renseigné » à la fin, le reste par ordre alphabétique.
+    return sorted(lignes, key=lambda ligne: (ligne["etablissement"] is None, str(ligne["etablissement"] or "").lower()))
 
 
 def tableau_de_bord(aujourd_hui=None):
@@ -83,6 +117,7 @@ def tableau_de_bord(aujourd_hui=None):
         }
 
     return {
+        "par_etablissement": par_etablissement(etudiants, debut),
         "periode": PERIODE_JOURS,
         "debut": debut,
         "inscrits": total_inscrits,

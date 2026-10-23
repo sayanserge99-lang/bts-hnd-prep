@@ -59,5 +59,9 @@
 - **Connexion Google** : écrite à la main (OpenID Connect, ~150 lignes) plutôt qu'avec django-allauth, pour garder
   nos pages et imposer le consentement + la spécialité à la première connexion. Signature du jeton non vérifiée
   (reçu directement de Google par HTTPS, OIDC Core 3.1.3.7), contenu vérifié. Lien de compte par e-mail vérifié.
+- **Informatique en premier** (Serge Alain, 23/10) : spécialité de lancement ; ordre réglable (`Specialite.ordre`).
+- **Établissements** : les quatre usages demandés (profil + stats, épreuves internes, espace établissement, filtre).
+  Établissement déclaré par l'étudiant = non vérifié : rien de réservé à un établissement sans validation par lui.
+  Statistiques par établissement : administrateur seulement, ordre alphabétique, jamais de classement (CDC 10.6).
 - **Interface** : Tailwind v4 en exécutable autonome (pas de Node), polices du système, HTMX servi localement ;
   les pages marchent aussi sans JavaScript (formulaire GET classique).

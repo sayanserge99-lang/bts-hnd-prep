@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db import IntegrityError
-from django.db.models import Count, Prefetch, Q
+from django.db.models import Case, Count, Prefetch, Q, When
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
@@ -16,17 +16,19 @@ from .models import Question, Quiz, ReponseQuestion, Tentative
 
 
 def matieres_proposees(utilisateur):
-    """Matières de la spécialité de l'étudiant qui ont des questions publiées, avec leurs chapitres."""
-    publiees = Q(chapitres__questions__publiee=True)
-    matieres = Matiere.objects.filter(publiees)
+    """Toutes les matières de la spécialité de l'étudiant (sans profil : toutes), avec leurs chapitres.
+
+    Celles qui ont déjà des questions publiées passent en premier ; les autres s'affichent « bientôt ».
+    """
+    matieres = Matiere.objects.select_related("examen")
     profil = getattr(utilisateur, "profil", None)
     if profil:
         matieres = matieres.filter(specialites=profil.specialite)
     chapitres = Chapitre.objects.annotate(nb=Count("questions", filter=Q(questions__publiee=True))).filter(nb__gt=0)
     return (
-        matieres.annotate(nb_questions=Count("chapitres__questions", filter=publiees, distinct=True))
+        matieres.annotate(nb_questions=Count("chapitres__questions", filter=Q(chapitres__questions__publiee=True), distinct=True))
         .prefetch_related(Prefetch("chapitres", queryset=chapitres.order_by("ordre"), to_attr="chapitres_actifs"))
-        .order_by("nom")
+        .order_by("examen__code", Case(When(nb_questions=0, then=1), default=0), "nom")
         .distinct()
     )
 
