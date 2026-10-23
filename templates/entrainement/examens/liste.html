@@ -13,7 +13,7 @@
 
   {% if not acces %}
     <p class="rounded-2xl bg-ambre-clair p-5">{% translate "Les examens blancs sont réservés aux abonnés du Pass session." %}
-      <a href="{% url 'accueil' %}#offres" class="font-semibold underline">{% translate "Voir le Pass session" %}</a></p>
+      <a href="{% url 'offres' %}" class="font-semibold underline">{% translate "Voir le Pass session" %}</a></p>
   {% endif %}
 
   <ul class="space-y-3">

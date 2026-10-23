@@ -32,7 +32,7 @@ def test_l_interface_passe_en_anglais(client):
 
     assert '<html lang="en">' in contenu
     assert "Past papers" in contenu
-    assert "Payment coming soon" in contenu
+    assert "Prices will be announced" in contenu
     # La mention d'indépendance reste dans les deux langues.
     assert "non affiliée au MINESUP" in contenu
 

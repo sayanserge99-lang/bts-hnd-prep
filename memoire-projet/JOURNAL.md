@@ -126,3 +126,8 @@
 - 23/10 : capture de Serge Alain (forum) : champ « Détails » invisible → le CSS des formulaires ne stylait pas les
   textarea (tous les champs multilignes du site touchés : forum, contributions) ; « Détails » rendu facultatif.
   Vérifié par capture (Chrome sans écran). 304/304 verts.
+- 23/10 : V3 module 4, Premium. Règle d'accès recopiée à 4 endroits → une seule (est_premium). Page Offres depuis la
+  base, accueil branché dessus, liens redirigés. PDF des corrigés : lien temporaire signé + filigrane (essayé sur un
+  vrai PDF, rendu vérifié avec Ghostscript). 3 tests à adapter (annonce sans offre, PDF sans jeton, faux PDF). Alerte
+  pypdf 7 (fusion avant rattachement) corrigée. Capture téléphone : tableau qui débordait → largeur minimale retirée.
+  Contre-épreuve : jeton toujours accepté → 1 échec. 311/311 verts.

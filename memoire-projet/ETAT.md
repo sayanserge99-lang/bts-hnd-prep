@@ -4,11 +4,11 @@
 
 ## Où on en est
 
-**V1 et V2 terminées côté code ; V3 en cours** (décidé avec Serge Alain le 23/10 : V3 avant la mise en ligne). Modules 1-3/5 faits : contributions, forum, codes d'accès. Le projet tourne :
+**V1 et V2 terminées côté code ; V3 en cours** (décidé avec Serge Alain le 23/10 : V3 avant la mise en ligne). Modules 1-4/5 faits : contributions, forum, codes d'accès, Premium. Le projet tourne :
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **303 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
+- `pytest` : **311 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
   10 statistiques, 16 Google).
 - **Connexion Google (V2)** `accounts/google.py` : OpenID Connect sans dépendance (state, PKCE, nonce ; vérifie iss,
   aud, exp, email_verified). Compte existant → connecté ; sinon page « Dernière étape » (spécialité + consentement
@@ -20,6 +20,14 @@
   convention de partenariat active ; voit les résultats des étudiants confirmés qui ont activé « Partager mes
   résultats » (consentement révocable, tracé). Étudiant confirmé : page « Épreuves de mon établissement »,
   PDF servi après contrôle (404 sinon). Lien « Mon établissement » dans l'en-tête des responsables.
+- **Premium (V3, module 4, 23/10)** : règle unique `paiements.acces.est_premium` (abonné, équipe, ou tout inscrit
+  tant que PAIEMENT_ACTIF est faux) utilisée par quiz, examens blancs, statistiques, corrigés. Page `/offres/`
+  (`paiements/offres.py`, gabarit `_formules.html` partagé avec l'accueil) : offres actives de la base, prix TTC
+  (filtre `fcfa`, espace fine insécable), fin du Pass par examen, comparatif CDC 7, lien code d'accès. Tous les
+  liens « Offres / Voir le Pass session » y mènent ; plus de prix écrit en dur. Démo : 2 offres d'exemple
+  (5 000 Pass, 1 500 / 30 j) [À FIXER]. PDF des corrigés (CDC 4) : lien signé valable 15 min et propre au compte
+  (`sujets/filigrane.py`), filigrane e-mail + date sur chaque page (pypdf, Helvetica, 18 % d'opacité), servi par
+  Django, `Cache-Control: private, no-store`. Vérifié par capture (page Offres sur téléphone, page filigranée).
 - **Codes d'accès (V3, module 3, 23/10)** `paiements/codes.py` : admin « Codes d'accès → Générer des codes »
   (partenariat à convention active, offre, nombre ≤ 2000 → CSV téléchargé aussitôt ; export CSV d'une sélection).
   Codes XXXX-XXXX-XXXX sans O/I/0/1 (32^12). Étudiant : « Mon espace → J'ai un code d'accès » (`/compte/profil/code/`),
@@ -107,7 +115,7 @@
 ## Prochaine étape
 
 **V3 avant la mise en ligne** (accord de Serge Alain le 23/10), dans cet ordre : contributions (fait), forum (fait),
-codes établissements (fait), Premium (offres, abonnements, page Offres), paiement simulé (agrégateur branché plus tard).
+codes établissements (fait), Premium (fait), paiement simulé (agrégateur branché plus tard).
 Ensuite, rappel des autres pistes :
 1. **Mise en ligne (bêta)** : choix du VPS et du nom de domaine (Serge Alain), puis `deploy/DEPLOIEMENT.md`
    (HTTPS non testé). Avant : sessions 2020-2026 avec dates de fin officielles, matières, quelques vrais sujets.

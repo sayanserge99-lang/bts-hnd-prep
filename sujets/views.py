@@ -9,6 +9,7 @@ from django.db.models import Case, Count, IntegerField, OuterRef, Q, Subquery, V
 from django.http import FileResponse, Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.http import content_disposition_header
 from django.utils.text import slugify
 from django.utils.translation import gettext as _
@@ -20,6 +21,7 @@ from communaute.models import Signalement
 from paiements.acces import lit_le_corrige_complet
 from partenaires.models import Etablissement
 
+from .filigrane import filigraner, jeton_valide
 from .models import ConsultationJour, Corrige, Favori, Sujet
 
 
@@ -176,7 +178,19 @@ def pdf_corrige(request, pk):
     if not corrige.fichier or not lit_le_corrige_complet(request.user):
         raise Http404
     sujet = corrige.sujet
-    return envoyer_pdf(request, corrige.fichier, f"corrige-{slugify(sujet.titre)}-{sujet.session.annee}.pdf")
+    # CDC 4 : lien temporaire et personnel. Expiré ou venu d'un autre compte : la fiche en donne un neuf.
+    if not jeton_valide(request.GET.get("jeton"), corrige, request.user):
+        return redirect(reverse("sujets:detail", args=[sujet.pk]) + "?onglet=corrige")
+    # CDC 4 : filigrane avec l'identifiant du lecteur. Servi par Django (pas par Nginx) : chaque copie est unique.
+    lecteur = request.user.email if request.user.is_authenticated else "BTS-HND Prep"
+    texte = f"{lecteur} · {timezone.localdate():%d/%m/%Y} · BTS-HND Prep"
+    with corrige.fichier.open("rb") as source:
+        contenu = filigraner(source.read(), texte)
+    nom = f"corrige-{slugify(sujet.titre)}-{sujet.session.annee}.pdf"
+    reponse = HttpResponse(contenu, content_type="application/pdf")
+    reponse["Content-Disposition"] = content_disposition_header(request.GET.get("telecharger") == "1", nom)
+    reponse["Cache-Control"] = "private, no-store"
+    return reponse
 
 
 @login_required

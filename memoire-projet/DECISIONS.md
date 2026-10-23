@@ -82,5 +82,8 @@
 - **Codes d'accès** (23/10) : générés par l'administrateur seulement (vendus hors plateforme), utilisables tant que
   la convention est active ; activer un code confirme l'étudiant dans l'établissement (le code en vient), sauf s'il en
   a déclaré un autre ; le responsable voit des compteurs, jamais qui a utilisé quel code.
+- **Premium** (23/10) : une seule fonction décide (est_premium) ; le filigrane met l'e-mail du lecteur (identifiant
+  lisible, dissuasif) ; le lien du PDF expire après 15 min et ne vaut que pour son compte — expiré, il ramène à la
+  fiche qui en donne un neuf (pas d'erreur pour l'étudiant). Les prix viennent de la base, jamais du gabarit.
 - **Interface** : Tailwind v4 en exécutable autonome (pas de Node), polices du système, HTMX servi localement ;
   les pages marchent aussi sans JavaScript (formulaire GET classique).

@@ -1,0 +1,37 @@
+{% load i18n prix %}
+{# Cartes des formules : la gratuite, puis les offres actives de la base (prix TTC, CDC 10.7). #}
+<div class="mt-6 grid gap-4 md:grid-cols-{% if offres|length > 1 %}3{% else %}2{% endif %}">
+  <div class="carte">
+    <p class="font-semibold">{% translate "Gratuit" %}</p>
+    <p class="mt-1 text-3xl font-extrabold">0 FCFA</p>
+    <ul class="mt-4 list-disc space-y-1 pl-5 text-sm text-gris">
+      <li>{% translate "Tous les sujets en consultation" %}</li>
+      <li>{% translate "Téléchargement des sujets en PDF" %}</li>
+      <li>{% translate "Début des corrigés, quelques quiz par jour" %}</li>
+    </ul>
+  </div>
+  {% for offre in offres %}
+    <div class="carte {% if offre.type == 'session' %}border-2 border-vert{% endif %}">
+      <p class="font-semibold">{{ offre.nom }}</p>
+      <p class="mt-1 text-3xl font-extrabold">{{ offre.prix|fcfa }} <span class="text-sm font-normal text-gris">{% translate "TTC" %}</span></p>
+      <p class="text-sm text-gris">
+        {% if offre.type == "duree" %}{% blocktranslate count n=offre.duree_jours %}pendant {{ n }} jour{% plural %}pendant {{ n }} jours{% endblocktranslate %}
+        {% else %}{% for session in offre.fins %}{% blocktranslate with examen=session.examen.code annee=session.annee fin=session.date_fin_officielle|date:"d/m/Y" %}{{ examen }} : jusqu'à la fin de la session {{ annee }} ({{ fin }}){% endblocktranslate %}{% if not forloop.last %}<br>{% endif %}
+          {% empty %}{% translate "jusqu'à la fin de la prochaine session" %}{% endfor %}{% endif %}
+      </p>
+      <ul class="mt-4 list-disc space-y-1 pl-5 text-sm text-gris">
+        <li>{% translate "Corrigés complets" %}</li>
+        <li>{% translate "QCM illimités et examens blancs" %}</li>
+        <li>{% translate "Suivi de vos points faibles" %}</li>
+      </ul>
+      {% if not paiement_actif %}
+        <p class="mt-4 inline-block rounded-lg border border-dashed border-gris/60 px-4 py-2 text-sm text-gris">{% translate "Paiement bientôt disponible" %}</p>
+      {% endif %}
+    </div>
+  {% empty %}
+    <div class="carte border-2 border-vert">
+      <p class="font-semibold">{% translate "Premium" %}</p>
+      <p class="mt-1 text-sm text-gris">{% translate "Corrigés complets, QCM illimités, examens blancs et suivi détaillé. Les prix seront annoncés à l'ouverture du paiement." %}</p>
+    </div>
+  {% endfor %}
+</div>

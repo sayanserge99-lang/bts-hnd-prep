@@ -6,6 +6,7 @@ from django.views.generic import TemplateView
 from accounts.views import changer_langue
 from catalogue.views import accueil, hors_ligne, manifeste, options_specialites, service_worker, statistiques
 from communaute.views import demande_retrait
+from paiements.views import offres
 
 
 admin.site.site_header = _("BTS-HND Prep — Administration")
@@ -29,6 +30,7 @@ urlpatterns = [
     path("etablissement/", include("partenaires.urls")),
     path("contribuer/", include("communaute.urls")),
     path("forum/", include("forum.urls")),
+    path("offres/", offres, name="offres"),
     # CDC 10 : pages légales accessibles depuis toutes les pages (contenu à rédiger).
     path("mentions-legales/", page("mentions_legales"), name="mentions_legales"),
     path("confidentialite/", page("confidentialite"), name="confidentialite"),

@@ -8,7 +8,7 @@ from django.db.models import OuterRef, Subquery
 from django.utils import timezone
 from django.utils.translation import gettext as _
 
-from paiements.acces import a_un_abonnement_actif
+from paiements.acces import est_premium
 
 from .models import Question, Quiz, ReponseQuestion, Tentative
 
@@ -23,7 +23,7 @@ def questions_publiees():
 
 def quiz_restants_aujourd_hui(utilisateur):
     """None = illimité. CDC 3.8 : quiz limités par jour pour l'offre gratuite, illimités en Premium (V3)."""
-    if not settings.PAIEMENT_ACTIF or utilisateur.is_staff or a_un_abonnement_actif(utilisateur):
+    if est_premium(utilisateur):
         return None
     faits = Tentative.objects.filter(
         utilisateur=utilisateur, quiz__isnull=False, debut__date=timezone.localdate()

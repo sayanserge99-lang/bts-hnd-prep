@@ -19,14 +19,14 @@
       {% if complet %}
         {% if corrige.contenu %}<div class="corrige">{{ corrige.contenu|mise_en_forme }}</div>{% endif %}
         {% if corrige.fichier %}
-          <a href="{% url 'sujets:pdf_corrige' corrige.pk %}" class="bouton-contour" target="_blank" rel="noopener">{% translate "Lire le corrigé (PDF)" %}</a>
+          <a href="{% lien_pdf_corrige corrige %}" class="bouton-contour" target="_blank" rel="noopener">{% translate "Lire le corrigé (PDF)" %}</a>
         {% endif %}
       {% elif corrige.contenu or corrige.fichier %}
         {# CDC 3.3 (V3) : la suite est réservée aux abonnés une fois le paiement ouvert. #}
         <div class="rounded-2xl bg-ambre-clair p-5">
           <p class="text-lg font-bold text-ambre">✦ {% translate "La suite avec le Pass session" %}</p>
           <p class="mt-1">{% translate "Le corrigé complet, le barème détaillé et les conseils de l'enseignant." %}</p>
-          <a href="{% url 'accueil' %}#offres" class="bouton-plein mt-4 w-full">{% translate "Voir le Pass session" %}</a>
+          <a href="{% url 'offres' %}" class="bouton-plein mt-4 w-full">{% translate "Voir le Pass session" %}</a>
         </div>
       {% endif %}
 

@@ -1,11 +1,14 @@
 """Corrigés (CDC 3.3, 10.7) : rendu, visibilité, règle de publication, accès, signalement, retrait."""
 
+import io
+import re
 from datetime import timedelta
 
 import pytest
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
 from django.utils import timezone
+from pypdf import PdfReader, PdfWriter
 
 from accounts.models import Utilisateur
 from communaute.models import DemandeRetrait, Signalement
@@ -36,6 +39,14 @@ def creer_corrige(sujet, **champs):
         **champs,
     }
     return Corrige.objects.create(**valeurs)
+
+
+def vrai_pdf():
+    ecrivain = PdfWriter()
+    ecrivain.add_blank_page(width=595, height=842)
+    tampon = io.BytesIO()
+    ecrivain.write(tampon)
+    return tampon.getvalue()
 
 
 def onglet_corrige(client, sujet):
@@ -143,7 +154,7 @@ def test_paiement_ouvert_la_suite_est_reservee(client, settings, sujet):
 
 def test_paiement_ouvert_un_abonne_lit_tout(client, settings, sujet):
     settings.PAIEMENT_ACTIF = True
-    corrige = creer_corrige(sujet, fichier=SimpleUploadedFile("c.pdf", b"%PDF-1.4", content_type="application/pdf"))
+    corrige = creer_corrige(sujet, fichier=SimpleUploadedFile("c.pdf", vrai_pdf(), content_type="application/pdf"))
     abonne = Utilisateur.objects.create_user(email="abonne@example.com", password="Revision-2027")
     offre = Offre.objects.create(nom="Pass", prix=5000, type=Offre.Type.SESSION)
     partenaire = Partenariat.objects.create(
@@ -159,8 +170,34 @@ def test_paiement_ouvert_un_abonne_lit_tout(client, settings, sujet):
 
     assert client.get(reverse("sujets:pdf_corrige", args=[corrige.pk])).status_code == 404
     client.force_login(abonne)
-    assert "Suite réservée aux abonnés" in onglet_corrige(client, sujet)
-    assert client.get(reverse("sujets:pdf_corrige", args=[corrige.pk])).status_code == 200
+    page = onglet_corrige(client, sujet)
+    assert "Suite réservée aux abonnés" in page
+    lien = re.search(r'href="([^"]*/pdf/\?jeton=[^"]+)"', page).group(1).replace("&amp;", "&")
+    reponse = client.get(lien)
+    assert reponse.status_code == 200 and reponse["Content-Type"] == "application/pdf"
+
+
+def test_le_pdf_du_corrige_porte_le_nom_du_lecteur_et_son_lien_expire(client, sujet, monkeypatch):
+    """CDC 4 : lien temporaire et personnel, filigrane avec l'identifiant de l'utilisateur."""
+    corrige = creer_corrige(sujet, fichier=SimpleUploadedFile("c.pdf", vrai_pdf(), content_type="application/pdf"))
+    awa = Utilisateur.objects.create_user(email="awa@example.com", password="Revision-2027")
+    client.force_login(awa)
+    lien = re.search(r'href="([^"]*/pdf/\?jeton=[^"]+)"', onglet_corrige(client, sujet)).group(1).replace("&amp;", "&")
+
+    texte = "".join(page.extract_text() for page in PdfReader(io.BytesIO(client.get(lien).content)).pages)
+    assert "awa@example.com" in texte
+
+    # Le lien copié ne sert à personne d'autre : retour à la fiche, qui donne un lien à soi.
+    ben = Utilisateur.objects.create_user(email="ben@example.com", password="Revision-2027")
+    client.force_login(ben)
+    assert client.get(lien).url == reverse("sujets:detail", args=[sujet.pk]) + "?onglet=corrige"
+    assert client.get(reverse("sujets:pdf_corrige", args=[corrige.pk])).status_code == 302  # sans jeton
+
+    # Et il expire (durée ramenée à zéro plutôt que d'attendre 15 minutes).
+    client.force_login(awa)
+    assert client.get(lien).status_code == 200
+    monkeypatch.setattr("sujets.filigrane.DUREE_LIEN", -1)
+    assert client.get(lien).status_code == 302
 
 
 def test_le_pdf_d_un_corrige_non_visible_est_introuvable(client, sujet):

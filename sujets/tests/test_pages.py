@@ -36,7 +36,8 @@ def test_accueil(client, publie):
     assert reponse.status_code == 200
     contenu = reponse.content.decode()
     assert "non affiliée au MINESUP" in contenu
-    assert "Paiement bientôt disponible" in contenu
+    # Sans offre enregistrée : aucun prix inventé, l'annonce suffit.
+    assert "Les prix seront annoncés" in contenu
     assert "Comptabilité générale" in contenu
 
 

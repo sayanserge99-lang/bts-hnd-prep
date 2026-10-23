@@ -7,7 +7,7 @@ from django.conf import settings
 from django.db import transaction
 from django.utils import timezone
 
-from paiements.acces import a_un_abonnement_actif
+from paiements.acces import est_premium
 
 from .correction import est_correcte
 from .models import ExamenBlanc, Question, ReponseQuestion, Tentative
@@ -16,10 +16,8 @@ CHAMP_COPIE = "copie"
 
 
 def peut_passer_un_examen(utilisateur):
-    # CDC 7 : examens blancs réservés au Premium (V3) ; ouverts à tous les inscrits tant que le paiement est fermé.
-    if not utilisateur.is_authenticated:
-        return False
-    return not settings.PAIEMENT_ACTIF or utilisateur.is_staff or a_un_abonnement_actif(utilisateur)
+    # CDC 7 : examens blancs réservés au Premium.
+    return est_premium(utilisateur)
 
 
 def examens_proposes(utilisateur):

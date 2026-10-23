@@ -93,30 +93,7 @@
 
 <section id="offres" class="mx-auto max-w-6xl px-4 py-8">
   <h2 class="text-2xl font-bold">{% translate "Choisissez votre formule" %}</h2>
-  <div class="mt-6 grid gap-4 md:grid-cols-2">
-    <div class="carte">
-      <p class="font-semibold">{% translate "Gratuit" %}</p>
-      <p class="mt-1 text-3xl font-extrabold">0 FCFA</p>
-      <ul class="mt-4 list-disc space-y-1 pl-5 text-sm text-gris">
-        <li>{% translate "Tous les sujets en consultation" %}</li>
-        <li>{% translate "Téléchargement des sujets en PDF" %}</li>
-      </ul>
-    </div>
-    <div class="carte border-2 border-vert">
-      <p class="font-semibold">{% translate "Pass session" %}</p>
-      {# Prix : hypothèse de l'étude de faisabilité, à confirmer par l'enquête. #}
-      <p class="mt-1 text-3xl font-extrabold">5 000 FCFA <span class="text-sm font-normal text-gris">{% translate "jusqu'à la fin de la prochaine session" %}</span></p>
-      <ul class="mt-4 list-disc space-y-1 pl-5 text-sm text-gris">
-        <li>{% translate "Corrigés complets" %}</li>
-        <li>{% translate "QCM illimités et examens blancs" %}</li>
-        <li>{% translate "Suivi de vos points faibles" %}</li>
-      </ul>
-      {% if not paiement_actif %}
-        <p class="mt-4 inline-block rounded-lg border border-dashed border-gris/60 px-4 py-2 text-sm text-gris">{% translate "Paiement bientôt disponible" %}</p>
-      {% endif %}
-    </div>
-  </div>
-  {# CDC 10.7 : aucune promesse de réussite. #}
-  <p class="mt-4 text-sm text-gris">{% translate "Aucune plateforme ne peut garantir la réussite à l'examen : nous vous aidons à vous entraîner sérieusement." %}</p>
+  {% include "paiements/_formules.html" %}
+  <p class="mt-4 text-sm"><a href="{% url 'offres' %}" class="text-vert underline">{% translate "Comparer les offres en détail" %}</a></p>
 </section>
 {% endblock %}

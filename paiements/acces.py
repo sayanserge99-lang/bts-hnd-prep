@@ -1,4 +1,7 @@
-"""Qui lit le corrigé complet (CDC 7) : abonnés Premium, équipe, et tout le monde tant que le paiement est fermé."""
+"""Qui a les droits Premium (CDC 7) : la règle est ici, une seule fois, pour tout le site.
+
+Tant que le paiement est fermé (PAIEMENT_ACTIF faux), il n'y a rien à vendre : tout est ouvert aux inscrits.
+"""
 
 from django.conf import settings
 from django.utils import timezone
@@ -15,8 +18,15 @@ def a_un_abonnement_actif(utilisateur):
     ).exists()
 
 
+def est_premium(utilisateur):
+    """Droits Premium : abonné, équipe, ou tout inscrit tant que le paiement est fermé."""
+    if not utilisateur.is_authenticated:
+        return False
+    return not settings.PAIEMENT_ACTIF or utilisateur.is_staff or a_un_abonnement_actif(utilisateur)
+
+
 def lit_le_corrige_complet(utilisateur):
-    # Accès partiel = V3 : sans paiement ouvert, il n'y a rien à vendre, donc tout est visible.
+    # Seul droit ouvert aussi aux visiteurs tant que le paiement est fermé (le corrigé se lit sans compte).
     if not settings.PAIEMENT_ACTIF:
         return True
-    return utilisateur.is_authenticated and (utilisateur.is_staff or a_un_abonnement_actif(utilisateur))
+    return est_premium(utilisateur)

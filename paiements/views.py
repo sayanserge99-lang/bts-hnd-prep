@@ -1,11 +1,15 @@
 from django import forms
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 from django.shortcuts import redirect, render
+from django.utils import timezone
 from django.utils.translation import gettext as _
 from django.utils.translation import gettext_lazy
 
 from . import codes
+from .acces import a_un_abonnement_actif
+from .offres import offres_affichees
 
 
 class ActivationForm(forms.Form):
@@ -32,3 +36,15 @@ def activer_code(request):
             )
             return redirect("accounts:profil")
     return render(request, "paiements/activer_code.html", {"form": form})
+
+
+def offres(request):
+    """Page « Offres » : comparatif Gratuit / Premium et prix (CDC 7, 3.8)."""
+    en_cours = None
+    if request.user.is_authenticated and a_un_abonnement_actif(request.user):
+        en_cours = request.user.abonnements.filter(fin__gte=timezone.localdate()).order_by("-fin").first()
+    return render(
+        request,
+        "paiements/offres.html",
+        {"offres": offres_affichees(request.user), "en_cours": en_cours, "quiz_gratuits": settings.QUIZ_GRATUITS_PAR_JOUR},
+    )

@@ -8,13 +8,12 @@ from django.templatetags.static import static
 from django.utils.translation import gettext as _
 
 from accounts.moderation import est_administrateur
-
-from .statistiques import tableau_de_bord
-
+from paiements.offres import offres_affichees
 from sujets.models import Sujet
 from sujets.views import examen_par_defaut
 
 from .models import Examen, Specialite
+from .statistiques import tableau_de_bord
 
 
 def accueil(request):
@@ -30,6 +29,7 @@ def accueil(request):
             "code_examen": code_examen,
             "specialites_examen": Specialite.objects.filter(examen__code=code_examen),
             "specialites": Specialite.objects.select_related("examen").order_by("examen__code", "ordre", "nom"),
+            "offres": offres_affichees(request.user),
         },
     )
 

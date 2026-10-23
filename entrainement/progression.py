@@ -2,12 +2,11 @@
 
 from dataclasses import dataclass
 
-from django.conf import settings
 from django.db.models import Count, Q
 from django.utils import timezone
 
 from catalogue.models import Chapitre, Matiere, Session
-from paiements.acces import a_un_abonnement_actif
+from paiements.acces import est_premium
 
 from .models import ReponseQuestion
 
@@ -28,8 +27,8 @@ class Taux:
 
 
 def voit_les_statistiques_completes(utilisateur):
-    # CDC 7 : statistiques basiques en gratuit, complètes en Premium (V3) ; complètes pour tous d'ici là.
-    return not settings.PAIEMENT_ACTIF or utilisateur.is_staff or a_un_abonnement_actif(utilisateur)
+    # CDC 7 : statistiques basiques en gratuit, complètes en Premium.
+    return est_premium(utilisateur)
 
 
 def _taux(utilisateur, champ, objets):

@@ -67,7 +67,7 @@
 - [ ] Fixer QUIZ_GRATUITS_PAR_JOUR (CDC 7 : quotas « restent à fixer »).
 - [x] Corrigés V2 : rendu Markdown/MathML sûr, badges, filtre, signalement, retrait, aperçu admin.
 - [ ] Corrige : décider si on ajoute `verifie_par` (FK utilisateur) pour tracer la vérification.
-- [ ] V3 : filigrane nominatif et lien temporaire sur le PDF du corrigé Premium (CDC 4).
+- [x] V3 : filigrane nominatif et lien temporaire sur le PDF du corrigé Premium (CDC 4).
 - [ ] Rendu : les $ à l'intérieur d'un bloc de code sont pris pour des formules (limite connue).
 - [x] Affichage MathML vérifié sur Chrome Android (Galaxy A15) : fraction et tableaux OK.
 - [ ] Vérifier aussi sur Firefox et sur l'ancien navigateur Samsung Internet.
@@ -75,6 +75,10 @@
 - [ ] Fixer JOURS_OFFERTS_PAR_SUJET avec Serge Alain (7 jours pour l'instant). Tant que le paiement est fermé,
       tout est gratuit : les jours offerts aujourd'hui expirent avant l'ouverture du Premium.
 - [ ] Contributions : pas de conversion WebP des photos (assemblées en PDF), pas de recadrage automatique.
+- [x] V3 module 4 : Premium (règle unique, page Offres, protection des PDF de corrigés).
+- [ ] Fixer les prix (Pass session, mensuel) : les offres de démo sont celles de l'étude de faisabilité.
+- [ ] Rappel par e-mail avant la fin d'un abonnement ; passage du statut à « expiré » (aujourd'hui seules les dates
+      comptent, le statut reste « actif »).
 - [x] V3 module 3 : codes d'accès (génération par lot, activation, suivi par l'établissement).
 - [ ] Codes d'accès : pas de date d'expiration propre au code (il vit tant que la convention est active) ; prix et
       facturation des lots aux IPES hors plateforme (à décider avec Serge Alain).

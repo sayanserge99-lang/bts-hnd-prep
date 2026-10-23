@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-23 12:05+0100\n"
+"POT-Creation-Date: 2026-10-23 12:16+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -303,6 +303,7 @@ msgid "chapitre"
 msgstr "chapter"
 
 #: catalogue/views.py:65 templates/admin/base_site.html:16
+#: templates/paiements/offres.html:31
 msgid "Statistiques"
 msgstr "Statistics"
 
@@ -679,15 +680,15 @@ msgstr ""
 msgid "English"
 msgstr "English"
 
-#: config/urls.py:11
+#: config/urls.py:12
 msgid "BTS-HND Prep — Administration"
 msgstr "BTS-HND Prep — Administration"
 
-#: config/urls.py:12
+#: config/urls.py:13
 msgid "BTS-HND Prep"
 msgstr "BTS-HND Prep"
 
-#: config/urls.py:13
+#: config/urls.py:14
 msgid "Tableau de bord"
 msgstr "Dashboard"
 
@@ -1240,7 +1241,7 @@ msgstr "First complete your profile (exam and specialty)."
 msgid "Durée en jours"
 msgstr "Duration in days"
 
-#: paiements/models.py:16 templates/catalogue/accueil.html:106
+#: paiements/models.py:16
 msgid "Pass session"
 msgstr "Session pass"
 
@@ -1292,15 +1293,15 @@ msgstr "subscription"
 msgid "jours offerts"
 msgstr "free days"
 
-#: paiements/views.py:13
+#: paiements/views.py:17
 msgid "Code d'accès"
 msgstr "Access code"
 
-#: paiements/views.py:14
+#: paiements/views.py:18
 msgid "Remis par votre établissement, par exemple ABCD-EFGH-JKLM."
 msgstr "Given by your institution, for example ABCD-EFGH-JKLM."
 
-#: paiements/views.py:31
+#: paiements/views.py:35
 #, python-format
 msgid "Code activé : %(offre)s, jusqu'au %(fin)s."
 msgstr "Code activated: %(offre)s, until %(fin)s."
@@ -1750,11 +1751,11 @@ msgstr "favourite"
 msgid "Une spécialité choisie n'est pas rattachée à la matière du sujet."
 msgstr "A chosen specialty is not linked to the paper's subject."
 
-#: sujets/views.py:189
+#: sujets/views.py:203
 msgid "Décrivez l'erreur en quelques mots (10 caractères au moins)."
 msgstr "Describe the mistake in a few words (at least 10 characters)."
 
-#: sujets/views.py:193
+#: sujets/views.py:207
 msgid "Merci ! L'enseignant relira ce passage."
 msgstr "Thank you! The teacher will review this part."
 
@@ -2018,7 +2019,7 @@ msgstr "from %(debut)s to %(fin)s"
 msgid "Offre gratuite."
 msgstr "Free plan."
 
-#: templates/accounts/profil.html:91
+#: templates/accounts/profil.html:91 templates/paiements/offres.html:40
 msgid "J'ai un code d'accès"
 msgstr "I have an access code"
 
@@ -2654,7 +2655,8 @@ msgstr "Soon"
 msgid "Forum"
 msgstr "Forum"
 
-#: templates/base.html:40
+#: templates/base.html:40 templates/paiements/offres.html:4
+#: templates/paiements/offres.html:9
 msgid "Offres"
 msgstr "Plans"
 
@@ -2806,44 +2808,9 @@ msgstr "More specialties are added session by session."
 msgid "Choisissez votre formule"
 msgstr "Choose your plan"
 
-#: templates/catalogue/accueil.html:98
-msgid "Gratuit"
-msgstr "Free"
-
-#: templates/catalogue/accueil.html:101
-msgid "Tous les sujets en consultation"
-msgstr "Read all papers"
-
-#: templates/catalogue/accueil.html:102
-msgid "Téléchargement des sujets en PDF"
-msgstr "Download papers as PDF"
-
-#: templates/catalogue/accueil.html:108
-msgid "jusqu'à la fin de la prochaine session"
-msgstr "until the end of the next session"
-
-#: templates/catalogue/accueil.html:110
-msgid "Corrigés complets"
-msgstr "Full marking guides"
-
-#: templates/catalogue/accueil.html:111
-msgid "QCM illimités et examens blancs"
-msgstr "Unlimited MCQs and mock exams"
-
-#: templates/catalogue/accueil.html:112
-msgid "Suivi de vos points faibles"
-msgstr "Track your weak points"
-
-#: templates/catalogue/accueil.html:115
-msgid "Paiement bientôt disponible"
-msgstr "Payment coming soon"
-
-#: templates/catalogue/accueil.html:120
-msgid ""
-"Aucune plateforme ne peut garantir la réussite à l'examen : nous vous aidons"
-" à vous entraîner sérieusement."
-msgstr ""
-"No platform can guarantee exam success: we help you practise seriously."
+#: templates/catalogue/accueil.html:97
+msgid "Comparer les offres en détail"
+msgstr "Compare the offers in detail"
 
 #: templates/communaute/demande_retrait.html:11
 msgid ""
@@ -3411,7 +3378,7 @@ msgid "Historique"
 msgstr "History"
 
 #: templates/entrainement/progression.html:79
-#: templates/partenaires/espace.html:77
+#: templates/paiements/offres.html:29 templates/partenaires/espace.html:77
 msgid "Quiz"
 msgstr "Quiz"
 
@@ -3609,6 +3576,70 @@ msgstr "Terms of sale"
 msgid "Contenu en cours de rédaction."
 msgstr "Content being written."
 
+#: templates/paiements/_formules.html:5 templates/paiements/offres.html:25
+msgid "Gratuit"
+msgstr "Free"
+
+#: templates/paiements/_formules.html:8
+msgid "Tous les sujets en consultation"
+msgstr "Read all papers"
+
+#: templates/paiements/_formules.html:9
+msgid "Téléchargement des sujets en PDF"
+msgstr "Download papers as PDF"
+
+#: templates/paiements/_formules.html:10
+msgid "Début des corrigés, quelques quiz par jour"
+msgstr "Start of marking guides, a few quizzes a day"
+
+#: templates/paiements/_formules.html:16
+msgid "TTC"
+msgstr "incl. VAT"
+
+#: templates/paiements/_formules.html:18
+#, python-format
+msgid "pendant %(n)s jour"
+msgid_plural "pendant %(n)s jours"
+msgstr[0] "for %(n)s day"
+msgstr[1] "for %(n)s days"
+
+#: templates/paiements/_formules.html:19
+#, python-format
+msgid "%(examen)s : jusqu'à la fin de la session %(annee)s (%(fin)s)"
+msgstr "%(examen)s: until the end of the %(annee)s session (%(fin)s)"
+
+#: templates/paiements/_formules.html:20
+msgid "jusqu'à la fin de la prochaine session"
+msgstr "until the end of the next session"
+
+#: templates/paiements/_formules.html:23
+msgid "Corrigés complets"
+msgstr "Full marking guides"
+
+#: templates/paiements/_formules.html:24
+msgid "QCM illimités et examens blancs"
+msgstr "Unlimited MCQs and mock exams"
+
+#: templates/paiements/_formules.html:25
+msgid "Suivi de vos points faibles"
+msgstr "Track your weak points"
+
+#: templates/paiements/_formules.html:28
+msgid "Paiement bientôt disponible"
+msgstr "Payment coming soon"
+
+#: templates/paiements/_formules.html:33 templates/paiements/offres.html:25
+msgid "Premium"
+msgstr "Premium"
+
+#: templates/paiements/_formules.html:34
+msgid ""
+"Corrigés complets, QCM illimités, examens blancs et suivi détaillé. Les prix"
+" seront annoncés à l'ouverture du paiement."
+msgstr ""
+"Full marking guides, unlimited MCQs, mock exams and detailed tracking. "
+"Prices will be announced when payment opens."
+
 #: templates/paiements/activer_code.html:4
 #: templates/paiements/activer_code.html:9
 msgid "Activer un code d'accès"
@@ -3625,6 +3656,77 @@ msgstr ""
 #: templates/paiements/activer_code.html:13
 msgid "Activer"
 msgstr "Activate"
+
+#: templates/paiements/offres.html:11
+msgid ""
+"Phase de lancement : tout est ouvert gratuitement aux inscrits tant que le "
+"paiement n'est pas ouvert."
+msgstr ""
+"Launch phase: everything is free for registered users until payment opens."
+
+#: templates/paiements/offres.html:14
+#, python-format
+msgid "Votre abonnement est actif jusqu'au %(fin)s."
+msgstr "Your subscription is active until %(fin)s."
+
+#: templates/paiements/offres.html:22
+msgid "Ce qui est compris"
+msgstr "What is included"
+
+#: templates/paiements/offres.html:27
+msgid "Sujets : consultation et téléchargement"
+msgstr "Papers: viewing and download"
+
+#: templates/paiements/offres.html:28
+msgid "Corrigés"
+msgstr "Marking guides"
+
+#: templates/paiements/offres.html:28
+msgid "Le début"
+msgstr "The beginning"
+
+#: templates/paiements/offres.html:28
+msgid "Complets, avec le PDF"
+msgstr "Complete, with the PDF"
+
+#: templates/paiements/offres.html:29
+#, python-format
+msgid "%(n)s par jour"
+msgid_plural "%(n)s par jour"
+msgstr[0] "%(n)s a day"
+msgstr[1] "%(n)s a day"
+
+#: templates/paiements/offres.html:29
+msgid "Illimités"
+msgstr "Unlimited"
+
+#: templates/paiements/offres.html:30
+msgid "Examens blancs chronométrés"
+msgstr "Timed mock exams"
+
+#: templates/paiements/offres.html:31
+msgid "Par matière"
+msgstr "By subject"
+
+#: templates/paiements/offres.html:31
+msgid "Par chapitre, points faibles"
+msgstr "By chapter, weak points"
+
+#: templates/paiements/offres.html:32
+msgid "Forum, contributions"
+msgstr "Forum, contributions"
+
+#: templates/paiements/offres.html:39
+msgid ""
+"Votre établissement est partenaire ? Il peut vous remettre un code d'accès."
+msgstr "Is your institution a partner? It can give you an access code."
+
+#: templates/paiements/offres.html:44
+msgid ""
+"Aucune plateforme ne peut garantir la réussite à l'examen : nous vous aidons"
+" à vous entraîner sérieusement."
+msgstr ""
+"No platform can guarantee exam success: we help you practise seriously."
 
 #: templates/partenaires/deposer.html:4 templates/partenaires/deposer.html:9
 #: templates/partenaires/espace.html:38
