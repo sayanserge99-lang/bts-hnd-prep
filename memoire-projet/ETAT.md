@@ -4,7 +4,7 @@
 
 ## Où on en est
 
-**V1 terminée côté code ; V2 en cours** (modules 1 à 4/5 faits : corrigés, QCM, examens blancs, progression). Le projet tourne :
+**V1 et V2 terminées côté code** (corrigés, QCM, examens blancs, progression, hors ligne, statistiques, Google, établissements, quiz sur une épreuve). Le projet tourne :
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
@@ -84,19 +84,15 @@
 
 ## Prochaine étape
 
-1. **Espace établissement + épreuves internes** (demandé par Serge Alain) : rôle Établissement rattaché à un
-   Etablissement, validation de ses étudiants (sinon n'importe qui se déclare de l'IAI), épreuves internes visibles
-   par ses seuls étudiants validés, résultats des étudiants consentants (CDC 10.6). Questions de conception à valider.
-2. Essayer le hors ligne sur le Galaxy A15 (garder un sujet, `docker compose stop web`, rouvrir la fiche et /hors-ligne/).
-3. Activer Google : identifiants OAuth à créer par Serge Alain (deploy/DEPLOIEMENT.md, section 7) ; pour essayer
-   en local, les mettre dans un fichier `.env` à la racine (GOOGLE_CLIENT_ID=…, GOOGLE_CLIENT_SECRET=…).
-   Spécialités V2 (CDC 3.10 : RH, logistique, réseaux, santé) = données à saisir dans l'admin, pas de code.
-   Ensuite : V3 (paiement Mobile Money, Premium, contributions, forum, codes IPES).
-4. Choix du VPS / hébergeur et du nom de domaine (Serge Alain), puis suivre `deploy/DEPLOIEMENT.md` (HTTPS non testé).
-   Retours de Serge Alain sur les pages (pas encore reçus).
-3. Fin de la V1 : rédaction des pages légales (contenu de Serge Alain), collecte des vrais sujets puis import en lot
-   (avant : saisir les sessions 2020-2026 avec leurs dates de fin officielles, et les matières de chaque spécialité).
-   Puis V2 : corrigés, QCM, examens blancs, suivi de progression, PWA hors ligne.
+Code V1 + V2 fini. Proposé à Serge Alain le 23/10 (réponse attendue) :
+1. **Mise en ligne (bêta)** : choix du VPS et du nom de domaine (Serge Alain), puis `deploy/DEPLOIEMENT.md`
+   (HTTPS non testé). Avant : sessions 2020-2026 avec dates de fin officielles, matières, quelques vrais sujets.
+2. **V3** (paiement Mobile Money, Premium, contributions, forum, codes IPES) : bloquée par le choix de l'agrégateur
+   de paiement et la structure juridique + NIU.
+3. Petits travaux de code possibles en attendant : quiz d'épreuve hors ligne, « Définir un mot de passe » pour les
+   comptes Google, cache apt de la CI, `compilemessages` dans le Dockerfile, image de production en Python 3.13.
+À faire par Serge Alain : identifiants Google, comptes responsables IAI/HINTEL + conventions, ville de HINTEL,
+pages légales, essai hors ligne sur le Galaxy.
 
 ## Repères
 
