@@ -56,5 +56,8 @@
   réseau d'abord, copie gardée en secours ; seules les pages publiques (/ et /sujets/) sont gardées au passage,
   jamais /compte/, /entrainement/ ni /admin/. Un quiz téléchargé contient ses réponses (correction sans réseau) :
   accepté pour de l'entraînement ; le serveur recorrige tout à la synchronisation et compte le quiz dans le quota.
+- **Connexion Google** : écrite à la main (OpenID Connect, ~150 lignes) plutôt qu'avec django-allauth, pour garder
+  nos pages et imposer le consentement + la spécialité à la première connexion. Signature du jeton non vérifiée
+  (reçu directement de Google par HTTPS, OIDC Core 3.1.3.7), contenu vérifié. Lien de compte par e-mail vérifié.
 - **Interface** : Tailwind v4 en exécutable autonome (pas de Node), polices du système, HTMX servi localement ;
   les pages marchent aussi sans JavaScript (formulaire GET classique).

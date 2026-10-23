@@ -92,7 +92,23 @@ docker compose -f compose.prod.yaml --env-file .env.production exec web python m
 Les sujets arrivent en brouillon ; le worker fait l'OCR et la compression ; publiez-les ensuite
 avec l'action « Publier » de l'admin.
 
-## 7. Mettre à jour
+## 7. Connexion avec Google (facultatif)
+
+Tant que `GOOGLE_CLIENT_ID` et `GOOGLE_CLIENT_SECRET` sont vides, le bouton « Continuer avec Google »
+n'apparaît pas. Pour l'activer, avec le compte Google du projet :
+
+1. Ouvrir https://console.cloud.google.com/, créer un projet « BTS-HND Prep ».
+2. **API et services → Écran de consentement OAuth** : type « Externe », nom de l'application,
+   adresse de contact, lien vers la politique de confidentialité ; portées `openid`, `email`, `profile`.
+3. **API et services → Identifiants → Créer des identifiants → ID client OAuth** : type « Application Web ».
+4. **URI de redirection autorisés** : `https://<domaine>/compte/google/retour/`
+   (et `http://localhost:8000/compte/google/retour/` pour essayer en développement).
+5. Copier l'ID client et le code secret dans `.env.production`, puis relancer avec `up -d --build`.
+
+À la première connexion avec Google, l'étudiant choisit sa spécialité et coche lui-même le
+consentement (CDC 10.2) : la connexion Google ne contourne pas cette étape.
+
+## 8. Mettre à jour
 
 ```sh
 cd /srv/bts-hnd-prep

@@ -86,3 +86,7 @@
   admin renommée. 10 tests ; 2 défauts trouvés par les tests (annotation nommée comme le champ ; clé « sujet »
   écrasée par l'identifiant). Rendu vérifié par capture (Chrome sans écran dans Docker). .po cassé par des lignes
   « #| msgid_plural » orphelines → nettoyées, et la CI vérifie désormais le .po avec msgfmt. 199/199 verts.
+- Connexion Google : module google.py, 3 vues, page « Dernière étape », bouton conditionnel, fonction commune
+  preparer_etudiant. Problème repéré avant le code : un compte Google sans mot de passe ne pouvait pas se
+  supprimer → confirmation par e-mail. 16 tests verts du premier coup ; contre-épreuve (email_verified retiré
+  → 1 échec). Guide console Google ajouté. 215/215 verts.

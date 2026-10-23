@@ -8,7 +8,12 @@
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **199 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne, 10 statistiques).
+- `pytest` : **215 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
+  10 statistiques, 16 Google).
+- **Connexion Google (V2)** `accounts/google.py` : OpenID Connect sans dépendance (state, PKCE, nonce ; vérifie iss,
+  aud, exp, email_verified). Compte existant → connecté ; sinon page « Dernière étape » (spécialité + consentement
+  non précoché). Inactive tant que GOOGLE_CLIENT_ID/SECRET sont vides (bouton et adresses absents).
+  Compte sans mot de passe : la suppression se confirme en tapant son e-mail.
 - **Statistiques (V2, module 5b)** `/admin/statistiques/` (administrateurs seulement, lien dans l'en-tête de l'admin) :
   inscrits, nouveaux, actifs, quiz et examens sur 30 j comparés aux 30 j d'avant, à traiter, contenu, sujets les plus
   consultés (compteur anonyme `ConsultationJour`, équipe non comptée), revenus et conversion quand le paiement est ouvert.
@@ -63,8 +68,10 @@
 ## Prochaine étape
 
 1. Essayer le hors ligne sur le Galaxy A15 (garder un sujet, `docker compose stop web`, rouvrir la fiche et /hors-ligne/).
-2. V2, fin : connexion Google (identifiants OAuth à créer par Serge Alain dans la console Google) ;
-   spécialités V2 (CDC 3.10 : RH, logistique, réseaux, santé) = données à saisir, pas de code.
+2. Activer Google : identifiants OAuth à créer par Serge Alain (deploy/DEPLOIEMENT.md, section 7) ; pour essayer
+   en local, les mettre dans un fichier `.env` à la racine (GOOGLE_CLIENT_ID=…, GOOGLE_CLIENT_SECRET=…).
+   Spécialités V2 (CDC 3.10 : RH, logistique, réseaux, santé) = données à saisir dans l'admin, pas de code.
+   Ensuite : V3 (paiement Mobile Money, Premium, contributions, forum, codes IPES).
 3. Choix du VPS / hébergeur et du nom de domaine (Serge Alain), puis suivre `deploy/DEPLOIEMENT.md` (HTTPS non testé).
    Retours de Serge Alain sur les pages (pas encore reçus).
 3. Fin de la V1 : rédaction des pages légales (contenu de Serge Alain), collecte des vrais sujets puis import en lot

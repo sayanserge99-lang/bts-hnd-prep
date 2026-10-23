@@ -11,6 +11,9 @@ x-django-env: &django-env
   POSTGRES_HOST: db
   POSTGRES_PORT: "5432"
   REDIS_URL: redis://redis:6379/0
+  # Pour essayer la connexion Google en local : identifiants de test (voir deploy/DEPLOIEMENT.md, section 7).
+  GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+  GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
 
 services:
   db:

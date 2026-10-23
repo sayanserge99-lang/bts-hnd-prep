@@ -9,6 +9,9 @@ urlpatterns = [
     path("inscription/", views.inscription, name="inscription"),
     path("connexion/", views.Connexion.as_view(), name="connexion"),
     path("deconnexion/", views.deconnexion, name="deconnexion"),
+    path("google/", views.google_debut, name="google"),
+    path("google/retour/", views.google_retour, name="google_retour"),
+    path("google/inscription/", views.google_finir, name="google_finir"),
     path("mot-de-passe/", views.MotDePasseOublie.as_view(), name="mot_de_passe_oublie"),
     path(
         "mot-de-passe/envoye/",

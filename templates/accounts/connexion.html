@@ -12,6 +12,7 @@
     {% translate "Se connecter" as bouton %}
     {% include "accounts/_formulaire.html" %}
   </form>
+  {% include "accounts/_bouton_google.html" %}
   <p class="mt-4 text-sm"><a class="text-vert underline" href="{% url 'accounts:mot_de_passe_oublie' %}">{% translate "Mot de passe oublié ?" %}</a></p>
   <p class="mt-2 text-sm">{% translate "Pas encore de compte ?" %} <a class="font-semibold text-vert underline" href="{% url 'accounts:inscription' %}">{% translate "Créer un compte" %}</a></p>
 </div>

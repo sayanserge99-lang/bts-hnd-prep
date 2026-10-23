@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-23 07:35+0100\n"
+"POT-Creation-Date: 2026-10-23 08:15+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,15 +38,15 @@ msgstr "Dates"
 msgid "Spécialité préparée"
 msgstr "Specialty"
 
-#: accounts/forms.py:50
+#: accounts/forms.py:50 accounts/forms.py:94
 msgid "J'accepte les conditions générales et la politique de confidentialité."
 msgstr "I accept the terms and conditions and the privacy policy."
 
-#: accounts/forms.py:57 accounts/forms.py:118
+#: accounts/forms.py:57 accounts/forms.py:89 accounts/forms.py:150
 msgid "Prénom"
 msgstr "First name"
 
-#: accounts/forms.py:57 accounts/forms.py:118
+#: accounts/forms.py:57 accounts/forms.py:90 accounts/forms.py:150
 msgid "Nom"
 msgstr "Last name"
 
@@ -54,29 +54,41 @@ msgstr "Last name"
 msgid "Un compte existe déjà avec cette adresse e-mail."
 msgstr "An account already exists with this email address."
 
-#: accounts/forms.py:84
+#: accounts/forms.py:91
+msgid "Langue"
+msgstr "Language"
+
+#: accounts/forms.py:116
 msgid "Adresse e-mail"
 msgstr "Email address"
 
-#: accounts/forms.py:89
+#: accounts/forms.py:121
 msgid ""
 "Trop de tentatives. Réessayez dans 15 minutes ou réinitialisez votre mot de "
 "passe."
 msgstr "Too many attempts. Try again in 15 minutes or reset your password."
 
-#: accounts/forms.py:112
+#: accounts/forms.py:144
 msgid "Session prévue"
 msgstr "Planned session"
 
-#: accounts/forms.py:134
+#: accounts/forms.py:166
 msgid "Cette session n'appartient pas à l'examen de votre spécialité."
 msgstr "This session does not belong to your specialty's exam."
 
-#: accounts/forms.py:149
+#: accounts/forms.py:181
 msgid "Mot de passe"
 msgstr "Password"
 
-#: accounts/forms.py:157
+#: accounts/forms.py:189
+msgid "Pour confirmer, tapez votre adresse e-mail"
+msgstr "To confirm, type your email address"
+
+#: accounts/forms.py:197
+msgid "Ce n'est pas l'adresse e-mail de ce compte."
+msgstr "This is not the email address of this account."
+
+#: accounts/forms.py:200
 msgid "Mot de passe incorrect."
 msgstr "Incorrect password."
 
@@ -112,11 +124,13 @@ msgstr "study profile"
 msgid "Cette spécialité n'appartient pas à l'examen choisi."
 msgstr "This specialty does not belong to the chosen exam."
 
-#: accounts/models.py:77 templates/accounts/inscription.html:16
+#: accounts/models.py:77 templates/accounts/google_finir.html:16
+#: templates/accounts/inscription.html:17
 msgid "Conditions générales"
 msgstr "Terms and conditions"
 
-#: accounts/models.py:78 templates/accounts/inscription.html:17
+#: accounts/models.py:78 templates/accounts/google_finir.html:17
+#: templates/accounts/inscription.html:18
 #: templates/pages/confidentialite.html:4
 #: templates/pages/confidentialite.html:5
 msgid "Politique de confidentialité"
@@ -138,31 +152,42 @@ msgstr "consent"
 msgid "affectation de modérateur"
 msgstr "moderator assignment"
 
-#: accounts/views.py:37
+#: accounts/views.py:40 accounts/views.py:203
 msgid "Bienvenue ! Votre compte est créé."
 msgstr "Welcome! Your account has been created."
 
-#: accounts/views.py:85
+#: accounts/views.py:88
 msgid "Ce compte n'a pas de profil d'étude."
 msgstr "This account has no study profile."
 
-#: accounts/views.py:90
+#: accounts/views.py:93
 msgid "Profil enregistré."
 msgstr "Profile saved."
 
-#: accounts/views.py:137
+#: accounts/views.py:140
 msgid "Ce compte est lié à des paiements : contactez-nous pour le supprimer."
 msgstr "This account is linked to payments: contact us to delete it."
 
-#: accounts/views.py:140
+#: accounts/views.py:143
 msgid "Votre compte et vos données ont été supprimés."
 msgstr "Your account and your data have been deleted."
 
-#: accounts/views.py:174
+#: accounts/views.py:171
+msgid ""
+"La connexion avec Google n'a pas abouti. Réessayez, ou connectez-vous avec "
+"votre e-mail."
+msgstr ""
+"Signing in with Google did not work. Try again, or log in with your email."
+
+#: accounts/views.py:177
+msgid "Ce compte est désactivé."
+msgstr "This account is disabled."
+
+#: accounts/views.py:237
 msgid "Mot de passe modifié. Vous pouvez vous connecter."
 msgstr "Password changed. You can now log in."
 
-#: catalogue/models.py:9 config/settings.py:185
+#: catalogue/models.py:9 config/settings.py:190
 msgid "Français"
 msgstr "French"
 
@@ -372,7 +397,7 @@ msgstr "Too many requests sent today. Write to us from the Contact page."
 msgid "Votre demande de retrait a bien été reçue"
 msgstr "Your takedown request has been received"
 
-#: config/settings.py:185
+#: config/settings.py:190
 msgid "English"
 msgstr "English"
 
@@ -1086,22 +1111,32 @@ msgstr "Describe the mistake in a few words (at least 10 characters)."
 msgid "Merci ! L'enseignant relira ce passage."
 msgstr "Thank you! The teacher will review this part."
 
+#: templates/accounts/_bouton_google.html:4
+#: templates/admin/sujets/sujet/importer.html:27
+msgid "ou"
+msgstr "or"
+
+#: templates/accounts/_bouton_google.html:7
+msgid "Continuer avec Google"
+msgstr "Continue with Google"
+
 #: templates/accounts/connexion.html:4 templates/accounts/connexion.html:8
-#: templates/accounts/connexion.html:12 templates/accounts/inscription.html:19
+#: templates/accounts/connexion.html:12 templates/accounts/inscription.html:20
 #: templates/base.html:54
 msgid "Se connecter"
 msgstr "Log in"
 
-#: templates/accounts/connexion.html:15
+#: templates/accounts/connexion.html:16
 msgid "Mot de passe oublié ?"
 msgstr "Forgot your password?"
 
-#: templates/accounts/connexion.html:16
+#: templates/accounts/connexion.html:17
 msgid "Pas encore de compte ?"
 msgstr "No account yet?"
 
-#: templates/accounts/connexion.html:16 templates/accounts/inscription.html:4
-#: templates/accounts/inscription.html:8 templates/base.html:55
+#: templates/accounts/connexion.html:17 templates/accounts/google_finir.html:4
+#: templates/accounts/inscription.html:4 templates/accounts/inscription.html:8
+#: templates/base.html:55
 msgid "Créer un compte"
 msgstr "Create an account"
 
@@ -1125,15 +1160,29 @@ msgstr ""
 msgid "Réinitialisation de votre mot de passe BTS-HND Prep"
 msgstr "Reset your BTS-HND Prep password"
 
-#: templates/accounts/inscription.html:9
-msgid "Gratuit. Nous ne demandons que le nécessaire."
-msgstr "Free. We only ask for what we need."
+#: templates/accounts/google_finir.html:8
+msgid "Dernière étape"
+msgstr "Last step"
 
+#: templates/accounts/google_finir.html:9
+#, python-format
+msgid ""
+"Compte Google : %(email)s. Indiquez votre spécialité et acceptez les "
+"conditions pour créer votre compte."
+msgstr ""
+"Google account: %(email)s. Choose your specialty and accept the terms to "
+"create your account."
+
+#: templates/accounts/google_finir.html:12
 #: templates/accounts/inscription.html:12
 msgid "Créer mon compte"
 msgstr "Create my account"
 
-#: templates/accounts/inscription.html:19
+#: templates/accounts/inscription.html:9
+msgid "Gratuit. Nous ne demandons que le nécessaire."
+msgstr "Free. We only ask for what we need."
+
+#: templates/accounts/inscription.html:20
 msgid "Déjà inscrit ?"
 msgstr "Already registered?"
 
@@ -1470,10 +1519,6 @@ msgstr "Column"
 #: templates/admin/sujets/sujet/importer.html:26
 msgid "Nom du PDF, ou des photos séparées par | (page1.jpg|page2.jpg)"
 msgstr "PDF name, or photos separated by | (page1.jpg|page2.jpg)"
-
-#: templates/admin/sujets/sujet/importer.html:27
-msgid "ou"
-msgstr "or"
 
 #: templates/admin/sujets/sujet/importer.html:28
 msgid "Année de la session, par exemple 2025"

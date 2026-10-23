@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titre %}{% translate "Créer un compte" %} — BTS-HND Prep{% endblock %}
+
+{% block contenu %}
+<div class="mx-auto max-w-md px-4 py-8">
+  <h1 class="text-2xl font-bold">{% translate "Dernière étape" %}</h1>
+  <p class="mt-1 text-sm text-gris">{% blocktranslate %}Compte Google : {{ email }}. Indiquez votre spécialité et acceptez les conditions pour créer votre compte.{% endblocktranslate %}</p>
+  <form method="post" class="formulaire carte mt-6 space-y-4" novalidate>
+    {% csrf_token %}
+    {% translate "Créer mon compte" as bouton %}
+    {% include "accounts/_formulaire.html" %}
+  </form>
+  <p class="mt-3 text-xs text-gris">
+    <a class="underline" href="{% url 'conditions_de_vente' %}">{% translate "Conditions générales" %}</a> ·
+    <a class="underline" href="{% url 'confidentialite' %}">{% translate "Politique de confidentialité" %}</a>
+  </p>
+</div>
+{% endblock %}

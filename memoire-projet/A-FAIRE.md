@@ -48,6 +48,10 @@
 - [ ] Alpine.js : pas encore nécessaire (ajouter quand il le sera : minuteur d'examen blanc, menus).
 - [x] Modérateurs limités à leurs matières (liste, fiches, actions, listes de choix), accès admin automatique.
 - [ ] V3 : rôle « Établissement » pour le tableau de bord IPES (CDC 10.6), absent des 3 rôles du CDC section 7.
+- [x] Connexion Google V2 (code prêt, inactive sans identifiants).
+- [ ] Créer les identifiants OAuth Google (Serge Alain) et essayer la connexion en vrai.
+- [ ] Un compte créé avec Google ne peut pas utiliser « mot de passe oublié » (pas de mot de passe) : ajouter
+      « Définir un mot de passe » dans Mon espace si besoin.
 - [x] Statistiques back-office V2 : tableau de bord administrateur, compteur anonyme des consultations.
 - [x] Hors ligne V2 : installable, sujets gardés (fiche, corrigé, PDF), quiz téléchargés + synchronisés.
 - [ ] Hors ligne : essai réel sur téléphone ; un sujet retiré (demande de retrait) reste sur les téléphones qui l'ont gardé.

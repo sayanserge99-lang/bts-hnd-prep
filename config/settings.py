@@ -99,6 +99,11 @@ EXAMEN_DELAI_GRACE_SECONDES = 90
 # CDC 10.1 : une demande de retrait masque le contenu tout de suite ; on en limite le nombre par adresse IP.
 DEMANDES_RETRAIT_PAR_JOUR = 3
 
+# Connexion avec Google (V2) : inactive tant que ces deux valeurs sont vides (identifiants OAuth
+# créés dans la Google Cloud Console ; voir deploy/DEPLOIEMENT.md).
+GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID", "")
+GOOGLE_CLIENT_SECRET = os.environ.get("GOOGLE_CLIENT_SECRET", "")
+
 # Version des CGU et de la politique de confidentialité enregistrée avec chaque consentement (CDC 10.2).
 VERSION_POLITIQUES = "1.0"
 

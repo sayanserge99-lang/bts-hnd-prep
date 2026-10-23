@@ -6,10 +6,11 @@ from django.contrib.auth import login, logout
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.db.models import ProtectedError
-from django.http import HttpResponse
+from django.http import Http404, HttpResponse
 from django.shortcuts import redirect, render
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils import timezone
+from django.utils.http import url_has_allowed_host_and_scheme
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 from django.views.i18n import set_language
@@ -18,7 +19,9 @@ from entrainement import progression
 from entrainement.models import Tentative
 from sujets.models import Sujet
 
-from .forms import ConnexionForm, InscriptionForm, ProfilForm, SuppressionForm
+from . import google
+from .forms import ConnexionForm, FinInscriptionGoogleForm, InscriptionForm, ProfilForm, SuppressionForm
+from .models import Utilisateur
 
 
 def avec_langue(reponse, utilisateur):
@@ -140,6 +143,66 @@ def supprimer(request):
         messages.success(request, _("Votre compte et vos données ont été supprimés."))
         return redirect("accueil")
     return render(request, "accounts/supprimer.html", {"form": form})
+
+
+def suite_sure(request, adresse):
+    """N'accepte qu'une adresse de ce site après la connexion (pas de redirection vers un site tiers)."""
+    if adresse and url_has_allowed_host_and_scheme(adresse, {request.get_host()}, require_https=request.is_secure()):
+        return adresse
+    return reverse("accounts:profil")
+
+
+def adresse_retour_google(request):
+    return request.build_absolute_uri(reverse("accounts:google_retour"))
+
+
+def google_debut(request):
+    if not google.est_active():
+        raise Http404
+    return redirect(google.preparer(request.session, adresse_retour_google(request), request.GET.get("next", "")))
+
+
+def google_retour(request):
+    if not google.est_active():
+        raise Http404
+    try:
+        email, prenom, nom, suite = google.terminer(request.session, request.GET, adresse_retour_google(request))
+    except google.RefusGoogle:
+        messages.error(request, _("La connexion avec Google n'a pas abouti. Réessayez, ou connectez-vous avec votre e-mail."))
+        return redirect("accounts:connexion")
+
+    utilisateur = Utilisateur.objects.filter(email__iexact=email).first()
+    if utilisateur is not None:
+        if not utilisateur.is_active:
+            messages.error(request, _("Ce compte est désactivé."))
+            return redirect("accounts:connexion")
+        # L'adresse est vérifiée par Google : c'est bien son titulaire.
+        login(request, utilisateur, backend="django.contrib.auth.backends.ModelBackend")
+        return avec_langue(redirect(suite_sure(request, suite)), utilisateur)
+
+    # Première connexion : on garde l'identité vérifiée le temps de compléter l'inscription.
+    request.session[google.CLE_SESSION + "_inscription"] = {"email": email, "prenom": prenom, "nom": nom}
+    return redirect("accounts:google_finir")
+
+
+def google_finir(request):
+    identite = request.session.get(google.CLE_SESSION + "_inscription")
+    if not google.est_active() or not identite:
+        return redirect("accounts:inscription")
+    if Utilisateur.objects.filter(email__iexact=identite["email"]).exists():
+        del request.session[google.CLE_SESSION + "_inscription"]
+        return redirect("accounts:connexion")
+    form = FinInscriptionGoogleForm(
+        request.POST or None,
+        initial={"first_name": identite["prenom"], "last_name": identite["nom"], "langue": request.LANGUAGE_CODE},
+    )
+    if form.is_valid():
+        utilisateur = form.creer(identite["email"])
+        del request.session[google.CLE_SESSION + "_inscription"]
+        login(request, utilisateur, backend="django.contrib.auth.backends.ModelBackend")
+        messages.success(request, _("Bienvenue ! Votre compte est créé."))
+        return avec_langue(redirect("accounts:profil"), utilisateur)
+    return render(request, "accounts/google_finir.html", {"form": form, "email": identite["email"]})
 
 
 @require_POST

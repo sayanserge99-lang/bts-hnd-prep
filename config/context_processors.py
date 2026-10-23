@@ -1,5 +1,6 @@
 from django.conf import settings
 
+from accounts import google
 from accounts.moderation import est_administrateur
 
 
@@ -13,4 +14,6 @@ def fonctionnalites(request):
         "mode_developpement": settings.DEBUG,
         # Lien « Statistiques » de l'admin : administrateurs seulement (CDC 3.9).
         "est_administrateur": hasattr(request, "user") and request.user.is_staff and est_administrateur(request.user),
+        # Bouton « Continuer avec Google » : seulement une fois les identifiants Google renseignés.
+        "connexion_google": google.est_active(),
     }

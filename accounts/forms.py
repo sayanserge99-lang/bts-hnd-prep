@@ -71,11 +71,43 @@ class InscriptionForm(UserCreationForm):
     @transaction.atomic
     def save(self, commit=True):
         utilisateur = super().save(commit=True)
-        utilisateur.groups.add(Group.objects.get(name="Étudiant"))
-        specialite = self.cleaned_data["specialite"]
-        ProfilEtude.objects.create(utilisateur=utilisateur, examen=specialite.examen, specialite=specialite)
-        for objet in (Consentement.Objet.CGU, Consentement.Objet.CONFIDENTIALITE):
-            Consentement.objects.create(utilisateur=utilisateur, objet=objet, version=settings.VERSION_POLITIQUES)
+        preparer_etudiant(utilisateur, self.cleaned_data["specialite"])
+        return utilisateur
+
+
+def preparer_etudiant(utilisateur, specialite):
+    """Rôle Étudiant, profil d'étude et consentements (CDC 10.2), quelle que soit la façon de s'inscrire."""
+    utilisateur.groups.add(Group.objects.get(name="Étudiant"))
+    ProfilEtude.objects.create(utilisateur=utilisateur, examen=specialite.examen, specialite=specialite)
+    for objet in (Consentement.Objet.CGU, Consentement.Objet.CONFIDENTIALITE):
+        Consentement.objects.create(utilisateur=utilisateur, objet=objet, version=settings.VERSION_POLITIQUES)
+
+
+class FinInscriptionGoogleForm(forms.Form):
+    """Première connexion avec Google : ce que Google ne donne pas, et le consentement (jamais présumé)."""
+
+    first_name = forms.CharField(label=_("Prénom"), max_length=150)
+    last_name = forms.CharField(label=_("Nom"), max_length=150)
+    langue = forms.ChoiceField(label=_("Langue"), choices=Utilisateur._meta.get_field("langue").choices)
+    specialite = champ_specialite()
+    accepte_conditions = forms.BooleanField(
+        label=_("J'accepte les conditions générales et la politique de confidentialité."), required=True
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        regrouper_par_examen(self.fields["specialite"])
+
+    @transaction.atomic
+    def creer(self, email):
+        donnees = self.cleaned_data
+        utilisateur = Utilisateur(
+            email=email, first_name=donnees["first_name"], last_name=donnees["last_name"], langue=donnees["langue"]
+        )
+        # Pas de mot de passe : ce compte se connecte avec Google.
+        utilisateur.set_unusable_password()
+        utilisateur.save()
+        preparer_etudiant(utilisateur, donnees["specialite"])
         return utilisateur
 
 
@@ -151,8 +183,19 @@ class SuppressionForm(forms.Form):
     def __init__(self, *args, utilisateur, **kwargs):
         self.utilisateur = utilisateur
         super().__init__(*args, **kwargs)
+        if not utilisateur.has_usable_password():
+            # Compte créé avec Google, sans mot de passe : on confirme en retapant l'adresse e-mail.
+            self.fields["mot_de_passe"] = forms.CharField(
+                label=_("Pour confirmer, tapez votre adresse e-mail"),
+                widget=forms.EmailInput(attrs={"autocomplete": "off"}),
+            )
 
     def clean_mot_de_passe(self):
-        if not self.utilisateur.check_password(self.cleaned_data["mot_de_passe"]):
+        valeur = self.cleaned_data["mot_de_passe"]
+        if not self.utilisateur.has_usable_password():
+            if valeur.strip().lower() != self.utilisateur.email.lower():
+                raise ValidationError(_("Ce n'est pas l'adresse e-mail de ce compte."))
+            return valeur
+        if not self.utilisateur.check_password(valeur):
             raise ValidationError(_("Mot de passe incorrect."))
-        return self.cleaned_data["mot_de_passe"]
+        return valeur
