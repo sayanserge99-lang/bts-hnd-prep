@@ -75,5 +75,9 @@
   pas seulement à la publication ; tout rejet supprime le fichier (plus simple que de juger « suspect ») ; une
   contribution validée donne un sujet en brouillon, jamais publié directement. Récompense = abonnement sans offre,
   ajouté après l'abonnement en cours ; pas de récompense pour un corrigé (CDC 3.7 : « pour chaque sujet validé »).
+- **Forum** (23/10, CDC muet sur le détail) : modération a posteriori (un message paraît tout de suite), masquage
+  automatique à 3 signalements de comptes différents, le modérateur tranche ; lecture publique, écriture avec un
+  compte ; pas de fichier joint ni d'image (pas de dépôt de sujet par cette voie) ; discussion liée à un sujet = suit
+  sa visibilité. Pas de classement ni de points pour les membres.
 - **Interface** : Tailwind v4 en exécutable autonome (pas de Node), polices du système, HTMX servi localement ;
   les pages marchent aussi sans JavaScript (formulaire GET classique).

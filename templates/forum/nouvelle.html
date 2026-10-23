@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titre %}{% translate "Poser une question" %} — BTS-HND Prep{% endblock %}
+
+{% block contenu %}
+<div class="mx-auto max-w-2xl px-4 py-8">
+  <a href="{% url 'forum:matiere' matiere.pk %}" class="text-sm text-vert hover:underline">← {{ matiere.nom }}</a>
+  <h1 class="mt-3 text-2xl font-bold">{% translate "Poser une question" %}</h1>
+  {% if sujet %}<p class="mt-1 text-sm text-gris">{% blocktranslate with titre=sujet.titre annee=sujet.session.annee %}Sur le sujet {{ titre }} {{ annee }}{% endblocktranslate %}</p>{% endif %}
+  <p class="mt-3 rounded-lg border border-ambre/40 bg-ambre-clair p-3 text-sm">{% translate "Restez courtois. Ne publiez jamais un sujet d'une session en cours : le message serait supprimé et le compte fermé." %}</p>
+  <form method="post" class="formulaire carte mt-6 space-y-4" novalidate>
+    {% csrf_token %}
+    {% if sujet %}<input type="hidden" name="sujet" value="{{ sujet.pk }}">{% endif %}
+    {% translate "Publier la question" as bouton %}
+    {% include "accounts/_formulaire.html" %}
+  </form>
+</div>
+{% endblock %}

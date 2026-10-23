@@ -58,6 +58,7 @@
     <a class="stats-tuile{% if a_traiter.retraits %} a-traiter{% endif %}" href="{% url 'admin:communaute_demanderetrait_changelist' %}?statut__exact=recue"><div class="valeur">{{ a_traiter.retraits }}</div><div class="libelle">{% translate "demandes de retrait reçues" %}</div></a>
     <a class="stats-tuile{% if a_traiter.signalements %} a-traiter{% endif %}" href="{% url 'admin:communaute_signalement_changelist' %}?statut__exact=ouvert"><div class="valeur">{{ a_traiter.signalements }}</div><div class="libelle">{% translate "erreurs signalées à vérifier" %}</div></a>
     <a class="stats-tuile{% if a_traiter.contributions %} a-traiter{% endif %}" href="{% url 'admin:communaute_contribution_changelist' %}?statut__exact=en_attente"><div class="valeur">{{ a_traiter.contributions }}</div><div class="libelle">{% translate "contributions en attente" %}</div></a>
+    <a class="stats-tuile{% if a_traiter.forum %} a-traiter{% endif %}" href="{% url 'admin:forum_signalementforum_changelist' %}?traite__exact=0"><div class="valeur">{{ a_traiter.forum }}</div><div class="libelle">{% translate "signalements du forum" %}</div></a>
   </div>
 
   <h2>{% translate "Contenu" %}</h2>

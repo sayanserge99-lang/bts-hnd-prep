@@ -75,7 +75,9 @@
 - [ ] Fixer JOURS_OFFERTS_PAR_SUJET avec Serge Alain (7 jours pour l'instant). Tant que le paiement est fermé,
       tout est gratuit : les jours offerts aujourd'hui expirent avant l'ouverture du Premium.
 - [ ] Contributions : pas de conversion WebP des photos (assemblées en PDF), pas de recadrage automatique.
-- [ ] Forum (V3) : pas encore modélisé.
+- [x] V3 module 2 : forum (questions-réponses par matière, signalements, modération).
+- [ ] Forum : pas de modification ni de suppression de ses propres messages, pas de recherche, pas d'abonnement
+      à une discussion (seul l'auteur de la question est prévenu). À ajouter selon les retours.
 
 ## Étude de faisabilité (reporté, « on les fera le moment venu »)
 

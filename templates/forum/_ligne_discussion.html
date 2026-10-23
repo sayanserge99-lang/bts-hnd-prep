@@ -1,0 +1,8 @@
+{% load i18n %}
+<li><a href="{% url 'forum:discussion' discussion.pk %}" class="carte block hover:border-vert">
+  <span class="block font-semibold">{% if discussion.reponse_acceptee_id %}<span class="text-vert" title="{% translate 'Résolue' %}">✓</span> {% endif %}{{ discussion.titre }}</span>
+  <span class="text-sm text-gris">
+    {% if avec_matiere %}{{ discussion.matiere.nom }} · {% endif %}{% if discussion.sujet %}{{ discussion.sujet.titre }} {{ discussion.sujet.session.annee }} · {% endif %}{{ discussion.auteur.first_name|default:_("Un étudiant") }} · {{ discussion.derniere_activite|timesince }}
+    {% if discussion.nb_reponses is not None %} · {% blocktranslate count n=discussion.nb_reponses %}{{ n }} réponse{% plural %}{{ n }} réponses{% endblocktranslate %}{% endif %}
+  </span>
+</a></li>

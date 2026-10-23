@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load i18n forum %}
+
+{% block titre %}{{ discussion.titre }} — {% translate "Forum" %} — BTS-HND Prep{% endblock %}
+
+{% block contenu %}
+<div class="mx-auto max-w-3xl space-y-5 px-4 py-6">
+  <a href="{% url 'forum:matiere' discussion.matiere_id %}" class="text-sm text-vert hover:underline">← {{ discussion.matiere.nom }}</a>
+
+  <article class="carte space-y-3">
+    <h1 class="text-xl font-bold">{{ discussion.titre }}</h1>
+    <p class="text-sm text-gris">{{ discussion.auteur.first_name|default:_("Un étudiant") }} · {{ discussion.cree_le|date:"d/m/Y H:i" }}
+      {% if discussion.sujet %} · <a href="{% url 'sujets:detail' discussion.sujet_id %}" class="text-vert underline">{{ discussion.sujet.titre }} {{ discussion.sujet.session.annee }}</a>{% endif %}</p>
+    <div class="corrige">{{ discussion.texte|message }}</div>
+    {% include "forum/_signaler.html" with auteur=discussion.auteur type_cible="discussion" cible_pk=discussion.pk %}
+  </article>
+
+  <section class="space-y-3" aria-labelledby="titre-reponses">
+    <h2 id="titre-reponses" class="font-semibold">{% blocktranslate count n=reponses|length %}{{ n }} réponse{% plural %}{{ n }} réponses{% endblocktranslate %}</h2>
+    {% for reponse in reponses %}
+      <article id="reponse-{{ reponse.pk }}" class="carte space-y-2 {% if reponse.pk == discussion.reponse_acceptee_id %}border-vert{% endif %}">
+        {% if reponse.pk == discussion.reponse_acceptee_id %}<p class="text-xs font-semibold uppercase tracking-wide text-vert">✓ {% translate "A aidé l'auteur de la question" %}</p>{% endif %}
+        <p class="text-sm text-gris">{{ reponse.auteur.first_name|default:_("Un étudiant") }}{% if reponse.auteur.is_staff %} · <span class="text-vert">{% translate "équipe" %}</span>{% endif %} · {{ reponse.cree_le|date:"d/m/Y H:i" }}</p>
+        <div class="corrige">{{ reponse.texte|message }}</div>
+        <div class="flex flex-wrap items-start gap-4">
+          {% if est_auteur and reponse.auteur != user %}
+            <form method="post" action="{% url 'forum:accepter' reponse.pk %}">{% csrf_token %}
+              <button class="text-xs text-vert underline">{% if reponse.pk == discussion.reponse_acceptee_id %}{% translate "Retirer « m'a aidé »" %}{% else %}{% translate "Cette réponse m'a aidé" %}{% endif %}</button>
+            </form>
+          {% endif %}
+          {% include "forum/_signaler.html" with auteur=reponse.auteur type_cible="reponse" cible_pk=reponse.pk %}
+        </div>
+      </article>
+    {% empty %}
+      <p class="carte text-gris">{% translate "Pas encore de réponse." %}</p>
+    {% endfor %}
+  </section>
+
+  {% if user.is_authenticated %}
+    <form method="post" class="formulaire carte space-y-4" novalidate>
+      {% csrf_token %}
+      {% translate "Répondre" as bouton %}
+      {% include "accounts/_formulaire.html" %}
+    </form>
+  {% else %}
+    <a href="{% url 'accounts:connexion' %}?next={{ request.path|urlencode }}" class="bouton-contour">{% translate "Se connecter pour répondre" %}</a>
+  {% endif %}
+</div>
+{% endblock %}

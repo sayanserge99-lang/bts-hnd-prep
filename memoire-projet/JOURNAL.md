@@ -113,3 +113,7 @@
   rejeter, PDF), liens (catalogue, fiche, Mon espace). 20 tests ; 3 échecs venaient des tests (e-mail envoyé après
   commit, admin créé deux fois). Contre-épreuve : contrôles de session retirés → 2 échecs. 277/277 verts.
   Au passage : le conteneur web s'était arrêté (relancé avec docker compose up -d).
+- 23/10 : V3 module 2, forum (CDC : une ligne « questions-réponses par matière, modéré » → choix faits et notés dans
+  DECISIONS). App forum, 3 modèles, services, 6 vues, 7 gabarits, admin, droits du modérateur. 14 tests ; défauts vus en
+  route : apostrophe qui cassait un gabarit (placeholder), LOGIN_URL pris pour une adresse, retour vers une discussion
+  que le signalement venait de masquer, tri perdu avec Count (alerte du paginateur). Contre-épreuve OK. 291/291 verts.

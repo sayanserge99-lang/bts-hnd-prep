@@ -36,6 +36,7 @@
         {% else %}
           <span class="text-gris">{% translate "Entraînement" %} <span class="badge-bientot">{% translate "Bientôt" %}</span></span>
         {% endif %}
+        {% if fonctionnalites.forum %}<a href="{% url 'forum:accueil' %}" class="hover:text-vert">{% translate "Forum" %}</a>{% endif %}
         <a href="{% url 'accueil' %}#offres" class="hover:text-vert">{% translate "Offres" %}</a>
       </nav>
 

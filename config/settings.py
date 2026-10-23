@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "communaute",
     "paiements",
     "partenaires",
+    "forum",
 ]
 
 MIDDLEWARE = [
@@ -95,6 +96,9 @@ QUIZ_GRATUITS_PAR_JOUR = 3
 # Contributions (CDC 3.7). [À FIXER] avec Serge Alain : nombre de jours offerts par sujet validé.
 JOURS_OFFERTS_PAR_SUJET = 7
 CONTRIBUTIONS_PAR_JOUR = 10
+# Forum (CDC 3.7) : messages par jour et par compte, signalements qui masquent un message en attendant le modérateur.
+FORUM_MESSAGES_PAR_JOUR = 30
+FORUM_SIGNALEMENTS_POUR_MASQUER = 3
 CONTRIBUTION_PHOTOS_MAX = 10
 CONTRIBUTION_TAILLE_MAX_FICHIER = 10 * 1024 * 1024
 
@@ -223,7 +227,7 @@ FONCTIONNALITES = {
     "examens_blancs": True,
     "hors_ligne": True,
     "contributions": True,
-    "forum": False,
+    "forum": True,
 }
 
 # CDC 10.4 : aucun paiement sans structure déclarée ni NIU.

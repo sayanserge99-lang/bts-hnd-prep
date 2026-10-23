@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titre %}{{ matiere.nom }} — {% translate "Forum" %} — BTS-HND Prep{% endblock %}
+
+{% block contenu %}
+<div class="mx-auto max-w-3xl space-y-5 px-4 py-6">
+  <div>
+    <a href="{% url 'forum:accueil' %}" class="text-sm text-vert hover:underline">← {% translate "Forum" %}</a>
+    <h1 class="mt-2 text-2xl font-bold">{{ matiere.nom }}</h1>
+    <p class="text-gris">{{ matiere.examen.code }}{% if sujet %} · {% blocktranslate with titre=sujet.titre annee=sujet.session.annee %}questions sur le sujet {{ titre }} {{ annee }}{% endblocktranslate %}{% endif %}</p>
+  </div>
+  <div class="flex flex-wrap items-center gap-3">
+    <a href="{% url 'forum:nouvelle' matiere.pk %}{% if sujet %}?sujet={{ sujet.pk }}{% endif %}" class="bouton-plein">{% translate "Poser une question" %}</a>
+    {% if request.GET.sans_reponse %}
+      <a href="?{% if sujet %}sujet={{ sujet.pk }}{% endif %}" class="text-sm text-vert underline">{% translate "Toutes les discussions" %}</a>
+    {% else %}
+      <a href="?sans_reponse=1{% if sujet %}&amp;sujet={{ sujet.pk }}{% endif %}" class="text-sm text-vert underline">{% translate "Sans réponse" %}</a>
+    {% endif %}
+  </div>
+  <ul class="space-y-2">
+    {% for discussion in page %}{% include "forum/_ligne_discussion.html" %}
+    {% empty %}<li class="carte text-gris">{% translate "Pas encore de discussion. Posez la première question !" %}</li>{% endfor %}
+  </ul>
+  {% if page.has_other_pages %}
+    <nav class="flex justify-between text-sm" aria-label="{% translate 'Pages' %}">
+      {% if page.has_previous %}<a href="?page={{ page.previous_page_number }}" class="text-vert underline">← {% translate "Précédentes" %}</a>{% else %}<span></span>{% endif %}
+      {% if page.has_next %}<a href="?page={{ page.next_page_number }}" class="text-vert underline">{% translate "Suivantes" %} →</a>{% endif %}
+    </nav>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,6 @@
+{% load i18n %}{% blocktranslate with nom=discussion.auteur.first_name|default:discussion.auteur.email %}Bonjour {{ nom }},{% endblocktranslate %}
+
+{% blocktranslate with titre=discussion.titre %}Quelqu'un a répondu à votre question « {{ titre }} ».{% endblocktranslate %}
+{% translate "Lisez la réponse sur BTS-HND Prep, rubrique Forum." %}
+
+BTS-HND Prep

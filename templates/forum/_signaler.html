@@ -1,0 +1,12 @@
+{% load i18n %}
+{% if user.is_authenticated and user != auteur %}
+  <details class="mt-2 text-xs">
+    <summary class="cursor-pointer text-gris underline">⚑ {% translate "Signaler" %}</summary>
+    <form method="post" action="{% url 'forum:signaler' type_cible cible_pk %}" class="mt-2 flex flex-wrap gap-2">
+      {% csrf_token %}
+      {% translate "Insulte, publicité, sujet d'une session en cours…" as exemple %}
+      <input name="motif" required minlength="5" maxlength="300" class="champ flex-1" placeholder="{{ exemple }}" aria-label="{% translate 'Motif du signalement' %}">
+      <button class="bouton-contour">{% translate "Envoyer" %}</button>
+    </form>
+  </details>
+{% endif %}

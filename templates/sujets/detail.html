@@ -79,6 +79,14 @@
     {% if sujet.fourni_par %}<dt class="text-gris">{% translate "Fourni par" %}</dt><dd>{{ sujet.fourni_par.nom }}</dd>{% endif %}
   </dl>
 
+  {% if fonctionnalites.forum %}
+    {# Forum : les questions sur ce sujet précis. #}
+    <p class="mt-6 flex flex-wrap gap-x-4 gap-y-2 text-sm">
+      {% if nb_discussions %}<a href="{% url 'forum:matiere' sujet.matiere_id %}?sujet={{ sujet.pk }}" class="text-vert underline">{% blocktranslate count n=nb_discussions %}{{ n }} question sur ce sujet au forum{% plural %}{{ n }} questions sur ce sujet au forum{% endblocktranslate %}</a>{% endif %}
+      <a href="{% url 'forum:nouvelle' sujet.matiere_id %}?sujet={{ sujet.pk }}" class="text-vert underline">{% translate "Une question sur ce sujet ? Posez-la au forum" %}</a>
+    </p>
+  {% endif %}
+
   {# CDC 10.1 : procédure de retrait pour tout ayant droit. #}
   <p class="mt-6 text-xs text-gris">
     <a href="{% url 'demande_de_retrait' %}?sujet={{ sujet.pk }}" class="underline">{% translate "Demander le retrait de ce document" %}</a>

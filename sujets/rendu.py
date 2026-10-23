@@ -47,7 +47,16 @@ BALISES = nh3.ALLOWED_TAGS | BALISES_MATHML
 ATTRIBUTS = {**nh3.ALLOWED_ATTRIBUTES, **ATTRIBUTS_MATHML}
 
 
-def rendre(texte):
+# Messages du forum : pas d'images (pistage, contenus choquants), liens marqués comme venant des utilisateurs.
+BALISES_MESSAGE = BALISES - {"img"}
+
+
+def rendre_message(texte):
+    """Rendu d'un message de forum : comme un corrigé (formules comprises), plus restrictif."""
+    return rendre(texte, balises=BALISES_MESSAGE, rel_liens="nofollow ugc noopener noreferrer")
+
+
+def rendre(texte, balises=BALISES, rel_liens="noopener noreferrer"):
     if not texte:
         return ""
     formules = []
@@ -68,7 +77,7 @@ def rendre(texte):
     # Les formules sont mises de côté d'abord : LaTeX gère ses propres espaces.
     texte = MILLIERS.sub(ESPACE_FINE_INSECABLE, FORMULE.sub(mettre_de_cote, texte))
     html = markdown.markdown(texte, extensions=["tables", "fenced_code", "sane_lists"])
-    return mark_safe(nh3.clean(REPERE.sub(remettre, html), tags=BALISES, attributes=ATTRIBUTS))
+    return mark_safe(nh3.clean(REPERE.sub(remettre, html), tags=balises, attributes=ATTRIBUTS, link_rel=rel_liens))
 
 
 def rendre_ligne(texte):

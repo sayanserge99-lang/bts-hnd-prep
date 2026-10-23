@@ -18,6 +18,12 @@
       <span><span class="block font-semibold">{% translate "Ma progression" %}</span><span class="text-sm text-gris">{% translate "Réussite par chapitre, points faibles, jours avant la session" %}</span></span>
       <span aria-hidden="true">→</span>
     </a>
+    {% if fonctionnalites.forum %}
+      <a href="{% url 'forum:accueil' %}" class="carte mt-4 flex items-center justify-between hover:border-vert">
+        <span><span class="block font-semibold">{% translate "Forum" %}</span><span class="text-sm text-gris">{% translate "Une question ? Les autres étudiants et les enseignants répondent" %}</span></span>
+        <span aria-hidden="true">→</span>
+      </a>
+    {% endif %}
     {% if fonctionnalites.examens_blancs %}
       <a href="{% url 'entrainement:examens' %}" class="carte mt-4 flex items-center justify-between hover:border-vert">
         <span><span class="block font-semibold">{% translate "Examens blancs" %}</span><span class="text-sm text-gris">{% translate "Un vrai sujet, dans la durée réelle de l'épreuve" %}</span></span>

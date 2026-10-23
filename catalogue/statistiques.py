@@ -9,6 +9,7 @@ from django.utils import timezone
 
 from accounts.models import ProfilEtude, Utilisateur
 from communaute.models import Contribution, DemandeRetrait, Signalement
+from forum.models import SignalementForum
 from entrainement.models import Question, ReponseQuestion, Tentative
 from paiements.models import Abonnement, Paiement
 from partenaires.models import Etablissement
@@ -138,6 +139,7 @@ def tableau_de_bord(aujourd_hui=None):
             "retraits": DemandeRetrait.objects.filter(statut=DemandeRetrait.Statut.RECUE).count(),
             "signalements": Signalement.objects.filter(statut=Signalement.Statut.OUVERT).count(),
             "contributions": Contribution.objects.filter(statut=Contribution.Statut.EN_ATTENTE).count(),
+            "forum": SignalementForum.objects.filter(traite=False).count(),
         },
         "top": top,
         "revenus": revenus,

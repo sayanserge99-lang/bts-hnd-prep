@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-23 10:54+0100\n"
+"POT-Creation-Date: 2026-10-23 11:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,7 +38,7 @@ msgstr "Dates"
 msgid "Spécialité préparée"
 msgstr "Specialty"
 
-#: accounts/forms.py:41 templates/base.html:51
+#: accounts/forms.py:41 templates/base.html:52
 msgid "Mon établissement"
 msgstr "My institution"
 
@@ -211,7 +211,7 @@ msgstr "Password saved."
 msgid "Mot de passe modifié. Vous pouvez vous connecter."
 msgstr "Password changed. You can now log in."
 
-#: catalogue/models.py:9 config/settings.py:195
+#: catalogue/models.py:9 config/settings.py:199
 msgid "Français"
 msgstr "French"
 
@@ -547,7 +547,7 @@ msgstr "Reason for rejection"
 msgid "Envoyé au contributeur. Le fichier est supprimé."
 msgstr "Sent to the contributor. The file is deleted."
 
-#: communaute/models.py:19 templates/admin/statistiques.html:74
+#: communaute/models.py:19 templates/admin/statistiques.html:75
 #: templates/communaute/mes_contributions.html:22
 #: templates/entrainement/examens/consignes.html:12
 #: templates/sujets/detail.html:15
@@ -675,7 +675,7 @@ msgstr ""
 "Thank you! Your marking guide will be reviewed by a moderator before it is "
 "published."
 
-#: config/settings.py:195
+#: config/settings.py:199
 msgid "English"
 msgstr "English"
 
@@ -871,7 +871,7 @@ msgstr "Shown after the answer."
 msgid "publiée"
 msgstr "published"
 
-#: entrainement/models.py:64
+#: entrainement/models.py:64 forum/models.py:29
 msgid "question"
 msgstr "question"
 
@@ -992,7 +992,7 @@ msgstr "attempt"
 msgid "Identifiants des choix cochés, ou texte de la réponse courte."
 msgstr "IDs of the ticked choices, or the short answer text."
 
-#: entrainement/models.py:231
+#: entrainement/models.py:231 forum/models.py:52 forum/models.py:57
 msgid "réponse"
 msgstr "answer"
 
@@ -1030,6 +1030,132 @@ msgstr "Exam over: answers not saved."
 #: entrainement/views_hors_ligne.py:68
 msgid "Vous avez fait tous vos quiz gratuits du jour."
 msgstr "You have used all your free quizzes for today."
+
+#: forum/admin.py:13
+msgid "Masquer les messages sélectionnés"
+msgstr "Hide selected messages"
+
+#: forum/admin.py:16
+#, python-format
+msgid "%d message masqué."
+msgid_plural "%d messages masqués."
+msgstr[0] "%d message hidden."
+msgstr[1] "%d messages hidden."
+
+#: forum/admin.py:18
+msgid "Rétablir les messages sélectionnés"
+msgstr "Restore selected messages"
+
+#: forum/admin.py:23
+#, python-format
+msgid "%d message rétabli."
+msgid_plural "%d messages rétablis."
+msgstr[0] "%d message restored."
+msgstr[1] "%d messages restored."
+
+#: forum/admin.py:64
+msgid "Masquer le message signalé (signalement fondé)"
+msgstr "Hide the reported message (valid report)"
+
+#: forum/admin.py:69
+#, python-format
+msgid "%d signalement traité."
+msgid_plural "%d signalements traités."
+msgstr[0] "%d report handled."
+msgstr[1] "%d reports handled."
+
+#: forum/admin.py:71
+msgid "Rejeter le signalement et rétablir le message"
+msgstr "Reject the report and restore the message"
+
+#: forum/admin.py:76
+#, python-format
+msgid "%d signalement rejeté."
+msgid_plural "%d signalements rejetés."
+msgstr[0] "%d report rejected."
+msgstr[1] "%d reports rejected."
+
+#: forum/forms.py:6
+msgid ""
+"Formules entre $ … $ comme dans les corrigés. Pas d'images ni de fichiers."
+msgstr "Formulas between $ … $ as in marking guides. No images or files."
+
+#: forum/forms.py:13
+msgid "Votre question"
+msgstr "Your question"
+
+#: forum/forms.py:13
+msgid "Détails"
+msgstr "Details"
+
+#: forum/forms.py:15
+msgid ""
+"Une phrase : par exemple « Comment calculer l'annuité d'un amortissement "
+"dégressif ? »"
+msgstr ""
+"One sentence: for example “How do I calculate a declining-balance "
+"depreciation charge?”"
+
+#: forum/forms.py:25 templates/entrainement/_formulaire_question.html:12
+#: templates/entrainement/examens/epreuve.html:38
+msgid "Votre réponse"
+msgstr "Your answer"
+
+#: forum/forms.py:31
+msgid "Pourquoi signalez-vous ce message ?"
+msgstr "Why are you reporting this message?"
+
+#: forum/models.py:26
+msgid "Facultatif : le sujet dont parle la question."
+msgstr "Optional: the paper the question is about."
+
+#: forum/models.py:30
+msgid "détails"
+msgstr "details"
+
+#: forum/models.py:33
+msgid "Choisie par l'auteur de la question : celle qui l'a aidé."
+msgstr "Chosen by the person who asked: the one that helped."
+
+#: forum/models.py:35 forum/models.py:53
+msgid "masquée"
+msgstr "hidden"
+
+#: forum/models.py:42
+msgid "discussion"
+msgstr "discussion"
+
+#: forum/models.py:69
+msgid "traité"
+msgstr "handled"
+
+#: forum/models.py:73
+msgid "signalement du forum"
+msgstr "forum report"
+
+#: forum/models.py:74 templates/admin/statistiques.html:61
+msgid "signalements du forum"
+msgstr "forum reports"
+
+#: forum/services.py:48
+msgid "Nouvelle réponse à votre question"
+msgstr "New answer to your question"
+
+#: forum/views.py:87 forum/views.py:105
+msgid "Vous avez beaucoup écrit aujourd'hui : revenez demain."
+msgstr "You have written a lot today: come back tomorrow."
+
+#: forum/views.py:145
+msgid "Indiquez en quelques mots pourquoi vous signalez ce message."
+msgstr "Say in a few words why you are reporting this message."
+
+#: forum/views.py:147
+msgid "Merci, un modérateur va regarder ce message."
+msgstr "Thank you, a moderator will look at this message."
+
+#: forum/views.py:149
+msgid "Vous avez déjà signalé ce message."
+msgstr "You have already reported this message."
 
 #: paiements/models.py:15
 msgid "Durée en jours"
@@ -1552,11 +1678,11 @@ msgstr "favourite"
 msgid "Une spécialité choisie n'est pas rattachée à la matière du sujet."
 msgstr "A chosen specialty is not linked to the paper's subject."
 
-#: sujets/views.py:188
+#: sujets/views.py:189
 msgid "Décrivez l'erreur en quelques mots (10 caractères au moins)."
 msgstr "Describe the mistake in a few words (at least 10 characters)."
 
-#: sujets/views.py:192
+#: sujets/views.py:193
 msgid "Merci ! L'enseignant relira ce passage."
 msgstr "Thank you! The teacher will review this part."
 
@@ -1573,7 +1699,7 @@ msgstr "Continue with Google"
 
 #: templates/accounts/connexion.html:4 templates/accounts/connexion.html:8
 #: templates/accounts/connexion.html:12 templates/accounts/inscription.html:20
-#: templates/base.html:55
+#: templates/base.html:56
 msgid "Se connecter"
 msgstr "Log in"
 
@@ -1587,7 +1713,7 @@ msgstr "No account yet?"
 
 #: templates/accounts/connexion.html:17 templates/accounts/google_finir.html:4
 #: templates/accounts/inscription.html:4 templates/accounts/inscription.html:8
-#: templates/base.html:56
+#: templates/base.html:57
 msgid "Créer un compte"
 msgstr "Create an account"
 
@@ -1645,7 +1771,7 @@ msgstr "Edit my profile"
 
 #: templates/accounts/modifier_profil.html:8
 #: templates/accounts/mot_de_passe.html:8 templates/accounts/profil.html:4
-#: templates/base.html:52 templates/communaute/mes_contributions.html:9
+#: templates/base.html:53 templates/communaute/mes_contributions.html:9
 #: templates/partenaires/mes_epreuves.html:9
 msgid "Mon espace"
 msgstr "My space"
@@ -1907,7 +2033,7 @@ msgstr "Reject"
 #: templates/admin/communaute/contribution/rejeter.html:6
 #: templates/admin/communaute/contribution/valider.html:6
 #: templates/admin/entrainement/question/importer.html:6
-#: templates/admin/sujets/sujet/importer.html:6 templates/base.html:97
+#: templates/admin/sujets/sujet/importer.html:6 templates/base.html:98
 msgid "Accueil"
 msgstr "Home"
 
@@ -1998,7 +2124,7 @@ msgid "Colonne"
 msgstr "Column"
 
 #: templates/admin/entrainement/question/importer.html:24
-#: templates/admin/statistiques.html:63
+#: templates/admin/statistiques.html:64
 #: templates/admin/sujets/sujet/importer.html:24
 msgid "Contenu"
 msgstr "Content"
@@ -2220,60 +2346,60 @@ msgstr "reported mistakes to check"
 msgid "contributions en attente"
 msgstr "contributions pending"
 
-#: templates/admin/statistiques.html:65
+#: templates/admin/statistiques.html:66
 msgid "sujets publiés"
 msgstr "published papers"
 
-#: templates/admin/statistiques.html:65
+#: templates/admin/statistiques.html:66
 #, python-format
 msgid "%(n)s en brouillon"
 msgstr "%(n)s in draft"
 
-#: templates/admin/statistiques.html:66
+#: templates/admin/statistiques.html:67
 msgid "corrigés visibles"
 msgstr "visible marking guides"
 
-#: templates/admin/statistiques.html:67
+#: templates/admin/statistiques.html:68
 msgid "questions publiées"
 msgstr "published questions"
 
-#: templates/admin/statistiques.html:70
+#: templates/admin/statistiques.html:71
 msgid "Sujets les plus consultés"
 msgstr "Most viewed papers"
 
-#: templates/admin/statistiques.html:74
+#: templates/admin/statistiques.html:75
 msgid "Fiches"
 msgstr "Pages"
 
-#: templates/admin/statistiques.html:74
+#: templates/admin/statistiques.html:75
 msgid "PDF"
 msgstr "PDF"
 
-#: templates/admin/statistiques.html:74
+#: templates/admin/statistiques.html:75
 msgid "Total"
 msgstr "Total"
 
-#: templates/admin/statistiques.html:88
+#: templates/admin/statistiques.html:89
 msgid "Aucune consultation sur la période."
 msgstr "No views over the period."
 
-#: templates/admin/statistiques.html:91
+#: templates/admin/statistiques.html:92
 msgid "Revenus et conversion"
 msgstr "Revenue and conversion"
 
-#: templates/admin/statistiques.html:94
+#: templates/admin/statistiques.html:95
 msgid "FCFA encaissés"
 msgstr "FCFA received"
 
-#: templates/admin/statistiques.html:95
+#: templates/admin/statistiques.html:96
 msgid "abonnés en cours"
 msgstr "current subscribers"
 
-#: templates/admin/statistiques.html:96
+#: templates/admin/statistiques.html:97
 msgid "taux de conversion (abonnés / inscrits)"
 msgstr "conversion rate (subscribers / registered)"
 
-#: templates/admin/statistiques.html:99
+#: templates/admin/statistiques.html:100
 msgid ""
 "Le paiement n'est pas encore ouvert (structure et NIU à renseigner) : pas de"
 " revenus à afficher."
@@ -2374,65 +2500,72 @@ msgstr "Skip to content"
 msgid "Navigation principale"
 msgstr "Main navigation"
 
-#: templates/base.html:33 templates/base.html:101
+#: templates/base.html:33 templates/base.html:102
 #: templates/sujets/liste.html:4 templates/sujets/liste.html:9
 msgid "Sujets"
 msgstr "Past papers"
 
-#: templates/base.html:35 templates/base.html:37 templates/base.html:106
-#: templates/base.html:111 templates/entrainement/accueil.html:4
+#: templates/base.html:35 templates/base.html:37 templates/base.html:107
+#: templates/base.html:112 templates/entrainement/accueil.html:4
 #: templates/entrainement/accueil.html:9
 #: templates/entrainement/examens/liste.html:9
 #: templates/entrainement/progression.html:9
 msgid "Entraînement"
 msgstr "Practice"
 
-#: templates/base.html:37 templates/base.html:111
+#: templates/base.html:37 templates/base.html:112
 #: templates/sujets/detail.html:19
 msgid "Bientôt"
 msgstr "Soon"
 
-#: templates/base.html:39
+#: templates/base.html:39 templates/entrainement/accueil.html:23
+#: templates/forum/accueil.html:4 templates/forum/accueil.html:9
+#: templates/forum/discussion.html:4 templates/forum/matiere.html:4
+#: templates/forum/matiere.html:9
+msgid "Forum"
+msgstr "Forum"
+
+#: templates/base.html:40
 msgid "Offres"
 msgstr "Plans"
 
-#: templates/base.html:53
+#: templates/base.html:54
 msgid "Déconnexion"
 msgstr "Log out"
 
-#: templates/base.html:82
+#: templates/base.html:83
 msgid "Informations légales"
 msgstr "Legal information"
 
-#: templates/base.html:83 templates/pages/mentions_legales.html:4
+#: templates/base.html:84 templates/pages/mentions_legales.html:4
 #: templates/pages/mentions_legales.html:5
 msgid "Mentions légales"
 msgstr "Legal notice"
 
-#: templates/base.html:84
+#: templates/base.html:85
 msgid "Confidentialité"
 msgstr "Privacy"
 
-#: templates/base.html:85
+#: templates/base.html:86
 msgid "Conditions de vente"
 msgstr "Terms of sale"
 
-#: templates/base.html:86 templates/communaute/demande_retrait.html:4
+#: templates/base.html:87 templates/communaute/demande_retrait.html:4
 #: templates/communaute/demande_retrait.html:8
 #: templates/communaute/demande_retrait_recue.html:4
 msgid "Demande de retrait"
 msgstr "Takedown request"
 
-#: templates/base.html:87 templates/communaute/demande_retrait.html:22
+#: templates/base.html:88 templates/communaute/demande_retrait.html:22
 #: templates/pages/contact.html:4 templates/pages/contact.html:5
 msgid "Contact"
 msgstr "Contact"
 
-#: templates/base.html:93
+#: templates/base.html:94
 msgid "Navigation mobile"
 msgstr "Mobile navigation"
 
-#: templates/base.html:117
+#: templates/base.html:118
 msgid "Profil"
 msgstr "Profile"
 
@@ -2630,6 +2763,7 @@ msgstr "Back to home"
 
 #: templates/communaute/email_accuse_retrait.txt:1
 #: templates/communaute/email_decision_contribution.txt:1
+#: templates/forum/email_nouvelle_reponse.txt:1
 #, python-format
 msgid "Bonjour %(nom)s,"
 msgstr "Hello %(nom)s,"
@@ -2793,11 +2927,6 @@ msgstr "See my result"
 msgid "Question suivante"
 msgstr "Next question"
 
-#: templates/entrainement/_formulaire_question.html:12
-#: templates/entrainement/examens/epreuve.html:38
-msgid "Votre réponse"
-msgstr "Your answer"
-
 #: templates/entrainement/_formulaire_question.html:17
 msgid "Plusieurs réponses possibles."
 msgstr "Several answers possible."
@@ -2824,6 +2953,10 @@ msgid "Réussite par chapitre, points faibles, jours avant la session"
 msgstr "Success by chapter, weak points, days before the session"
 
 #: templates/entrainement/accueil.html:23
+msgid "Une question ? Les autres étudiants et les enseignants répondent"
+msgstr "A question? Other students and teachers answer"
+
+#: templates/entrainement/accueil.html:29
 #: templates/entrainement/examens/consignes.html:8
 #: templates/entrainement/examens/liste.html:4
 #: templates/entrainement/examens/liste.html:10
@@ -2831,18 +2964,18 @@ msgstr "Success by chapter, weak points, days before the session"
 msgid "Examens blancs"
 msgstr "Mock exams"
 
-#: templates/entrainement/accueil.html:23
+#: templates/entrainement/accueil.html:29
 msgid "Un vrai sujet, dans la durée réelle de l'épreuve"
 msgstr "A real paper, in the real exam time"
 
-#: templates/entrainement/accueil.html:28
+#: templates/entrainement/accueil.html:34
 #, python-format
 msgid "%(n)s quiz gratuit restant aujourd'hui."
 msgid_plural "%(n)s quiz gratuits restants aujourd'hui."
 msgstr[0] "%(n)s free quiz left today."
 msgstr[1] "%(n)s free quizzes left today."
 
-#: templates/entrainement/accueil.html:38
+#: templates/entrainement/accueil.html:44
 #: templates/entrainement/examens/consignes.html:13
 #, python-format
 msgid "%(n)s question"
@@ -2850,47 +2983,47 @@ msgid_plural "%(n)s questions"
 msgstr[0] "%(n)s question"
 msgstr[1] "%(n)s questions"
 
-#: templates/entrainement/accueil.html:38
+#: templates/entrainement/accueil.html:44
 msgid "Questions bientôt disponibles"
 msgstr "Questions coming soon"
 
-#: templates/entrainement/accueil.html:44
+#: templates/entrainement/accueil.html:50
 msgid "Chapitre"
 msgstr "Chapter"
 
-#: templates/entrainement/accueil.html:46
+#: templates/entrainement/accueil.html:52
 msgid "Toute la matière"
 msgstr "Whole subject"
 
-#: templates/entrainement/accueil.html:52
+#: templates/entrainement/accueil.html:58
 #: templates/entrainement/progression.html:51
 msgid "Lancer un quiz"
 msgstr "Start a quiz"
 
-#: templates/entrainement/accueil.html:56 templates/sujets/detail.html:53
+#: templates/entrainement/accueil.html:62 templates/sujets/detail.html:53
 msgid "Téléchargé ✓ : à retrouver dans Hors ligne"
 msgstr "Downloaded ✓: find it in Offline"
 
-#: templates/entrainement/accueil.html:57 templates/sujets/detail.html:54
+#: templates/entrainement/accueil.html:63 templates/sujets/detail.html:54
 msgid "Téléchargement impossible : vérifiez la connexion."
 msgstr "Download failed: check your connection."
 
-#: templates/entrainement/accueil.html:57 templates/sujets/detail.html:54
+#: templates/entrainement/accueil.html:63 templates/sujets/detail.html:54
 msgid "Télécharger pour le hors ligne"
 msgstr "Download for offline"
 
-#: templates/entrainement/accueil.html:66
+#: templates/entrainement/accueil.html:72
 #, python-format
 msgid "Réviser mon erreur (%(n)s)"
 msgid_plural "Réviser mes erreurs (%(n)s)"
 msgstr[0] "Review my mistake (%(n)s)"
 msgstr[1] "Review my mistakes (%(n)s)"
 
-#: templates/entrainement/accueil.html:71
+#: templates/entrainement/accueil.html:77
 msgid "Aucune matière n'est encore enregistrée pour votre spécialité."
 msgstr "No subjects are recorded for your specialty yet."
 
-#: templates/entrainement/accueil.html:76
+#: templates/entrainement/accueil.html:82
 msgid "Mes derniers quiz"
 msgstr "My latest quizzes"
 
@@ -3161,7 +3294,7 @@ msgstr "Mock exam"
 msgid "Aucune tentative terminée pour le moment."
 msgstr "No completed attempts yet."
 
-#: templates/entrainement/progression.html:94
+#: templates/entrainement/progression.html:94 templates/forum/matiere.html:26
 #: templates/sujets/_resultats.html:34 templates/sujets/detail.html:72
 msgid "Pages"
 msgstr "Pages"
@@ -3196,6 +3329,145 @@ msgstr "Replay my mistakes"
 #: templates/entrainement/resultat.html:32
 msgid "Retour à l'entraînement"
 msgstr "Back to practice"
+
+#: templates/forum/_ligne_discussion.html:3
+msgid "Résolue"
+msgstr "Solved"
+
+#: templates/forum/_ligne_discussion.html:5 templates/forum/discussion.html:12
+#: templates/forum/discussion.html:23
+msgid "Un étudiant"
+msgstr "A student"
+
+#: templates/forum/_ligne_discussion.html:6 templates/forum/discussion.html:19
+#, python-format
+msgid "%(n)s réponse"
+msgid_plural "%(n)s réponses"
+msgstr[0] "%(n)s answer"
+msgstr[1] "%(n)s answers"
+
+#: templates/forum/_signaler.html:4
+msgid "Signaler"
+msgstr "Report"
+
+#: templates/forum/_signaler.html:7
+msgid "Insulte, publicité, sujet d'une session en cours…"
+msgstr "Insult, advertising, paper from an ongoing session…"
+
+#: templates/forum/_signaler.html:8
+msgid "Motif du signalement"
+msgstr "Reason for the report"
+
+#: templates/forum/_signaler.html:9 templates/sujets/_corrige.html:43
+msgid "Envoyer"
+msgstr "Send"
+
+#: templates/forum/accueil.html:10
+msgid ""
+"Posez vos questions sur une matière ou un sujet ; les autres étudiants et "
+"les enseignants vous répondent."
+msgstr ""
+"Ask your questions about a subject or a paper; other students and teachers "
+"answer."
+
+#: templates/forum/accueil.html:15
+msgid "Dernières discussions"
+msgstr "Latest discussions"
+
+#: templates/forum/accueil.html:23
+msgid "Matières"
+msgstr "Subjects"
+
+#: templates/forum/accueil.html:28
+#, python-format
+msgid "%(n)s discussion"
+msgid_plural "%(n)s discussions"
+msgstr[0] "%(n)s discussion"
+msgstr[1] "%(n)s discussions"
+
+#: templates/forum/discussion.html:22
+msgid "A aidé l'auteur de la question"
+msgstr "Helped the person who asked"
+
+#: templates/forum/discussion.html:23
+msgid "équipe"
+msgstr "team"
+
+#: templates/forum/discussion.html:28
+msgid "Retirer « m'a aidé »"
+msgstr "Remove “helped me”"
+
+#: templates/forum/discussion.html:28
+msgid "Cette réponse m'a aidé"
+msgstr "This answer helped me"
+
+#: templates/forum/discussion.html:35
+msgid "Pas encore de réponse."
+msgstr "No answer yet."
+
+#: templates/forum/discussion.html:42
+msgid "Répondre"
+msgstr "Answer"
+
+#: templates/forum/discussion.html:46
+msgid "Se connecter pour répondre"
+msgstr "Log in to answer"
+
+#: templates/forum/email_nouvelle_reponse.txt:3
+#, python-format
+msgid "Quelqu'un a répondu à votre question « %(titre)s »."
+msgstr "Someone answered your question “%(titre)s”."
+
+#: templates/forum/email_nouvelle_reponse.txt:4
+msgid "Lisez la réponse sur BTS-HND Prep, rubrique Forum."
+msgstr "Read the answer on BTS-HND Prep, in the Forum section."
+
+#: templates/forum/matiere.html:11
+#, python-format
+msgid "questions sur le sujet %(titre)s %(annee)s"
+msgstr "questions about the %(titre)s %(annee)s paper"
+
+#: templates/forum/matiere.html:14 templates/forum/nouvelle.html:4
+#: templates/forum/nouvelle.html:9
+msgid "Poser une question"
+msgstr "Ask a question"
+
+#: templates/forum/matiere.html:16
+msgid "Toutes les discussions"
+msgstr "All discussions"
+
+#: templates/forum/matiere.html:18
+msgid "Sans réponse"
+msgstr "Unanswered"
+
+#: templates/forum/matiere.html:23
+msgid "Pas encore de discussion. Posez la première question !"
+msgstr "No discussion yet. Ask the first question!"
+
+#: templates/forum/matiere.html:27
+msgid "Précédentes"
+msgstr "Previous"
+
+#: templates/forum/matiere.html:28
+msgid "Suivantes"
+msgstr "Next"
+
+#: templates/forum/nouvelle.html:10
+#, python-format
+msgid "Sur le sujet %(titre)s %(annee)s"
+msgstr "About the %(titre)s %(annee)s paper"
+
+#: templates/forum/nouvelle.html:11
+msgid ""
+"Restez courtois. Ne publiez jamais un sujet d'une session en cours : le "
+"message serait supprimé et le compte fermé."
+msgstr ""
+"Stay polite. Never post a paper from an ongoing session: the message would "
+"be deleted and the account closed."
+
+#: templates/forum/nouvelle.html:15
+msgid "Publier la question"
+msgstr "Post the question"
 
 #: templates/pages/conditions_de_vente.html:4
 #: templates/pages/conditions_de_vente.html:5
@@ -3444,15 +3716,11 @@ msgstr "Report a mistake"
 msgid "Où est l'erreur, et quelle serait la bonne réponse ?"
 msgstr "Where is the mistake, and what would the right answer be?"
 
-#: templates/sujets/_corrige.html:43
-msgid "Envoyer"
-msgstr "Send"
-
 #: templates/sujets/_corrige.html:47
 msgid "Se connecter pour signaler une erreur"
 msgstr "Log in to report a mistake"
 
-#: templates/sujets/_corrige.html:49 templates/sujets/detail.html:84
+#: templates/sujets/_corrige.html:49 templates/sujets/detail.html:92
 msgid "Demander le retrait de ce document"
 msgstr "Request removal of this document"
 
@@ -3559,6 +3827,17 @@ msgstr "Source"
 #: templates/sujets/detail.html:79 templates/sujets/liste.html:71
 msgid "Fourni par"
 msgstr "Provided by"
+
+#: templates/sujets/detail.html:85
+#, python-format
+msgid "%(n)s question sur ce sujet au forum"
+msgid_plural "%(n)s questions sur ce sujet au forum"
+msgstr[0] "%(n)s question about this paper on the forum"
+msgstr[1] "%(n)s questions about this paper on the forum"
+
+#: templates/sujets/detail.html:86
+msgid "Une question sur ce sujet ? Posez-la au forum"
+msgstr "A question about this paper? Ask it on the forum"
 
 #: templates/sujets/liste.html:19
 msgid "Aucun sujet n'est encore disponible."
