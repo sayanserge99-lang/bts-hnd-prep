@@ -85,5 +85,10 @@
 - **Premium** (23/10) : une seule fonction décide (est_premium) ; le filigrane met l'e-mail du lecteur (identifiant
   lisible, dissuasif) ; le lien du PDF expire après 15 min et ne vaut que pour son compte — expiré, il ramène à la
   fiche qui en donne un neuf (pas d'erreur pour l'étudiant). Les prix viennent de la base, jamais du gabarit.
+- **Paiement** (23/10) : construit avec un agrégateur simulé en attendant le choix de Serge Alain ; seule une
+  notification signée (ou une consultation directe de l'agrégateur) déclare un paiement réussi, jamais le retour
+  du navigateur ; montant fixé par le serveur et revérifié ; un montant différent n'ouvre rien (l'équipe vérifie).
+  Numéro de reçu dérivé de la clé du paiement. Le simulateur n'existe qu'avec DEBUG, et le site refuse de démarrer
+  en production avec le paiement ouvert sur le simulateur.
 - **Interface** : Tailwind v4 en exécutable autonome (pas de Node), polices du système, HTMX servi localement ;
   les pages marchent aussi sans JavaScript (formulaire GET classique).

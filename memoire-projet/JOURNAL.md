@@ -131,3 +131,8 @@
   vrai PDF, rendu vérifié avec Ghostscript). 3 tests à adapter (annonce sans offre, PDF sans jeton, faux PDF). Alerte
   pypdf 7 (fusion avant rattachement) corrigée. Capture téléphone : tableau qui débordait → largeur minimale retirée.
   Contre-épreuve : jeton toujours accepté → 1 échec. 311/311 verts.
+- 23/10 : V3 module 5, paiement avec agrégateur simulé : modèle Paiement complété, consentement « conditions de
+  vente », interface Fournisseur + Simule, service (commande, appliquer idempotent, rafraîchir, reçu), 5 vues,
+  6 gabarits, admin en lecture seule, vérification de déploiement E001/E002. 19 tests verts du premier coup ;
+  contre-épreuve (signature et montant retirés) → 2 échecs. Captures téléphone : boutons radio mal alignés (même
+  famille de défaut que les textarea) → CSS corrigé. check --deploy propre ; E001 vérifié. 330/330 verts.

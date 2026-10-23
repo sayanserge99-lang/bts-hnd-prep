@@ -1,0 +1,23 @@
+{% load i18n prix %}
+{# En attente, ce bloc se redemande toutes les 5 s (HTMX) ; sans JavaScript, un bouton recharge la page. #}
+<div id="etat-paiement" class="carte mt-4 space-y-3"
+     {% if paiement.statut == "en_attente" %}hx-get="{% url 'paiements:suivi' paiement.reference %}" hx-trigger="every 5s" hx-swap="outerHTML"{% endif %}>
+  {% if paiement.statut == "reussi" %}
+    <p class="text-lg font-bold text-vert">✓ {% translate "Paiement réussi" %}</p>
+    <p class="text-sm">{% blocktranslate with fin=paiement.abonnement.fin|date:"d/m/Y" %}Votre accès Premium est ouvert jusqu'au {{ fin }}. Le reçu vous a été envoyé par e-mail.{% endblocktranslate %}</p>
+    <div class="flex flex-wrap gap-3">
+      <a href="{% url 'paiements:recu' paiement.reference %}" class="bouton-contour">{% translate "Voir le reçu" %}</a>
+      <a href="{% url 'entrainement:accueil' %}" class="bouton-plein">{% translate "S'entraîner" %}</a>
+    </div>
+  {% elif paiement.statut == "echoue" %}
+    <p class="text-lg font-bold text-red-800">{% translate "Paiement non abouti" %}</p>
+    <p class="text-sm">{{ paiement.motif_echec }}</p>
+    <p class="text-sm text-gris">{% translate "Aucun accès n'a été ouvert. Si votre compte Mobile Money a été débité, écrivez-nous depuis la page Contact avec la référence ci-dessous." %}</p>
+    <a href="{% url 'offres' %}" class="bouton-plein">{% translate "Réessayer" %}</a>
+  {% else %}
+    <p class="text-lg font-bold">{% translate "En attente de votre confirmation" %}</p>
+    <p class="text-sm">{% blocktranslate with montant=paiement.montant|fcfa operateur=paiement.get_operateur_display %}Validez le paiement de {{ montant }} sur votre téléphone ({{ operateur }}), avec votre code secret. Cette page se met à jour toute seule.{% endblocktranslate %}</p>
+    <a href="{% url 'paiements:suivi' paiement.reference %}" class="bouton-contour">{% translate "Actualiser" %}</a>
+  {% endif %}
+  <p class="text-xs text-gris">{% translate "Référence" %} : {{ paiement.reference }}</p>
+</div>

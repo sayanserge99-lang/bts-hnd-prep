@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-23 12:16+0100\n"
+"POT-Creation-Date: 2026-10-23 12:57+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -152,62 +152,66 @@ msgstr "Privacy policy"
 msgid "Partage des résultats avec l'établissement"
 msgstr "Sharing results with the institution"
 
-#: accounts/models.py:102
+#: accounts/models.py:99 templates/base.html:86
+msgid "Conditions de vente"
+msgstr "Terms of sale"
+
+#: accounts/models.py:103
 msgid "version de la politique"
 msgstr "policy version"
 
-#: accounts/models.py:107
+#: accounts/models.py:108
 msgid "consentement"
 msgstr "consent"
 
-#: accounts/models.py:131
+#: accounts/models.py:132
 msgid "affectation de modérateur"
 msgstr "moderator assignment"
 
-#: accounts/views.py:42 accounts/views.py:226
+#: accounts/views.py:42 accounts/views.py:228
 msgid "Bienvenue ! Votre compte est créé."
 msgstr "Welcome! Your account has been created."
 
-#: accounts/views.py:98
+#: accounts/views.py:100
 msgid "Votre établissement ne voit plus vos résultats."
 msgstr "Your institution can no longer see your results."
 
-#: accounts/views.py:103
+#: accounts/views.py:105
 msgid "Votre établissement peut maintenant voir vos résultats."
 msgstr "Your institution can now see your results."
 
-#: accounts/views.py:111
+#: accounts/views.py:113
 msgid "Ce compte n'a pas de profil d'étude."
 msgstr "This account has no study profile."
 
-#: accounts/views.py:116
+#: accounts/views.py:118
 msgid "Profil enregistré."
 msgstr "Profile saved."
 
-#: accounts/views.py:163
+#: accounts/views.py:165
 msgid "Ce compte est lié à des paiements : contactez-nous pour le supprimer."
 msgstr "This account is linked to payments: contact us to delete it."
 
-#: accounts/views.py:166
+#: accounts/views.py:168
 msgid "Votre compte et vos données ont été supprimés."
 msgstr "Your account and your data have been deleted."
 
-#: accounts/views.py:194
+#: accounts/views.py:196
 msgid ""
 "La connexion avec Google n'a pas abouti. Réessayez, ou connectez-vous avec "
 "votre e-mail."
 msgstr ""
 "Signing in with Google did not work. Try again, or log in with your email."
 
-#: accounts/views.py:200
+#: accounts/views.py:202
 msgid "Ce compte est désactivé."
 msgstr "This account is disabled."
 
-#: accounts/views.py:265
+#: accounts/views.py:267
 msgid "Mot de passe enregistré."
 msgstr "Password saved."
 
-#: accounts/views.py:275
+#: accounts/views.py:277
 msgid "Mot de passe modifié. Vous pouvez vous connecter."
 msgstr "Password changed. You can now log in."
 
@@ -307,7 +311,7 @@ msgstr "chapter"
 msgid "Statistiques"
 msgstr "Statistics"
 
-#: communaute/admin.py:39 communaute/models.py:60 paiements/admin.py:98
+#: communaute/admin.py:39 communaute/models.py:60 paiements/admin.py:106
 msgid "contribution"
 msgstr "contribution"
 
@@ -1158,39 +1162,39 @@ msgstr "Thank you, a moderator will look at this message."
 msgid "Vous avez déjà signalé ce message."
 msgstr "You have already reported this message."
 
-#: paiements/admin.py:30
+#: paiements/admin.py:38
 msgid "Établissement (convention active)"
 msgstr "Institution (active agreement)"
 
-#: paiements/admin.py:32
+#: paiements/admin.py:40
 msgid "Offre donnée par chaque code"
 msgstr "Offer given by each code"
 
-#: paiements/admin.py:33
+#: paiements/admin.py:41
 msgid "Nombre de codes"
 msgstr "Number of codes"
 
-#: paiements/admin.py:76
+#: paiements/admin.py:84
 msgid "Générer des codes d'accès"
 msgstr "Generate access codes"
 
-#: paiements/admin.py:81
+#: paiements/admin.py:89
 msgid "Exporter les codes sélectionnés (CSV)"
 msgstr "Export selected codes (CSV)"
 
-#: paiements/admin.py:92
+#: paiements/admin.py:100
 msgid "origine"
 msgstr "origin"
 
-#: paiements/admin.py:95 paiements/models.py:68
+#: paiements/admin.py:103 paiements/models.py:72
 msgid "paiement"
 msgstr "payment"
 
-#: paiements/admin.py:97 paiements/models.py:85
+#: paiements/admin.py:105 paiements/models.py:95
 msgid "code d'accès"
 msgstr "access code"
 
-#: paiements/codes.py:42 paiements/models.py:93
+#: paiements/codes.py:42 paiements/models.py:103
 msgid "Un établissement sans convention active ne peut pas recevoir de codes."
 msgstr "An institution without an active agreement cannot receive codes."
 
@@ -1233,7 +1237,7 @@ msgid ""
 "fin."
 msgstr "This code is no longer valid: your institution's agreement has ended."
 
-#: paiements/codes.py:93
+#: paiements/codes.py:93 paiements/views.py:96
 msgid "Complétez d'abord votre profil (examen et spécialité)."
 msgstr "First complete your profile (exam and specialty)."
 
@@ -1261,50 +1265,101 @@ msgstr "Successful"
 msgid "Échoué"
 msgstr "Failed"
 
-#: paiements/models.py:60
+#: paiements/models.py:61
 msgid "montant (FCFA)"
 msgstr "amount (FCFA)"
 
-#: paiements/models.py:62
+#: paiements/models.py:63
+msgid "numéro Mobile Money"
+msgstr "Mobile Money number"
+
+#: paiements/models.py:64
+msgid "agrégateur"
+msgstr "payment aggregator"
+
+#: paiements/models.py:65
 msgid "référence de l'agrégateur"
 msgstr "aggregator reference"
 
-#: paiements/models.py:86
+#: paiements/models.py:96
 msgid "codes d'accès"
 msgstr "access codes"
 
-#: paiements/models.py:99 partenaires/models.py:38
+#: paiements/models.py:109 partenaires/models.py:38
 msgid "Actif"
 msgstr "Active"
 
-#: paiements/models.py:100
+#: paiements/models.py:110
 msgid "Expiré"
 msgstr "Expired"
 
-#: paiements/models.py:101
+#: paiements/models.py:111
 msgid "Annulé"
 msgstr "Cancelled"
 
-#: paiements/models.py:118
+#: paiements/models.py:128
 msgid "abonnement"
 msgstr "subscription"
 
-#: paiements/models.py:132
+#: paiements/models.py:142
 msgid "jours offerts"
 msgstr "free days"
 
-#: paiements/views.py:17
+#: paiements/service.py:43
+msgid "Le paiement n'est pas encore ouvert."
+msgstr "Payment is not open yet."
+
+#: paiements/service.py:66
+#, python-format
+msgid "Montant reçu (%(recu)s FCFA) différent du prix (%(prix)s FCFA)."
+msgstr ""
+"Amount received (%(recu)s FCFA) differs from the price (%(prix)s FCFA)."
+
+#: paiements/service.py:70
+msgid "Paiement refusé ou annulé."
+msgstr "Payment declined or cancelled."
+
+#: paiements/service.py:98
+msgid "Délai dépassé : aucune confirmation reçue."
+msgstr "Time limit exceeded: no confirmation received."
+
+#: paiements/service.py:106
+#, python-format
+msgid "Votre reçu BTS-HND Prep n° %(numero)s"
+msgstr "Your BTS-HND Prep receipt no. %(numero)s"
+
+#: paiements/views.py:28
 msgid "Code d'accès"
 msgstr "Access code"
 
-#: paiements/views.py:18
+#: paiements/views.py:29
 msgid "Remis par votre établissement, par exemple ABCD-EFGH-JKLM."
 msgstr "Given by your institution, for example ABCD-EFGH-JKLM."
 
-#: paiements/views.py:35
+#: paiements/views.py:46
 #, python-format
 msgid "Code activé : %(offre)s, jusqu'au %(fin)s."
 msgstr "Code activated: %(offre)s, until %(fin)s."
+
+#: paiements/views.py:65
+msgid "Opérateur"
+msgstr "Operator"
+
+#: paiements/views.py:67
+msgid "Numéro Mobile Money"
+msgstr "Mobile Money number"
+
+#: paiements/views.py:68
+msgid "Le numéro qui paie, par exemple 6 77 12 34 56."
+msgstr "The number that pays, for example 6 77 12 34 56."
+
+#: paiements/views.py:71
+msgid "J'ai lu et j'accepte les conditions de vente"
+msgstr "I have read and accept the terms of sale"
+
+#: paiements/views.py:76
+msgid "Numéro de mobile camerounais attendu (9 chiffres, commençant par 6)."
+msgstr "A Cameroonian mobile number is expected (9 digits, starting with 6)."
 
 #: partenaires/forms.py:16
 msgid ""
@@ -1845,7 +1900,7 @@ msgstr "Edit my profile"
 #: templates/accounts/modifier_profil.html:8
 #: templates/accounts/mot_de_passe.html:8 templates/accounts/profil.html:4
 #: templates/base.html:53 templates/communaute/mes_contributions.html:9
-#: templates/paiements/activer_code.html:8
+#: templates/paiements/activer_code.html:8 templates/paiements/recu.html:8
 #: templates/partenaires/mes_epreuves.html:9
 msgid "Mon espace"
 msgstr "My space"
@@ -1854,7 +1909,7 @@ msgstr "My space"
 msgid "Enregistrer"
 msgstr "Save"
 
-#: templates/accounts/mot_de_passe.html:10 templates/accounts/profil.html:108
+#: templates/accounts/mot_de_passe.html:10 templates/accounts/profil.html:114
 msgid "Définir un mot de passe"
 msgstr "Set a password"
 
@@ -1866,7 +1921,7 @@ msgstr ""
 "Your account was created with Google. With a password, you can also log in "
 "with your email and use “Forgot password”."
 
-#: templates/accounts/mot_de_passe.html:13 templates/accounts/profil.html:108
+#: templates/accounts/mot_de_passe.html:13 templates/accounts/profil.html:114
 msgid "Changer mon mot de passe"
 msgstr "Change my password"
 
@@ -2010,7 +2065,8 @@ msgstr "My subscription"
 msgid "Jours offerts (contribution)"
 msgstr "Free days (contribution)"
 
-#: templates/accounts/profil.html:86
+#: templates/accounts/profil.html:86 templates/paiements/commander.html:14
+#: templates/paiements/email_recu.txt:8 templates/paiements/recu.html:26
 #, python-format
 msgid "du %(debut)s au %(fin)s"
 msgstr "from %(debut)s to %(fin)s"
@@ -2019,36 +2075,45 @@ msgstr "from %(debut)s to %(fin)s"
 msgid "Offre gratuite."
 msgstr "Free plan."
 
-#: templates/accounts/profil.html:91 templates/paiements/offres.html:40
+#: templates/accounts/profil.html:91
+msgid "Mes paiements"
+msgstr "My payments"
+
+#: templates/accounts/profil.html:93 templates/paiements/email_recu.txt:5
+#: templates/paiements/recu.html:4 templates/paiements/recu.html:19
+msgid "Reçu"
+msgstr "Receipt"
+
+#: templates/accounts/profil.html:97 templates/paiements/offres.html:40
 msgid "J'ai un code d'accès"
 msgstr "I have an access code"
 
-#: templates/accounts/profil.html:97 templates/accounts/profil.html:100
+#: templates/accounts/profil.html:103 templates/accounts/profil.html:106
 #: templates/communaute/envoyer_sujet.html:8
 #: templates/communaute/mes_contributions.html:4
 #: templates/communaute/mes_contributions.html:10
 msgid "Mes contributions"
 msgstr "My contributions"
 
-#: templates/accounts/profil.html:98
+#: templates/accounts/profil.html:104
 msgid "Envoyez des sujets de sessions passées ou proposez des corrigés."
 msgstr "Send papers from past sessions or propose marking guides."
 
-#: templates/accounts/profil.html:105
+#: templates/accounts/profil.html:111
 msgid "Mes données"
 msgstr "My data"
 
-#: templates/accounts/profil.html:106
+#: templates/accounts/profil.html:112
 msgid ""
 "Vous pouvez récupérer toutes vos données ou supprimer votre compte à tout "
 "moment."
 msgstr "You can download all your data or delete your account at any time."
 
-#: templates/accounts/profil.html:109
+#: templates/accounts/profil.html:115
 msgid "Télécharger mes données"
 msgstr "Download my data"
 
-#: templates/accounts/profil.html:110 templates/accounts/supprimer.html:4
+#: templates/accounts/profil.html:116 templates/accounts/supprimer.html:4
 #: templates/accounts/supprimer.html:8
 msgid "Supprimer mon compte"
 msgstr "Delete my account"
@@ -2655,8 +2720,8 @@ msgstr "Soon"
 msgid "Forum"
 msgstr "Forum"
 
-#: templates/base.html:40 templates/paiements/offres.html:4
-#: templates/paiements/offres.html:9
+#: templates/base.html:40 templates/paiements/commander.html:8
+#: templates/paiements/offres.html:4 templates/paiements/offres.html:9
 msgid "Offres"
 msgstr "Plans"
 
@@ -2676,10 +2741,6 @@ msgstr "Legal notice"
 #: templates/base.html:85
 msgid "Confidentialité"
 msgstr "Privacy"
-
-#: templates/base.html:86
-msgid "Conditions de vente"
-msgstr "Terms of sale"
 
 #: templates/base.html:87 templates/communaute/demande_retrait.html:4
 #: templates/communaute/demande_retrait.html:8
@@ -2860,6 +2921,7 @@ msgstr "Back to home"
 #: templates/communaute/email_accuse_retrait.txt:1
 #: templates/communaute/email_decision_contribution.txt:1
 #: templates/forum/email_nouvelle_reponse.txt:1
+#: templates/paiements/email_recu.txt:1
 #, python-format
 msgid "Bonjour %(nom)s,"
 msgstr "Hello %(nom)s,"
@@ -3576,6 +3638,65 @@ msgstr "Terms of sale"
 msgid "Contenu en cours de rédaction."
 msgstr "Content being written."
 
+#: templates/paiements/_etat.html:6
+msgid "Paiement réussi"
+msgstr "Payment successful"
+
+#: templates/paiements/_etat.html:7
+#, python-format
+msgid ""
+"Votre accès Premium est ouvert jusqu'au %(fin)s. Le reçu vous a été envoyé "
+"par e-mail."
+msgstr ""
+"Your Premium access is open until %(fin)s. The receipt has been sent to you "
+"by email."
+
+#: templates/paiements/_etat.html:9
+msgid "Voir le reçu"
+msgstr "View the receipt"
+
+#: templates/paiements/_etat.html:10
+msgid "S'entraîner"
+msgstr "Practise"
+
+#: templates/paiements/_etat.html:13
+msgid "Paiement non abouti"
+msgstr "Payment not completed"
+
+#: templates/paiements/_etat.html:15
+msgid ""
+"Aucun accès n'a été ouvert. Si votre compte Mobile Money a été débité, "
+"écrivez-nous depuis la page Contact avec la référence ci-dessous."
+msgstr ""
+"No access has been opened. If your Mobile Money account was debited, write "
+"to us from the Contact page with the reference below."
+
+#: templates/paiements/_etat.html:16
+msgid "Réessayer"
+msgstr "Try again"
+
+#: templates/paiements/_etat.html:18
+msgid "En attente de votre confirmation"
+msgstr "Waiting for your confirmation"
+
+#: templates/paiements/_etat.html:19
+#, python-format
+msgid ""
+"Validez le paiement de %(montant)s sur votre téléphone (%(operateur)s), avec"
+" votre code secret. Cette page se met à jour toute seule."
+msgstr ""
+"Approve the payment of %(montant)s on your phone (%(operateur)s) with your "
+"PIN. This page updates by itself."
+
+#: templates/paiements/_etat.html:20
+msgid "Actualiser"
+msgstr "Refresh"
+
+#: templates/paiements/_etat.html:22 templates/paiements/email_recu.txt:11
+#: templates/paiements/recu.html:29
+msgid "Référence"
+msgstr "Reference"
+
 #: templates/paiements/_formules.html:5 templates/paiements/offres.html:25
 msgid "Gratuit"
 msgstr "Free"
@@ -3592,7 +3713,8 @@ msgstr "Download papers as PDF"
 msgid "Début des corrigés, quelques quiz par jour"
 msgstr "Start of marking guides, a few quizzes a day"
 
-#: templates/paiements/_formules.html:16
+#: templates/paiements/_formules.html:16 templates/paiements/commander.html:13
+#: templates/paiements/email_recu.txt:9 templates/paiements/recu.html:27
 msgid "TTC"
 msgstr "incl. VAT"
 
@@ -3625,14 +3747,18 @@ msgid "Suivi de vos points faibles"
 msgstr "Track your weak points"
 
 #: templates/paiements/_formules.html:28
+msgid "Choisir"
+msgstr "Choose"
+
+#: templates/paiements/_formules.html:30
 msgid "Paiement bientôt disponible"
 msgstr "Payment coming soon"
 
-#: templates/paiements/_formules.html:33 templates/paiements/offres.html:25
+#: templates/paiements/_formules.html:35 templates/paiements/offres.html:25
 msgid "Premium"
 msgstr "Premium"
 
-#: templates/paiements/_formules.html:34
+#: templates/paiements/_formules.html:36
 msgid ""
 "Corrigés complets, QCM illimités, examens blancs et suivi détaillé. Les prix"
 " seront annoncés à l'ouverture du paiement."
@@ -3656,6 +3782,63 @@ msgstr ""
 #: templates/paiements/activer_code.html:13
 msgid "Activer"
 msgstr "Activate"
+
+#: templates/paiements/commander.html:4 templates/paiements/suivi.html:4
+msgid "Paiement"
+msgstr "Payment"
+
+#: templates/paiements/commander.html:13
+msgid "Prix"
+msgstr "Price"
+
+#: templates/paiements/commander.html:14 templates/paiements/email_recu.txt:8
+#: templates/paiements/recu.html:26
+msgid "Accès Premium"
+msgstr "Premium access"
+
+#: templates/paiements/commander.html:15
+msgid "Frais"
+msgstr "Fees"
+
+#: templates/paiements/commander.html:15
+msgid "Aucun frais ajouté par BTS-HND Prep"
+msgstr "No fees added by BTS-HND Prep"
+
+#: templates/paiements/commander.html:20
+msgid "Payer"
+msgstr "Pay"
+
+#: templates/paiements/commander.html:22
+msgid "Lire les conditions de vente"
+msgstr "Read the terms of sale"
+
+#: templates/paiements/commander.html:22
+msgid "Vous confirmez ensuite le paiement sur votre téléphone."
+msgstr "You then confirm the payment on your phone."
+
+#: templates/paiements/email_recu.txt:3
+msgid "Merci pour votre paiement. Voici votre reçu."
+msgstr "Thank you for your payment. Here is your receipt."
+
+#: templates/paiements/email_recu.txt:6
+msgid "Date"
+msgstr "Date"
+
+#: templates/paiements/email_recu.txt:7 templates/paiements/recu.html:25
+msgid "Offre"
+msgstr "Plan"
+
+#: templates/paiements/email_recu.txt:9 templates/paiements/recu.html:27
+msgid "Montant payé"
+msgstr "Amount paid"
+
+#: templates/paiements/email_recu.txt:10 templates/paiements/recu.html:28
+msgid "Moyen de paiement"
+msgstr "Payment method"
+
+#: templates/paiements/email_recu.txt:13
+msgid "Le reçu reste consultable dans « Mon espace »."
+msgstr "The receipt remains available in “My area”."
 
 #: templates/paiements/offres.html:11
 msgid ""
@@ -3727,6 +3910,14 @@ msgid ""
 " à vous entraîner sérieusement."
 msgstr ""
 "No platform can guarantee exam success: we help you practise seriously."
+
+#: templates/paiements/recu.html:24
+msgid "Client"
+msgstr "Customer"
+
+#: templates/paiements/recu.html:32
+msgid "Imprimer"
+msgstr "Print"
 
 #: templates/partenaires/deposer.html:4 templates/partenaires/deposer.html:9
 #: templates/partenaires/espace.html:38

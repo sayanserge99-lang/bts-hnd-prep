@@ -24,7 +24,9 @@
         <li>{% translate "QCM illimités et examens blancs" %}</li>
         <li>{% translate "Suivi de vos points faibles" %}</li>
       </ul>
-      {% if not paiement_actif %}
+      {% if paiement_actif %}
+        <a href="{% url 'paiements:commander' offre.pk %}" class="bouton-plein mt-4 w-full">{% translate "Choisir" %}</a>
+      {% else %}
         <p class="mt-4 inline-block rounded-lg border border-dashed border-gris/60 px-4 py-2 text-sm text-gris">{% translate "Paiement bientôt disponible" %}</p>
       {% endif %}
     </div>

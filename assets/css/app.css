@@ -52,13 +52,18 @@
   .formulaire label {
     @apply block text-sm font-medium;
   }
-  .formulaire input:not([type="checkbox"]):not([type="hidden"]),
+  .formulaire input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
   .formulaire select,
   .formulaire textarea {
     @apply champ mt-1;
   }
-  .formulaire input[type="checkbox"] {
+  .formulaire input[type="checkbox"],
+  .formulaire input[type="radio"] {
     @apply mt-0.5 h-5 w-5 shrink-0 accent-vert;
+  }
+  /* Choix uniques (RadioSelect) : chaque option est une ligne cliquable, le rond devant son libellé. */
+  .formulaire label:has(> input[type="radio"]) {
+    @apply mt-2 flex cursor-pointer items-center gap-3 rounded-lg border border-gris/50 px-3 py-2 text-base font-normal;
   }
   .errorlist {
     @apply mt-1 text-sm text-red-700;

@@ -87,6 +87,12 @@
       {% empty %}
         <p class="text-gris">{% translate "Offre gratuite." %}</p>
       {% endfor %}
+      {% if paiements %}
+        <p class="mt-2 font-semibold">{% translate "Mes paiements" %}</p>
+        <ul>{% for paiement in paiements %}
+          <li><a href="{% url 'paiements:recu' paiement.reference %}" class="text-vert underline">{% translate "Reçu" %} {{ paiement.numero_recu }}</a> · {{ paiement.offre.nom }} · {{ paiement.confirme_le|date:"d/m/Y" }}</li>
+        {% endfor %}</ul>
+      {% endif %}
     </div>
     <a href="{% url 'accounts:activer_code' %}" class="bouton-contour">{% translate "J'ai un code d'accès" %}</a>
   </section>

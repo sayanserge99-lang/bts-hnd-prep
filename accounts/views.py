@@ -17,7 +17,7 @@ from django.views.decorators.http import require_POST
 from django.views.i18n import set_language
 
 from entrainement import progression
-from paiements.models import Abonnement
+from paiements.models import Abonnement, Paiement
 from entrainement.models import Tentative
 from sujets.models import Sujet
 
@@ -80,6 +80,8 @@ def profil(request):
             "session": session,
             "jours": progression.jours_restants(session),
             "partage": Consentement.partage_actif(request.user),
+            # CDC 10.7 : historique des paiements et reçus dans le profil.
+            "paiements": request.user.paiements.filter(statut=Paiement.Statut.REUSSI).select_related("offre"),
             "abonnements": request.user.abonnements.filter(statut=Abonnement.Statut.ACTIF, fin__gte=timezone.localdate())
             .select_related("offre")
             .order_by("debut"),

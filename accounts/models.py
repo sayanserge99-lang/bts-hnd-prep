@@ -96,6 +96,7 @@ class Consentement(models.Model):
         CGU = "cgu", _("Conditions générales")
         CONFIDENTIALITE = "confidentialite", _("Politique de confidentialité")
         PARTAGE_ETABLISSEMENT = "partage_etablissement", _("Partage des résultats avec l'établissement")
+        CONDITIONS_DE_VENTE = "conditions_de_vente", _("Conditions de vente")
 
     utilisateur = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="consentements")
     objet = models.CharField(max_length=30, choices=Objet.choices)

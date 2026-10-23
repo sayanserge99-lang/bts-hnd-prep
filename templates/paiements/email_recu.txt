@@ -1,0 +1,15 @@
+{% load i18n prix %}{% blocktranslate with nom=paiement.utilisateur.first_name|default:paiement.utilisateur.email %}Bonjour {{ nom }},{% endblocktranslate %}
+
+{% translate "Merci pour votre paiement. Voici votre reçu." %}
+
+{% translate "Reçu" %} : {{ paiement.numero_recu }}
+{% translate "Date" %} : {{ paiement.confirme_le|date:"d/m/Y H:i" }}
+{% translate "Offre" %} : {{ paiement.offre.nom }}
+{% translate "Accès Premium" %} : {% blocktranslate with debut=abonnement.debut|date:"d/m/Y" fin=abonnement.fin|date:"d/m/Y" %}du {{ debut }} au {{ fin }}{% endblocktranslate %}
+{% translate "Montant payé" %} : {{ paiement.montant|fcfa }} {% translate "TTC" %}
+{% translate "Moyen de paiement" %} : {{ paiement.get_operateur_display }}
+{% translate "Référence" %} : {{ paiement.reference }}
+
+{% translate "Le reçu reste consultable dans « Mon espace »." %}
+
+BTS-HND Prep — {{ exploitant.structure }}{% if exploitant.niu %} · NIU {{ exploitant.niu }}{% endif %}

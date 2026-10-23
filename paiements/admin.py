@@ -19,9 +19,17 @@ class OffreAdmin(admin.ModelAdmin):
 
 @admin.register(Paiement)
 class PaiementAdmin(admin.ModelAdmin):
-    list_display = ("reference", "utilisateur", "montant", "operateur", "statut", "cree_le")
-    list_filter = ("statut", "operateur")
-    search_fields = ("reference", "utilisateur__email")
+    """Lecture seule : seul l'agrégateur fait changer un paiement d'état."""
+
+    list_display = ("reference", "utilisateur", "offre", "montant", "operateur", "statut", "motif_echec", "cree_le")
+    list_filter = ("statut", "operateur", "fournisseur")
+    search_fields = ("reference", "utilisateur__email", "telephone")
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
 
 
 class GenerationCodesForm(forms.Form):

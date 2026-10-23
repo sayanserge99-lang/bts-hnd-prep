@@ -4,11 +4,11 @@
 
 ## Où on en est
 
-**V1 et V2 terminées côté code ; V3 en cours** (décidé avec Serge Alain le 23/10 : V3 avant la mise en ligne). Modules 1-4/5 faits : contributions, forum, codes d'accès, Premium. Le projet tourne :
+**V1, V2 et V3 terminées côté code** (V3 faite avant la mise en ligne, à la demande de Serge Alain, 23/10) : contributions, forum, codes d'accès, Premium, paiement (agrégateur simulé, le vrai reste à brancher). Le projet tourne :
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **311 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
+- `pytest` : **330 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
   10 statistiques, 16 Google).
 - **Connexion Google (V2)** `accounts/google.py` : OpenID Connect sans dépendance (state, PKCE, nonce ; vérifie iss,
   aud, exp, email_verified). Compte existant → connecté ; sinon page « Dernière étape » (spécialité + consentement
@@ -20,6 +20,16 @@
   convention de partenariat active ; voit les résultats des étudiants confirmés qui ont activé « Partager mes
   résultats » (consentement révocable, tracé). Étudiant confirmé : page « Épreuves de mon établissement »,
   PDF servi après contrôle (404 sinon). Lien « Mon établissement » dans l'en-tête des responsables.
+- **Paiement (V3, module 5, 23/10)** `paiements/service.py`, `paiements/fournisseurs/` : `/paiement/offre/<id>/`
+  (récapitulatif prix TTC + dates, opérateur Orange/MTN, numéro camerounais normalisé 2376XXXXXXXX, conditions de
+  vente acceptées → Consentement CONDITIONS_DE_VENTE), montant fixé par le serveur. Agrégateur = classe Fournisseur
+  (initier, lire_notification signée HMAC-SHA256 en-tête X-Signature, consulter) ; `Simule` seul pour l'instant,
+  avec une page simulateur (DEBUG seulement) qui envoie une vraie notification signée. `/paiement/notification/`
+  (csrf_exempt, signature obligatoire). Confirmation idempotente (select_for_update), montant vérifié, abonnement
+  à la suite de l'abonnement en cours, reçu par e-mail (numéro R<année>-<pk>, NIU) et page reçu imprimable,
+  « Mes paiements » dans Mon espace. Suivi HTMX toutes les 5 s ; abandon après 30 min. Vérification Django
+  paiements.E001/E002 : refuse la production avec paiement ouvert + agrégateur simulé ou sans PAIEMENT_SECRET.
+  Essai local : `PAIEMENT_ESSAI=1` dans `.env` puis `docker compose up -d`. Admin des paiements en lecture seule.
 - **Premium (V3, module 4, 23/10)** : règle unique `paiements.acces.est_premium` (abonné, équipe, ou tout inscrit
   tant que PAIEMENT_ACTIF est faux) utilisée par quiz, examens blancs, statistiques, corrigés. Page `/offres/`
   (`paiements/offres.py`, gabarit `_formules.html` partagé avec l'accueil) : offres actives de la base, prix TTC
@@ -115,7 +125,7 @@
 ## Prochaine étape
 
 **V3 avant la mise en ligne** (accord de Serge Alain le 23/10), dans cet ordre : contributions (fait), forum (fait),
-codes établissements (fait), Premium (fait), paiement simulé (agrégateur branché plus tard).
+codes établissements (fait), Premium (fait), paiement simulé (fait ; agrégateur réel à brancher).
 Ensuite, rappel des autres pistes :
 1. **Mise en ligne (bêta)** : choix du VPS et du nom de domaine (Serge Alain), puis `deploy/DEPLOIEMENT.md`
    (HTTPS non testé). Avant : sessions 2020-2026 avec dates de fin officielles, matières, quelques vrais sujets.

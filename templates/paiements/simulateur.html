@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load prix %}
+
+{% block titre %}Simulateur de paiement — BTS-HND Prep{% endblock %}
+
+{% block contenu %}
+{# Développement seulement (DEBUG) : pas de traduction, cette page n'existe pas en production. #}
+<div class="mx-auto max-w-md px-4 py-8">
+  <p class="rounded-lg border border-dashed border-ambre bg-ambre-clair p-3 text-sm">Simulation : aucun argent n'est débité. Cette page remplace le téléphone de l'étudiant.</p>
+  <div class="carte mt-4 space-y-2 text-sm">
+    <p class="font-semibold">{{ paiement.get_operateur_display }} · {{ paiement.telephone }}</p>
+    <p>Demande de paiement de {{ paiement.montant|fcfa }} pour « {{ paiement.offre.nom }} ».</p>
+    <form method="post" class="flex flex-wrap gap-3 pt-2">
+      {% csrf_token %}
+      <button name="choix" value="valider" class="bouton-plein">Valider (code secret)</button>
+      <button name="choix" value="refuser" class="bouton-contour">Refuser</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

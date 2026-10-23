@@ -57,18 +57,28 @@ class Paiement(models.Model):
 
     utilisateur = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="paiements")
     offre = models.ForeignKey(Offre, on_delete=models.PROTECT)
+    # Fixé par le serveur à la commande (prix de l'offre), jamais reçu du navigateur.
     montant = models.PositiveIntegerField(_("montant (FCFA)"))
     operateur = models.CharField(max_length=10, choices=Operateur.choices)
+    telephone = models.CharField(_("numéro Mobile Money"), max_length=15, blank=True)
+    fournisseur = models.CharField(_("agrégateur"), max_length=20, blank=True)
     reference = models.CharField(_("référence de l'agrégateur"), max_length=100, unique=True)
     statut = models.CharField(max_length=12, choices=Statut.choices, default=Statut.EN_ATTENTE)
+    motif_echec = models.CharField(max_length=200, blank=True)
     cree_le = models.DateTimeField(auto_now_add=True)
     confirme_le = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         verbose_name = _("paiement")
+        ordering = ["-cree_le"]
 
     def __str__(self):
         return f"{self.reference} · {self.montant} FCFA"
+
+    @property
+    def numero_recu(self):
+        """CDC 10.7 : numéro de reçu, suivi et sans trou dans l'ordre des paiements."""
+        return f"R{self.cree_le:%Y}-{self.pk:06d}"
 
 
 class CodeAcces(models.Model):

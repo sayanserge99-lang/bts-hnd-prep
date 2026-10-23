@@ -234,5 +234,17 @@ FONCTIONNALITES = {
 EXPLOITANT = {
     "structure": os.environ.get("EXPLOITANT_STRUCTURE", ""),
     "niu": os.environ.get("EXPLOITANT_NIU", ""),
+    # Imprimés sur les reçus (CDC 10.7).
+    "adresse": os.environ.get("EXPLOITANT_ADRESSE", ""),
+    "contact": os.environ.get("EXPLOITANT_CONTACT", ""),
 }
 PAIEMENT_ACTIF = bool(EXPLOITANT["structure"] and EXPLOITANT["niu"])
+# Essai du parcours de paiement en développement, avec l'agrégateur simulé (jamais en production).
+if DEBUG and os.environ.get("PAIEMENT_ESSAI") == "1":
+    PAIEMENT_ACTIF = True
+# Agrégateur Mobile Money (CDC 3.8) : « simule » tant qu'il n'est pas choisi (refusé hors DEBUG).
+PAIEMENT_FOURNISSEUR = os.environ.get("PAIEMENT_FOURNISSEUR", "simule")
+# Secret partagé avec l'agrégateur pour signer ses notifications.
+PAIEMENT_SECRET = os.environ.get("PAIEMENT_SECRET", "") or f"simule-{SECRET_KEY}"
+# Au-delà, un paiement resté en attente (téléphone éteint, confirmation oubliée) est abandonné.
+PAIEMENT_DELAI_MINUTES = 30

@@ -14,6 +14,8 @@ x-django-env: &django-env
   # Pour essayer la connexion Google en local : identifiants de test (voir deploy/DEPLOIEMENT.md, section 7).
   GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
   GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+  # Essayer le parcours de paiement avec l'agrégateur simulé : PAIEMENT_ESSAI=1 dans le fichier .env.
+  PAIEMENT_ESSAI: ${PAIEMENT_ESSAI:-0}
 
 services:
   db:

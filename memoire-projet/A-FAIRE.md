@@ -75,6 +75,10 @@
 - [ ] Fixer JOURS_OFFERTS_PAR_SUJET avec Serge Alain (7 jours pour l'instant). Tant que le paiement est fermé,
       tout est gratuit : les jours offerts aujourd'hui expirent avant l'ouverture du Premium.
 - [ ] Contributions : pas de conversion WebP des photos (assemblées en PDF), pas de recadrage automatique.
+- [x] V3 module 5 : paiement Mobile Money (parcours complet, agrégateur simulé, reçus).
+- [ ] Choisir l'agrégateur (Serge Alain) puis écrire sa classe dans paiements/fournisseurs/ (initier, format de sa
+      notification, consulter) ; régler PAIEMENT_FOURNISSEUR, PAIEMENT_SECRET, EXPLOITANT_* dans .env.production.
+- [ ] Remboursement : aucune procédure dans le site (à traiter à la main, à écrire dans les conditions de vente).
 - [x] V3 module 4 : Premium (règle unique, page Offres, protection des PDF de corrigés).
 - [ ] Fixer les prix (Pass session, mensuel) : les offres de démo sont celles de l'étude de faisabilité.
 - [ ] Rappel par e-mail avant la fin d'un abonnement ; passage du statut à « expiré » (aujourd'hui seules les dates

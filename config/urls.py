@@ -31,6 +31,7 @@ urlpatterns = [
     path("contribuer/", include("communaute.urls")),
     path("forum/", include("forum.urls")),
     path("offres/", offres, name="offres"),
+    path("paiement/", include("paiements.urls")),
     # CDC 10 : pages légales accessibles depuis toutes les pages (contenu à rédiger).
     path("mentions-legales/", page("mentions_legales"), name="mentions_legales"),
     path("confidentialite/", page("confidentialite"), name="confidentialite"),
