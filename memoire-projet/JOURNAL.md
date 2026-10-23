@@ -95,3 +95,7 @@
   contenu de démo informatique, toutes les matières, établissement dans le profil, stats par établissement,
   fourni_par (filtre, fiche, import). Erreur en route : constantes VRAI_FAUX utilisées avant leur définition dans
   donnees_demo → corrigé. 9 tests ajoutés, 224/224 verts.
+- 23/10 : espace établissement (3 propositions validées par Serge Alain : responsable créé par l'admin, validation
+  des étudiants, convention active pour publier). ResponsableEtablissement, EpreuveInterne, validation dans
+  ProfilEtude, consentement de partage, 7 vues, 3 pages. 14 tests verts du premier coup, 54 textes traduits.
+  238/238 verts. Question posée par Serge Alain : quiz à partir d'une épreuve → 3 options proposées, réponse attendue.

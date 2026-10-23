@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titre %}{% translate "Épreuves de mon établissement" %} — BTS-HND Prep{% endblock %}
+
+{% block contenu %}
+<div class="mx-auto max-w-3xl space-y-6 px-4 py-6">
+  <div>
+    <a href="{% url 'accounts:profil' %}" class="text-sm text-vert hover:underline">← {% translate "Mon espace" %}</a>
+    <h1 class="mt-2 text-2xl font-bold">{% translate "Épreuves de mon établissement" %}</h1>
+  </div>
+  {% if etablissement %}
+    <p class="text-gris">{{ etablissement.nom }}</p>
+    <ul class="space-y-2">
+      {% for epreuve in epreuves %}
+        <li><a href="{% url 'partenaires:pdf_epreuve' epreuve.pk %}" class="carte block hover:border-vert" target="_blank" rel="noopener">
+          <span class="block font-semibold">{{ epreuve.titre }}</span>
+          <span class="text-sm text-gris">{{ epreuve.get_type_display }} · {{ epreuve.annee_academique }}{% if epreuve.matiere %} · {{ epreuve.matiere.nom }}{% endif %}</span>
+        </a></li>
+      {% empty %}
+        <li class="carte text-gris">{% translate "Votre établissement n'a pas encore publié d'épreuve." %}</li>
+      {% endfor %}
+    </ul>
+  {% elif declare %}
+    <p class="carte text-gris">{% blocktranslate with nom=declare.nom %}Vous avez indiqué {{ nom }} : ses épreuves internes seront visibles dès que l'établissement aura confirmé votre inscription.{% endblocktranslate %}</p>
+  {% else %}
+    <p class="carte text-gris">{% translate "Indiquez votre établissement dans votre profil pour accéder à ses épreuves internes." %}
+      <a href="{% url 'accounts:modifier_profil' %}" class="underline">{% translate "Modifier mon profil" %}</a></p>
+  {% endif %}
+</div>
+{% endblock %}

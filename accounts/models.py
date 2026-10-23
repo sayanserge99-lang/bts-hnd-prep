@@ -55,7 +55,13 @@ class ProfilEtude(models.Model):
     examen = models.ForeignKey("catalogue.Examen", on_delete=models.PROTECT, verbose_name=_("examen visé"))
     specialite = models.ForeignKey("catalogue.Specialite", on_delete=models.PROTECT)
     etablissement = models.ForeignKey(
-        "partenaires.Etablissement", on_delete=models.SET_NULL, null=True, blank=True
+        "partenaires.Etablissement", on_delete=models.SET_NULL, null=True, blank=True, related_name="profils"
+    )
+    # Déclaré par l'étudiant, puis confirmé par un responsable de l'établissement : seul un étudiant
+    # validé voit les épreuves internes (sinon n'importe qui pourrait se dire de l'IAI).
+    etablissement_valide_le = models.DateTimeField(_("établissement validé le"), null=True, blank=True)
+    etablissement_valide_par = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name="+"
     )
     session_prevue = models.ForeignKey(
         "catalogue.Session", on_delete=models.SET_NULL, null=True, blank=True, verbose_name=_("session prévue")
@@ -66,6 +72,19 @@ class ProfilEtude(models.Model):
 
     def __str__(self):
         return f"{self.utilisateur} · {self.specialite}"
+
+    @property
+    def etablissement_valide(self):
+        return self.etablissement_id is not None and self.etablissement_valide_le is not None
+
+    def save(self, *args, **kwargs):
+        # Changer d'établissement annule la validation : le nouvel établissement doit confirmer à son tour.
+        if self.pk:
+            ancien = ProfilEtude.objects.filter(pk=self.pk).values_list("etablissement_id", flat=True).first()
+            if ancien != self.etablissement_id:
+                self.etablissement_valide_le = None
+                self.etablissement_valide_par = None
+        super().save(*args, **kwargs)
 
     def clean(self):
         if self.specialite.examen_id != self.examen_id:
@@ -94,6 +113,13 @@ class Consentement(models.Model):
     @property
     def est_actif(self):
         return self.date_revocation is None
+
+    @classmethod
+    def partage_actif(cls, utilisateur):
+        """CDC 10.6 : l'étudiant a-t-il accepté (et pas révoqué) le partage de ses résultats avec son établissement ?"""
+        return cls.objects.filter(
+            utilisateur=utilisateur, objet=cls.Objet.PARTAGE_ETABLISSEMENT, date_revocation__isnull=True
+        ).exists()
 
 
 class AffectationModerateur(models.Model):

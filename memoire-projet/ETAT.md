@@ -1,6 +1,6 @@
 # État du projet
 
-**Dernière mise à jour : 22/10/2026**
+**Dernière mise à jour : 23/10/2026**
 
 ## Où on en est
 
@@ -8,12 +8,21 @@
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **224 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
+- `pytest` : **238 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
   10 statistiques, 16 Google).
 - **Connexion Google (V2)** `accounts/google.py` : OpenID Connect sans dépendance (state, PKCE, nonce ; vérifie iss,
   aud, exp, email_verified). Compte existant → connecté ; sinon page « Dernière étape » (spécialité + consentement
   non précoché). Inactive tant que GOOGLE_CLIENT_ID/SECRET sont vides (bouton et adresses absents).
   Compte sans mot de passe : la suppression se confirme en tapant son e-mail.
+- **Espace établissement (23/10, `/etablissement/`)** : compte responsable créé par l'admin (inline sur la fiche
+  Établissement) ; il confirme ou retire les étudiants qui déclarent son établissement (changer d'établissement
+  annule la confirmation) ; dépose des épreuves internes (PDF vérifié, 20 Mo), publiables seulement avec une
+  convention de partenariat active ; voit les résultats des étudiants confirmés qui ont activé « Partager mes
+  résultats » (consentement révocable, tracé). Étudiant confirmé : page « Épreuves de mon établissement »,
+  PDF servi après contrôle (404 sinon). Lien « Mon établissement » dans l'en-tête des responsables.
+- **Question en attente (23/10)** : quiz liés à une épreuve — 3 options proposées (questions rattachées à un sujet
+  + bouton « Quiz sur cette épreuve », import CSV de questions, brouillons générés par IA validés par un enseignant).
+  J'ai conseillé 1 + 2 d'abord ; **réponse de Serge Alain attendue**.
 - **Demandes de Serge Alain (23/10)** : informatique en premier (`Specialite.ordre`, IG et SWE = 1, contenu de démo
   complet : 3 matières BTS + Database Systems HND, questions, 2 corrigés, examen blanc) ; Entraînement montre toutes
   les matières (« bientôt » si pas de questions) ; établissement facultatif dans le profil (IAI-Cameroun, HINTEL

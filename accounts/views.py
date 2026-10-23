@@ -21,7 +21,7 @@ from sujets.models import Sujet
 
 from . import google
 from .forms import ConnexionForm, FinInscriptionGoogleForm, InscriptionForm, ProfilForm, SuppressionForm
-from .models import Utilisateur
+from .models import Consentement, Utilisateur
 
 
 def avec_langue(reponse, utilisateur):
@@ -77,8 +77,26 @@ def profil(request):
             .order_by("-fin")[:3],
             "session": session,
             "jours": progression.jours_restants(session),
+            "partage": Consentement.partage_actif(request.user),
         },
     )
+
+
+@login_required
+@require_POST
+def basculer_partage(request):
+    """CDC 10.6 : partage des résultats avec l'établissement, désactivé par défaut et révocable à tout moment."""
+    if Consentement.partage_actif(request.user):
+        Consentement.objects.filter(
+            utilisateur=request.user, objet=Consentement.Objet.PARTAGE_ETABLISSEMENT, date_revocation__isnull=True
+        ).update(date_revocation=timezone.now())
+        messages.success(request, _("Votre établissement ne voit plus vos résultats."))
+    else:
+        Consentement.objects.create(
+            utilisateur=request.user, objet=Consentement.Objet.PARTAGE_ETABLISSEMENT, version=settings.VERSION_POLITIQUES
+        )
+        messages.success(request, _("Votre établissement peut maintenant voir vos résultats."))
+    return redirect("accounts:profil")
 
 
 @login_required

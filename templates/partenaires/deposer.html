@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titre %}{% translate "Déposer une épreuve" %} — BTS-HND Prep{% endblock %}
+
+{% block contenu %}
+<div class="mx-auto max-w-md px-4 py-8">
+  <a href="{% url 'partenaires:espace' %}" class="text-sm text-vert hover:underline">← {{ etablissement.nom }}</a>
+  <h1 class="mt-3 text-2xl font-bold">{% translate "Déposer une épreuve" %}</h1>
+  <p class="mt-1 text-sm text-gris">{% translate "Devoir, partiel ou examen blanc interne : seuls vos étudiants confirmés le verront." %}</p>
+  <form method="post" enctype="multipart/form-data" class="formulaire carte mt-6 space-y-4" novalidate>
+    {% csrf_token %}
+    {% translate "Déposer" as bouton %}
+    {% include "accounts/_formulaire.html" %}
+  </form>
+</div>
+{% endblock %}

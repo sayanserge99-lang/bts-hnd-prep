@@ -48,6 +48,7 @@
         </form>
         <div class="hidden items-center gap-3 text-sm font-semibold md:flex">
           {% if user.is_authenticated %}
+            {% if etablissement_gere %}<a href="{% url 'partenaires:espace' %}" class="text-vert hover:underline">{% translate "Mon établissement" %}</a>{% endif %}
             <a href="{% url 'accounts:profil' %}" class="text-vert hover:underline">{% translate "Mon espace" %}</a>
             <form method="post" action="{% url 'accounts:deconnexion' %}">{% csrf_token %}<button class="bouton-contour">{% translate "Déconnexion" %}</button></form>
           {% else %}

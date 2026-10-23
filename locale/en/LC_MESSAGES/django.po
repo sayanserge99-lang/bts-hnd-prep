@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-23 08:46+0100\n"
+"POT-Creation-Date: 2026-10-23 09:00+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,7 +38,7 @@ msgstr "Dates"
 msgid "Spécialité préparée"
 msgstr "Specialty"
 
-#: accounts/forms.py:41
+#: accounts/forms.py:41 templates/base.html:51
 msgid "Mon établissement"
 msgstr "My institution"
 
@@ -120,78 +120,90 @@ msgstr "user"
 msgid "examen visé"
 msgstr "target exam"
 
-#: accounts/models.py:61
+#: accounts/models.py:62
+msgid "établissement validé le"
+msgstr "institution confirmed on"
+
+#: accounts/models.py:67
 msgid "session prévue"
 msgstr "planned session"
 
-#: accounts/models.py:65
+#: accounts/models.py:71
 msgid "profil d'étude"
 msgstr "study profile"
 
-#: accounts/models.py:72
+#: accounts/models.py:91
 msgid "Cette spécialité n'appartient pas à l'examen choisi."
 msgstr "This specialty does not belong to the chosen exam."
 
-#: accounts/models.py:77 templates/accounts/google_finir.html:16
+#: accounts/models.py:96 templates/accounts/google_finir.html:16
 #: templates/accounts/inscription.html:17
 msgid "Conditions générales"
 msgstr "Terms and conditions"
 
-#: accounts/models.py:78 templates/accounts/google_finir.html:17
+#: accounts/models.py:97 templates/accounts/google_finir.html:17
 #: templates/accounts/inscription.html:18
 #: templates/pages/confidentialite.html:4
 #: templates/pages/confidentialite.html:5
 msgid "Politique de confidentialité"
 msgstr "Privacy policy"
 
-#: accounts/models.py:79
+#: accounts/models.py:98
 msgid "Partage des résultats avec l'établissement"
 msgstr "Sharing results with the institution"
 
-#: accounts/models.py:83
+#: accounts/models.py:102
 msgid "version de la politique"
 msgstr "policy version"
 
-#: accounts/models.py:88
+#: accounts/models.py:107
 msgid "consentement"
 msgstr "consent"
 
-#: accounts/models.py:105
+#: accounts/models.py:131
 msgid "affectation de modérateur"
 msgstr "moderator assignment"
 
-#: accounts/views.py:40 accounts/views.py:203
+#: accounts/views.py:40 accounts/views.py:221
 msgid "Bienvenue ! Votre compte est créé."
 msgstr "Welcome! Your account has been created."
 
-#: accounts/views.py:88
+#: accounts/views.py:93
+msgid "Votre établissement ne voit plus vos résultats."
+msgstr "Your institution can no longer see your results."
+
+#: accounts/views.py:98
+msgid "Votre établissement peut maintenant voir vos résultats."
+msgstr "Your institution can now see your results."
+
+#: accounts/views.py:106
 msgid "Ce compte n'a pas de profil d'étude."
 msgstr "This account has no study profile."
 
-#: accounts/views.py:93
+#: accounts/views.py:111
 msgid "Profil enregistré."
 msgstr "Profile saved."
 
-#: accounts/views.py:140
+#: accounts/views.py:158
 msgid "Ce compte est lié à des paiements : contactez-nous pour le supprimer."
 msgstr "This account is linked to payments: contact us to delete it."
 
-#: accounts/views.py:143
+#: accounts/views.py:161
 msgid "Votre compte et vos données ont été supprimés."
 msgstr "Your account and your data have been deleted."
 
-#: accounts/views.py:171
+#: accounts/views.py:189
 msgid ""
 "La connexion avec Google n'a pas abouti. Réessayez, ou connectez-vous avec "
 "votre e-mail."
 msgstr ""
 "Signing in with Google did not work. Try again, or log in with your email."
 
-#: accounts/views.py:177
+#: accounts/views.py:195
 msgid "Ce compte est désactivé."
 msgstr "This account is disabled."
 
-#: accounts/views.py:237
+#: accounts/views.py:255
 msgid "Mot de passe modifié. Vous pouvez vous connecter."
 msgstr "Password changed. You can now log in."
 
@@ -507,7 +519,7 @@ msgstr ""
 msgid "Affichée après la réponse (CDC 3.4)."
 msgstr "Shown after the answer."
 
-#: entrainement/models.py:35
+#: entrainement/models.py:35 partenaires/models.py:110
 msgid "publiée"
 msgstr "published"
 
@@ -714,7 +726,7 @@ msgstr "access codes"
 msgid "Un établissement sans convention active ne peut pas recevoir de codes."
 msgstr "An institution without an active agreement cannot receive codes."
 
-#: paiements/models.py:98 partenaires/models.py:37
+#: paiements/models.py:98 partenaires/models.py:38
 msgid "Actif"
 msgstr "Active"
 
@@ -730,37 +742,123 @@ msgstr "Cancelled"
 msgid "abonnement"
 msgstr "subscription"
 
-#: partenaires/models.py:23
+#: partenaires/forms.py:16
+msgid ""
+"Visible par vos étudiants validés (convention de partenariat active "
+"requise)."
+msgstr ""
+"Visible to your confirmed students (an active partnership agreement is "
+"required)."
+
+#: partenaires/forms.py:26
+msgid "Le fichier dépasse 20 Mo."
+msgstr "The file is larger than 20 MB."
+
+#: partenaires/forms.py:30
+msgid "Le fichier doit être un PDF."
+msgstr "The file must be a PDF."
+
+#: partenaires/forms.py:36 partenaires/views.py:123
+msgid "Publication impossible sans convention de partenariat active."
+msgstr "Publishing is not possible without an active partnership agreement."
+
+#: partenaires/models.py:24
 msgid "région"
 msgstr "region"
 
-#: partenaires/models.py:27
+#: partenaires/models.py:28
 msgid "établissement"
 msgstr "institution"
 
-#: partenaires/models.py:36
+#: partenaires/models.py:37
 msgid "En négociation"
 msgstr "Under negotiation"
 
-#: partenaires/models.py:38
+#: partenaires/models.py:39
 msgid "Résilié"
 msgstr "Terminated"
 
-#: partenaires/models.py:41
+#: partenaires/models.py:42
 msgid "convention signée (PDF)"
 msgstr "signed agreement (PDF)"
 
-#: partenaires/models.py:45
+#: partenaires/models.py:46
 msgid "taux de partage (%)"
 msgstr "revenue share (%)"
 
-#: partenaires/models.py:45
+#: partenaires/models.py:46
 msgid "Part des revenus reversée à l'IPES."
 msgstr "Share of revenue paid to the institution."
 
-#: partenaires/models.py:50
+#: partenaires/models.py:51
 msgid "partenariat"
 msgstr "partnership"
+
+#: partenaires/models.py:86
+msgid "responsable d'établissement"
+msgstr "institution manager"
+
+#: partenaires/models.py:87
+msgid "responsables d'établissement"
+msgstr "institution managers"
+
+#: partenaires/models.py:97
+msgid "Devoir"
+msgstr "Assignment"
+
+#: partenaires/models.py:98
+msgid "Partiel"
+msgstr "Mid-term exam"
+
+#: partenaires/models.py:99
+msgid "Examen blanc interne"
+msgstr "Internal mock exam"
+
+#: partenaires/models.py:100
+msgid "Rattrapage"
+msgstr "Resit"
+
+#: partenaires/models.py:107 sujets/models.py:94
+msgid "type d'épreuve"
+msgstr "paper type"
+
+#: partenaires/models.py:108
+msgid "année académique"
+msgstr "academic year"
+
+#: partenaires/models.py:108
+msgid "Par exemple 2025-2026."
+msgstr "For example 2025-2026."
+
+#: partenaires/models.py:109 sujets/models.py:97 sujets/models.py:237
+msgid "fichier PDF"
+msgstr "PDF file"
+
+#: partenaires/models.py:115
+msgid "épreuve interne"
+msgstr "internal paper"
+
+#: partenaires/models.py:116
+msgid "épreuves internes"
+msgstr "internal papers"
+
+#: partenaires/views.py:89
+#, python-format
+msgid "%(nom)s est validé(e) comme étudiant(e) de l'établissement."
+msgstr "%(nom)s is confirmed as a student of the institution."
+
+#: partenaires/views.py:100
+#, python-format
+msgid "%(nom)s n'est plus rattaché(e) à l'établissement."
+msgstr "%(nom)s is no longer linked to the institution."
+
+#: partenaires/views.py:113
+msgid "Épreuve déposée."
+msgstr "Paper uploaded."
+
+#: partenaires/views.py:136
+msgid "Épreuve supprimée."
+msgstr "Paper deleted."
 
 #: sujets/admin.py:33
 msgid "Choisissez uniquement des spécialités rattachées à cette matière."
@@ -1004,17 +1102,9 @@ msgstr "Practical"
 msgid "Uniquement des spécialités auxquelles la matière est rattachée."
 msgstr "Only specialties the subject is linked to."
 
-#: sujets/models.py:94
-msgid "type d'épreuve"
-msgstr "paper type"
-
 #: sujets/models.py:96
 msgid "barème"
 msgstr "marking scheme"
-
-#: sujets/models.py:97 sujets/models.py:237
-msgid "fichier PDF"
-msgstr "PDF file"
 
 #: sujets/models.py:98
 msgid "nombre de pages"
@@ -1151,7 +1241,7 @@ msgstr "Continue with Google"
 
 #: templates/accounts/connexion.html:4 templates/accounts/connexion.html:8
 #: templates/accounts/connexion.html:12 templates/accounts/inscription.html:20
-#: templates/base.html:54
+#: templates/base.html:55
 msgid "Se connecter"
 msgstr "Log in"
 
@@ -1165,7 +1255,7 @@ msgstr "No account yet?"
 
 #: templates/accounts/connexion.html:17 templates/accounts/google_finir.html:4
 #: templates/accounts/inscription.html:4 templates/accounts/inscription.html:8
-#: templates/base.html:55
+#: templates/base.html:56
 msgid "Créer un compte"
 msgstr "Create an account"
 
@@ -1217,11 +1307,12 @@ msgstr "Already registered?"
 
 #: templates/accounts/modifier_profil.html:4
 #: templates/accounts/modifier_profil.html:9 templates/accounts/profil.html:13
+#: templates/partenaires/mes_epreuves.html:28
 msgid "Modifier mon profil"
 msgstr "Edit my profile"
 
 #: templates/accounts/modifier_profil.html:8 templates/accounts/profil.html:4
-#: templates/base.html:51
+#: templates/base.html:52 templates/partenaires/mes_epreuves.html:9
 msgid "Mon espace"
 msgstr "My space"
 
@@ -1283,7 +1374,40 @@ msgstr "Hello %(prenom)s"
 msgid "session %(annee)s"
 msgstr "%(annee)s session"
 
+#: templates/accounts/profil.html:18
+msgid "Mon établissement :"
+msgstr "My institution:"
+
 #: templates/accounts/profil.html:19
+msgid "validé"
+msgstr "confirmed"
+
+#: templates/accounts/profil.html:20
+msgid "en attente de validation par l'établissement"
+msgstr "awaiting confirmation by the institution"
+
+#: templates/accounts/profil.html:22 templates/partenaires/mes_epreuves.html:4
+#: templates/partenaires/mes_epreuves.html:10
+msgid "Épreuves de mon établissement"
+msgstr "My institution's papers"
+
+#: templates/accounts/profil.html:26
+msgid "Votre établissement voit vos résultats."
+msgstr "Your institution can see your results."
+
+#: templates/accounts/profil.html:26
+msgid "Votre établissement ne voit pas vos résultats."
+msgstr "Your institution cannot see your results."
+
+#: templates/accounts/profil.html:27
+msgid "Ne plus partager mes résultats"
+msgstr "Stop sharing my results"
+
+#: templates/accounts/profil.html:27
+msgid "Partager mes résultats avec mon établissement"
+msgstr "Share my results with my institution"
+
+#: templates/accounts/profil.html:36
 #: templates/entrainement/progression.html:17
 #, python-format
 msgid "jour avant la session %(nom)s"
@@ -1291,57 +1415,57 @@ msgid_plural "jours avant la session %(nom)s"
 msgstr[0] "day before the %(nom)s session"
 msgstr[1] "days before the %(nom)s session"
 
-#: templates/accounts/profil.html:25
+#: templates/accounts/profil.html:42
 msgid "Mes derniers résultats"
 msgstr "My latest results"
 
-#: templates/accounts/profil.html:30
+#: templates/accounts/profil.html:47
 #: templates/entrainement/progression.html:50
 msgid "Faites un premier quiz pour voir votre progression."
 msgstr "Take a first quiz to see your progress."
 
-#: templates/accounts/profil.html:33 templates/entrainement/accueil.html:18
+#: templates/accounts/profil.html:50 templates/entrainement/accueil.html:18
 #: templates/entrainement/progression.html:4
 #: templates/entrainement/progression.html:10
 msgid "Ma progression"
 msgstr "My progress"
 
-#: templates/accounts/profil.html:39
+#: templates/accounts/profil.html:56
 msgid "Sujets récents de votre spécialité"
 msgstr "Recent papers for your specialty"
 
-#: templates/accounts/profil.html:44
+#: templates/accounts/profil.html:61
 msgid "Aucun sujet publié pour le moment."
 msgstr "No papers published yet."
 
-#: templates/accounts/profil.html:47
+#: templates/accounts/profil.html:64
 msgid "Tous les sujets de ma spécialité"
 msgstr "All papers for my specialty"
 
-#: templates/accounts/profil.html:52
+#: templates/accounts/profil.html:69
 msgid "Mes favoris"
 msgstr "My favourites"
 
-#: templates/accounts/profil.html:57
+#: templates/accounts/profil.html:74
 msgid ""
 "Ajoutez des sujets à vos favoris depuis leur fiche pour les retrouver ici."
 msgstr "Add papers to your favourites from their page to find them here."
 
-#: templates/accounts/profil.html:64
+#: templates/accounts/profil.html:81
 msgid "Mes données"
 msgstr "My data"
 
-#: templates/accounts/profil.html:65
+#: templates/accounts/profil.html:82
 msgid ""
 "Vous pouvez récupérer toutes vos données ou supprimer votre compte à tout "
 "moment."
 msgstr "You can download all your data or delete your account at any time."
 
-#: templates/accounts/profil.html:67
+#: templates/accounts/profil.html:84
 msgid "Télécharger mes données"
 msgstr "Download my data"
 
-#: templates/accounts/profil.html:68 templates/accounts/supprimer.html:4
+#: templates/accounts/profil.html:85 templates/accounts/supprimer.html:4
 #: templates/accounts/supprimer.html:8
 msgid "Supprimer mon compte"
 msgstr "Delete my account"
@@ -1532,7 +1656,7 @@ msgstr ""
 "Payment is not open yet (company and tax number to fill in): no revenue to "
 "show."
 
-#: templates/admin/sujets/sujet/importer.html:6 templates/base.html:96
+#: templates/admin/sujets/sujet/importer.html:6 templates/base.html:97
 msgid "Accueil"
 msgstr "Home"
 
@@ -1707,20 +1831,20 @@ msgstr "Skip to content"
 msgid "Navigation principale"
 msgstr "Main navigation"
 
-#: templates/base.html:33 templates/base.html:100
+#: templates/base.html:33 templates/base.html:101
 #: templates/sujets/liste.html:4 templates/sujets/liste.html:9
 msgid "Sujets"
 msgstr "Past papers"
 
-#: templates/base.html:35 templates/base.html:37 templates/base.html:105
-#: templates/base.html:110 templates/entrainement/accueil.html:4
+#: templates/base.html:35 templates/base.html:37 templates/base.html:106
+#: templates/base.html:111 templates/entrainement/accueil.html:4
 #: templates/entrainement/accueil.html:9
 #: templates/entrainement/examens/liste.html:9
 #: templates/entrainement/progression.html:9
 msgid "Entraînement"
 msgstr "Practice"
 
-#: templates/base.html:37 templates/base.html:110
+#: templates/base.html:37 templates/base.html:111
 #: templates/sujets/detail.html:19
 msgid "Bientôt"
 msgstr "Soon"
@@ -1729,43 +1853,43 @@ msgstr "Soon"
 msgid "Offres"
 msgstr "Plans"
 
-#: templates/base.html:52
+#: templates/base.html:53
 msgid "Déconnexion"
 msgstr "Log out"
 
-#: templates/base.html:81
+#: templates/base.html:82
 msgid "Informations légales"
 msgstr "Legal information"
 
-#: templates/base.html:82 templates/pages/mentions_legales.html:4
+#: templates/base.html:83 templates/pages/mentions_legales.html:4
 #: templates/pages/mentions_legales.html:5
 msgid "Mentions légales"
 msgstr "Legal notice"
 
-#: templates/base.html:83
+#: templates/base.html:84
 msgid "Confidentialité"
 msgstr "Privacy"
 
-#: templates/base.html:84
+#: templates/base.html:85
 msgid "Conditions de vente"
 msgstr "Terms of sale"
 
-#: templates/base.html:85 templates/communaute/demande_retrait.html:4
+#: templates/base.html:86 templates/communaute/demande_retrait.html:4
 #: templates/communaute/demande_retrait.html:8
 #: templates/communaute/demande_retrait_recue.html:4
 msgid "Demande de retrait"
 msgstr "Takedown request"
 
-#: templates/base.html:86 templates/communaute/demande_retrait.html:22
+#: templates/base.html:87 templates/communaute/demande_retrait.html:22
 #: templates/pages/contact.html:4 templates/pages/contact.html:5
 msgid "Contact"
 msgstr "Contact"
 
-#: templates/base.html:92
+#: templates/base.html:93
 msgid "Navigation mobile"
 msgstr "Mobile navigation"
 
-#: templates/base.html:116
+#: templates/base.html:117
 msgid "Profil"
 msgstr "Profile"
 
@@ -2056,6 +2180,7 @@ msgstr "Success by chapter, weak points, days before the session"
 #: templates/entrainement/examens/consignes.html:8
 #: templates/entrainement/examens/liste.html:4
 #: templates/entrainement/examens/liste.html:10
+#: templates/partenaires/espace.html:64
 msgid "Examens blancs"
 msgstr "Mock exams"
 
@@ -2377,6 +2502,7 @@ msgid "Historique"
 msgstr "History"
 
 #: templates/entrainement/progression.html:79
+#: templates/partenaires/espace.html:64
 msgid "Quiz"
 msgstr "Quiz"
 
@@ -2435,6 +2561,145 @@ msgstr "Terms of sale"
 msgid "Contenu en cours de rédaction."
 msgstr "Content being written."
 
+#: templates/partenaires/deposer.html:4 templates/partenaires/deposer.html:9
+#: templates/partenaires/espace.html:38
+msgid "Déposer une épreuve"
+msgstr "Upload a paper"
+
+#: templates/partenaires/deposer.html:10
+msgid ""
+"Devoir, partiel ou examen blanc interne : seuls vos étudiants confirmés le "
+"verront."
+msgstr ""
+"Assignment, mid-term or internal mock exam: only your confirmed students "
+"will see it."
+
+#: templates/partenaires/deposer.html:13
+msgid "Déposer"
+msgstr "Upload"
+
+#: templates/partenaires/espace.html:9
+msgid "Espace établissement"
+msgstr "Institution area"
+
+#: templates/partenaires/espace.html:12
+msgid ""
+"Aucune convention de partenariat active : vous pouvez valider vos étudiants "
+"et déposer des épreuves, mais pas les publier. Contactez BTS-HND Prep pour "
+"signer la convention."
+msgstr ""
+"No active partnership agreement: you can confirm your students and upload "
+"papers, but not publish them. Contact BTS-HND Prep to sign the agreement."
+
+#: templates/partenaires/espace.html:17
+#, python-format
+msgid "Étudiant à confirmer (%(n)s)"
+msgid_plural "Étudiants à confirmer (%(n)s)"
+msgstr[0] "Student to confirm (%(n)s)"
+msgstr[1] "Students to confirm (%(n)s)"
+
+#: templates/partenaires/espace.html:18
+msgid ""
+"Ces inscrits disent être de votre établissement. Confirmez seulement vos "
+"vrais étudiants : eux seuls verront vos épreuves internes."
+msgstr ""
+"These users say they belong to your institution. Only confirm your real "
+"students: they alone will see your internal papers."
+
+#: templates/partenaires/espace.html:25
+msgid "Confirmer"
+msgstr "Confirm"
+
+#: templates/partenaires/espace.html:26
+msgid "Pas de chez nous"
+msgstr "Not one of ours"
+
+#: templates/partenaires/espace.html:30
+msgid "Personne en attente."
+msgstr "Nobody waiting."
+
+#: templates/partenaires/espace.html:37
+msgid "Épreuves internes"
+msgstr "Internal papers"
+
+#: templates/partenaires/espace.html:46
+msgid "Publiée"
+msgstr "Published"
+
+#: templates/partenaires/espace.html:46
+msgid "Non publiée"
+msgstr "Not published"
+
+#: templates/partenaires/espace.html:47 templates/pwa/hors_ligne.html:13
+msgid "Retirer"
+msgstr "Remove"
+
+#: templates/partenaires/espace.html:47
+msgid "Publier"
+msgstr "Publish"
+
+#: templates/partenaires/espace.html:48
+msgid "Supprimer"
+msgstr "Delete"
+
+#: templates/partenaires/espace.html:52
+msgid "Aucune épreuve déposée."
+msgstr "No paper uploaded."
+
+#: templates/partenaires/espace.html:58
+msgid "Résultats partagés"
+msgstr "Shared results"
+
+#: templates/partenaires/espace.html:60
+#, python-format
+msgid ""
+"%(n)s étudiant confirmé. Seuls ceux qui ont choisi de partager leurs "
+"résultats apparaissent ci-dessous."
+msgid_plural ""
+"%(n)s étudiants confirmés. Seuls ceux qui ont choisi de partager leurs "
+"résultats apparaissent ci-dessous."
+msgstr[0] ""
+"%(n)s confirmed student. Only those who chose to share their results appear "
+"below."
+msgstr[1] ""
+"%(n)s confirmed students. Only those who chose to share their results appear"
+" below."
+
+#: templates/partenaires/espace.html:64
+msgid "Étudiant"
+msgstr "Student"
+
+#: templates/partenaires/espace.html:64
+msgid "Réussite"
+msgstr "Success rate"
+
+#: templates/partenaires/espace.html:64
+msgid "Dernière activité"
+msgstr "Last activity"
+
+#: templates/partenaires/espace.html:79
+msgid "Aucun étudiant ne partage encore ses résultats."
+msgstr "No student is sharing their results yet."
+
+#: templates/partenaires/mes_epreuves.html:21
+msgid "Votre établissement n'a pas encore publié d'épreuve."
+msgstr "Your institution has not published any paper yet."
+
+#: templates/partenaires/mes_epreuves.html:25
+#, python-format
+msgid ""
+"Vous avez indiqué %(nom)s : ses épreuves internes seront visibles dès que "
+"l'établissement aura confirmé votre inscription."
+msgstr ""
+"You chose %(nom)s: its internal papers will be visible as soon as the "
+"institution confirms your enrolment."
+
+#: templates/partenaires/mes_epreuves.html:27
+msgid ""
+"Indiquez votre établissement dans votre profil pour accéder à ses épreuves "
+"internes."
+msgstr "Add your institution to your profile to access its internal papers."
+
 #: templates/pwa/hors_ligne.html:9
 msgid ""
 "Aucun sujet gardé. Ouvrez la fiche d’un sujet et touchez « Garder hors ligne"
@@ -2454,10 +2719,6 @@ msgstr "Play"
 #: templates/pwa/hors_ligne.html:12
 msgid "Reprendre"
 msgstr "Resume"
-
-#: templates/pwa/hors_ligne.html:13
-msgid "Retirer"
-msgstr "Remove"
 
 #: templates/pwa/hors_ligne.html:17
 msgid "Ce n’est pas la bonne réponse."
