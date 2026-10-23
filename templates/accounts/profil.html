@@ -81,6 +81,7 @@
     <h2 class="text-base font-semibold">{% translate "Mes données" %}</h2>
     <p class="text-gris">{% translate "Vous pouvez récupérer toutes vos données ou supprimer votre compte à tout moment." %}</p>
     <div class="flex flex-wrap gap-3">
+      <a href="{% url 'accounts:mot_de_passe' %}" class="bouton-contour">{% if user.has_usable_password %}{% translate "Changer mon mot de passe" %}{% else %}{% translate "Définir un mot de passe" %}{% endif %}</a>
       <a href="{% url 'accounts:exporter' %}" class="bouton-contour">{% translate "Télécharger mes données" %}</a>
       <a href="{% url 'accounts:supprimer' %}" class="bouton-contour text-red-700">{% translate "Supprimer mon compte" %}</a>
     </div>

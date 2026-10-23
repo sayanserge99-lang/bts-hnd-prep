@@ -8,7 +8,7 @@
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **251 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
+- `pytest` : **257 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
   10 statistiques, 16 Google).
 - **Connexion Google (V2)** `accounts/google.py` : OpenID Connect sans dépendance (state, PKCE, nonce ; vérifie iss,
   aud, exp, email_verified). Compte existant → connecté ; sinon page « Dernière étape » (spécialité + consentement
@@ -89,8 +89,8 @@ Code V1 + V2 fini. Proposé à Serge Alain le 23/10 (réponse attendue) :
    (HTTPS non testé). Avant : sessions 2020-2026 avec dates de fin officielles, matières, quelques vrais sujets.
 2. **V3** (paiement Mobile Money, Premium, contributions, forum, codes IPES) : bloquée par le choix de l'agrégateur
    de paiement et la structure juridique + NIU.
-3. Petits travaux de code possibles en attendant : quiz d'épreuve hors ligne, « Définir un mot de passe » pour les
-   comptes Google, cache apt de la CI, `compilemessages` dans le Dockerfile, image de production en Python 3.13.
+3. Petits travaux faits le 23/10 : quiz d'épreuve hors ligne, page mot de passe (définir/changer), cache apt de la CI.
+   Serge Alain choisit l'hébergeur et le domaine pendant ce temps.
 À faire par Serge Alain : identifiants Google, comptes responsables IAI/HINTEL + conventions, ville de HINTEL,
 pages légales, essai hors ligne sur le Galaxy.
 

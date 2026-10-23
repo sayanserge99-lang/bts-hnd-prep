@@ -2,7 +2,8 @@ import json
 
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm, SetPasswordForm
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
 from django.db.models import ProtectedError
@@ -245,6 +246,21 @@ class MotDePasseOublie(auth_views.PasswordResetView):
     email_template_name = "accounts/email_reinitialisation.txt"
     subject_template_name = "accounts/email_reinitialisation_sujet.txt"
     success_url = reverse_lazy("accounts:mot_de_passe_envoye")
+
+
+@login_required
+def mot_de_passe(request):
+    """Changer son mot de passe, ou en définir un pour un compte créé avec Google (qui n'en a pas)."""
+    definir = not request.user.has_usable_password()
+    classe = SetPasswordForm if definir else PasswordChangeForm
+    form = classe(request.user, request.POST or None)
+    if form.is_valid():
+        form.save()
+        # Sans cela, changer de mot de passe déconnecterait l'étudiant de cette session.
+        update_session_auth_hash(request, form.user)
+        messages.success(request, _("Mot de passe enregistré."))
+        return redirect("accounts:profil")
+    return render(request, "accounts/mot_de_passe.html", {"form": form, "definir": definir})
 
 
 class NouveauMotDePasse(auth_views.PasswordResetConfirmView):

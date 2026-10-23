@@ -21,6 +21,7 @@ urlpatterns = [
     path("mot-de-passe/<uidb64>/<token>/", views.NouveauMotDePasse.as_view(), name="nouveau_mot_de_passe"),
     path("profil/", views.profil, name="profil"),
     path("profil/modifier/", views.modifier_profil, name="modifier_profil"),
+    path("profil/mot-de-passe/", views.mot_de_passe, name="mot_de_passe"),
     path("profil/partage/", views.basculer_partage, name="partage"),
     path("profil/mes-donnees/", views.exporter, name="exporter"),
     path("profil/supprimer/", views.supprimer, name="supprimer"),

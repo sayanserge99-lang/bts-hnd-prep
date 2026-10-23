@@ -80,8 +80,8 @@
   function preparerBoutonQuiz(bouton) {
     if (!disponible) return;
     bouton.addEventListener("click", function () {
-      var corps = new URLSearchParams({ matiere: bouton.dataset.matiere });
-      var chapitre = document.querySelector(bouton.dataset.chapitre);
+      var corps = new URLSearchParams(bouton.dataset.sujet ? { sujet: bouton.dataset.sujet } : { matiere: bouton.dataset.matiere });
+      var chapitre = bouton.dataset.chapitre && document.querySelector(bouton.dataset.chapitre);
       if (chapitre && chapitre.value) corps.set("chapitre", chapitre.value);
       bouton.disabled = true;
       fetch(bouton.dataset.url, { method: "POST", body: corps, headers: { "X-CSRFToken": jetonCsrf() }, credentials: "same-origin" })

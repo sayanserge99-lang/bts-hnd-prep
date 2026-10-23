@@ -42,13 +42,21 @@ jobs:
           python-version: "3.13"
           cache: pip
 
+      # Sans cela, chaque installation reconstruit l'index des pages de manuel (plusieurs minutes).
+      - name: Désactiver l'index des pages de manuel
+        run: sudo rm -f /var/lib/man-db/auto-update
+
       # Mêmes outils que l'image Docker : les tests d'OCR et de compression tournent aussi ici.
+      # Paquets gardés en cache d'un passage à l'autre : apt sur les machines GitHub prenait de 10 s à 12 min.
       - name: Installer les outils système
-        run: |
-          # Sans cela, chaque installation reconstruit l'index des pages de manuel (plusieurs minutes).
-          sudo rm -f /var/lib/man-db/auto-update
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends gettext tesseract-ocr tesseract-ocr-fra tesseract-ocr-eng ghostscript
+        uses: awalsh128/cache-apt-pkgs-action@v1.4.3
+        with:
+          packages: gettext tesseract-ocr tesseract-ocr-fra tesseract-ocr-eng ghostscript
+          version: "1"
+          execute_install_scripts: true
+
+      - name: Vérifier les outils système
+        run: tesseract --list-langs && gs --version && msgfmt --version | head -1
 
       - name: Installer les dépendances
         run: pip install -r requirements.txt

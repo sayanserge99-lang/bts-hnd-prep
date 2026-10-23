@@ -10,10 +10,8 @@
 - [x] `git init` + premier commit (61249a5). Auteur local : Ayoung Sanama Serge Alain <sayanserge99@gmail.com>.
 - [x] Dépôt GitHub : https://github.com/sayanserge99-lang/bts-hnd-prep (public). Le remote contient le nom de compte, car Windows a aussi le compte AyounSanama en mémoire.
 - [x] GitHub Actions : `.github/workflows/tests.yml` (check, migrations manquantes, pytest sur PostgreSQL 17, Python 3.13).
-- [ ] CI : l'étape « Installer les outils système » varie de 10 s à 12 min (apt sur les machines GitHub).
-      Regarder son journal (connecté) ; piste : mettre les paquets en cache (actions/cache ou cache-apt-pkgs-action).
-- [ ] Python 3.15 n'est pas officiellement supporté par Django 5.2 (ça marche, mais) :
-      fixer l'image Docker de production sur Python 3.13.
+- [x] CI : paquets système en cache (cache-apt-pkgs-action) ; l'étape apt variait de 10 s à 12 min.
+- [x] Image Docker (dev et prod) et CI en Python 3.13 (le venv local reste en 3.15).
 
 ## Squelette (suite)
 
@@ -37,7 +35,7 @@
 - [x] Option « Partager mes résultats avec mon établissement » (CDC 10.6), révocable.
 - [x] Traductions EN : 270 textes traduits, test de complétude.
 - [ ] Faire relire les traductions anglaises par un anglophone (vocabulaire HND : « past papers », « marking guide »).
-- [ ] Production : lancer `compilemessages` dans le Dockerfile au lieu de versionner le `.mo`.
+- [x] Production : `compilemessages` lancé dans l'image prod (le `.mo` reste versionné pour le dev).
 - [x] Formulaire de demande de retrait (sujets) avec actions d'admin Accepter / Refuser.
 - [ ] Rédiger les pages légales (mentions, confidentialité, CGV, contact) : contenu à fournir par Serge Alain / juriste.
 - [ ] Renseigner DJANGO_ADMINS dans .env.production pour être prévenu des demandes de retrait.
@@ -54,11 +52,10 @@
 - [ ] Épreuves internes : pas encore dans le mode hors ligne, ni d'avis aux étudiants quand une épreuve est publiée.
 - [x] Quiz sur une épreuve (questions rattachées à un sujet) + import CSV des questions.
 - [ ] Option 3 : brouillons de questions générés par IA depuis le texte du PDF, validés par un enseignant (plus tard).
-- [ ] Quiz sur une épreuve : pas encore téléchargeable hors ligne (seuls les quiz par matière/chapitre le sont).
+- [x] Quiz sur une épreuve téléchargeable hors ligne (bouton sur la fiche du sujet).
 - [x] Connexion Google V2 (code prêt, inactive sans identifiants).
 - [ ] Créer les identifiants OAuth Google (Serge Alain) et essayer la connexion en vrai.
-- [ ] Un compte créé avec Google ne peut pas utiliser « mot de passe oublié » (pas de mot de passe) : ajouter
-      « Définir un mot de passe » dans Mon espace si besoin.
+- [x] « Définir un mot de passe » (compte Google) / « Changer mon mot de passe » dans Mon espace.
 - [x] Statistiques back-office V2 : tableau de bord administrateur, compteur anonyme des consultations.
 - [x] Hors ligne V2 : installable, sujets gardés (fiche, corrigé, PDF), quiz téléchargés + synchronisés.
 - [ ] Hors ligne : essai réel sur téléphone ; un sujet retiré (demande de retrait) reste sur les téléphones qui l'ont gardé.

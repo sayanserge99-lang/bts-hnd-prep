@@ -104,3 +104,6 @@
   partagée avec l'import de sujets). 13 tests ; 2 échecs au premier passage venaient des tests (la règle de
   publication a bloqué ma publication forcée d'un sujet en cours — elle marche ; statut RETIRE inexistant → MASQUE).
   Contre-épreuve : filtre affaibli → 2 échecs. 251/251 verts.
+- 23/10 : petits travaux en attendant le choix de l'hébergeur : quiz d'épreuve téléchargeable hors ligne, page
+  « mot de passe » (définir pour un compte Google, changer avec l'ancien sinon, session gardée), cache apt de la CI.
+  Python 3.13 et compilemessages étaient déjà dans le Dockerfile → cochés. 6 tests, 257/257 verts.

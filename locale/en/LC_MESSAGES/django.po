@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-23 09:14+0100\n"
+"POT-Creation-Date: 2026-10-23 10:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -84,7 +84,7 @@ msgstr "Planned session"
 msgid "Cette session n'appartient pas à l'examen de votre spécialité."
 msgstr "This session does not belong to your specialty's exam."
 
-#: accounts/forms.py:199
+#: accounts/forms.py:199 templates/accounts/mot_de_passe.html:4
 msgid "Mot de passe"
 msgstr "Password"
 
@@ -164,46 +164,50 @@ msgstr "consent"
 msgid "affectation de modérateur"
 msgstr "moderator assignment"
 
-#: accounts/views.py:40 accounts/views.py:221
+#: accounts/views.py:41 accounts/views.py:222
 msgid "Bienvenue ! Votre compte est créé."
 msgstr "Welcome! Your account has been created."
 
-#: accounts/views.py:93
+#: accounts/views.py:94
 msgid "Votre établissement ne voit plus vos résultats."
 msgstr "Your institution can no longer see your results."
 
-#: accounts/views.py:98
+#: accounts/views.py:99
 msgid "Votre établissement peut maintenant voir vos résultats."
 msgstr "Your institution can now see your results."
 
-#: accounts/views.py:106
+#: accounts/views.py:107
 msgid "Ce compte n'a pas de profil d'étude."
 msgstr "This account has no study profile."
 
-#: accounts/views.py:111
+#: accounts/views.py:112
 msgid "Profil enregistré."
 msgstr "Profile saved."
 
-#: accounts/views.py:158
+#: accounts/views.py:159
 msgid "Ce compte est lié à des paiements : contactez-nous pour le supprimer."
 msgstr "This account is linked to payments: contact us to delete it."
 
-#: accounts/views.py:161
+#: accounts/views.py:162
 msgid "Votre compte et vos données ont été supprimés."
 msgstr "Your account and your data have been deleted."
 
-#: accounts/views.py:189
+#: accounts/views.py:190
 msgid ""
 "La connexion avec Google n'a pas abouti. Réessayez, ou connectez-vous avec "
 "votre e-mail."
 msgstr ""
 "Signing in with Google did not work. Try again, or log in with your email."
 
-#: accounts/views.py:195
+#: accounts/views.py:196
 msgid "Ce compte est désactivé."
 msgstr "This account is disabled."
 
-#: accounts/views.py:255
+#: accounts/views.py:261
+msgid "Mot de passe enregistré."
+msgstr "Password saved."
+
+#: accounts/views.py:271
 msgid "Mot de passe modifié. Vous pouvez vous connecter."
 msgstr "Password changed. You can now log in."
 
@@ -760,7 +764,7 @@ msgstr ""
 " Session pass."
 
 #: entrainement/views.py:78 entrainement/views.py:93
-#: entrainement/views_hors_ligne.py:65
+#: entrainement/views_hors_ligne.py:74
 msgid "Aucune question disponible pour ce choix pour le moment."
 msgstr "No questions available for this choice yet."
 
@@ -777,7 +781,7 @@ msgstr "Mock exams are reserved for Session pass subscribers."
 msgid "Épreuve terminée : réponses non enregistrées."
 msgstr "Exam over: answers not saved."
 
-#: entrainement/views_hors_ligne.py:62
+#: entrainement/views_hors_ligne.py:68
 msgid "Vous avez fait tous vos quiz gratuits du jour."
 msgstr "You have used all your free quizzes for today."
 
@@ -1397,7 +1401,8 @@ msgstr "Already registered?"
 msgid "Modifier mon profil"
 msgstr "Edit my profile"
 
-#: templates/accounts/modifier_profil.html:8 templates/accounts/profil.html:4
+#: templates/accounts/modifier_profil.html:8
+#: templates/accounts/mot_de_passe.html:8 templates/accounts/profil.html:4
 #: templates/base.html:52 templates/partenaires/mes_epreuves.html:9
 msgid "Mon espace"
 msgstr "My space"
@@ -1405,6 +1410,27 @@ msgstr "My space"
 #: templates/accounts/modifier_profil.html:12
 msgid "Enregistrer"
 msgstr "Save"
+
+#: templates/accounts/mot_de_passe.html:10 templates/accounts/profil.html:84
+msgid "Définir un mot de passe"
+msgstr "Set a password"
+
+#: templates/accounts/mot_de_passe.html:11
+msgid ""
+"Votre compte a été créé avec Google. Avec un mot de passe, vous pourrez "
+"aussi vous connecter avec votre e-mail, et utiliser « Mot de passe oublié »."
+msgstr ""
+"Your account was created with Google. With a password, you can also log in "
+"with your email and use “Forgot password”."
+
+#: templates/accounts/mot_de_passe.html:13 templates/accounts/profil.html:84
+msgid "Changer mon mot de passe"
+msgstr "Change my password"
+
+#: templates/accounts/mot_de_passe.html:17
+#: templates/accounts/nouveau_mot_de_passe.html:10
+msgid "Enregistrer le mot de passe"
+msgstr "Save password"
 
 #: templates/accounts/mot_de_passe_envoye.html:6
 msgid "Vérifiez votre boîte e-mail"
@@ -1437,10 +1463,6 @@ msgstr "Send the link"
 #: templates/accounts/nouveau_mot_de_passe.html:6
 msgid "Nouveau mot de passe"
 msgstr "New password"
-
-#: templates/accounts/nouveau_mot_de_passe.html:10
-msgid "Enregistrer le mot de passe"
-msgstr "Save password"
 
 #: templates/accounts/nouveau_mot_de_passe.html:14
 msgid "Ce lien n'est plus valable. Demandez-en un nouveau."
@@ -1547,11 +1569,11 @@ msgid ""
 "moment."
 msgstr "You can download all your data or delete your account at any time."
 
-#: templates/accounts/profil.html:84
+#: templates/accounts/profil.html:85
 msgid "Télécharger mes données"
 msgstr "Download my data"
 
-#: templates/accounts/profil.html:85 templates/accounts/supprimer.html:4
+#: templates/accounts/profil.html:86 templates/accounts/supprimer.html:4
 #: templates/accounts/supprimer.html:8
 msgid "Supprimer mon compte"
 msgstr "Delete my account"
@@ -2413,15 +2435,15 @@ msgstr "Whole subject"
 msgid "Lancer un quiz"
 msgstr "Start a quiz"
 
-#: templates/entrainement/accueil.html:56
+#: templates/entrainement/accueil.html:56 templates/sujets/detail.html:53
 msgid "Téléchargé ✓ : à retrouver dans Hors ligne"
 msgstr "Downloaded ✓: find it in Offline"
 
-#: templates/entrainement/accueil.html:57
+#: templates/entrainement/accueil.html:57 templates/sujets/detail.html:54
 msgid "Téléchargement impossible : vérifiez la connexion."
 msgstr "Download failed: check your connection."
 
-#: templates/entrainement/accueil.html:57
+#: templates/entrainement/accueil.html:57 templates/sujets/detail.html:54
 msgid "Télécharger pour le hors ligne"
 msgstr "Download for offline"
 
@@ -2490,13 +2512,13 @@ msgid "Voir ma note"
 msgstr "See my mark"
 
 #: templates/entrainement/examens/consignes.html:11
-#: templates/sujets/detail.html:59
+#: templates/sujets/detail.html:65
 msgid "Durée"
 msgstr "Duration"
 
 #: templates/entrainement/examens/consignes.html:11
 #: templates/entrainement/examens/liste.html:24
-#: templates/sujets/detail.html:60
+#: templates/sujets/detail.html:66
 #, python-format
 msgid "%(h)s minutes"
 msgstr "%(h)s minutes"
@@ -2708,7 +2730,7 @@ msgid "Aucune tentative terminée pour le moment."
 msgstr "No completed attempts yet."
 
 #: templates/entrainement/progression.html:94
-#: templates/sujets/_resultats.html:34 templates/sujets/detail.html:66
+#: templates/sujets/_resultats.html:34 templates/sujets/detail.html:72
 msgid "Pages"
 msgstr "Pages"
 
@@ -2998,7 +3020,7 @@ msgstr "Send"
 msgid "Se connecter pour signaler une erreur"
 msgstr "Log in to report a mistake"
 
-#: templates/sujets/_corrige.html:49 templates/sujets/detail.html:78
+#: templates/sujets/_corrige.html:49 templates/sujets/detail.html:84
 msgid "Demander le retrait de ce document"
 msgstr "Request removal of this document"
 
@@ -3087,23 +3109,23 @@ msgstr[1] "%(n)s questions from this paper, marked straight away."
 msgid "Quiz sur cette épreuve"
 msgstr "Quiz on this paper"
 
-#: templates/sujets/detail.html:52
+#: templates/sujets/detail.html:58
 msgid "Se connecter pour faire le quiz"
 msgstr "Log in to take the quiz"
 
-#: templates/sujets/detail.html:62
+#: templates/sujets/detail.html:68
 msgid "Coefficient"
 msgstr "Coefficient"
 
-#: templates/sujets/detail.html:69
+#: templates/sujets/detail.html:75
 msgid "Barème"
 msgstr "Marking scheme"
 
-#: templates/sujets/detail.html:72
+#: templates/sujets/detail.html:78
 msgid "Source"
 msgstr "Source"
 
-#: templates/sujets/detail.html:73 templates/sujets/liste.html:71
+#: templates/sujets/detail.html:79 templates/sujets/liste.html:71
 msgid "Fourni par"
 msgstr "Provided by"
 

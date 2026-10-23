@@ -12,6 +12,7 @@ from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
 from catalogue.models import Chapitre, Matiere
+from sujets.models import Sujet
 from sujets.rendu import rendre, rendre_ligne
 
 from . import quiz
@@ -53,14 +54,22 @@ def paquet(tentative):
 @login_required
 @require_POST
 def telecharger_quiz(request):
-    matiere = get_object_or_404(Matiere, pk=request.POST.get("matiere"))
-    chapitre = None
-    if request.POST.get("chapitre"):
-        chapitre = get_object_or_404(Chapitre, pk=request.POST["chapitre"], matiere=matiere)
+    """Quiz d'une matière (ou d'un chapitre), ou quiz d'une épreuve publiée si `sujet` est donné."""
+    sujet = None
+    if request.POST.get("sujet"):
+        sujet = get_object_or_404(Sujet.objects.publies().select_related("session", "matiere"), pk=request.POST["sujet"])
+    else:
+        matiere = get_object_or_404(Matiere, pk=request.POST.get("matiere"))
+        chapitre = None
+        if request.POST.get("chapitre"):
+            chapitre = get_object_or_404(Chapitre, pk=request.POST["chapitre"], matiere=matiere)
     # Un quiz téléchargé compte comme un quiz joué (limite quotidienne de l'offre gratuite).
     if quiz.quiz_restants_aujourd_hui(request.user) == 0:
         return JsonResponse({"erreur": _("Vous avez fait tous vos quiz gratuits du jour.")}, status=403)
-    tentative = quiz.lancer_quiz_rapide(request.user, matiere, chapitre)
+    if sujet:
+        tentative = quiz.lancer_quiz_sujet(request.user, sujet)
+    else:
+        tentative = quiz.lancer_quiz_rapide(request.user, matiere, chapitre)
     if tentative is None:
         return JsonResponse({"erreur": _("Aucune question disponible pour ce choix pour le moment.")}, status=404)
     return JsonResponse(paquet(tentative))

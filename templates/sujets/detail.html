@@ -45,8 +45,14 @@
       <p><span class="font-semibold">{% translate "Entraînez-vous sur cette épreuve" %}</span><br>
         <span class="text-sm text-gris">{% blocktranslate count n=nb_questions %}{{ n }} question tirée de ce sujet, corrigée tout de suite.{% plural %}{{ n }} questions tirées de ce sujet, corrigées tout de suite.{% endblocktranslate %}</span></p>
       {% if user.is_authenticated %}
-        <form method="post" action="{% url 'entrainement:lancer_sujet' sujet.pk %}">{% csrf_token %}
+        <form method="post" action="{% url 'entrainement:lancer_sujet' sujet.pk %}" class="flex flex-wrap gap-2">{% csrf_token %}
           <button class="bouton-plein">{% translate "Quiz sur cette épreuve" %}</button>
+          {% if fonctionnalites.hors_ligne %}
+            <button type="button" class="bouton-contour hidden" data-telecharger-quiz data-sujet="{{ sujet.pk }}"
+                    data-url="{% url 'entrainement:quiz_hors_ligne' %}"
+                    data-texte-telecharge="{% translate 'Téléchargé ✓ : à retrouver dans Hors ligne' %}"
+                    data-texte-erreur="{% translate 'Téléchargement impossible : vérifiez la connexion.' %}">{% translate "Télécharger pour le hors ligne" %}</button>
+          {% endif %}
         </form>
       {% else %}
         <a href="{% url 'accounts:connexion' %}?next={{ request.path|urlencode }}" class="bouton-contour">{% translate "Se connecter pour faire le quiz" %}</a>

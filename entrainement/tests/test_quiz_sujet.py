@@ -198,3 +198,21 @@ def test_page_d_import_dans_l_admin(client, chapitre):
     })
     assert "Résultat de l'import" in reponse.content.decode()
     assert Question.objects.filter(publiee=False).count() == 1
+
+
+# --- Hors ligne --------------------------------------------------------------------------------------------
+
+def test_telecharger_le_quiz_d_une_epreuve(client, etudiant, chapitre, sujet_publie):
+    question = creer_question(chapitre, sujet=sujet_publie)
+    creer_question(chapitre, enonce="Sans sujet ?")
+    client.force_login(etudiant)
+    assert "data-sujet" in client.get(reverse("sujets:detail", args=[sujet_publie.pk])).content.decode()
+
+    paquet = client.post(reverse("entrainement:quiz_hors_ligne"), {"sujet": sujet_publie.pk}).json()
+    assert [q["id"] for q in paquet["questions"]] == [question.pk]
+
+
+def test_pas_de_telechargement_pour_un_sujet_non_publie(client, etudiant, chapitre, sujet_en_cours):
+    creer_question(chapitre, sujet=sujet_en_cours)
+    client.force_login(etudiant)
+    assert client.post(reverse("entrainement:quiz_hors_ligne"), {"sujet": sujet_en_cours.pk}).status_code == 404
