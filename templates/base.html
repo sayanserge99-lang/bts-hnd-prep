@@ -8,6 +8,7 @@
   <meta name="description" content="{% translate 'Sujets BTS et HND des sessions passées, classés par spécialité, matière et année.' %}">
   <link rel="stylesheet" href="{% static 'css/app.css' %}{% if mode_developpement %}?v={% now 'U' %}{% endif %}">
   <script src="{% static 'js/htmx.min.js' %}" defer></script>
+  <script src="{% static 'js/site.js' %}" defer></script>
   {% if fonctionnalites.hors_ligne %}
     {# CDC 4 : installable sur l'écran d'accueil, sujets et quiz consultables sans connexion. #}
     <link rel="manifest" href="{% url 'manifeste' %}">

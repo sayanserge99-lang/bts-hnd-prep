@@ -1,5 +1,6 @@
 import hashlib
 
+from django.conf import settings
 from django.contrib import admin
 from django.core.exceptions import PermissionDenied
 from django.db.models import Max, Min
@@ -38,7 +39,8 @@ def service_worker(request):
     """CDC 4 (hors ligne). Servi à la racine du site pour pouvoir intercepter toutes ses pages."""
     # La version change avec les fichiers statiques : un nouveau déploiement remplace l'ancienne coquille.
     version = hashlib.sha256((static("css/app.css") + static("js/hors-ligne.js")).encode()).hexdigest()[:12]
-    reponse = render(request, "pwa/sw.js", {"version": version}, content_type="application/javascript")
+    contexte = {"version": version, "admin": "/" + settings.ADMIN_URL}
+    reponse = render(request, "pwa/sw.js", contexte, content_type="application/javascript")
     reponse["Service-Worker-Allowed"] = "/"
     # Le navigateur doit toujours vérifier s'il existe une nouvelle version du service worker.
     reponse["Cache-Control"] = "no-cache"

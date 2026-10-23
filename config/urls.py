@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
 from django.utils.translation import gettext_lazy as _
@@ -45,7 +46,7 @@ urlpatterns = [
     path("contact/", page("contact"), name="contact"),
     path("langue/", changer_langue, name="set_language"),
     # Avant admin.site.urls : sinon l'admin prendrait « statistiques » pour une application.
-    path("admin/statistiques/", admin.site.admin_view(statistiques), name="statistiques"),
-    path("admin/", admin.site.urls),
+    path(f"{settings.ADMIN_URL}statistiques/", admin.site.admin_view(statistiques), name="statistiques"),
+    path(settings.ADMIN_URL, admin.site.urls),
 ]
 # Volontairement aucune route vers MEDIA_URL : les PDF passent par sujets:pdf.

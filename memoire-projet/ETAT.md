@@ -8,7 +8,7 @@
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **330 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
+- `pytest` : **338 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
   10 statistiques, 16 Google).
 - **Connexion Google (V2)** `accounts/google.py` : OpenID Connect sans dépendance (state, PKCE, nonce ; vérifie iss,
   aud, exp, email_verified). Compte existant → connecté ; sinon page « Dernière étape » (spécialité + consentement
@@ -20,6 +20,14 @@
   convention de partenariat active ; voit les résultats des étudiants confirmés qui ont activé « Partager mes
   résultats » (consentement révocable, tracé). Étudiant confirmé : page « Épreuves de mon établissement »,
   PDF servi après contrôle (404 sinon). Lien « Mon établissement » dans l'en-tête des responsables.
+- **Sécurité (audit du 23/10, demande de Serge Alain)** `config/securite.py` : limites anti-abus dans Redis
+  (connexion 5 échecs/compte + 20/IP, **connexion admin limitée pareil** — elle ne l'était pas ; inscriptions 5/h/IP ;
+  mot de passe oublié 3 e-mails/h/adresse + 5/h/IP, réponse identique ; signalements de corrigé 10/j/compte),
+  journal « securite » des blocages. En-têtes : Content-Security-Policy (scripts du site seulement, aucun script en
+  ligne — test qui l'interdit dans les gabarits ; `static/js/site.js` pour le bouton Imprimer), Permissions-Policy,
+  `server_tokens off` (Nginx). Adresse d'admin réglable `DJANGO_ADMIN_URL` (urls, service worker, Nginx en modèle
+  envsubst). CI : pip-audit + passage chaque lundi. Vérifié dans Chrome sans écran (aucune violation CSP sur 11 pages,
+  méthode validée sur une page piège : `--headless=new --enable-logging=stderr --v=1`).
 - **Paiement (V3, module 5, 23/10)** `paiements/service.py`, `paiements/fournisseurs/` : `/paiement/offre/<id>/`
   (récapitulatif prix TTC + dates, opérateur Orange/MTN, numéro camerounais normalisé 2376XXXXXXXX, conditions de
   vente acceptées → Consentement CONDITIONS_DE_VENTE), montant fixé par le serveur. Agrégateur = classe Fournisseur

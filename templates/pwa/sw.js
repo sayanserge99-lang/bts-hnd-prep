@@ -43,7 +43,7 @@ function garderCopie(nomCache, requete, reponse) {
 self.addEventListener("fetch", (evenement) => {
   const requete = evenement.request;
   const url = new URL(requete.url);
-  if (requete.method !== "GET" || url.origin !== self.location.origin || url.pathname.startsWith("/admin/")) {
+  if (requete.method !== "GET" || url.origin !== self.location.origin || url.pathname.startsWith("{{ admin|escapejs }}")) {
     return;
   }
 

@@ -55,5 +55,6 @@ CMD ["sh", "-c", "python manage.py migrate --noinput && gunicorn config.wsgi --b
 
 
 FROM nginx:1.27-alpine AS nginx
-COPY deploy/nginx.conf /etc/nginx/conf.d/default.conf
+# Modèle lu au démarrage par l'image : ${DJANGO_ADMIN_URL} y est remplacé (adresse de l'administration).
+COPY deploy/nginx.conf /etc/nginx/templates/default.conf.template
 COPY --from=prod /app/staticfiles /srv/static

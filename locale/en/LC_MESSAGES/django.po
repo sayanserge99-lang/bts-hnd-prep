@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-23 12:57+0100\n"
+"POT-Creation-Date: 2026-10-23 14:10+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,69 +34,69 @@ msgstr "Roles"
 msgid "Dates"
 msgstr "Dates"
 
-#: accounts/forms.py:32
-msgid "Spécialité préparée"
-msgstr "Specialty"
-
-#: accounts/forms.py:41 templates/base.html:52
-msgid "Mon établissement"
-msgstr "My institution"
-
-#: accounts/forms.py:42
-msgid "Autre / non listé"
-msgstr "Other / not listed"
-
-#: accounts/forms.py:62 accounts/forms.py:109
-msgid "J'accepte les conditions générales et la politique de confidentialité."
-msgstr "I accept the terms and conditions and the privacy policy."
-
-#: accounts/forms.py:69 accounts/forms.py:103 accounts/forms.py:166
-msgid "Prénom"
-msgstr "First name"
-
-#: accounts/forms.py:69 accounts/forms.py:104 accounts/forms.py:166
-msgid "Nom"
-msgstr "Last name"
-
-#: accounts/forms.py:80
-msgid "Un compte existe déjà avec cette adresse e-mail."
-msgstr "An account already exists with this email address."
-
-#: accounts/forms.py:105
-msgid "Langue"
-msgstr "Language"
-
-#: accounts/forms.py:131
-msgid "Adresse e-mail"
-msgstr "Email address"
-
-#: accounts/forms.py:136
+#: accounts/forms.py:21
 msgid ""
 "Trop de tentatives. Réessayez dans 15 minutes ou réinitialisez votre mot de "
 "passe."
 msgstr "Too many attempts. Try again in 15 minutes or reset your password."
 
-#: accounts/forms.py:160
+#: accounts/forms.py:39
+msgid "Spécialité préparée"
+msgstr "Specialty"
+
+#: accounts/forms.py:48 templates/base.html:53
+msgid "Mon établissement"
+msgstr "My institution"
+
+#: accounts/forms.py:49
+msgid "Autre / non listé"
+msgstr "Other / not listed"
+
+#: accounts/forms.py:69 accounts/forms.py:116
+msgid "J'accepte les conditions générales et la politique de confidentialité."
+msgstr "I accept the terms and conditions and the privacy policy."
+
+#: accounts/forms.py:76 accounts/forms.py:110 accounts/forms.py:181
+msgid "Prénom"
+msgstr "First name"
+
+#: accounts/forms.py:76 accounts/forms.py:111 accounts/forms.py:181
+msgid "Nom"
+msgstr "Last name"
+
+#: accounts/forms.py:87
+msgid "Un compte existe déjà avec cette adresse e-mail."
+msgstr "An account already exists with this email address."
+
+#: accounts/forms.py:112
+msgid "Langue"
+msgstr "Language"
+
+#: accounts/forms.py:161
+msgid "Adresse e-mail"
+msgstr "Email address"
+
+#: accounts/forms.py:175
 msgid "Session prévue"
 msgstr "Planned session"
 
-#: accounts/forms.py:183
+#: accounts/forms.py:198
 msgid "Cette session n'appartient pas à l'examen de votre spécialité."
 msgstr "This session does not belong to your specialty's exam."
 
-#: accounts/forms.py:199 templates/accounts/mot_de_passe.html:4
+#: accounts/forms.py:214 templates/accounts/mot_de_passe.html:4
 msgid "Mot de passe"
 msgstr "Password"
 
-#: accounts/forms.py:207
+#: accounts/forms.py:222
 msgid "Pour confirmer, tapez votre adresse e-mail"
 msgstr "To confirm, type your email address"
 
-#: accounts/forms.py:215
+#: accounts/forms.py:230
 msgid "Ce n'est pas l'adresse e-mail de ce compte."
 msgstr "This is not the email address of this account."
 
-#: accounts/forms.py:218
+#: accounts/forms.py:233
 msgid "Mot de passe incorrect."
 msgstr "Incorrect password."
 
@@ -152,7 +152,7 @@ msgstr "Privacy policy"
 msgid "Partage des résultats avec l'établissement"
 msgstr "Sharing results with the institution"
 
-#: accounts/models.py:99 templates/base.html:86
+#: accounts/models.py:99 templates/base.html:87
 msgid "Conditions de vente"
 msgstr "Terms of sale"
 
@@ -168,54 +168,59 @@ msgstr "consent"
 msgid "affectation de modérateur"
 msgstr "moderator assignment"
 
-#: accounts/views.py:42 accounts/views.py:228
+#: accounts/views.py:44
+msgid ""
+"Trop de comptes créés depuis cette connexion. Réessayez dans une heure."
+msgstr "Too many accounts created from this connection. Try again in an hour."
+
+#: accounts/views.py:49 accounts/views.py:235
 msgid "Bienvenue ! Votre compte est créé."
 msgstr "Welcome! Your account has been created."
 
-#: accounts/views.py:100
+#: accounts/views.py:107
 msgid "Votre établissement ne voit plus vos résultats."
 msgstr "Your institution can no longer see your results."
 
-#: accounts/views.py:105
+#: accounts/views.py:112
 msgid "Votre établissement peut maintenant voir vos résultats."
 msgstr "Your institution can now see your results."
 
-#: accounts/views.py:113
+#: accounts/views.py:120
 msgid "Ce compte n'a pas de profil d'étude."
 msgstr "This account has no study profile."
 
-#: accounts/views.py:118
+#: accounts/views.py:125
 msgid "Profil enregistré."
 msgstr "Profile saved."
 
-#: accounts/views.py:165
+#: accounts/views.py:172
 msgid "Ce compte est lié à des paiements : contactez-nous pour le supprimer."
 msgstr "This account is linked to payments: contact us to delete it."
 
-#: accounts/views.py:168
+#: accounts/views.py:175
 msgid "Votre compte et vos données ont été supprimés."
 msgstr "Your account and your data have been deleted."
 
-#: accounts/views.py:196
+#: accounts/views.py:203
 msgid ""
 "La connexion avec Google n'a pas abouti. Réessayez, ou connectez-vous avec "
 "votre e-mail."
 msgstr ""
 "Signing in with Google did not work. Try again, or log in with your email."
 
-#: accounts/views.py:202
+#: accounts/views.py:209
 msgid "Ce compte est désactivé."
 msgstr "This account is disabled."
 
-#: accounts/views.py:267
+#: accounts/views.py:284
 msgid "Mot de passe enregistré."
 msgstr "Password saved."
 
-#: accounts/views.py:277
+#: accounts/views.py:294
 msgid "Mot de passe modifié. Vous pouvez vous connecter."
 msgstr "Password changed. You can now log in."
 
-#: catalogue/models.py:9 config/settings.py:199
+#: catalogue/models.py:9 config/settings.py:204
 msgid "Français"
 msgstr "French"
 
@@ -306,7 +311,7 @@ msgstr "title"
 msgid "chapitre"
 msgstr "chapter"
 
-#: catalogue/views.py:65 templates/admin/base_site.html:16
+#: catalogue/views.py:67 templates/admin/base_site.html:16
 #: templates/paiements/offres.html:31
 msgid "Statistiques"
 msgstr "Statistics"
@@ -661,38 +666,38 @@ msgstr "takedown request"
 msgid "demandes de retrait"
 msgstr "takedown requests"
 
-#: communaute/views.py:48
+#: communaute/views.py:41
 msgid ""
 "Trop de demandes envoyées aujourd'hui. Écrivez-nous depuis la page Contact."
 msgstr "Too many requests sent today. Write to us from the Contact page."
 
-#: communaute/views.py:53
+#: communaute/views.py:46
 msgid "Votre demande de retrait a bien été reçue"
 msgstr "Your takedown request has been received"
 
-#: communaute/views.py:84
+#: communaute/views.py:77
 msgid "Merci ! Votre sujet est en attente de vérification par un modérateur."
 msgstr "Thank you! Your paper is waiting to be checked by a moderator."
 
-#: communaute/views.py:95
+#: communaute/views.py:88
 msgid "Merci ! Votre corrigé sera relu par un modérateur avant d'être publié."
 msgstr ""
 "Thank you! Your marking guide will be reviewed by a moderator before it is "
 "published."
 
-#: config/settings.py:199
+#: config/settings.py:204
 msgid "English"
 msgstr "English"
 
-#: config/urls.py:12
+#: config/urls.py:13
 msgid "BTS-HND Prep — Administration"
 msgstr "BTS-HND Prep — Administration"
 
-#: config/urls.py:13
+#: config/urls.py:14
 msgid "BTS-HND Prep"
 msgstr "BTS-HND Prep"
 
-#: config/urls.py:14
+#: config/urls.py:15
 msgid "Tableau de bord"
 msgstr "Dashboard"
 
@@ -1806,11 +1811,15 @@ msgstr "favourite"
 msgid "Une spécialité choisie n'est pas rattachée à la matière du sujet."
 msgstr "A chosen specialty is not linked to the paper's subject."
 
-#: sujets/views.py:203
+#: sujets/views.py:204
 msgid "Décrivez l'erreur en quelques mots (10 caractères au moins)."
 msgstr "Describe the mistake in a few words (at least 10 characters)."
 
 #: sujets/views.py:207
+msgid "Vous avez déjà beaucoup signalé aujourd'hui. Merci ! Revenez demain."
+msgstr "You have already reported a lot today. Thank you! Come back tomorrow."
+
+#: sujets/views.py:212
 msgid "Merci ! L'enseignant relira ce passage."
 msgstr "Thank you! The teacher will review this part."
 
@@ -1827,7 +1836,7 @@ msgstr "Continue with Google"
 
 #: templates/accounts/connexion.html:4 templates/accounts/connexion.html:8
 #: templates/accounts/connexion.html:12 templates/accounts/inscription.html:20
-#: templates/base.html:56
+#: templates/base.html:57
 msgid "Se connecter"
 msgstr "Log in"
 
@@ -1841,7 +1850,7 @@ msgstr "No account yet?"
 
 #: templates/accounts/connexion.html:17 templates/accounts/google_finir.html:4
 #: templates/accounts/inscription.html:4 templates/accounts/inscription.html:8
-#: templates/base.html:57
+#: templates/base.html:58
 msgid "Créer un compte"
 msgstr "Create an account"
 
@@ -1899,7 +1908,7 @@ msgstr "Edit my profile"
 
 #: templates/accounts/modifier_profil.html:8
 #: templates/accounts/mot_de_passe.html:8 templates/accounts/profil.html:4
-#: templates/base.html:53 templates/communaute/mes_contributions.html:9
+#: templates/base.html:54 templates/communaute/mes_contributions.html:9
 #: templates/paiements/activer_code.html:8 templates/paiements/recu.html:8
 #: templates/partenaires/mes_epreuves.html:9
 msgid "Mon espace"
@@ -2194,7 +2203,7 @@ msgstr "Reject"
 #: templates/admin/communaute/contribution/valider.html:6
 #: templates/admin/entrainement/question/importer.html:6
 #: templates/admin/paiements/codeacces/generer.html:6
-#: templates/admin/sujets/sujet/importer.html:6 templates/base.html:98
+#: templates/admin/sujets/sujet/importer.html:6 templates/base.html:99
 msgid "Accueil"
 msgstr "Home"
 
@@ -2687,77 +2696,77 @@ msgid ""
 "année."
 msgstr "Past BTS and HND papers, sorted by specialty, subject and year."
 
-#: templates/base.html:21
+#: templates/base.html:22
 msgid "Aller au contenu"
 msgstr "Skip to content"
 
-#: templates/base.html:32
+#: templates/base.html:33
 msgid "Navigation principale"
 msgstr "Main navigation"
 
-#: templates/base.html:33 templates/base.html:102
+#: templates/base.html:34 templates/base.html:103
 #: templates/sujets/liste.html:4 templates/sujets/liste.html:9
 msgid "Sujets"
 msgstr "Past papers"
 
-#: templates/base.html:35 templates/base.html:37 templates/base.html:107
-#: templates/base.html:112 templates/entrainement/accueil.html:4
+#: templates/base.html:36 templates/base.html:38 templates/base.html:108
+#: templates/base.html:113 templates/entrainement/accueil.html:4
 #: templates/entrainement/accueil.html:9
 #: templates/entrainement/examens/liste.html:9
 #: templates/entrainement/progression.html:9
 msgid "Entraînement"
 msgstr "Practice"
 
-#: templates/base.html:37 templates/base.html:112
+#: templates/base.html:38 templates/base.html:113
 #: templates/sujets/detail.html:19
 msgid "Bientôt"
 msgstr "Soon"
 
-#: templates/base.html:39 templates/entrainement/accueil.html:23
+#: templates/base.html:40 templates/entrainement/accueil.html:23
 #: templates/forum/accueil.html:4 templates/forum/accueil.html:9
 #: templates/forum/discussion.html:4 templates/forum/matiere.html:4
 #: templates/forum/matiere.html:9
 msgid "Forum"
 msgstr "Forum"
 
-#: templates/base.html:40 templates/paiements/commander.html:8
+#: templates/base.html:41 templates/paiements/commander.html:8
 #: templates/paiements/offres.html:4 templates/paiements/offres.html:9
 msgid "Offres"
 msgstr "Plans"
 
-#: templates/base.html:54
+#: templates/base.html:55
 msgid "Déconnexion"
 msgstr "Log out"
 
-#: templates/base.html:83
+#: templates/base.html:84
 msgid "Informations légales"
 msgstr "Legal information"
 
-#: templates/base.html:84 templates/pages/mentions_legales.html:4
+#: templates/base.html:85 templates/pages/mentions_legales.html:4
 #: templates/pages/mentions_legales.html:5
 msgid "Mentions légales"
 msgstr "Legal notice"
 
-#: templates/base.html:85
+#: templates/base.html:86
 msgid "Confidentialité"
 msgstr "Privacy"
 
-#: templates/base.html:87 templates/communaute/demande_retrait.html:4
+#: templates/base.html:88 templates/communaute/demande_retrait.html:4
 #: templates/communaute/demande_retrait.html:8
 #: templates/communaute/demande_retrait_recue.html:4
 msgid "Demande de retrait"
 msgstr "Takedown request"
 
-#: templates/base.html:88 templates/communaute/demande_retrait.html:22
+#: templates/base.html:89 templates/communaute/demande_retrait.html:22
 #: templates/pages/contact.html:4 templates/pages/contact.html:5
 msgid "Contact"
 msgstr "Contact"
 
-#: templates/base.html:94
+#: templates/base.html:95
 msgid "Navigation mobile"
 msgstr "Mobile navigation"
 
-#: templates/base.html:118
+#: templates/base.html:119
 msgid "Profil"
 msgstr "Profile"
 

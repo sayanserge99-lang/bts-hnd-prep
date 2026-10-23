@@ -136,3 +136,8 @@
   6 gabarits, admin en lecture seule, vérification de déploiement E001/E002. 19 tests verts du premier coup ;
   contre-épreuve (signature et montant retirés) → 2 échecs. Captures téléphone : boutons radio mal alignés (même
   famille de défaut que les textarea) → CSS corrigé. check --deploy propre ; E001 vérifié. 330/330 verts.
+- 23/10 : audit de sécurité demandé par Serge Alain. Déjà en place : HTTPS/HSTS/cookies sûrs, Argon2, CSRF, nh3, PDF
+  internes, droits par objet. Trous trouvés et bouchés : connexion admin sans limite (le plus grave), limite par IP,
+  inscriptions et réinitialisations sans limite, pas de CSP, signalements illimités, adresse d'admin par défaut, pas
+  d'audit des dépendances. 8 tests ; contre-épreuve (limite admin retirée → 2 échecs). Première capture CSP trompeuse
+  (Chrome n'affichait rien même sur une page piège) → bonne option trouvée, puis vérification refaite. 338/338 verts.

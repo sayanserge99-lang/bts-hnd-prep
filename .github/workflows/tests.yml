@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
   pull_request:
+  # Chaque lundi, même sans modification : une faille découverte entre-temps dans une dépendance est signalée.
+  schedule:
+    - cron: "0 6 * * 1"
 
 jobs:
   pytest:
@@ -60,6 +63,12 @@ jobs:
 
       - name: Installer les dépendances
         run: pip install -r requirements.txt
+
+      # Failles connues (base PyPI / OSV) dans les bibliothèques utilisées : la CI échoue s'il y en a.
+      - name: Rechercher les failles connues des dépendances
+        run: |
+          pip install pip-audit
+          pip-audit -r requirements.txt --progress-spinner off
 
       - name: Vérifier la configuration Django
         run: python manage.py check

@@ -21,6 +21,8 @@ from paiements.models import Abonnement, Paiement
 from entrainement.models import Tentative
 from sujets.models import Sujet
 
+from config.securite import INSCRIPTIONS_PAR_IP, REINITIALISATIONS_PAR_EMAIL, REINITIALISATIONS_PAR_IP, adresse_ip
+
 from . import google
 from .forms import ConnexionForm, FinInscriptionGoogleForm, InscriptionForm, ProfilForm, SuppressionForm
 from .models import Consentement, Utilisateur
@@ -36,7 +38,12 @@ def inscription(request):
     if request.user.is_authenticated:
         return redirect("accounts:profil")
     form = InscriptionForm(request.POST or None, initial={"langue": request.LANGUAGE_CODE})
-    if form.is_valid():
+    ip = adresse_ip(request)
+    if request.method == "POST" and INSCRIPTIONS_PAR_IP.atteinte(ip):
+        # Robots qui créent des comptes en série : 5 comptes par heure depuis une même adresse.
+        form.add_error(None, _("Trop de comptes créés depuis cette connexion. Réessayez dans une heure."))
+    elif form.is_valid():
+        INSCRIPTIONS_PAR_IP.compter(ip)
         utilisateur = form.save()
         login(request, utilisateur, backend="django.contrib.auth.backends.ModelBackend")
         messages.success(request, _("Bienvenue ! Votre compte est créé."))
@@ -252,6 +259,16 @@ class MotDePasseOublie(auth_views.PasswordResetView):
     email_template_name = "accounts/email_reinitialisation.txt"
     subject_template_name = "accounts/email_reinitialisation_sujet.txt"
     success_url = reverse_lazy("accounts:mot_de_passe_envoye")
+
+    def form_valid(self, form):
+        # Pas de boîte mail inondée : 3 e-mails par heure par adresse, 5 demandes par heure par connexion.
+        # La page de confirmation est la même dans tous les cas (rien n'indique si un compte existe).
+        ip, email = adresse_ip(self.request), form.cleaned_data["email"].lower()
+        if REINITIALISATIONS_PAR_IP.atteinte(ip) or REINITIALISATIONS_PAR_EMAIL.atteinte(email):
+            return redirect(self.success_url)
+        REINITIALISATIONS_PAR_IP.compter(ip)
+        REINITIALISATIONS_PAR_EMAIL.compter(email)
+        return super().form_valid(form)
 
 
 @login_required

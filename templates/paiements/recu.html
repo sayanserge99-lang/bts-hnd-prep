@@ -29,6 +29,6 @@
       <dt class="text-gris">{% translate "Référence" %}</dt><dd>{{ paiement.reference }}</dd>
     </dl>
   </article>
-  <button type="button" onclick="window.print()" class="bouton-contour mt-4 print:hidden">{% translate "Imprimer" %}</button>
+  <button type="button" data-imprimer class="bouton-contour mt-4 hidden print:hidden">{% translate "Imprimer" %}</button>
 </div>
 {% endblock %}

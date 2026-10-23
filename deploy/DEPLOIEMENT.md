@@ -34,6 +34,8 @@ nano .env.production
 | `POSTGRES_PASSWORD` | un mot de passe long et aléatoire |
 | `EMAIL_*` | les accès SMTP du fournisseur d'e-mails |
 | `DJANGO_ADMINS` | l'adresse qui reçoit les alertes (demandes de retrait, erreurs) |
+| `DJANGO_ADMIN_URL` | une adresse d'administration difficile à deviner, avec la barre finale, par exemple `gestion-7f3k/` (par défaut `admin/`, que les robots essaient en premier) |
+| `CSP_FORM_ACTION_EN_PLUS` | l'adresse de la page de paiement de l'agrégateur, par exemple `https://checkout.agregateur.cm` (le navigateur refuse sinon d'y aller après le formulaire) |
 
 Le fichier `.env.production` ne doit jamais être envoyé sur GitHub (il est dans `.gitignore`).
 

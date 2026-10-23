@@ -1,5 +1,8 @@
+import logging
+
 from django import forms
 from django.conf import settings
+from django.contrib.admin.forms import AdminAuthenticationForm
 from django.contrib.auth.forms import AuthenticationForm, UserChangeForm, UserCreationForm
 from django.contrib.auth.models import Group
 from django.core.cache import cache
@@ -9,9 +12,13 @@ from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from catalogue.models import Session, Specialite
+from config.securite import CONNEXION_PAR_IP, adresse_ip
 from partenaires.models import Etablissement
 
 from .models import Consentement, ProfilEtude, Utilisateur
+
+journal = logging.getLogger("securite")
+MESSAGE_BLOQUE = _("Trop de tentatives. Réessayez dans 15 minutes ou réinitialisez votre mot de passe.")
 
 
 class UtilisateurCreationForm(UserCreationForm):
@@ -126,29 +133,37 @@ class FinInscriptionGoogleForm(forms.Form):
         return utilisateur
 
 
-class ConnexionForm(AuthenticationForm):
-    username = forms.EmailField(
-        label=_("Adresse e-mail"), widget=forms.EmailInput(attrs={"autofocus": True, "autocomplete": "email"})
-    )
-
-    error_messages = {
-        **AuthenticationForm.error_messages,
-        "bloque": _("Trop de tentatives. Réessayez dans 15 minutes ou réinitialisez votre mot de passe."),
-    }
+class ConnexionLimiteeMixin:
+    """Échecs comptés par compte (5) et par adresse IP (20) : ni mot de passe deviné sur un compte,
+    ni même mot de passe essayé sur des milliers de comptes. Sert au site et à l'administration."""
 
     def clean(self):
         email = (self.cleaned_data.get("username") or "").lower()
         self.cleaned_data["username"] = email
         cle = f"connexion-echecs:{email}"
-        if cache.get(cle, 0) >= settings.CONNEXION_ESSAIS_MAX:
-            raise ValidationError(self.error_messages["bloque"], code="bloque")
+        ip = adresse_ip(self.request) if self.request else ""
+        if cache.get(cle, 0) >= settings.CONNEXION_ESSAIS_MAX or (ip and CONNEXION_PAR_IP.atteinte(ip)):
+            journal.warning("Connexion bloquée (trop d'échecs) : %s depuis %s", email, ip)
+            raise ValidationError(MESSAGE_BLOQUE, code="bloque")
         try:
             donnees = super().clean()
         except ValidationError:
             cache.set(cle, cache.get(cle, 0) + 1, timeout=settings.CONNEXION_BLOCAGE_SECONDES)
+            if ip:
+                CONNEXION_PAR_IP.compter(ip)
             raise
         cache.delete(cle)
         return donnees
+
+
+class ConnexionForm(ConnexionLimiteeMixin, AuthenticationForm):
+    username = forms.EmailField(
+        label=_("Adresse e-mail"), widget=forms.EmailInput(attrs={"autofocus": True, "autocomplete": "email"})
+    )
+
+
+class ConnexionAdminForm(ConnexionLimiteeMixin, AdminAuthenticationForm):
+    """L'administration publie les sujets : sa page de connexion est limitée comme celle du site."""
 
 
 class ProfilForm(forms.ModelForm):

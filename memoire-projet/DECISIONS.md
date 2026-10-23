@@ -90,5 +90,8 @@
   du navigateur ; montant fixé par le serveur et revérifié ; un montant différent n'ouvre rien (l'équipe vérifie).
   Numéro de reçu dérivé de la clé du paiement. Le simulateur n'existe qu'avec DEBUG, et le site refuse de démarrer
   en production avec le paiement ouvert sur le simulateur.
+- **Sécurité** (23/10) : limites dans le cache Redis (simples, partagées entre processus) plutôt qu'une bibliothèque ;
+  le blocage refuse même le bon mot de passe ; « mot de passe oublié » répond toujours pareil (ni limite ni existence
+  du compte révélées). CSP stricte pour les scripts, tolérante pour les styles en ligne (barres de progression).
 - **Interface** : Tailwind v4 en exécutable autonome (pas de Node), polices du système, HTMX servi localement ;
   les pages marchent aussi sans JavaScript (formulaire GET classique).

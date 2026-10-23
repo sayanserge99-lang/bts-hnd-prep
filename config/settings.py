@@ -15,6 +15,10 @@ if PRODUCTION and SECRET_KEY == "dev-uniquement-a-changer":
 DEBUG = os.environ.get("DJANGO_DEBUG", "0" if PRODUCTION else "1") == "1"
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
 CSRF_TRUSTED_ORIGINS = [o for o in os.environ.get("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",") if o]
+# Adresse de l'administration : changer « admin/ » en production éloigne les robots qui la cherchent.
+ADMIN_URL = os.environ.get("DJANGO_ADMIN_URL", "admin/").strip("/") + "/"
+# Content-Security-Policy : sites où un formulaire peut mener (page de paiement de l'agrégateur, par exemple).
+CSP_FORM_ACTION_EN_PLUS = [o for o in os.environ.get("CSP_FORM_ACTION_EN_PLUS", "").split(",") if o]
 
 INSTALLED_APPS = [
     # modeltranslation doit précéder django.contrib.admin
@@ -39,6 +43,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "config.securite.EnTetesDeSecurite",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",

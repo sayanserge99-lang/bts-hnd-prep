@@ -18,6 +18,7 @@ from django.views.decorators.http import require_POST
 from catalogue.models import Examen, Matiere, SpecialiteMatiere
 
 from communaute.models import Signalement
+from config.securite import SIGNALEMENTS_CORRIGE_PAR_COMPTE
 from paiements.acces import lit_le_corrige_complet
 from partenaires.models import Etablissement
 
@@ -201,8 +202,12 @@ def signaler_corrige(request, pk):
     motif = request.POST.get("motif", "").strip()
     if len(motif) < 10:
         messages.error(request, _("Décrivez l'erreur en quelques mots (10 caractères au moins)."))
+    elif SIGNALEMENTS_CORRIGE_PAR_COMPTE.atteinte(request.user.pk):
+        # Chaque signalement écrit à l'équipe : pas plus de 10 par jour et par compte.
+        messages.error(request, _("Vous avez déjà beaucoup signalé aujourd'hui. Merci ! Revenez demain."))
     else:
-        Signalement.objects.create(utilisateur=request.user, corrige=corrige, motif=motif)
+        SIGNALEMENTS_CORRIGE_PAR_COMPTE.compter(request.user.pk)
+        Signalement.objects.create(utilisateur=request.user, corrige=corrige, motif=motif[:2000])
         mail_admins(f"Erreur signalée : {corrige}", motif, fail_silently=True)
         messages.success(request, _("Merci ! L'enseignant relira ce passage."))
     return redirect(f"{reverse('sujets:detail', args=[corrige.sujet_id])}?onglet=corrige")

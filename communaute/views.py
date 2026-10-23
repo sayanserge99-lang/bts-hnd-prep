@@ -10,17 +10,10 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.utils.translation import gettext as _
 
+from config.securite import adresse_ip
 from sujets.models import Corrige, Sujet
 
 from .forms import DemandeRetraitForm, EnvoiSujetForm, PropositionCorrigeForm
-
-
-def adresse_ip(request):
-    # Derrière Nginx, REMOTE_ADDR est celle de Nginx : l'adresse du visiteur est dans X-Real-IP,
-    # que Nginx écrase toujours (deploy/nginx.conf). Sans proxy, cet en-tête serait falsifiable.
-    if settings.DERRIERE_PROXY:
-        return request.META.get("HTTP_X_REAL_IP") or request.META.get("REMOTE_ADDR", "")
-    return request.META.get("REMOTE_ADDR", "")
 
 
 def document_vise(request):

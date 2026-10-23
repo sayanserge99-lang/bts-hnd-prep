@@ -66,6 +66,9 @@ services:
       context: .
       target: nginx
     restart: unless-stopped
+    environment:
+      # Même valeur que dans .env.production, avec la barre finale (par défaut : admin/).
+      DJANGO_ADMIN_URL: ${DJANGO_ADMIN_URL:-admin/}
     ports:
       - "${PORT_HTTP:-80}:80"
     volumes:

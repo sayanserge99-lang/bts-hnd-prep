@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 
-from .forms import UtilisateurChangeForm, UtilisateurCreationForm
+from .forms import ConnexionAdminForm, UtilisateurChangeForm, UtilisateurCreationForm
 from .models import AffectationModerateur, Consentement, ProfilEtude, Utilisateur
 
 
@@ -46,3 +46,7 @@ class ConsentementAdmin(admin.ModelAdmin):
 @admin.register(AffectationModerateur)
 class AffectationModerateurAdmin(admin.ModelAdmin):
     list_display = ("moderateur", "matiere", "date_attribution")
+
+
+# Connexion à l'administration : mêmes limites d'essais que le site (accounts.forms.ConnexionLimiteeMixin).
+admin.site.login_form = ConnexionAdminForm
