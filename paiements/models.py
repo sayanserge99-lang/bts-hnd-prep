@@ -133,8 +133,8 @@ class Abonnement(models.Model):
         return f"{self.utilisateur} · {origine} jusqu'au {self.fin:%d/%m/%Y}"
 
     @classmethod
-    def offrir_jours(cls, utilisateur, jours, contribution):
-        """Jours ajoutés à la suite de l'abonnement en cours (ou à partir d'aujourd'hui s'il n'y en a pas)."""
+    def prochain_jour_libre(cls, utilisateur):
+        """Lendemain de l'abonnement en cours, ou aujourd'hui : un nouvel abonnement s'ajoute, il ne se superpose pas."""
         aujourd_hui = timezone.localdate()
         en_cours = (
             cls.objects.filter(utilisateur=utilisateur, statut=cls.Statut.ACTIF, fin__gte=aujourd_hui)
@@ -142,7 +142,11 @@ class Abonnement(models.Model):
             .values_list("fin", flat=True)
             .first()
         )
-        debut = en_cours + timedelta(days=1) if en_cours else aujourd_hui
+        return en_cours + timedelta(days=1) if en_cours else aujourd_hui
+
+    @classmethod
+    def offrir_jours(cls, utilisateur, jours, contribution):
+        debut = cls.prochain_jour_libre(utilisateur)
         return cls.objects.create(
             utilisateur=utilisateur, debut=debut, fin=debut + timedelta(days=jours - 1), contribution=contribution
         )

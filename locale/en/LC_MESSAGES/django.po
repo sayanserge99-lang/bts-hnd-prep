@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-23 11:22+0100\n"
+"POT-Creation-Date: 2026-10-23 11:49+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -164,50 +164,50 @@ msgstr "consent"
 msgid "affectation de modérateur"
 msgstr "moderator assignment"
 
-#: accounts/views.py:41 accounts/views.py:222
+#: accounts/views.py:42 accounts/views.py:226
 msgid "Bienvenue ! Votre compte est créé."
 msgstr "Welcome! Your account has been created."
 
-#: accounts/views.py:94
+#: accounts/views.py:98
 msgid "Votre établissement ne voit plus vos résultats."
 msgstr "Your institution can no longer see your results."
 
-#: accounts/views.py:99
+#: accounts/views.py:103
 msgid "Votre établissement peut maintenant voir vos résultats."
 msgstr "Your institution can now see your results."
 
-#: accounts/views.py:107
+#: accounts/views.py:111
 msgid "Ce compte n'a pas de profil d'étude."
 msgstr "This account has no study profile."
 
-#: accounts/views.py:112
+#: accounts/views.py:116
 msgid "Profil enregistré."
 msgstr "Profile saved."
 
-#: accounts/views.py:159
+#: accounts/views.py:163
 msgid "Ce compte est lié à des paiements : contactez-nous pour le supprimer."
 msgstr "This account is linked to payments: contact us to delete it."
 
-#: accounts/views.py:162
+#: accounts/views.py:166
 msgid "Votre compte et vos données ont été supprimés."
 msgstr "Your account and your data have been deleted."
 
-#: accounts/views.py:190
+#: accounts/views.py:194
 msgid ""
 "La connexion avec Google n'a pas abouti. Réessayez, ou connectez-vous avec "
 "votre e-mail."
 msgstr ""
 "Signing in with Google did not work. Try again, or log in with your email."
 
-#: accounts/views.py:196
+#: accounts/views.py:200
 msgid "Ce compte est désactivé."
 msgstr "This account is disabled."
 
-#: accounts/views.py:261
+#: accounts/views.py:265
 msgid "Mot de passe enregistré."
 msgstr "Password saved."
 
-#: accounts/views.py:271
+#: accounts/views.py:275
 msgid "Mot de passe modifié. Vous pouvez vous connecter."
 msgstr "Password changed. You can now log in."
 
@@ -306,7 +306,7 @@ msgstr "chapter"
 msgid "Statistiques"
 msgstr "Statistics"
 
-#: communaute/admin.py:39 communaute/models.py:60
+#: communaute/admin.py:39 communaute/models.py:60 paiements/admin.py:98
 msgid "contribution"
 msgstr "contribution"
 
@@ -1157,6 +1157,85 @@ msgstr "Thank you, a moderator will look at this message."
 msgid "Vous avez déjà signalé ce message."
 msgstr "You have already reported this message."
 
+#: paiements/admin.py:30
+msgid "Établissement (convention active)"
+msgstr "Institution (active agreement)"
+
+#: paiements/admin.py:32
+msgid "Offre donnée par chaque code"
+msgstr "Offer given by each code"
+
+#: paiements/admin.py:33
+msgid "Nombre de codes"
+msgstr "Number of codes"
+
+#: paiements/admin.py:76
+msgid "Générer des codes d'accès"
+msgstr "Generate access codes"
+
+#: paiements/admin.py:81
+msgid "Exporter les codes sélectionnés (CSV)"
+msgstr "Export selected codes (CSV)"
+
+#: paiements/admin.py:92
+msgid "origine"
+msgstr "origin"
+
+#: paiements/admin.py:95 paiements/models.py:68
+msgid "paiement"
+msgstr "payment"
+
+#: paiements/admin.py:97 paiements/models.py:85
+msgid "code d'accès"
+msgstr "access code"
+
+#: paiements/codes.py:42 paiements/models.py:93
+msgid "Un établissement sans convention active ne peut pas recevoir de codes."
+msgstr "An institution without an active agreement cannot receive codes."
+
+#: paiements/codes.py:56
+msgid "code"
+msgstr "code"
+
+#: paiements/codes.py:56 paiements/models.py:25
+msgid "offre"
+msgstr "plan"
+
+#: paiements/codes.py:56 partenaires/models.py:28
+msgid "établissement"
+msgstr "institution"
+
+#: paiements/codes.py:56
+msgid "utilisé le"
+msgstr "used on"
+
+#: paiements/codes.py:67
+msgid ""
+"Trop d'essais. Réessayez dans une heure, ou demandez de l'aide à votre "
+"établissement."
+msgstr ""
+"Too many attempts. Try again in an hour, or ask your institution for help."
+
+#: paiements/codes.py:85
+msgid ""
+"Ce code n'existe pas. Vérifiez-le (les lettres O et I n'y figurent jamais)."
+msgstr ""
+"This code does not exist. Check it (the letters O and I are never used)."
+
+#: paiements/codes.py:87
+msgid "Ce code a déjà été utilisé."
+msgstr "This code has already been used."
+
+#: paiements/codes.py:89
+msgid ""
+"Ce code n'est plus valable : la convention de votre établissement a pris "
+"fin."
+msgstr "This code is no longer valid: your institution's agreement has ended."
+
+#: paiements/codes.py:93
+msgid "Complétez d'abord votre profil (examen et spécialité)."
+msgstr "First complete your profile (exam and specialty)."
+
 #: paiements/models.py:15
 msgid "Durée en jours"
 msgstr "Duration in days"
@@ -1168,10 +1247,6 @@ msgstr "Session pass"
 #: paiements/models.py:19
 msgid "prix (FCFA TTC)"
 msgstr "price (FCFA incl. tax)"
-
-#: paiements/models.py:25
-msgid "offre"
-msgstr "plan"
 
 #: paiements/models.py:44
 msgid "Aucune session à venir n'est enregistrée pour cet examen."
@@ -1193,21 +1268,9 @@ msgstr "amount (FCFA)"
 msgid "référence de l'agrégateur"
 msgstr "aggregator reference"
 
-#: paiements/models.py:68
-msgid "paiement"
-msgstr "payment"
-
-#: paiements/models.py:85
-msgid "code d'accès"
-msgstr "access code"
-
 #: paiements/models.py:86
 msgid "codes d'accès"
 msgstr "access codes"
-
-#: paiements/models.py:93
-msgid "Un établissement sans convention active ne peut pas recevoir de codes."
-msgstr "An institution without an active agreement cannot receive codes."
 
 #: paiements/models.py:99 partenaires/models.py:38
 msgid "Actif"
@@ -1229,6 +1292,19 @@ msgstr "subscription"
 msgid "jours offerts"
 msgstr "free days"
 
+#: paiements/views.py:13
+msgid "Code d'accès"
+msgstr "Access code"
+
+#: paiements/views.py:14
+msgid "Remis par votre établissement, par exemple ABCD-EFGH-JKLM."
+msgstr "Given by your institution, for example ABCD-EFGH-JKLM."
+
+#: paiements/views.py:31
+#, python-format
+msgid "Code activé : %(offre)s, jusqu'au %(fin)s."
+msgstr "Code activated: %(offre)s, until %(fin)s."
+
 #: partenaires/forms.py:16
 msgid ""
 "Visible par vos étudiants validés (convention de partenariat active "
@@ -1241,17 +1317,13 @@ msgstr ""
 msgid "Le fichier dépasse 20 Mo."
 msgstr "The file is larger than 20 MB."
 
-#: partenaires/forms.py:36 partenaires/views.py:123
+#: partenaires/forms.py:36 partenaires/views.py:141
 msgid "Publication impossible sans convention de partenariat active."
 msgstr "Publishing is not possible without an active partnership agreement."
 
 #: partenaires/models.py:24
 msgid "région"
 msgstr "region"
-
-#: partenaires/models.py:28
-msgid "établissement"
-msgstr "institution"
 
 #: partenaires/models.py:37
 msgid "En négociation"
@@ -1325,21 +1397,21 @@ msgstr "internal paper"
 msgid "épreuves internes"
 msgstr "internal papers"
 
-#: partenaires/views.py:89
+#: partenaires/views.py:107
 #, python-format
 msgid "%(nom)s est validé(e) comme étudiant(e) de l'établissement."
 msgstr "%(nom)s is confirmed as a student of the institution."
 
-#: partenaires/views.py:100
+#: partenaires/views.py:118
 #, python-format
 msgid "%(nom)s n'est plus rattaché(e) à l'établissement."
 msgstr "%(nom)s is no longer linked to the institution."
 
-#: partenaires/views.py:113
+#: partenaires/views.py:131
 msgid "Épreuve déposée."
 msgstr "Paper uploaded."
 
-#: partenaires/views.py:136
+#: partenaires/views.py:154
 msgid "Épreuve supprimée."
 msgstr "Paper deleted."
 
@@ -1772,6 +1844,7 @@ msgstr "Edit my profile"
 #: templates/accounts/modifier_profil.html:8
 #: templates/accounts/mot_de_passe.html:8 templates/accounts/profil.html:4
 #: templates/base.html:53 templates/communaute/mes_contributions.html:9
+#: templates/paiements/activer_code.html:8
 #: templates/partenaires/mes_epreuves.html:9
 msgid "Mon espace"
 msgstr "My space"
@@ -1780,7 +1853,7 @@ msgstr "My space"
 msgid "Enregistrer"
 msgstr "Save"
 
-#: templates/accounts/mot_de_passe.html:10 templates/accounts/profil.html:94
+#: templates/accounts/mot_de_passe.html:10 templates/accounts/profil.html:108
 msgid "Définir un mot de passe"
 msgstr "Set a password"
 
@@ -1792,7 +1865,7 @@ msgstr ""
 "Your account was created with Google. With a password, you can also log in "
 "with your email and use “Forgot password”."
 
-#: templates/accounts/mot_de_passe.html:13 templates/accounts/profil.html:94
+#: templates/accounts/mot_de_passe.html:13 templates/accounts/profil.html:108
 msgid "Changer mon mot de passe"
 msgstr "Change my password"
 
@@ -1928,32 +2001,53 @@ msgid ""
 "Ajoutez des sujets à vos favoris depuis leur fiche pour les retrouver ici."
 msgstr "Add papers to your favourites from their page to find them here."
 
-#: templates/accounts/profil.html:83 templates/accounts/profil.html:86
+#: templates/accounts/profil.html:83
+msgid "Mon abonnement"
+msgstr "My subscription"
+
+#: templates/accounts/profil.html:85
+msgid "Jours offerts (contribution)"
+msgstr "Free days (contribution)"
+
+#: templates/accounts/profil.html:86
+#, python-format
+msgid "du %(debut)s au %(fin)s"
+msgstr "from %(debut)s to %(fin)s"
+
+#: templates/accounts/profil.html:88
+msgid "Offre gratuite."
+msgstr "Free plan."
+
+#: templates/accounts/profil.html:91
+msgid "J'ai un code d'accès"
+msgstr "I have an access code"
+
+#: templates/accounts/profil.html:97 templates/accounts/profil.html:100
 #: templates/communaute/envoyer_sujet.html:8
 #: templates/communaute/mes_contributions.html:4
 #: templates/communaute/mes_contributions.html:10
 msgid "Mes contributions"
 msgstr "My contributions"
 
-#: templates/accounts/profil.html:84
+#: templates/accounts/profil.html:98
 msgid "Envoyez des sujets de sessions passées ou proposez des corrigés."
 msgstr "Send papers from past sessions or propose marking guides."
 
-#: templates/accounts/profil.html:91
+#: templates/accounts/profil.html:105
 msgid "Mes données"
 msgstr "My data"
 
-#: templates/accounts/profil.html:92
+#: templates/accounts/profil.html:106
 msgid ""
 "Vous pouvez récupérer toutes vos données ou supprimer votre compte à tout "
 "moment."
 msgstr "You can download all your data or delete your account at any time."
 
-#: templates/accounts/profil.html:95
+#: templates/accounts/profil.html:109
 msgid "Télécharger mes données"
 msgstr "Download my data"
 
-#: templates/accounts/profil.html:96 templates/accounts/supprimer.html:4
+#: templates/accounts/profil.html:110 templates/accounts/supprimer.html:4
 #: templates/accounts/supprimer.html:8
 msgid "Supprimer mon compte"
 msgstr "Delete my account"
@@ -2033,6 +2127,7 @@ msgstr "Reject"
 #: templates/admin/communaute/contribution/rejeter.html:6
 #: templates/admin/communaute/contribution/valider.html:6
 #: templates/admin/entrainement/question/importer.html:6
+#: templates/admin/paiements/codeacces/generer.html:6
 #: templates/admin/sujets/sujet/importer.html:6 templates/base.html:98
 msgid "Accueil"
 msgstr "Home"
@@ -2260,6 +2355,40 @@ msgstr "Duplicate skipped"
 #: templates/admin/sujets/sujet/importer.html:64
 msgid "Erreur"
 msgstr "Error"
+
+#: templates/admin/paiements/codeacces/change_list.html:6
+msgid "Générer des codes"
+msgstr "Generate codes"
+
+#: templates/admin/paiements/codeacces/generer.html:8
+msgid "Générer"
+msgstr "Generate"
+
+#: templates/admin/paiements/codeacces/generer.html:15
+msgid ""
+"Chaque code donne l'offre choisie à un étudiant, une seule fois. Il ne "
+"marche que tant que la convention de l'établissement est active."
+msgstr ""
+"Each code gives the chosen offer to one student, once. It only works while "
+"the institution's agreement is active."
+
+#: templates/admin/paiements/codeacces/generer.html:16
+msgid ""
+"Le fichier CSV des codes se télécharge aussitôt : c'est lui que vous "
+"remettez à l'établissement. Le responsable le retrouve aussi dans son "
+"espace."
+msgstr ""
+"The CSV file of codes downloads straight away: hand it to the institution. "
+"Its manager also finds it in their area."
+
+#: templates/admin/paiements/codeacces/generer.html:17
+msgid ""
+"Codes de 12 caractères, sans O ni I pour éviter les confusions à la recopie."
+msgstr "12-character codes, without O or I to avoid mistakes when copying."
+
+#: templates/admin/paiements/codeacces/generer.html:22
+msgid "Générer et télécharger"
+msgstr "Generate and download"
 
 #: templates/admin/statistiques.html:23
 #, python-format
@@ -2960,7 +3089,7 @@ msgstr "A question? Other students and teachers answer"
 #: templates/entrainement/examens/consignes.html:8
 #: templates/entrainement/examens/liste.html:4
 #: templates/entrainement/examens/liste.html:10
-#: templates/partenaires/espace.html:64
+#: templates/partenaires/espace.html:77
 msgid "Examens blancs"
 msgstr "Mock exams"
 
@@ -3282,7 +3411,7 @@ msgid "Historique"
 msgstr "History"
 
 #: templates/entrainement/progression.html:79
-#: templates/partenaires/espace.html:64
+#: templates/partenaires/espace.html:77
 msgid "Quiz"
 msgstr "Quiz"
 
@@ -3480,6 +3609,23 @@ msgstr "Terms of sale"
 msgid "Contenu en cours de rédaction."
 msgstr "Content being written."
 
+#: templates/paiements/activer_code.html:4
+#: templates/paiements/activer_code.html:9
+msgid "Activer un code d'accès"
+msgstr "Activate an access code"
+
+#: templates/paiements/activer_code.html:10
+msgid ""
+"Votre établissement est partenaire de BTS-HND Prep ? Le code qu'il vous a "
+"remis ouvre l'abonnement Premium. Il ne sert qu'une fois."
+msgstr ""
+"Is your institution a BTS-HND Prep partner? The code it gave you opens the "
+"Premium subscription. It can only be used once."
+
+#: templates/paiements/activer_code.html:13
+msgid "Activer"
+msgstr "Activate"
+
 #: templates/partenaires/deposer.html:4 templates/partenaires/deposer.html:9
 #: templates/partenaires/espace.html:38
 msgid "Déposer une épreuve"
@@ -3565,11 +3711,32 @@ msgstr "Delete"
 msgid "Aucune épreuve déposée."
 msgstr "No paper uploaded."
 
-#: templates/partenaires/espace.html:58
+#: templates/partenaires/espace.html:59
+msgid "Codes d'accès"
+msgstr "Access codes"
+
+#: templates/partenaires/espace.html:60
+msgid ""
+"Chaque étudiant active son code dans « Mon espace » ; il est alors confirmé "
+"comme étudiant de votre établissement."
+msgstr ""
+"Each student activates their code in “My area”; they are then confirmed as a"
+" student of your institution."
+
+#: templates/partenaires/espace.html:63
+#, python-format
+msgid "%(utilises)s utilisé(s) sur %(total)s"
+msgstr "%(utilises)s used out of %(total)s"
+
+#: templates/partenaires/espace.html:66
+msgid "Télécharger les codes non utilisés"
+msgstr "Download unused codes"
+
+#: templates/partenaires/espace.html:71
 msgid "Résultats partagés"
 msgstr "Shared results"
 
-#: templates/partenaires/espace.html:60
+#: templates/partenaires/espace.html:73
 #, python-format
 msgid ""
 "%(n)s étudiant confirmé. Seuls ceux qui ont choisi de partager leurs "
@@ -3584,19 +3751,19 @@ msgstr[1] ""
 "%(n)s confirmed students. Only those who chose to share their results appear"
 " below."
 
-#: templates/partenaires/espace.html:64
+#: templates/partenaires/espace.html:77
 msgid "Étudiant"
 msgstr "Student"
 
-#: templates/partenaires/espace.html:64
+#: templates/partenaires/espace.html:77
 msgid "Réussite"
 msgstr "Success rate"
 
-#: templates/partenaires/espace.html:64
+#: templates/partenaires/espace.html:77
 msgid "Dernière activité"
 msgstr "Last activity"
 
-#: templates/partenaires/espace.html:79
+#: templates/partenaires/espace.html:92
 msgid "Aucun étudiant ne partage encore ses résultats."
 msgstr "No student is sharing their results yet."
 

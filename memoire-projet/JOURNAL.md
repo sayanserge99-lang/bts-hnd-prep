@@ -117,3 +117,9 @@
   DECISIONS). App forum, 3 modèles, services, 6 vues, 7 gabarits, admin, droits du modérateur. 14 tests ; défauts vus en
   route : apostrophe qui cassait un gabarit (placeholder), LOGIN_URL pris pour une adresse, retour vers une discussion
   que le signalement venait de masquer, tri perdu avec Count (alerte du paginateur). Contre-épreuve OK. 291/291 verts.
+- 23/10 : V3 module 3, codes d'accès. Service (génération, CSV, activation), admin (génération + export), page
+  d'activation, bloc « Mon abonnement », section codes de l'espace établissement. Défaut vu avant les tests :
+  ProfilEtude.save() aurait annulé la confirmation posée par le code (établissement changé dans la même sauvegarde)
+  → confirmation posée après. Calcul « lendemain de l'abonnement en cours » mis en commun. 12 tests ; 1 échec
+  (bouton absent : has_change_permission n'est pas dans le contexte de la liste admin). Contre-épreuve : la base
+  refuse aussi le second usage (OneToOne). 303/303 verts.

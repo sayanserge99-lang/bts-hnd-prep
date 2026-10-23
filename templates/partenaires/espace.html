@@ -54,6 +54,19 @@
     </ul>
   </section>
 
+  {% if codes %}
+    <section class="space-y-3">
+      <h2 class="text-lg font-semibold">{% translate "Codes d'accès" %}</h2>
+      <p class="text-sm text-gris">{% translate "Chaque étudiant active son code dans « Mon espace » ; il est alors confirmé comme étudiant de votre établissement." %}</p>
+      <ul class="space-y-1 text-sm">
+        {% for ligne in codes %}
+          <li class="carte">{{ ligne.offre__nom }} : {% blocktranslate with utilises=ligne.utilises total=ligne.total %}{{ utilises }} utilisé(s) sur {{ total }}{% endblocktranslate %}</li>
+        {% endfor %}
+      </ul>
+      <a href="{% url 'partenaires:codes_restants' %}" class="bouton-contour">{% translate "Télécharger les codes non utilisés" %}</a>
+    </section>
+  {% endif %}
+
   <section class="space-y-3">
     <h2 class="text-lg font-semibold">{% translate "Résultats partagés" %}</h2>
     {# CDC 10.6 : seuls les étudiants qui ont accepté le partage (révocable à tout moment). #}

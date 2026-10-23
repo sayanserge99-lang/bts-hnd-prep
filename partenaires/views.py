@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 from django.db.models import Count, Max, Q
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.utils.text import slugify
@@ -15,6 +15,8 @@ from django.views.decorators.http import require_POST
 
 from accounts.models import Consentement, ProfilEtude
 from entrainement.models import ReponseQuestion, Tentative
+from paiements import codes
+from paiements.models import CodeAcces
 from sujets.views import envoyer_pdf
 
 from .acces import epreuves_visibles, etablissement_gere_par, etablissement_valide_de
@@ -75,8 +77,24 @@ def espace(request, etablissement):
             "valides": profils.filter(etablissement_valide_le__isnull=False).order_by("utilisateur__last_name"),
             "resultats": resultats_partages(etablissement),
             "epreuves": etablissement.epreuves.select_related("matiere"),
+            # Codes d'accès : combien sont utilisés, jamais par qui (le code n'est pas un résultat partagé).
+            "codes": CodeAcces.objects.filter(partenariat__etablissement=etablissement)
+            .values("offre__nom")
+            .annotate(total=Count("pk"), utilises=Count("pk", filter=Q(utilise_par__isnull=False)))
+            .order_by("offre__nom"),
         },
     )
+
+
+@responsable_requis
+def codes_restants(request, etablissement):
+    """Les codes encore libres, en CSV, à distribuer aux étudiants."""
+    libres = CodeAcces.objects.filter(
+        partenariat__etablissement=etablissement, utilise_par__isnull=True
+    ).select_related("offre", "partenariat__etablissement").order_by("offre__nom", "code")
+    reponse = HttpResponse(codes.en_csv(libres), content_type="text/csv; charset=utf-8")
+    reponse["Content-Disposition"] = f'attachment; filename="codes-{slugify(etablissement.nom)}.csv"'
+    return reponse
 
 
 @responsable_requis

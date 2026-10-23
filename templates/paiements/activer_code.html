@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titre %}{% translate "Activer un code d'accès" %} — BTS-HND Prep{% endblock %}
+
+{% block contenu %}
+<div class="mx-auto max-w-md px-4 py-8">
+  <a href="{% url 'accounts:profil' %}" class="text-sm text-vert hover:underline">← {% translate "Mon espace" %}</a>
+  <h1 class="mt-3 text-2xl font-bold">{% translate "Activer un code d'accès" %}</h1>
+  <p class="mt-1 text-sm text-gris">{% translate "Votre établissement est partenaire de BTS-HND Prep ? Le code qu'il vous a remis ouvre l'abonnement Premium. Il ne sert qu'une fois." %}</p>
+  <form method="post" class="formulaire carte mt-6 space-y-4" novalidate>
+    {% csrf_token %}
+    {% translate "Activer" as bouton %}
+    {% include "accounts/_formulaire.html" %}
+  </form>
+</div>
+{% endblock %}

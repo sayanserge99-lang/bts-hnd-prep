@@ -1,0 +1,25 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+  <a href="{% url 'admin:index' %}">{% translate "Accueil" %}</a>
+  &rsaquo; <a href="{% url 'admin:paiements_codeacces_changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
+  &rsaquo; {% translate "Générer" %}
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+  <ul>
+    <li>{% translate "Chaque code donne l'offre choisie à un étudiant, une seule fois. Il ne marche que tant que la convention de l'établissement est active." %}</li>
+    <li>{% translate "Le fichier CSV des codes se télécharge aussitôt : c'est lui que vous remettez à l'établissement. Le responsable le retrouve aussi dans son espace." %}</li>
+    <li>{% translate "Codes de 12 caractères, sans O ni I pour éviter les confusions à la recopie." %}</li>
+  </ul>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="{% translate 'Générer et télécharger' %}" class="default">
+  </form>
+</div>
+{% endblock %}

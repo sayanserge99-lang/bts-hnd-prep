@@ -77,6 +77,20 @@
   </section>
 
   {# CDC 10.2 : export et suppression depuis le profil. #}
+  {# CDC 3.8 : abonnement en cours ; un code d'accès remis par l'établissement l'active. #}
+  <section class="carte flex flex-wrap items-center justify-between gap-3 text-sm">
+    <div>
+      <h2 class="text-base font-semibold">{% translate "Mon abonnement" %}</h2>
+      {% for abonnement in abonnements %}
+        <p>{% if abonnement.offre %}{{ abonnement.offre.nom }}{% else %}{% translate "Jours offerts (contribution)" %}{% endif %} :
+          {% blocktranslate with debut=abonnement.debut|date:"d/m/Y" fin=abonnement.fin|date:"d/m/Y" %}du {{ debut }} au {{ fin }}{% endblocktranslate %}</p>
+      {% empty %}
+        <p class="text-gris">{% translate "Offre gratuite." %}</p>
+      {% endfor %}
+    </div>
+    <a href="{% url 'accounts:activer_code' %}" class="bouton-contour">{% translate "J'ai un code d'accès" %}</a>
+  </section>
+
   {% if fonctionnalites.contributions %}
     <section class="carte flex flex-wrap items-center justify-between gap-3 text-sm">
       <div>

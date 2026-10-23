@@ -13,4 +13,5 @@ urlpatterns = [
     path("epreuves/<int:pk>/supprimer/", views.supprimer_epreuve, name="supprimer_epreuve"),
     path("epreuves/<int:pk>/pdf/", views.pdf_epreuve, name="pdf_epreuve"),
     path("mes-epreuves/", views.mes_epreuves, name="mes_epreuves"),
+    path("codes.csv", views.codes_restants, name="codes_restants"),
 ]

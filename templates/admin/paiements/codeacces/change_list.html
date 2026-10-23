@@ -1,0 +1,8 @@
+{% extends "admin/change_list.html" %}
+{% load i18n %}
+
+{# La page de génération vérifie elle-même le droit de modifier les codes. #}
+{% block object-tools-items %}
+  <li><a href="{% url 'admin:paiements_codeacces_generer' %}">{% translate "Générer des codes" %}</a></li>
+  {{ block.super }}
+{% endblock %}

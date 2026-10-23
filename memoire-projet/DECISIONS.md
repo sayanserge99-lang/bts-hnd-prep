@@ -79,5 +79,8 @@
   automatique à 3 signalements de comptes différents, le modérateur tranche ; lecture publique, écriture avec un
   compte ; pas de fichier joint ni d'image (pas de dépôt de sujet par cette voie) ; discussion liée à un sujet = suit
   sa visibilité. Pas de classement ni de points pour les membres.
+- **Codes d'accès** (23/10) : générés par l'administrateur seulement (vendus hors plateforme), utilisables tant que
+  la convention est active ; activer un code confirme l'étudiant dans l'établissement (le code en vient), sauf s'il en
+  a déclaré un autre ; le responsable voit des compteurs, jamais qui a utilisé quel code.
 - **Interface** : Tailwind v4 en exécutable autonome (pas de Node), polices du système, HTMX servi localement ;
   les pages marchent aussi sans JavaScript (formulaire GET classique).
