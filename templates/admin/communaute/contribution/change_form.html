@@ -1,0 +1,10 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block object-tools-items %}
+  {% if original.statut == "en_attente" and has_change_permission %}
+    <li><a href="{% url 'admin:communaute_contribution_valider' original.pk %}">{% translate "Valider" %}</a></li>
+    <li><a href="{% url 'admin:communaute_contribution_rejeter' original.pk %}">{% translate "Rejeter" %}</a></li>
+  {% endif %}
+  {{ block.super }}
+{% endblock %}

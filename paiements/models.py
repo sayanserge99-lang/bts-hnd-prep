@@ -4,6 +4,7 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Q
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from catalogue.models import Session
@@ -100,23 +101,48 @@ class Abonnement(models.Model):
         ANNULE = "annule", _("Annulé")
 
     utilisateur = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="abonnements")
-    offre = models.ForeignKey(Offre, on_delete=models.PROTECT)
+    # Vide pour des jours offerts à un contributeur : ils ne viennent d'aucune offre.
+    offre = models.ForeignKey(Offre, on_delete=models.PROTECT, null=True, blank=True)
     debut = models.DateField()
     fin = models.DateField()
     statut = models.CharField(max_length=10, choices=Statut.choices, default=Statut.ACTIF)
     # Créé à la réception du webhook de succès, ou à l'utilisation d'un code.
     paiement = models.OneToOneField(Paiement, on_delete=models.PROTECT, null=True, blank=True)
     code_acces = models.OneToOneField(CodeAcces, on_delete=models.PROTECT, null=True, blank=True)
+    # CDC 3.7 : jours d'abonnement offerts pour chaque sujet validé.
+    contribution = models.OneToOneField(
+        "communaute.Contribution", on_delete=models.PROTECT, null=True, blank=True, related_name="recompense"
+    )
 
     class Meta:
         verbose_name = _("abonnement")
         constraints = [
             models.CheckConstraint(
-                condition=(Q(paiement__isnull=False) & Q(code_acces__isnull=True))
-                | (Q(paiement__isnull=True) & Q(code_acces__isnull=False)),
+                condition=(Q(paiement__isnull=False) & Q(code_acces__isnull=True) & Q(contribution__isnull=True))
+                | (Q(paiement__isnull=True) & Q(code_acces__isnull=False) & Q(contribution__isnull=True))
+                | (Q(paiement__isnull=True) & Q(code_acces__isnull=True) & Q(contribution__isnull=False)),
                 name="abonnement_une_seule_origine",
+            ),
+            models.CheckConstraint(
+                condition=Q(offre__isnull=False) | Q(contribution__isnull=False), name="abonnement_offre_sauf_recompense"
             ),
         ]
 
     def __str__(self):
-        return f"{self.utilisateur} · {self.offre} jusqu'au {self.fin:%d/%m/%Y}"
+        origine = self.offre or _("jours offerts")
+        return f"{self.utilisateur} · {origine} jusqu'au {self.fin:%d/%m/%Y}"
+
+    @classmethod
+    def offrir_jours(cls, utilisateur, jours, contribution):
+        """Jours ajoutés à la suite de l'abonnement en cours (ou à partir d'aujourd'hui s'il n'y en a pas)."""
+        aujourd_hui = timezone.localdate()
+        en_cours = (
+            cls.objects.filter(utilisateur=utilisateur, statut=cls.Statut.ACTIF, fin__gte=aujourd_hui)
+            .order_by("-fin")
+            .values_list("fin", flat=True)
+            .first()
+        )
+        debut = en_cours + timedelta(days=1) if en_cours else aujourd_hui
+        return cls.objects.create(
+            utilisateur=utilisateur, debut=debut, fin=debut + timedelta(days=jours - 1), contribution=contribution
+        )

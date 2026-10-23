@@ -1,0 +1,12 @@
+{% load i18n %}
+<table>
+  <tr><th>{% translate "Contribution" %}</th><td>{{ contribution.libelle }} ({{ contribution.get_type_display }})</td></tr>
+  <tr><th>{% translate "Envoyée par" %}</th><td>{{ contribution.utilisateur.email }}, {{ contribution.cree_le|date:"d/m/Y H:i" }}</td></tr>
+  <tr><th>{% translate "Droits certifiés le" %}</th><td>{{ contribution.date_certification|date:"d/m/Y H:i" }}</td></tr>
+  {% if contribution.commentaire %}<tr><th>{% translate "Commentaire" %}</th><td>{{ contribution.commentaire|linebreaksbr }}</td></tr>{% endif %}
+  <tr><th>{% translate "Fichier" %}</th><td>{% if contribution.fichier %}<a href="{% url 'admin:communaute_contribution_fichier' contribution.pk %}" target="_blank" rel="noopener">{% translate "Ouvrir le PDF" %}</a>{% else %}—{% endif %}</td></tr>
+</table>
+{% if doublons %}
+  <p class="errornote">{% translate "Doublon possible : ces sujets existent déjà pour la même année et la même matière." %}</p>
+  <ul>{% for sujet in doublons %}<li><a href="{% url 'admin:sujets_sujet_change' sujet.pk %}">{{ sujet }}</a> · {{ sujet.get_statut_display }}</li>{% endfor %}</ul>
+{% endif %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-23 10:02+0100\n"
+"POT-Creation-Date: 2026-10-23 10:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -211,7 +211,7 @@ msgstr "Password saved."
 msgid "Mot de passe modifié. Vous pouvez vous connecter."
 msgstr "Password changed. You can now log in."
 
-#: catalogue/models.py:9 config/settings.py:190
+#: catalogue/models.py:9 config/settings.py:195
 msgid "Français"
 msgstr "French"
 
@@ -306,130 +306,376 @@ msgstr "chapter"
 msgid "Statistiques"
 msgstr "Statistics"
 
-#: communaute/admin.py:34
+#: communaute/admin.py:39 communaute/models.py:60
+msgid "contribution"
+msgstr "contribution"
+
+#: communaute/admin.py:43
+msgid "doublon ?"
+msgstr "duplicate?"
+
+#: communaute/admin.py:47
+msgid "fichier"
+msgstr "file"
+
+#: communaute/admin.py:52
+#: templates/admin/communaute/contribution/_resume.html:7
+msgid "Ouvrir le PDF"
+msgstr "Open the PDF"
+
+#: communaute/admin.py:99
+msgid ""
+"Sujet créé en brouillon. Publiez-le quand il est vérifié : la règle de "
+"publication s'applique."
+msgstr ""
+"Paper created as a draft. Publish it once checked: the publication rule "
+"applies."
+
+#: communaute/admin.py:102
+msgid ""
+"Corrigé créé en brouillon (« Proposé par la communauté »). Relisez-le puis "
+"publiez-le."
+msgstr ""
+"Marking guide created as a draft (“Proposed by the community”). Review it, "
+"then publish it."
+
+#: communaute/admin.py:104
+msgid "Valider la contribution"
+msgstr "Approve the contribution"
+
+#: communaute/admin.py:113
+msgid "Contribution rejetée ; le fichier est supprimé."
+msgstr "Contribution rejected; the file has been deleted."
+
+#: communaute/admin.py:115
+msgid "Rejeter la contribution"
+msgstr "Reject the contribution"
+
+#: communaute/admin.py:133
 msgid "Accepter : supprimer le document"
 msgstr "Accept: delete the document"
 
-#: communaute/admin.py:40
+#: communaute/admin.py:139
 #, python-format
 msgid "%d demande acceptée."
 msgid_plural "%d demandes acceptées."
 msgstr[0] "%d request accepted."
 msgstr[1] "%d requests accepted."
 
-#: communaute/admin.py:43
+#: communaute/admin.py:142
 msgid "Refuser : republier le contenu"
 msgstr "Refuse: republish the content"
 
-#: communaute/admin.py:50
+#: communaute/admin.py:149
 #, python-format
 msgid "%d demande refusée."
 msgid_plural "%d demandes refusées."
 msgstr[0] "%d request refused."
 msgstr[1] "%d requests refused."
 
-#: communaute/forms.py:19
+#: communaute/contributions.py:32
+msgid "Ajoutez le document (PDF ou photos)."
+msgstr "Add the document (PDF or photos)."
+
+#: communaute/contributions.py:35
+#, python-format
+msgid "« %(nom)s » dépasse 10 Mo."
+msgstr "“%(nom)s” is larger than 10 MB."
+
+#: communaute/contributions.py:39 partenaires/forms.py:30
+msgid "Le fichier doit être un PDF."
+msgstr "The file must be a PDF."
+
+#: communaute/contributions.py:42
+#, python-format
+msgid "%(n)s photos au plus."
+msgstr "%(n)s photos at most."
+
+#: communaute/contributions.py:44
+msgid "Envoyez un seul PDF, ou des photos JPG ou PNG (une par page)."
+msgstr "Send a single PDF, or JPG or PNG photos (one per page)."
+
+#: communaute/contributions.py:50
+#, python-format
+msgid "Photo illisible : %(erreur)s"
+msgstr "Unreadable photo: %(erreur)s"
+
+#: communaute/contributions.py:122
+msgid "Votre contribution a été validée"
+msgstr "Your contribution has been approved"
+
+#: communaute/contributions.py:123
+msgid "Votre contribution n'a pas été retenue"
+msgstr "Your contribution was not accepted"
+
+#: communaute/forms.py:41
 msgid "Motif de la demande"
 msgstr "Reason for the request"
 
-#: communaute/forms.py:20
+#: communaute/forms.py:42
 msgid "Précisez vos droits sur ce document (auteur, éditeur, établissement…)."
 msgstr ""
 "Explain your rights over this document (author, publisher, institution…)."
 
-#: communaute/forms.py:30
+#: communaute/forms.py:52
 msgid "La demande doit viser un seul document."
 msgstr "The request must concern a single document."
 
-#: communaute/models.py:17 paiements/models.py:53
+#: communaute/forms.py:68
+msgid ""
+"Vous avez déjà beaucoup envoyé aujourd'hui. Merci ! Revenez demain pour la "
+"suite."
+msgstr ""
+"You have already sent a lot today. Thank you! Come back tomorrow for the "
+"rest."
+
+#: communaute/forms.py:82
+msgid "Le sujet"
+msgstr "The paper"
+
+#: communaute/forms.py:82
+msgid "Un PDF, ou une photo par page (JPG ou PNG, 10 au plus), dans l'ordre."
+msgstr "A PDF, or one photo per page (JPG or PNG, 10 at most), in order."
+
+#: communaute/forms.py:85
+msgid ""
+"Je l'envoie quand même (meilleure qualité, pages manquantes dans celui du "
+"site…)"
+msgstr ""
+"Send it anyway (better quality, pages missing from the one on the site…)"
+
+#: communaute/forms.py:91
+msgid "Année de la session"
+msgstr "Session year"
+
+#: communaute/forms.py:91 templates/catalogue/accueil.html:31
+#: templates/sujets/liste.html:26
+msgid "Spécialité"
+msgstr "Specialty"
+
+#: communaute/forms.py:91 templates/sujets/liste.html:54
+msgid "Matière"
+msgstr "Subject"
+
+#: communaute/forms.py:92
+msgid "Facultatif : épreuve pratique, pages manquantes, provenance…"
+msgstr "Optional: practical exam, missing pages, origin…"
+
+#: communaute/forms.py:109
+msgid "Cette matière n'est pas au programme de la spécialité choisie."
+msgstr "This subject is not part of the chosen specialty."
+
+#: communaute/forms.py:114
+#, python-format
+msgid ""
+"La session %(annee)s n'est pas terminée : nous n'acceptons aucun sujet d'une"
+" session en cours."
+msgstr ""
+"The %(annee)s session is not over: we accept no paper from an ongoing "
+"session."
+
+#: communaute/forms.py:120
+#, python-format
+msgid ""
+"Nous avons déjà ce sujet (%(matiere)s %(annee)s). Cochez la case si le vôtre"
+" apporte quelque chose."
+msgstr ""
+"We already have this paper (%(matiere)s %(annee)s). Tick the box if yours "
+"adds something."
+
+#: communaute/forms.py:137
+msgid "Ou le corrigé en document"
+msgstr "Or the marking guide as a document"
+
+#: communaute/forms.py:138
+msgid "Un PDF, ou une photo par page (JPG ou PNG, 10 au plus)."
+msgstr "A PDF, or one photo per page (JPG or PNG, 10 at most)."
+
+#: communaute/forms.py:154
+msgid "Rédigez le corrigé ou joignez-le en document."
+msgstr "Write the marking guide or attach it as a document."
+
+#: communaute/forms.py:172
+msgid "Session"
+msgstr "Session"
+
+#: communaute/forms.py:174 templates/sujets/liste.html:62
+msgid "Type d'épreuve"
+msgstr "Paper type"
+
+#: communaute/forms.py:175
+msgid "Durée (minutes)"
+msgstr "Duration (minutes)"
+
+#: communaute/forms.py:176 sujets/models.py:101
+msgid "Exemple : MINESUP, BTS session 2025."
+msgstr "Example: MINESUP, HND 2025 session."
+
+#: communaute/forms.py:178 templates/sujets/detail.html:75
+msgid "Barème"
+msgstr "Marking scheme"
+
+#: communaute/forms.py:197
+msgid ""
+"Session en cours : un tel sujet est suspect (CDC 4.2). Rejetez la "
+"contribution au lieu de la valider."
+msgstr ""
+"Ongoing session: such a paper is suspicious (CDC 4.2). Reject the "
+"contribution instead of approving it."
+
+#: communaute/forms.py:204
+msgid "Titulaire des droits"
+msgstr "Rights holder"
+
+#: communaute/forms.py:206
+msgid "Début du corrigé (visible par tous)"
+msgstr "Start of the marking guide (visible to all)"
+
+#: communaute/forms.py:208
+msgid "Suite du corrigé"
+msgstr "Rest of the marking guide"
+
+#: communaute/forms.py:219
+msgid "Le corrigé est vide."
+msgstr "The marking guide is empty."
+
+#: communaute/forms.py:225
+msgid "Motif du rejet"
+msgstr "Reason for rejection"
+
+#: communaute/forms.py:226
+msgid "Envoyé au contributeur. Le fichier est supprimé."
+msgstr "Sent to the contributor. The file is deleted."
+
+#: communaute/models.py:19 templates/admin/statistiques.html:74
+#: templates/communaute/mes_contributions.html:22
+#: templates/entrainement/examens/consignes.html:12
+#: templates/sujets/detail.html:15
+msgid "Sujet"
+msgstr "Paper"
+
+#: communaute/models.py:20 templates/communaute/mes_contributions.html:21
+#: templates/sujets/detail.html:17 templates/sujets/detail.html:19
+#: templates/sujets/liste.html:81
+msgid "Corrigé"
+msgstr "Marking guide"
+
+#: communaute/models.py:23 paiements/models.py:54
 msgid "En attente"
 msgstr "Pending"
 
-#: communaute/models.py:18
+#: communaute/models.py:24 templates/communaute/mes_contributions.html:24
 msgid "Validée"
 msgstr "Approved"
 
-#: communaute/models.py:19
+#: communaute/models.py:25
 msgid "Rejetée"
 msgstr "Rejected"
 
-#: communaute/models.py:23
+#: communaute/models.py:32
+msgid "corrigé rédigé"
+msgstr "written marking guide"
+
+#: communaute/models.py:33
 msgid "année proposée"
 msgstr "proposed year"
 
-#: communaute/models.py:27
+#: communaute/models.py:38
+msgid "sujet corrigé"
+msgstr "paper answered"
+
+#: communaute/models.py:38
+msgid "Pour un corrigé proposé : le sujet publié qu'il corrige."
+msgstr "For a proposed marking guide: the published paper it answers."
+
+#: communaute/models.py:41
 msgid "je certifie avoir le droit de partager ce document"
 msgstr "I certify that I have the right to share this document"
 
-#: communaute/models.py:32
+#: communaute/models.py:46 communaute/models.py:50
 msgid "Renseigné une fois validée."
 msgstr "Filled in once approved."
 
-#: communaute/models.py:37
-msgid "contribution"
-msgstr "contribution"
-
 #: communaute/models.py:52
+msgid "jours d'abonnement offerts"
+msgstr "free subscription days"
+
+#: communaute/models.py:81
+#, python-format
+msgid "Corrigé de « %(sujet)s »"
+msgstr "Marking guide for “%(sujet)s”"
+
+#: communaute/models.py:94
 msgid "Ouvert"
 msgstr "Open"
 
-#: communaute/models.py:53
+#: communaute/models.py:95
 msgid "Traité"
 msgstr "Handled"
 
-#: communaute/models.py:54
+#: communaute/models.py:96
 msgid "Rejeté"
 msgstr "Rejected"
 
-#: communaute/models.py:64
+#: communaute/models.py:106
 msgid "signalement"
 msgstr "report"
 
-#: communaute/models.py:73
+#: communaute/models.py:115
 msgid "Reçue"
 msgstr "Received"
 
-#: communaute/models.py:74
+#: communaute/models.py:116
 msgid "Acceptée (contenu supprimé)"
 msgstr "Accepted (content deleted)"
 
-#: communaute/models.py:75
+#: communaute/models.py:117
 msgid "Refusée (contenu republié)"
 msgstr "Refused (content republished)"
 
-#: communaute/models.py:78
+#: communaute/models.py:120
 msgid "nom du demandeur"
 msgstr "requester's name"
 
-#: communaute/models.py:79
+#: communaute/models.py:121
 msgid "e-mail du demandeur"
 msgstr "requester's email"
 
-#: communaute/models.py:86
+#: communaute/models.py:128
 msgid ""
 "je certifie être titulaire des droits sur ce contenu ou mandaté par lui"
 msgstr ""
 "I certify that I hold the rights to this content or act on behalf of the "
 "rights holder"
 
-#: communaute/models.py:93
+#: communaute/models.py:135
 msgid "demande de retrait"
 msgstr "takedown request"
 
-#: communaute/models.py:94
+#: communaute/models.py:136
 msgid "demandes de retrait"
 msgstr "takedown requests"
 
-#: communaute/views.py:43
+#: communaute/views.py:48
 msgid ""
 "Trop de demandes envoyées aujourd'hui. Écrivez-nous depuis la page Contact."
 msgstr "Too many requests sent today. Write to us from the Contact page."
 
-#: communaute/views.py:48
+#: communaute/views.py:53
 msgid "Votre demande de retrait a bien été reçue"
 msgstr "Your takedown request has been received"
 
-#: config/settings.py:190
+#: communaute/views.py:84
+msgid "Merci ! Votre sujet est en attente de vérification par un modérateur."
+msgstr "Thank you! Your paper is waiting to be checked by a moderator."
+
+#: communaute/views.py:95
+msgid "Merci ! Votre corrigé sera relu par un modérateur avant d'être publié."
+msgstr ""
+"Thank you! Your marking guide will be reviewed by a moderator before it is "
+"published."
+
+#: config/settings.py:195
 msgid "English"
 msgstr "English"
 
@@ -785,73 +1031,77 @@ msgstr "Exam over: answers not saved."
 msgid "Vous avez fait tous vos quiz gratuits du jour."
 msgstr "You have used all your free quizzes for today."
 
-#: paiements/models.py:14
+#: paiements/models.py:15
 msgid "Durée en jours"
 msgstr "Duration in days"
 
-#: paiements/models.py:15 templates/catalogue/accueil.html:106
+#: paiements/models.py:16 templates/catalogue/accueil.html:106
 msgid "Pass session"
 msgstr "Session pass"
 
-#: paiements/models.py:18
+#: paiements/models.py:19
 msgid "prix (FCFA TTC)"
 msgstr "price (FCFA incl. tax)"
 
-#: paiements/models.py:24
+#: paiements/models.py:25
 msgid "offre"
 msgstr "plan"
 
-#: paiements/models.py:43
+#: paiements/models.py:44
 msgid "Aucune session à venir n'est enregistrée pour cet examen."
 msgstr "No upcoming session is recorded for this exam."
 
-#: paiements/models.py:54
+#: paiements/models.py:55
 msgid "Réussi"
 msgstr "Successful"
 
-#: paiements/models.py:55
+#: paiements/models.py:56
 msgid "Échoué"
 msgstr "Failed"
 
-#: paiements/models.py:59
+#: paiements/models.py:60
 msgid "montant (FCFA)"
 msgstr "amount (FCFA)"
 
-#: paiements/models.py:61
+#: paiements/models.py:62
 msgid "référence de l'agrégateur"
 msgstr "aggregator reference"
 
-#: paiements/models.py:67
+#: paiements/models.py:68
 msgid "paiement"
 msgstr "payment"
 
-#: paiements/models.py:84
+#: paiements/models.py:85
 msgid "code d'accès"
 msgstr "access code"
 
-#: paiements/models.py:85
+#: paiements/models.py:86
 msgid "codes d'accès"
 msgstr "access codes"
 
-#: paiements/models.py:92
+#: paiements/models.py:93
 msgid "Un établissement sans convention active ne peut pas recevoir de codes."
 msgstr "An institution without an active agreement cannot receive codes."
 
-#: paiements/models.py:98 partenaires/models.py:38
+#: paiements/models.py:99 partenaires/models.py:38
 msgid "Actif"
 msgstr "Active"
 
-#: paiements/models.py:99
+#: paiements/models.py:100
 msgid "Expiré"
 msgstr "Expired"
 
-#: paiements/models.py:100
+#: paiements/models.py:101
 msgid "Annulé"
 msgstr "Cancelled"
 
-#: paiements/models.py:112
+#: paiements/models.py:118
 msgid "abonnement"
 msgstr "subscription"
+
+#: paiements/models.py:132
+msgid "jours offerts"
+msgstr "free days"
 
 #: partenaires/forms.py:16
 msgid ""
@@ -864,10 +1114,6 @@ msgstr ""
 #: partenaires/forms.py:26
 msgid "Le fichier dépasse 20 Mo."
 msgstr "The file is larger than 20 MB."
-
-#: partenaires/forms.py:30
-msgid "Le fichier doit être un PDF."
-msgstr "The file must be a PDF."
 
 #: partenaires/forms.py:36 partenaires/views.py:123
 msgid "Publication impossible sans convention de partenariat active."
@@ -1202,10 +1448,6 @@ msgstr "number of pages"
 msgid "Rempli par la tâche d'extraction, sert à la recherche."
 msgstr "Filled in by the extraction task, used for search."
 
-#: sujets/models.py:101
-msgid "Exemple : MINESUP, BTS session 2025."
-msgstr "Example: MINESUP, HND 2025 session."
-
 #: sujets/models.py:104
 msgid "fourni par"
 msgstr "provided by"
@@ -1403,7 +1645,8 @@ msgstr "Edit my profile"
 
 #: templates/accounts/modifier_profil.html:8
 #: templates/accounts/mot_de_passe.html:8 templates/accounts/profil.html:4
-#: templates/base.html:52 templates/partenaires/mes_epreuves.html:9
+#: templates/base.html:52 templates/communaute/mes_contributions.html:9
+#: templates/partenaires/mes_epreuves.html:9
 msgid "Mon espace"
 msgstr "My space"
 
@@ -1411,7 +1654,7 @@ msgstr "My space"
 msgid "Enregistrer"
 msgstr "Save"
 
-#: templates/accounts/mot_de_passe.html:10 templates/accounts/profil.html:84
+#: templates/accounts/mot_de_passe.html:10 templates/accounts/profil.html:94
 msgid "Définir un mot de passe"
 msgstr "Set a password"
 
@@ -1423,7 +1666,7 @@ msgstr ""
 "Your account was created with Google. With a password, you can also log in "
 "with your email and use “Forgot password”."
 
-#: templates/accounts/mot_de_passe.html:13 templates/accounts/profil.html:84
+#: templates/accounts/mot_de_passe.html:13 templates/accounts/profil.html:94
 msgid "Changer mon mot de passe"
 msgstr "Change my password"
 
@@ -1559,21 +1802,32 @@ msgid ""
 "Ajoutez des sujets à vos favoris depuis leur fiche pour les retrouver ici."
 msgstr "Add papers to your favourites from their page to find them here."
 
-#: templates/accounts/profil.html:81
+#: templates/accounts/profil.html:83 templates/accounts/profil.html:86
+#: templates/communaute/envoyer_sujet.html:8
+#: templates/communaute/mes_contributions.html:4
+#: templates/communaute/mes_contributions.html:10
+msgid "Mes contributions"
+msgstr "My contributions"
+
+#: templates/accounts/profil.html:84
+msgid "Envoyez des sujets de sessions passées ou proposez des corrigés."
+msgstr "Send papers from past sessions or propose marking guides."
+
+#: templates/accounts/profil.html:91
 msgid "Mes données"
 msgstr "My data"
 
-#: templates/accounts/profil.html:82
+#: templates/accounts/profil.html:92
 msgid ""
 "Vous pouvez récupérer toutes vos données ou supprimer votre compte à tout "
 "moment."
 msgstr "You can download all your data or delete your account at any time."
 
-#: templates/accounts/profil.html:85
+#: templates/accounts/profil.html:95
 msgid "Télécharger mes données"
 msgstr "Download my data"
 
-#: templates/accounts/profil.html:86 templates/accounts/supprimer.html:4
+#: templates/accounts/profil.html:96 templates/accounts/supprimer.html:4
 #: templates/accounts/supprimer.html:8
 msgid "Supprimer mon compte"
 msgstr "Delete my account"
@@ -1607,10 +1861,94 @@ msgstr "Django site admin"
 msgid "Django administration"
 msgstr "Django administration"
 
+#: templates/admin/communaute/contribution/_resume.html:3
+msgid "Contribution"
+msgstr "Contribution"
+
+#: templates/admin/communaute/contribution/_resume.html:4
+msgid "Envoyée par"
+msgstr "Sent by"
+
+#: templates/admin/communaute/contribution/_resume.html:5
+msgid "Droits certifiés le"
+msgstr "Rights certified on"
+
+#: templates/admin/communaute/contribution/_resume.html:6
+msgid "Commentaire"
+msgstr "Comment"
+
+#: templates/admin/communaute/contribution/_resume.html:7
+#: templates/admin/sujets/sujet/importer.html:54
+msgid "Fichier"
+msgstr "File"
+
+#: templates/admin/communaute/contribution/_resume.html:10
+msgid ""
+"Doublon possible : ces sujets existent déjà pour la même année et la même "
+"matière."
+msgstr ""
+"Possible duplicate: these papers already exist for the same year and "
+"subject."
+
+#: templates/admin/communaute/contribution/change_form.html:6
+#: templates/admin/communaute/contribution/valider.html:9
+#: templates/admin/communaute/contribution/valider.html:25
+#: templates/entrainement/_formulaire_question.html:28
+#: templates/pwa/hors_ligne.html:14
+msgid "Valider"
+msgstr "Submit"
+
+#: templates/admin/communaute/contribution/change_form.html:7
+#: templates/admin/communaute/contribution/rejeter.html:9
+#: templates/admin/communaute/contribution/rejeter.html:20
+msgid "Rejeter"
+msgstr "Reject"
+
+#: templates/admin/communaute/contribution/rejeter.html:6
+#: templates/admin/communaute/contribution/valider.html:6
 #: templates/admin/entrainement/question/importer.html:6
 #: templates/admin/sujets/sujet/importer.html:6 templates/base.html:97
 msgid "Accueil"
 msgstr "Home"
+
+#: templates/admin/communaute/contribution/rejeter.html:16
+msgid ""
+"Sujet d'une session en cours, origine douteuse, illisible, doublon sans "
+"intérêt… Le motif est envoyé au contributeur et le fichier est supprimé."
+msgstr ""
+"Paper from an ongoing session, doubtful origin, unreadable, pointless "
+"duplicate… The reason is sent to the contributor and the file is deleted."
+
+#: templates/admin/communaute/contribution/valider.html:17
+msgid ""
+"Vérifiez le document (session passée, origine sûre, lisible), puis complétez"
+" la fiche. Le sujet est créé en brouillon : publiez-le ensuite avec l'action"
+" « Publier »."
+msgstr ""
+"Check the document (past session, reliable origin, readable), then complete "
+"the record. The paper is created as a draft: then publish it with the "
+"“Publish” action."
+
+#: templates/admin/communaute/contribution/valider.html:19
+#, python-format
+msgid ""
+"Corrigé proposé pour « %(sujet)s ». Il est créé en brouillon, au statut « "
+"Proposé par la communauté » : relisez-le puis publiez-le."
+msgstr ""
+"Marking guide proposed for “%(sujet)s”. It is created as a draft, with the "
+"status “Proposed by the community”: review it, then publish it."
+
+#: templates/admin/communaute/contribution/valider.html:20
+msgid ""
+"Le texte rédigé par le contributeur est repris dans « Début du corrigé » : "
+"répartissez-le si besoin."
+msgstr ""
+"The contributor's text is copied into “Start of the marking guide”: split it"
+" if needed."
+
+#: templates/admin/communaute/contribution/valider.html:26
+msgid "Rejeter plutôt"
+msgstr "Reject instead"
 
 #: templates/admin/entrainement/question/importer.html:9
 #: templates/admin/sujets/sujet/importer.html:9
@@ -1904,12 +2242,6 @@ msgid "Sujets les plus consultés"
 msgstr "Most viewed papers"
 
 #: templates/admin/statistiques.html:74
-#: templates/entrainement/examens/consignes.html:12
-#: templates/sujets/detail.html:15
-msgid "Sujet"
-msgstr "Paper"
-
-#: templates/admin/statistiques.html:74
 msgid "Fiches"
 msgstr "Pages"
 
@@ -2024,10 +2356,6 @@ msgid ""
 msgstr ""
 "Optional: name of the institution that provided the paper (as recorded)"
 
-#: templates/admin/sujets/sujet/importer.html:54
-msgid "Fichier"
-msgstr "File"
-
 #: templates/admin/sujets/sujet/importer.html:62
 msgid "Importé"
 msgstr "Imported"
@@ -2141,10 +2469,6 @@ msgstr "Marking guides available; practice tests are coming soon."
 #: templates/catalogue/accueil.html:21 templates/sujets/liste.html:11
 msgid "Examen"
 msgstr "Exam"
-
-#: templates/catalogue/accueil.html:31 templates/sujets/liste.html:26
-msgid "Spécialité"
-msgstr "Specialty"
 
 #: templates/catalogue/accueil.html:36
 msgid "Voir les sujets"
@@ -2305,6 +2629,7 @@ msgid "Retour à l'accueil"
 msgstr "Back to home"
 
 #: templates/communaute/email_accuse_retrait.txt:1
+#: templates/communaute/email_decision_contribution.txt:1
 #, python-format
 msgid "Bonjour %(nom)s,"
 msgstr "Hello %(nom)s,"
@@ -2318,6 +2643,118 @@ msgid ""
 msgstr ""
 "We have received your takedown request for “%(document)s”. The document is "
 "hidden while we review it; we will reply by email."
+
+#: templates/communaute/email_decision_contribution.txt:3
+#, python-format
+msgid "Votre contribution « %(document)s » a été validée. Merci !"
+msgstr "Your contribution “%(document)s” has been approved. Thank you!"
+
+#: templates/communaute/email_decision_contribution.txt:4
+#, python-format
+msgid "%(n)s jour d'abonnement vous est offert."
+msgid_plural "%(n)s jours d'abonnement vous sont offerts."
+msgstr[0] "%(n)s free subscription day is yours."
+msgstr[1] "%(n)s free subscription days are yours."
+
+#: templates/communaute/email_decision_contribution.txt:5
+msgid "Le sujet sera publié une fois vérifié par un modérateur."
+msgstr "The paper will be published once checked by a moderator."
+
+#: templates/communaute/email_decision_contribution.txt:5
+msgid "Le corrigé sera publié une fois relu par un modérateur."
+msgstr "The marking guide will be published once reviewed by a moderator."
+
+#: templates/communaute/email_decision_contribution.txt:6
+#, python-format
+msgid "Votre contribution « %(document)s » n'a pas été retenue."
+msgstr "Your contribution “%(document)s” was not accepted."
+
+#: templates/communaute/email_decision_contribution.txt:7
+#: templates/communaute/mes_contributions.html:30
+msgid "Motif :"
+msgstr "Reason:"
+
+#: templates/communaute/envoyer_sujet.html:4
+#: templates/communaute/envoyer_sujet.html:9
+#: templates/communaute/mes_contributions.html:13
+msgid "Envoyer un sujet"
+msgstr "Send a paper"
+
+#: templates/communaute/envoyer_sujet.html:11
+#, python-format
+msgid ""
+"Vous avez un sujet d'une session passée ? Envoyez-le : un modérateur le "
+"vérifie avant publication, et chaque sujet validé vous offre %(n)s jour "
+"d'abonnement."
+msgid_plural ""
+"Vous avez un sujet d'une session passée ? Envoyez-le : un modérateur le "
+"vérifie avant publication, et chaque sujet validé vous offre %(n)s jours "
+"d'abonnement."
+msgstr[0] ""
+"Do you have a paper from a past session? Send it: a moderator checks it "
+"before publication, and each approved paper earns you %(n)s free "
+"subscription day."
+msgstr[1] ""
+"Do you have a paper from a past session? Send it: a moderator checks it "
+"before publication, and each approved paper earns you %(n)s free "
+"subscription days."
+
+#: templates/communaute/envoyer_sujet.html:14
+msgid ""
+"Jamais de sujet d'une session en cours ni de document obtenu par une fuite :"
+" la fraude aux examens est sanctionnée par la loi."
+msgstr ""
+"Never a paper from an ongoing session or a leaked document: exam fraud is "
+"punishable by law."
+
+#: templates/communaute/envoyer_sujet.html:17
+msgid "Envoyer le sujet"
+msgstr "Send the paper"
+
+#: templates/communaute/mes_contributions.html:14
+msgid "Proposer un corrigé (depuis la fiche d'un sujet)"
+msgstr "Propose a marking guide (from a paper's page)"
+
+#: templates/communaute/mes_contributions.html:25
+msgid "Non retenue"
+msgstr "Not accepted"
+
+#: templates/communaute/mes_contributions.html:26
+msgid "En attente de vérification"
+msgstr "Waiting to be checked"
+
+#: templates/communaute/mes_contributions.html:28
+#, python-format
+msgid "Envoyée le %(date)s"
+msgstr "Sent on %(date)s"
+
+#: templates/communaute/mes_contributions.html:29
+#, python-format
+msgid "%(n)s jour d'abonnement offert"
+msgid_plural "%(n)s jours d'abonnement offerts"
+msgstr[0] "%(n)s free subscription day"
+msgstr[1] "%(n)s free subscription days"
+
+#: templates/communaute/mes_contributions.html:33
+msgid "Vous n'avez encore rien envoyé."
+msgstr "You have not sent anything yet."
+
+#: templates/communaute/proposer_corrige.html:4
+#: templates/communaute/proposer_corrige.html:9
+msgid "Proposer un corrigé"
+msgstr "Propose a marking guide"
+
+#: templates/communaute/proposer_corrige.html:10
+msgid ""
+"Un modérateur le relit avant publication. Il sera affiché « Proposé par la "
+"communauté », avec votre nom comme auteur."
+msgstr ""
+"A moderator reviews it before publication. It will be shown as “Proposed by "
+"the community”, with your name as author."
+
+#: templates/communaute/proposer_corrige.html:13
+msgid "Envoyer le corrigé"
+msgstr "Send the marking guide"
 
 #: templates/entrainement/_barre_taux.html:7
 #, python-format
@@ -2368,11 +2805,6 @@ msgstr "Several answers possible."
 #: templates/entrainement/_formulaire_question.html:17
 msgid "Une seule réponse."
 msgstr "One answer only."
-
-#: templates/entrainement/_formulaire_question.html:28
-#: templates/pwa/hors_ligne.html:14
-msgid "Valider"
-msgstr "Submit"
 
 #: templates/entrainement/accueil.html:10
 msgid "Quiz de 10 questions tirées au hasard, corrigées au fur et à mesure."
@@ -3032,6 +3464,14 @@ msgstr "The marking guide for this paper is in preparation."
 msgid "Ce sujet n'a pas encore de corrigé."
 msgstr "This paper has no marking guide yet."
 
+#: templates/sujets/_corrige.html:60
+msgid "Vous avez résolu ce sujet ? Proposez votre corrigé"
+msgstr "Solved this paper? Propose your marking guide"
+
+#: templates/sujets/_corrige.html:61
+msgid "Vous avez résolu ce sujet ? Connectez-vous pour proposer votre corrigé"
+msgstr "Solved this paper? Log in to propose your marking guide"
+
 #: templates/sujets/_resultats.html:3
 #, python-format
 msgid "%(total)s sujet"
@@ -3068,11 +3508,6 @@ msgstr "All papers"
 #: templates/sujets/detail.html:14
 msgid "Sujet ou corrigé"
 msgstr "Paper or marking guide"
-
-#: templates/sujets/detail.html:17 templates/sujets/detail.html:19
-#: templates/sujets/liste.html:81
-msgid "Corrigé"
-msgstr "Marking guide"
 
 #: templates/sujets/detail.html:27
 msgid "Lire le sujet (PDF)"
@@ -3117,10 +3552,6 @@ msgstr "Log in to take the quiz"
 msgid "Coefficient"
 msgstr "Coefficient"
 
-#: templates/sujets/detail.html:75
-msgid "Barème"
-msgstr "Marking scheme"
-
 #: templates/sujets/detail.html:78
 msgid "Source"
 msgstr "Source"
@@ -3149,17 +3580,9 @@ msgstr "Year"
 msgid "Toutes"
 msgstr "All"
 
-#: templates/sujets/liste.html:54
-msgid "Matière"
-msgstr "Subject"
-
 #: templates/sujets/liste.html:56
 msgid "Toutes les matières"
 msgstr "All subjects"
-
-#: templates/sujets/liste.html:62
-msgid "Type d'épreuve"
-msgstr "Paper type"
 
 #: templates/sujets/liste.html:64
 msgid "Tous les types"
@@ -3176,3 +3599,11 @@ msgstr "With or without a marking guide"
 #: templates/sujets/liste.html:91
 msgid "Filtrer"
 msgstr "Filter"
+
+#: templates/sujets/liste.html:95
+msgid "Il manque un sujet ?"
+msgstr "A paper is missing?"
+
+#: templates/sujets/liste.html:96
+msgid "Envoyez-le, il vous offre des jours d'abonnement"
+msgstr "Send it and earn free subscription days"

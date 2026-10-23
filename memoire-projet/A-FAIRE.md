@@ -71,6 +71,10 @@
 - [ ] Rendu : les $ à l'intérieur d'un bloc de code sont pris pour des formules (limite connue).
 - [x] Affichage MathML vérifié sur Chrome Android (Galaxy A15) : fraction et tableaux OK.
 - [ ] Vérifier aussi sur Firefox et sur l'ancien navigateur Samsung Internet.
+- [x] V3 module 1 : contributions (envoi de sujets et de corrigés, file de modération, récompense).
+- [ ] Fixer JOURS_OFFERTS_PAR_SUJET avec Serge Alain (7 jours pour l'instant). Tant que le paiement est fermé,
+      tout est gratuit : les jours offerts aujourd'hui expirent avant l'ouverture du Premium.
+- [ ] Contributions : pas de conversion WebP des photos (assemblées en PDF), pas de recadrage automatique.
 - [ ] Forum (V3) : pas encore modélisé.
 
 ## Étude de faisabilité (reporté, « on les fera le moment venu »)

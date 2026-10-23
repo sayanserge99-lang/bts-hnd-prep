@@ -91,6 +91,10 @@
       <noscript><button class="bouton-plein">{% translate "Filtrer" %}</button></noscript>
     </form>
 
+    {% if fonctionnalites.contributions %}
+      <p class="mt-4 text-sm text-gris">{% translate "Il manque un sujet ?" %}
+        <a href="{% url 'communaute:envoyer_sujet' %}" class="text-vert underline">{% translate "Envoyez-le, il vous offre des jours d'abonnement" %}</a></p>
+    {% endif %}
     <div id="resultats" class="mt-6" aria-live="polite">
       {% include "sujets/_resultats.html" %}
     </div>

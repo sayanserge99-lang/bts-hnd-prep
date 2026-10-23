@@ -1,0 +1,23 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+  <a href="{% url 'admin:index' %}">{% translate "Accueil" %}</a>
+  &rsaquo; <a href="{% url 'admin:communaute_contribution_changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
+  &rsaquo; <a href="{% url 'admin:communaute_contribution_change' contribution.pk %}">{{ contribution.libelle }}</a>
+  &rsaquo; {% translate "Rejeter" %}
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+  {% include "admin/communaute/contribution/_resume.html" %}
+  <p>{% translate "Sujet d'une session en cours, origine douteuse, illisible, doublon sans intérêt… Le motif est envoyé au contributeur et le fichier est supprimé." %}</p>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="{% translate 'Rejeter' %}" class="default">
+  </form>
+</div>
+{% endblock %}

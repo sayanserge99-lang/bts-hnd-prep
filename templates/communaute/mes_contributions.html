@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titre %}{% translate "Mes contributions" %} — BTS-HND Prep{% endblock %}
+
+{% block contenu %}
+<div class="mx-auto max-w-3xl space-y-6 px-4 py-6">
+  <div>
+    <a href="{% url 'accounts:profil' %}" class="text-sm text-vert hover:underline">← {% translate "Mon espace" %}</a>
+    <h1 class="mt-2 text-2xl font-bold">{% translate "Mes contributions" %}</h1>
+  </div>
+  <div class="flex flex-wrap gap-3">
+    <a href="{% url 'communaute:envoyer_sujet' %}" class="bouton-plein">{% translate "Envoyer un sujet" %}</a>
+    <a href="{% url 'sujets:liste' %}" class="bouton-contour">{% translate "Proposer un corrigé (depuis la fiche d'un sujet)" %}</a>
+  </div>
+  <ul class="space-y-2">
+    {% for contribution in contributions %}
+      <li class="carte text-sm">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <span class="font-semibold">
+            {% if contribution.type == "corrige" %}{% translate "Corrigé" %} · {{ contribution.sujet_vise.titre }} — {{ contribution.sujet_vise.session.annee }}
+            {% else %}{% translate "Sujet" %} · {{ contribution.matiere.examen.code }} {{ contribution.matiere.nom }} — {{ contribution.annee }}{% endif %}
+          </span>
+          {% if contribution.statut == "validee" %}<span class="rounded bg-vert-clair px-2 py-0.5 text-xs font-semibold text-vert">✓ {% translate "Validée" %}</span>
+          {% elif contribution.statut == "rejetee" %}<span class="rounded bg-red-50 px-2 py-0.5 text-xs font-semibold text-red-800">{% translate "Non retenue" %}</span>
+          {% else %}<span class="rounded bg-ambre-clair px-2 py-0.5 text-xs font-semibold text-ambre">{% translate "En attente de vérification" %}</span>{% endif %}
+        </div>
+        <p class="mt-1 text-gris">{% blocktranslate with date=contribution.cree_le|date:"d/m/Y" %}Envoyée le {{ date }}{% endblocktranslate %}
+          {% if contribution.jours_offerts %} · {% blocktranslate count n=contribution.jours_offerts %}{{ n }} jour d'abonnement offert{% plural %}{{ n }} jours d'abonnement offerts{% endblocktranslate %}{% endif %}</p>
+        {% if contribution.statut == "rejetee" %}<p class="mt-1">{% translate "Motif :" %} {{ contribution.motif_rejet }}</p>{% endif %}
+      </li>
+    {% empty %}
+      <li class="carte text-gris">{% translate "Vous n'avez encore rien envoyé." %}</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

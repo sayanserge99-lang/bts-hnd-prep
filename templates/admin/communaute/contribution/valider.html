@@ -1,0 +1,29 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+  <a href="{% url 'admin:index' %}">{% translate "Accueil" %}</a>
+  &rsaquo; <a href="{% url 'admin:communaute_contribution_changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
+  &rsaquo; <a href="{% url 'admin:communaute_contribution_change' contribution.pk %}">{{ contribution.libelle }}</a>
+  &rsaquo; {% translate "Valider" %}
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+  {% include "admin/communaute/contribution/_resume.html" %}
+  {% if contribution.type == "sujet" %}
+    <p>{% translate "Vérifiez le document (session passée, origine sûre, lisible), puis complétez la fiche. Le sujet est créé en brouillon : publiez-le ensuite avec l'action « Publier »." %}</p>
+  {% else %}
+    <p>{% blocktranslate with sujet=contribution.sujet_vise %}Corrigé proposé pour « {{ sujet }} ». Il est créé en brouillon, au statut « Proposé par la communauté » : relisez-le puis publiez-le.{% endblocktranslate %}</p>
+    {% if contribution.texte %}<p>{% translate "Le texte rédigé par le contributeur est repris dans « Début du corrigé » : répartissez-le si besoin." %}</p>{% endif %}
+  {% endif %}
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="{% translate 'Valider' %}" class="default">
+    <a href="{% url 'admin:communaute_contribution_rejeter' contribution.pk %}" class="button">{% translate "Rejeter plutôt" %}</a>
+  </form>
+</div>
+{% endblock %}

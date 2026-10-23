@@ -4,11 +4,11 @@
 
 ## Où on en est
 
-**V1 et V2 terminées côté code** (corrigés, QCM, examens blancs, progression, hors ligne, statistiques, Google, établissements, quiz sur une épreuve). Le projet tourne :
+**V1 et V2 terminées côté code ; V3 en cours** (décidé avec Serge Alain le 23/10 : V3 avant la mise en ligne). Module 1/5 fait : contributions. Le projet tourne :
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **257 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
+- `pytest` : **277 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
   10 statistiques, 16 Google).
 - **Connexion Google (V2)** `accounts/google.py` : OpenID Connect sans dépendance (state, PKCE, nonce ; vérifie iss,
   aud, exp, email_verified). Compte existant → connecté ; sinon page « Dernière étape » (spécialité + consentement
@@ -20,6 +20,14 @@
   convention de partenariat active ; voit les résultats des étudiants confirmés qui ont activé « Partager mes
   résultats » (consentement révocable, tracé). Étudiant confirmé : page « Épreuves de mon établissement »,
   PDF servi après contrôle (404 sinon). Lien « Mon établissement » dans l'en-tête des responsables.
+- **Contributions (V3, module 1, 23/10)** `/contribuer/` (`communaute/contributions.py`, forms, views) : envoi d'un sujet
+  (un PDF ou jusqu'à 10 photos assemblées en PDF, spécialité, matière, année, droits certifiés et datés), refusé dès
+  l'envoi si la session n'est pas terminée ; alerte doublon (case « envoyer quand même ») ; 10 envois/jour.
+  Corrigé proposé depuis l'onglet Corrigé d'un sujet publié (texte ou document). « Mes contributions » (statut, motif,
+  jours offerts). Admin : file de modération, boutons Valider / Rejeter, PDF servi par une vue. Valider = sujet créé
+  en **brouillon** (session en cours refusée) + jours offerts (`Abonnement.offrir_jours`, à la suite de l'abonnement
+  en cours, JOURS_OFFERTS_PAR_SUJET = 7 [À FIXER]) ; corrigé = « Proposé par la communauté » en brouillon, sans
+  récompense. Rejeter = motif obligatoire + fichier supprimé. E-mail au contributeur. Contre-épreuve faite.
 - **Quiz sur une épreuve (23/10, options 1 + 2 choisies par Serge Alain)** : `Question.sujet` (facultatif) ;
   bouton « Quiz sur cette épreuve » sur la fiche du sujet (toutes ses questions, max 40, mode `sujet` du Quiz).
   Filtre unique `filtre_questions_visibles` / `Question.objects.visibles()` : une question liée à un sujet non
@@ -84,7 +92,9 @@
 
 ## Prochaine étape
 
-Code V1 + V2 fini. Proposé à Serge Alain le 23/10 (réponse attendue) :
+**V3 avant la mise en ligne** (accord de Serge Alain le 23/10), dans cet ordre : contributions (fait), forum,
+codes établissements, Premium (offres, abonnements, page Offres), paiement simulé (agrégateur branché plus tard).
+Ensuite, rappel des autres pistes :
 1. **Mise en ligne (bêta)** : choix du VPS et du nom de domaine (Serge Alain), puis `deploy/DEPLOIEMENT.md`
    (HTTPS non testé). Avant : sessions 2020-2026 avec dates de fin officielles, matières, quelques vrais sujets.
 2. **V3** (paiement Mobile Money, Premium, contributions, forum, codes IPES) : bloquée par le choix de l'agrégateur

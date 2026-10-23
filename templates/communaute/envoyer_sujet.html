@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titre %}{% translate "Envoyer un sujet" %} — BTS-HND Prep{% endblock %}
+
+{% block contenu %}
+<div class="mx-auto max-w-xl px-4 py-8">
+  <a href="{% url 'communaute:mes_contributions' %}" class="text-sm text-vert hover:underline">← {% translate "Mes contributions" %}</a>
+  <h1 class="mt-3 text-2xl font-bold">{% translate "Envoyer un sujet" %}</h1>
+  <p class="mt-1 text-sm text-gris">
+    {% blocktranslate count n=jours_par_sujet %}Vous avez un sujet d'une session passée ? Envoyez-le : un modérateur le vérifie avant publication, et chaque sujet validé vous offre {{ n }} jour d'abonnement.{% plural %}Vous avez un sujet d'une session passée ? Envoyez-le : un modérateur le vérifie avant publication, et chaque sujet validé vous offre {{ n }} jours d'abonnement.{% endblocktranslate %}
+  </p>
+  {# CDC 4.2 : la règle est dite avant l'envoi, pas seulement au refus. #}
+  <p class="mt-3 rounded-lg border border-ambre/40 bg-ambre-clair p-3 text-sm">{% translate "Jamais de sujet d'une session en cours ni de document obtenu par une fuite : la fraude aux examens est sanctionnée par la loi." %}</p>
+  <form method="post" enctype="multipart/form-data" class="formulaire carte mt-6 space-y-4" novalidate>
+    {% csrf_token %}
+    {% translate "Envoyer le sujet" as bouton %}
+    {% include "accounts/_formulaire.html" %}
+  </form>
+</div>
+{% endblock %}

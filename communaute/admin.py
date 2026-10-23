@@ -1,9 +1,18 @@
 from django.contrib import admin, messages
+from django.core.exceptions import PermissionDenied
+from django.http import Http404
+from django.shortcuts import get_object_or_404, redirect
+from django.template.response import TemplateResponse
+from django.urls import path, reverse
+from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import ngettext
 
 from accounts.moderation import LimiteAuxMatieresDuModerateur
+from sujets.views import envoyer_pdf
 
+from . import contributions
+from .forms import RejetForm, ValidationCorrigeForm, ValidationSujetForm
 from .models import Contribution, DemandeRetrait, Signalement
 
 # Un signalement ou une demande de retrait vise un sujet ou un corrigé.
@@ -12,8 +21,98 @@ CIBLES = ("sujet__matiere", "corrige__sujet__matiere")
 
 @admin.register(Contribution)
 class ContributionAdmin(LimiteAuxMatieresDuModerateur, admin.ModelAdmin):
-    list_display = ("matiere", "annee", "utilisateur", "statut", "cree_le")
-    list_filter = ("statut",)
+    """File de modération (CDC 3.9) : valider (sujet ou corrigé créé en brouillon) ou rejeter avec motif."""
+
+    list_display = ("libelle", "type", "utilisateur", "statut", "alerte_doublon", "cree_le")
+    list_filter = ("statut", "type", "matiere__examen")
+    search_fields = ("utilisateur__email", "matiere__nom_fr", "matiere__nom_en", "commentaire")
+    readonly_fields = (
+        "type", "utilisateur", "matiere", "specialite", "annee", "sujet_vise", "lien_fichier", "texte", "commentaire",
+        "certifie_droits", "date_certification", "statut", "motif_rejet", "sujet", "corrige", "jours_offerts",
+        "traitee_par", "traitee_le", "cree_le",
+    )
+    exclude = ("fichier",)
+
+    def has_add_permission(self, request):
+        return False  # les contributions arrivent du site
+
+    @admin.display(description=_("contribution"))
+    def libelle(self, contribution):
+        return contribution.libelle
+
+    @admin.display(description=_("doublon ?"), boolean=True)
+    def alerte_doublon(self, contribution):
+        return contribution.doublons.exists() if contribution.type == Contribution.Type.SUJET else None
+
+    @admin.display(description=_("fichier"))
+    def lien_fichier(self, contribution):
+        if not contribution.fichier:
+            return "—"
+        url = reverse("admin:communaute_contribution_fichier", args=[contribution.pk])
+        return format_html('<a href="{}" target="_blank" rel="noopener">{}</a>', url, _("Ouvrir le PDF"))
+
+    def get_urls(self):
+        vue = self.admin_site.admin_view
+        return [
+            path("<int:pk>/fichier/", vue(self.vue_fichier), name="communaute_contribution_fichier"),
+            path("<int:pk>/valider/", vue(self.vue_valider), name="communaute_contribution_valider"),
+            path("<int:pk>/rejeter/", vue(self.vue_rejeter), name="communaute_contribution_rejeter"),
+        ] + super().get_urls()
+
+    def _contribution(self, request, pk, en_attente=True):
+        # get_queryset limite le modérateur à ses matières.
+        contribution = get_object_or_404(self.get_queryset(request).select_related("matiere__examen", "utilisateur"), pk=pk)
+        if en_attente and contribution.statut != Contribution.Statut.EN_ATTENTE:
+            raise Http404
+        return contribution
+
+    def vue_fichier(self, request, pk):
+        if not self.has_view_permission(request):
+            raise PermissionDenied
+        contribution = self._contribution(request, pk, en_attente=False)
+        if not contribution.fichier:
+            raise Http404
+        return envoyer_pdf(request, contribution.fichier, f"contribution-{contribution.pk}.pdf")
+
+    def _page(self, request, contribution, form, titre, gabarit):
+        contexte = {
+            **self.admin_site.each_context(request),
+            "opts": self.model._meta,
+            "title": titre,
+            "contribution": contribution,
+            "form": form,
+            "doublons": contribution.doublons.select_related("session"),
+        }
+        return TemplateResponse(request, f"admin/communaute/contribution/{gabarit}", contexte)
+
+    def vue_valider(self, request, pk):
+        if not self.has_change_permission(request):
+            raise PermissionDenied
+        contribution = self._contribution(request, pk)
+        if contribution.type == Contribution.Type.SUJET:
+            form = ValidationSujetForm(request.POST or None, contribution=contribution)
+        else:
+            form = ValidationCorrigeForm(request.POST or None, contribution=contribution)
+        if form.is_valid():
+            if contribution.type == Contribution.Type.SUJET:
+                sujet = contributions.valider_sujet(contribution, request.user, **form.cleaned_data)
+                self.message_user(request, _("Sujet créé en brouillon. Publiez-le quand il est vérifié : la règle de publication s'applique."))
+                return redirect("admin:sujets_sujet_change", sujet.pk)
+            corrige = contributions.valider_corrige(contribution, request.user, **form.cleaned_data)
+            self.message_user(request, _("Corrigé créé en brouillon (« Proposé par la communauté »). Relisez-le puis publiez-le."))
+            return redirect("admin:sujets_corrige_change", corrige.pk)
+        return self._page(request, contribution, form, _("Valider la contribution"), "valider.html")
+
+    def vue_rejeter(self, request, pk):
+        if not self.has_change_permission(request):
+            raise PermissionDenied
+        contribution = self._contribution(request, pk)
+        form = RejetForm(request.POST or None)
+        if form.is_valid():
+            contributions.rejeter(contribution, request.user, form.cleaned_data["motif"])
+            self.message_user(request, _("Contribution rejetée ; le fichier est supprimé."), messages.WARNING)
+            return redirect("admin:communaute_contribution_changelist")
+        return self._page(request, contribution, form, _("Rejeter la contribution"), "rejeter.html")
 
 
 @admin.register(Signalement)

@@ -13,16 +13,30 @@ UNE_SEULE_CIBLE = (Q(sujet__isnull=False) & Q(corrige__isnull=True)) | (
 
 
 class Contribution(models.Model):
+    """Sujet envoyé ou corrigé proposé par un étudiant ou un enseignant (CDC 3.7), en file de modération."""
+
+    class Type(models.TextChoices):
+        SUJET = "sujet", _("Sujet")
+        CORRIGE = "corrige", _("Corrigé")
+
     class Statut(models.TextChoices):
         EN_ATTENTE = "en_attente", _("En attente")
         VALIDEE = "validee", _("Validée")
         REJETEE = "rejetee", _("Rejetée")
 
     utilisateur = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="contributions")
-    fichier = models.FileField(upload_to="contributions/%Y/")
-    annee = models.PositiveSmallIntegerField(_("année proposée"))
-    specialite = models.ForeignKey("catalogue.Specialite", on_delete=models.PROTECT)
+    type = models.CharField(max_length=10, choices=Type.choices, default=Type.SUJET)
+    # Toujours un PDF : les photos sont assemblées à l'envoi. Vide pour un corrigé rédigé en texte,
+    # et supprimé au rejet (CDC 4.2 : une contribution suspecte est rejetée et supprimée).
+    fichier = models.FileField(upload_to="contributions/%Y/", blank=True)
+    texte = models.TextField(_("corrigé rédigé"), blank=True)
+    annee = models.PositiveSmallIntegerField(_("année proposée"), null=True, blank=True)
+    specialite = models.ForeignKey("catalogue.Specialite", on_delete=models.PROTECT, null=True, blank=True)
     matiere = models.ForeignKey("catalogue.Matiere", on_delete=models.PROTECT)
+    sujet_vise = models.ForeignKey(
+        "sujets.Sujet", on_delete=models.CASCADE, null=True, blank=True, related_name="corriges_proposes",
+        verbose_name=_("sujet corrigé"), help_text=_("Pour un corrigé proposé : le sujet publié qu'il corrige."),
+    )
     commentaire = models.TextField(blank=True)
     certifie_droits = models.BooleanField(_("je certifie avoir le droit de partager ce document"))
     date_certification = models.DateTimeField(auto_now_add=True)
@@ -31,20 +45,48 @@ class Contribution(models.Model):
     sujet = models.ForeignKey(
         "sujets.Sujet", on_delete=models.SET_NULL, null=True, blank=True, help_text=_("Renseigné une fois validée.")
     )
+    corrige = models.ForeignKey(
+        "sujets.Corrige", on_delete=models.SET_NULL, null=True, blank=True, related_name="+",
+        help_text=_("Renseigné une fois validée."),
+    )
+    jours_offerts = models.PositiveSmallIntegerField(_("jours d'abonnement offerts"), default=0)
+    traitee_par = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name="+"
+    )
+    traitee_le = models.DateTimeField(null=True, blank=True)
     cree_le = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name = _("contribution")
+        ordering = ["-cree_le"]
         constraints = [
             # CDC 10.1 : case obligatoire, enregistrée avec la date.
             models.CheckConstraint(condition=Q(certifie_droits=True), name="contribution_droits_certifies"),
             models.CheckConstraint(
                 condition=~Q(statut="rejetee") | ~Q(motif_rejet=""), name="contribution_rejet_motive"
             ),
+            models.CheckConstraint(
+                condition=(Q(type="sujet") & Q(annee__isnull=False) & Q(sujet_vise__isnull=True))
+                | (Q(type="corrige") & Q(sujet_vise__isnull=False)),
+                name="contribution_cible_selon_type",
+            ),
         ]
 
     def __str__(self):
-        return f"{self.matiere} {self.annee} · {self.utilisateur}"
+        return f"{self.libelle} · {self.utilisateur}"
+
+    @property
+    def libelle(self):
+        if self.type == self.Type.CORRIGE:
+            return _("Corrigé de « %(sujet)s »") % {"sujet": self.sujet_vise}
+        return f"{self.matiere} {self.annee}"
+
+    @property
+    def doublons(self):
+        """CDC 3.7 : sujets déjà présents pour la même année et la même matière."""
+        if self.type != self.Type.SUJET:
+            return Sujet.objects.none()
+        return Sujet.objects.filter(matiere_id=self.matiere_id, session__annee=self.annee)
 
 
 class Signalement(models.Model):

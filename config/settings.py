@@ -92,6 +92,11 @@ CONNEXION_BLOCAGE_SECONDES = 15 * 60
 # CDC 3.8 : quiz par jour de l'offre gratuite, appliqué seulement une fois le paiement ouvert.
 # [À FIXER] : le quota exact reste à décider (CDC 7) ; 3 est une valeur d'attente.
 QUIZ_GRATUITS_PAR_JOUR = 3
+# Contributions (CDC 3.7). [À FIXER] avec Serge Alain : nombre de jours offerts par sujet validé.
+JOURS_OFFERTS_PAR_SUJET = 7
+CONTRIBUTIONS_PAR_JOUR = 10
+CONTRIBUTION_PHOTOS_MAX = 10
+CONTRIBUTION_TAILLE_MAX_FICHIER = 10 * 1024 * 1024
 
 # Examens blancs : marge accordée après l'heure de fin pour une copie envoyée sur une connexion lente.
 EXAMEN_DELAI_GRACE_SECONDES = 90
@@ -217,7 +222,7 @@ FONCTIONNALITES = {
     "entrainement": True,
     "examens_blancs": True,
     "hors_ligne": True,
-    "contributions": False,
+    "contributions": True,
     "forum": False,
 }
 

@@ -107,3 +107,9 @@
 - 23/10 : petits travaux en attendant le choix de l'hébergeur : quiz d'épreuve téléchargeable hors ligne, page
   « mot de passe » (définir pour un compte Google, changer avec l'ancien sinon, session gardée), cache apt de la CI.
   Python 3.13 et compilemessages étaient déjà dans le Dockerfile → cochés. 6 tests, 257/257 verts.
+- 23/10 : Serge Alain demande la V3 avant la mise en ligne. Module 1, contributions : relu le CDC (3.7, 4.1, 4.2, 10.1)
+  depuis le PDF. Contribution étendue (type sujet/corrigé, texte, sujet visé, traitement), Abonnement accepte une
+  3e origine (récompense, sans offre). Service, formulaires (plusieurs fichiers), 3 pages, file de modération (valider,
+  rejeter, PDF), liens (catalogue, fiche, Mon espace). 20 tests ; 3 échecs venaient des tests (e-mail envoyé après
+  commit, admin créé deux fois). Contre-épreuve : contrôles de session retirés → 2 échecs. 277/277 verts.
+  Au passage : le conteneur web s'était arrêté (relancé avec docker compose up -d).

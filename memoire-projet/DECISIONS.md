@@ -71,5 +71,9 @@
 - **Questions tirées d'un sujet** (23/10) : elles suivent la visibilité du sujet partout (quiz de l'épreuve,
   quiz rapide, révision, hors ligne, compteurs), via un seul filtre ; on peut donc les préparer pendant la session.
   Import CSV : chapitre et sujet doivent exister (pas de création automatique, pour éviter les doublons de frappe).
+- **Contributions** (23/10) : un sujet d'une session non terminée est refusé dès l'envoi (et à la validation),
+  pas seulement à la publication ; tout rejet supprime le fichier (plus simple que de juger « suspect ») ; une
+  contribution validée donne un sujet en brouillon, jamais publié directement. Récompense = abonnement sans offre,
+  ajouté après l'abonnement en cours ; pas de récompense pour un corrigé (CDC 3.7 : « pour chaque sujet validé »).
 - **Interface** : Tailwind v4 en exécutable autonome (pas de Node), polices du système, HTMX servi localement ;
   les pages marchent aussi sans JavaScript (formulaire GET classique).

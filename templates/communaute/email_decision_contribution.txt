@@ -1,0 +1,9 @@
+{% load i18n %}{% blocktranslate with nom=contribution.utilisateur.first_name|default:contribution.utilisateur.email %}Bonjour {{ nom }},{% endblocktranslate %}
+
+{% if contribution.statut == "validee" %}{% blocktranslate with document=contribution.libelle %}Votre contribution « {{ document }} » a été validée. Merci !{% endblocktranslate %}
+{% if contribution.jours_offerts %}{% blocktranslate count n=contribution.jours_offerts %}{{ n }} jour d'abonnement vous est offert.{% plural %}{{ n }} jours d'abonnement vous sont offerts.{% endblocktranslate %}
+{% endif %}{% if contribution.type == "sujet" %}{% translate "Le sujet sera publié une fois vérifié par un modérateur." %}{% else %}{% translate "Le corrigé sera publié une fois relu par un modérateur." %}{% endif %}
+{% else %}{% blocktranslate with document=contribution.libelle %}Votre contribution « {{ document }} » n'a pas été retenue.{% endblocktranslate %}
+{% translate "Motif :" %} {{ contribution.motif_rejet }}
+{% endif %}
+BTS-HND Prep

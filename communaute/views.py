@@ -1,13 +1,18 @@
+from functools import wraps
+
 from django.conf import settings
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from django.core.mail import mail_admins, send_mail
-from django.shortcuts import redirect, render
+from django.http import Http404
+from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.utils.translation import gettext as _
 
 from sujets.models import Corrige, Sujet
 
-from .forms import DemandeRetraitForm
+from .forms import DemandeRetraitForm, EnvoiSujetForm, PropositionCorrigeForm
 
 
 def adresse_ip(request):
@@ -54,3 +59,52 @@ def demande_retrait(request):
             mail_admins(f"Demande de retrait : {document}", demande.motif, fail_silently=True)
             return redirect("demande_retrait_recue")
     return render(request, "communaute/demande_retrait.html", {"form": form, "document": document})
+
+
+def contributions_ouvertes(vue):
+    """Les pages de contribution n'existent que si la fonctionnalité est ouverte (settings.FONCTIONNALITES)."""
+
+    @wraps(vue)
+    def enveloppe(request, *args, **kwargs):
+        if not settings.FONCTIONNALITES["contributions"]:
+            raise Http404
+        return vue(request, *args, **kwargs)
+
+    return login_required(enveloppe)
+
+
+@contributions_ouvertes
+def envoyer_sujet(request):
+    """CDC 3.7 : un étudiant ou un enseignant envoie un sujet, qui passe en file de modération."""
+    profil = getattr(request.user, "profil", None)
+    initial = {"specialite": profil.specialite} if profil else {}
+    form = EnvoiSujetForm(request.POST or None, request.FILES or None, utilisateur=request.user, initial=initial)
+    if form.is_valid():
+        form.save()
+        messages.success(request, _("Merci ! Votre sujet est en attente de vérification par un modérateur."))
+        return redirect("communaute:mes_contributions")
+    return render(request, "communaute/envoyer_sujet.html", {"form": form, "jours_par_sujet": settings.JOURS_OFFERTS_PAR_SUJET})
+
+
+@contributions_ouvertes
+def proposer_corrige(request, pk):
+    sujet = get_object_or_404(Sujet.objects.publies().select_related("session", "matiere"), pk=pk)
+    form = PropositionCorrigeForm(request.POST or None, request.FILES or None, utilisateur=request.user, sujet=sujet)
+    if form.is_valid():
+        form.save()
+        messages.success(request, _("Merci ! Votre corrigé sera relu par un modérateur avant d'être publié."))
+        return redirect("communaute:mes_contributions")
+    return render(request, "communaute/proposer_corrige.html", {"form": form, "sujet": sujet})
+
+
+@contributions_ouvertes
+def mes_contributions(request):
+    """CDC 2 : suivi de ses contributions (statut, motif d'un rejet, jours offerts)."""
+    return render(
+        request,
+        "communaute/mes_contributions.html",
+        {
+            "contributions": request.user.contributions.select_related("matiere__examen", "sujet_vise__session"),
+            "jours_par_sujet": settings.JOURS_OFFERTS_PAR_SUJET,
+        },
+    )

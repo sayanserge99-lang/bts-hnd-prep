@@ -27,6 +27,7 @@ urlpatterns = [
     path("compte/", include("accounts.urls")),
     path("entrainement/", include("entrainement.urls")),
     path("etablissement/", include("partenaires.urls")),
+    path("contribuer/", include("communaute.urls")),
     # CDC 10 : pages légales accessibles depuis toutes les pages (contenu à rédiger).
     path("mentions-legales/", page("mentions_legales"), name="mentions_legales"),
     path("confidentialite/", page("confidentialite"), name="confidentialite"),

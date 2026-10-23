@@ -54,4 +54,11 @@
       {% if en_preparation %}{% translate "Le corrigé de ce sujet est en préparation." %}{% else %}{% translate "Ce sujet n'a pas encore de corrigé." %}{% endif %}
     </p>
   {% endfor %}
+  {% if fonctionnalites.contributions %}
+    {# CDC 2 : le contributeur peut proposer des corrigés. #}
+    <p class="text-sm">
+      {% if user.is_authenticated %}<a href="{% url 'communaute:proposer_corrige' sujet.pk %}" class="text-vert underline">{% translate "Vous avez résolu ce sujet ? Proposez votre corrigé" %}</a>
+      {% else %}<a href="{% url 'accounts:connexion' %}?next={% url 'communaute:proposer_corrige' sujet.pk %}" class="text-vert underline">{% translate "Vous avez résolu ce sujet ? Connectez-vous pour proposer votre corrigé" %}</a>{% endif %}
+    </p>
+  {% endif %}
 </div>

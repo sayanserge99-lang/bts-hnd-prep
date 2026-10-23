@@ -77,6 +77,16 @@
   </section>
 
   {# CDC 10.2 : export et suppression depuis le profil. #}
+  {% if fonctionnalites.contributions %}
+    <section class="carte flex flex-wrap items-center justify-between gap-3 text-sm">
+      <div>
+        <h2 class="text-base font-semibold">{% translate "Mes contributions" %}</h2>
+        <p class="text-gris">{% translate "Envoyez des sujets de sessions passées ou proposez des corrigés." %}</p>
+      </div>
+      <a href="{% url 'communaute:mes_contributions' %}" class="bouton-contour">{% translate "Mes contributions" %}</a>
+    </section>
+  {% endif %}
+
   <section class="carte space-y-2 text-sm">
     <h2 class="text-base font-semibold">{% translate "Mes données" %}</h2>
     <p class="text-gris">{% translate "Vous pouvez récupérer toutes vos données ou supprimer votre compte à tout moment." %}</p>
