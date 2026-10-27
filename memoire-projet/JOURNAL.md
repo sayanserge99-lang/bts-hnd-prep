@@ -147,3 +147,6 @@
   (essai complet dans Debian avec faux docker/rclone). Script de durcissement du serveur (shellcheck propre ; une
   remarque SC2016 voulue, annotée). accounts.W001 + adresse d'admin réglée dans la CI. Images dev reconstruites
   (qrcode). 355/355 verts.
+- 27/10 : Sentry (config/suivi_erreurs.py), actif seulement avec SENTRY_DSN. Le test (vrai plantage, événement capturé)
+  a trouvé une fuite : les variables locales jointes par défaut contenaient l'adresse avec ?jeton=… → désactivées
+  (include_local_variables=False) ; contre-épreuve OK. send_default_pii retiré (obsolète ; défaut déjà sans données).

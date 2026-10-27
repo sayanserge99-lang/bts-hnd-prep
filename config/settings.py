@@ -256,3 +256,8 @@ PAIEMENT_FOURNISSEUR = os.environ.get("PAIEMENT_FOURNISSEUR", "simule")
 PAIEMENT_SECRET = os.environ.get("PAIEMENT_SECRET", "") or f"simule-{SECRET_KEY}"
 # Au-delà, un paiement resté en attente (téléphone éteint, confirmation oubliée) est abandonné.
 PAIEMENT_DELAI_MINUTES = 30
+
+# Suivi des erreurs (Sentry) : actif seulement si SENTRY_DSN est réglé, sans aucune donnée personnelle.
+from config.suivi_erreurs import demarrer as demarrer_suivi_des_erreurs  # noqa: E402
+
+SUIVI_DES_ERREURS = demarrer_suivi_des_erreurs()

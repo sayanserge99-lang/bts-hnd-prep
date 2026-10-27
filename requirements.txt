@@ -11,6 +11,7 @@ markdown>=3.7
 nh3>=0.2.18
 latex2mathml>=3.77
 qrcode>=7.4
+sentry-sdk[django,celery]>=2.0
 
 pytest>=8.3
 pytest-django>=4.9
