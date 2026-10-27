@@ -13,6 +13,7 @@ from django.utils.translation import gettext_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
+from catalogue.models import Session
 from sujets.views import est_requete_htmx
 
 from . import codes, service
@@ -62,13 +63,13 @@ def offres(request):
 
 
 class CommandeForm(forms.Form):
-    operateur = forms.ChoiceField(choices=Paiement.Operateur.choices, widget=forms.RadioSelect, label=gettext_lazy("Opérateur"))
+    operateur = forms.ChoiceField(choices=Paiement.Operateur.choices, widget=forms.RadioSelect, label=gettext_lazy("Payer avec"))
     telephone = forms.CharField(
-        label=gettext_lazy("Numéro Mobile Money"), max_length=20,
-        help_text=gettext_lazy("Le numéro qui paie, par exemple 6 77 12 34 56."),
-        widget=forms.TextInput(attrs={"inputmode": "tel", "autocomplete": "tel"}),
+        label=gettext_lazy("Numéro de téléphone"), max_length=20,
+        help_text=gettext_lazy("Vous recevrez une demande sur ce téléphone : validez-la avec votre code secret."),
+        widget=forms.TextInput(attrs={"inputmode": "tel", "autocomplete": "tel", "placeholder": "6XX XX XX XX"}),
     )
-    accepte = forms.BooleanField(label=gettext_lazy("J'ai lu et j'accepte les conditions de vente"))
+    accepte = forms.BooleanField(label=gettext_lazy("J'ai lu et j'accepte les conditions générales de vente."))
 
     def clean_telephone(self):
         numero = service.normaliser_telephone(self.cleaned_data["telephone"])
@@ -110,7 +111,11 @@ def commander(request, pk):
         if adresse:
             return redirect(adresse)
         return redirect("paiements:suivi", reference=paiement.reference)
-    return render(request, "paiements/commander.html", {"offre": offre, "debut": debut, "fin": fin, "form": form})
+    profil = getattr(request.user, "profil", None)
+    session = Session.objects.prochaine(profil.examen, debut) if offre.type == Offre.Type.SESSION and profil else None
+    return render(request, "paiements/commander.html", {
+        "offre": offre, "debut": debut, "fin": fin, "form": form, "session": session, "agregateur": fournisseur_actif().nom,
+    })
 
 
 def paiement_de(request, reference):

@@ -65,6 +65,13 @@
   .formulaire label:has(> input[type="radio"]) {
     @apply mt-2 flex cursor-pointer items-center gap-3 rounded-lg border border-gris/50 px-3 py-2 text-base font-normal;
   }
+  .formulaire label:has(> input[type="radio"]:checked) {
+    @apply border-2 border-vert bg-vert-clair;
+  }
+  /* Le texte tapé ne passe pas sous l'œil (templates/forms/champ.html). */
+  [data-mot-de-passe] input {
+    @apply pr-12;
+  }
   .errorlist {
     @apply mt-1 text-sm text-red-700;
   }

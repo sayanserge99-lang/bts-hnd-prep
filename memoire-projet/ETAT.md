@@ -8,7 +8,7 @@
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **420 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
+- `pytest` : **435 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
   10 statistiques, 16 Google).
 - **Connexion Google (V2)** `accounts/google.py` : OpenID Connect sans dépendance (state, PKCE, nonce ; vérifie iss,
   aud, exp, email_verified). Compte existant → connecté ; sinon page « Dernière étape » (spécialité + consentement
@@ -20,6 +20,17 @@
   convention de partenariat active ; voit les résultats des étudiants confirmés qui ont activé « Partager mes
   résultats » (consentement révocable, tracé). Étudiant confirmé : page « Épreuves de mon établissement »,
   PDF servi après contrôle (404 sinon). Lien « Mon établissement » dans l'en-tête des responsables.
+- **Maquettes, groupe A (27/10)** — maquette complète de 13 écrans reçue ; décisions de Serge Alain dans DECISIONS.
+  Libellés sans deux-points (`templates/forms/champ.html`, fieldset + légende pour les radios, « (facultatif) » si le
+  formulaire a `marquer_facultatifs`) ; inscription à un seul mot de passe (`password2 = None`, solidité revérifiée sur
+  password1 dans `_post_clean`, sinon Django ne vérifiait plus rien) + œil « Afficher le mot de passe » sur tous les
+  champs mot de passe (site.js) ; langue = celle de l'interface ; réinitialisation testée de bout en bout. Paiement
+  d'après la maquette (« Payer 5 000 FCFA », avantages, note « code secret », lien code d'accès, `Fournisseur.nom`).
+  Quiz en mode concentré (blocs `entete` / `pied` de base.html). Formules côte à côte (la classe était assemblée par
+  le gabarit : Tailwind ne la générait pas). Liste des sujets : recherche et années, le reste sous « Plus de filtres ».
+  Point 3 : les deux « Premium 30 jours » étaient un achat du mensuel + un code (pas le Pass) → `Abonnement.periodes`
+  fusionne les périodes contiguës ; un Pass actif ne se rachète plus (`refuser_second_pass`, codes aussi : le code
+  n'est pas consommé) ; un paiement confirmé sans période possible est noté « À régulariser » et signalé à l'équipe.
 - **Avant le lancement, étape 3 commencée (27/10)** : référentiel par classeur Excel (`catalogue/referentiel.py`,
   commandes `modele_referentiel` et `importer_referentiel`, modèle prêt dans `contenu/referentiel-a-remplir.xlsx`) :
   sessions, spécialités, matières, coefficients, chapitres ; essai à blanc par défaut, tout ou rien, erreurs avec

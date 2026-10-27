@@ -109,6 +109,14 @@
 
 ## Maquettes
 
+- [x] Groupe A (27/10) : libellés, inscription sans confirmation + œil, paiement, quiz concentré, formules, filtres.
+- [ ] Groupe B : tableau de bord, inscription BTS/HND en cartes, profil en blocs, envoi de sujet (sessions terminées).
+- [ ] Données de démo « [DÉMO] » : quiz terminé, examen blanc commencé, contributions en attente (dont une session
+      non terminée) ; commande refusée en production. Puis captures des écrans 7, 9 et 10.
+- [ ] Plus tard : annonces par e-mail (voir DECISIONS) ; paires BTS ↔ HND (« spécialité équivalente »).
+- [ ] Quiz : « Signaler cette question » (maquette) n'existe pas encore.
+- [ ] Paiement : préfixe « +237 » affiché devant le champ (maquette) ; aujourd'hui seulement un exemple.
+
 - [ ] Accueil : « télécharger gratuitement » → « avec un compte » (visiteur = téléchargement limité).
 - [ ] Mobile : badge « Bientôt » sur l'onglet Entraînement.
 - [ ] Écran corrigé : étiqueter « écran V3 ».

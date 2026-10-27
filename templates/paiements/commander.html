@@ -6,20 +6,40 @@
 {% block contenu %}
 <div class="mx-auto max-w-md px-4 py-8">
   <a href="{% url 'offres' %}" class="text-sm text-vert hover:underline">← {% translate "Offres" %}</a>
-  <h1 class="mt-3 text-2xl font-bold">{{ offre.nom }}</h1>
+  <h1 class="mt-3 text-2xl font-bold">{% if session %}{% translate "Obtenir le Pass session" %}{% else %}{{ offre.nom }}{% endif %}</h1>
 
   {# CDC 10.7 : prix TTC et période affichés avant le paiement, sans frais cachés. #}
-  <dl class="carte mt-4 grid grid-cols-[auto_1fr] gap-x-6 gap-y-2 text-sm">
-    <dt class="text-gris">{% translate "Prix" %}</dt><dd class="font-semibold">{{ offre.prix|fcfa }} {% translate "TTC" %}</dd>
-    <dt class="text-gris">{% translate "Accès Premium" %}</dt><dd>{% blocktranslate with debut=debut|date:"d/m/Y" fin=fin|date:"d/m/Y" %}du {{ debut }} au {{ fin }}{% endblocktranslate %}</dd>
-    <dt class="text-gris">{% translate "Frais" %}</dt><dd>{% translate "Aucun frais ajouté par BTS-HND Prep" %}</dd>
-  </dl>
+  <div class="carte mt-4 border-2 border-vert">
+    <div class="flex items-start justify-between gap-4">
+      <div>
+        <p class="text-lg font-bold">{{ offre.nom }}{% if session %} {{ session.annee }}{% endif %}</p>
+        <p class="text-sm text-gris">
+          {% if session %}{% blocktranslate with annee=session.annee fin=fin|date:"d/m/Y" %}Valable jusqu'à la fin officielle de la session {{ annee }} ({{ fin }}){% endblocktranslate %}
+          {% else %}{% blocktranslate with debut=debut|date:"d/m/Y" fin=fin|date:"d/m/Y" %}Accès Premium du {{ debut }} au {{ fin }}{% endblocktranslate %}{% endif %}
+        </p>
+      </div>
+      <p class="shrink-0 text-right"><span class="block text-2xl font-extrabold">{{ offre.prix|fcfa }}</span><span class="text-xs text-gris">{% translate "TTC, sans frais ajoutés" %}</span></p>
+    </div>
+    <ul class="mt-3 list-disc space-y-1 pl-5 text-sm text-gris">
+      <li>{% translate "Corrigés complets de toutes les matières" %}</li>
+      <li>{% translate "QCM illimités et examens blancs" %}</li>
+      <li>{% translate "Suivi de vos points faibles" %}</li>
+    </ul>
+  </div>
 
-  <form method="post" class="formulaire carte mt-6 space-y-4" novalidate>
+  <form method="post" class="formulaire mt-6 space-y-4" novalidate>
     {% csrf_token %}
-    {% translate "Payer" as bouton %}
+    {% blocktranslate with prix=offre.prix|fcfa asvar bouton %}Payer {{ prix }}{% endblocktranslate %}
     {% include "accounts/_formulaire.html" %}
-    <p class="text-xs text-gris"><a href="{% url 'conditions_de_vente' %}" class="underline" target="_blank" rel="noopener">{% translate "Lire les conditions de vente" %}</a> · {% translate "Vous confirmez ensuite le paiement sur votre téléphone." %}</p>
   </form>
+
+  <div class="carte mt-4 flex gap-3 text-sm text-gris">
+    <svg aria-hidden="true" class="mt-0.5 shrink-0" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+    <p>{% if agregateur %}{% blocktranslate %}Paiement traité par {{ agregateur }}.{% endblocktranslate %} {% endif %}{% translate "Nous ne voyons jamais votre code secret. Un reçu vous est envoyé par e-mail." %}
+      <a href="{% url 'conditions_de_vente' %}" class="underline" target="_blank" rel="noopener">{% translate "Lire les conditions de vente" %}</a></p>
+  </div>
+
+  <p class="mt-6 text-center text-sm">{% translate "Votre établissement vous a remis un code ?" %}
+    <a href="{% url 'accounts:activer_code' %}" class="font-semibold text-vert underline">{% translate "Utiliser un code d'accès" %}</a></p>
 </div>
 {% endblock %}

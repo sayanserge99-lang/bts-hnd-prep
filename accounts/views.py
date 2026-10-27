@@ -91,9 +91,8 @@ def profil(request):
             "partage": Consentement.partage_actif(request.user),
             # CDC 10.7 : historique des paiements et reçus dans le profil.
             "paiements": request.user.paiements.filter(statut=Paiement.Statut.REUSSI).select_related("offre"),
-            "abonnements": request.user.abonnements.filter(statut=Abonnement.Statut.ACTIF, fin__gte=timezone.localdate())
-            .select_related("offre")
-            .order_by("debut"),
+            # Les abonnements qui se suivent (achat, code, jours offerts) forment une seule période.
+            "periodes": Abonnement.periodes(request.user),
         },
     )
 

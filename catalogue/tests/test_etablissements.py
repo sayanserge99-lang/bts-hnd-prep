@@ -58,7 +58,7 @@ def test_inscription_avec_etablissement(client, comptabilite, iai):
 
 def test_l_etablissement_est_facultatif(client, comptabilite, iai):
     page = client.get(reverse("accounts:inscription")).content.decode()
-    assert "Autre / non listé" in page and "IAI-Cameroun" in page
+    assert "Choisir dans la liste" in page and "(facultatif)" in page and "IAI-Cameroun" in page
 
     client.post(reverse("accounts:inscription"), {
         "first_name": "Awa", "last_name": "Ngono", "email": "awa@example.com", "langue": "fr",

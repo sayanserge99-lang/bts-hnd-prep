@@ -10,7 +10,7 @@ from datetime import timedelta
 
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.core.mail import send_mail
+from django.core.mail import mail_admins, send_mail
 from django.db import transaction
 from django.template.loader import render_to_string
 from django.utils import timezone
@@ -30,8 +30,20 @@ def normaliser_telephone(saisie):
     return f"237{correspondance.group(1)}" if correspondance else None
 
 
+def refuser_second_pass(utilisateur, offre):
+    """Un Pass déjà actif ne se rachète pas : le second couvrirait sans le dire la session suivante."""
+    if offre.type != offre.Type.SESSION:
+        return
+    en_cours = Abonnement.pass_en_cours(utilisateur)
+    if en_cours:
+        raise ValidationError(
+            _("Vous avez déjà le Pass session, valable jusqu'au %(fin)s.") % {"fin": f"{en_cours.fin:%d/%m/%Y}"}
+        )
+
+
 def periode(utilisateur, offre):
     """Dates de l'abonnement qu'achèterait l'utilisateur aujourd'hui (affichées avant le paiement)."""
+    refuser_second_pass(utilisateur, offre)
     debut = Abonnement.prochain_jour_libre(utilisateur)
     profil = getattr(utilisateur, "profil", None)
     return debut, offre.calculer_fin(profil.examen if profil else None, debut)
@@ -70,8 +82,22 @@ def appliquer(notification):
             return _echec(paiement, notification.motif or _("Paiement refusé ou annulé."))
         paiement.statut = Paiement.Statut.REUSSI
         paiement.confirme_le = timezone.now()
+        try:
+            debut, fin = periode(paiement.utilisateur, paiement.offre)
+        except ValidationError as erreur:
+            # L'argent est reçu mais rien ne peut s'ouvrir (deux paiements du même Pass lancés ensemble, plus de
+            # session à venir) : on le note, et l'équipe régularise (remboursement) au lieu de laisser le paiement
+            # « en attente » et l'agrégateur réessayer sans fin.
+            # Le message est copié : Python efface `erreur` à la sortie du bloc, avant l'envoi après validation.
+            raison = erreur.messages[0]
+            paiement.motif_echec = (_("À régulariser : ") + raison)[:200]
+            paiement.save(update_fields=["statut", "confirme_le", "motif_echec"])
+            transaction.on_commit(lambda: mail_admins(
+                f"Paiement {paiement.reference} à régulariser", f"{paiement.utilisateur} · {paiement.offre} : {raison}",
+                fail_silently=True,
+            ))
+            return paiement
         paiement.save(update_fields=["statut", "confirme_le"])
-        debut, fin = periode(paiement.utilisateur, paiement.offre)
         Abonnement.objects.create(utilisateur=paiement.utilisateur, offre=paiement.offre, debut=debut, fin=fin, paiement=paiement)
         transaction.on_commit(lambda: envoyer_recu(paiement))
     return paiement

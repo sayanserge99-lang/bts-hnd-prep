@@ -1,3 +1,5 @@
+{% load i18n %}
+{# Libellés sans deux-points (maquettes). Un formulaire avec marquer_facultatifs signale ses champs facultatifs. #}
 {% if field.widget_type == "checkbox" %}
   <div>
     <label class="flex items-start gap-3 text-sm" for="{{ field.auto_id }}">
@@ -5,10 +7,32 @@
     </label>
     {{ field.errors }}
   </div>
+{% elif field.use_fieldset %}
+  {# Choix uniques ou multiples : un groupe nommé par sa légende, lu comme tel par les lecteurs d'écran. #}
+  <fieldset class="space-y-1">
+    <legend class="text-sm font-medium">{{ field.label }}{% if not field.field.required and field.form.marquer_facultatifs %} <span class="font-normal text-gris">{% translate "(facultatif)" %}</span>{% endif %}</legend>
+    {{ field }}
+    {% if field.help_text %}<div class="text-xs text-gris" id="{{ field.auto_id }}_helptext">{{ field.help_text|safe }}</div>{% endif %}
+    {{ field.errors }}
+  </fieldset>
 {% else %}
   <div class="space-y-1">
-    {{ field.label_tag }}
-    {{ field }}
+    <label for="{{ field.id_for_label }}">{{ field.label }}{% if not field.field.required and field.form.marquer_facultatifs %} <span class="font-normal text-gris">{% translate "(facultatif)" %}</span>{% endif %}</label>
+    {% if field.widget_type == "password" %}
+      {# Œil : caché sans JavaScript (site.js l'affiche) ; remplace la confirmation du mot de passe. #}
+      <div class="relative" data-mot-de-passe>
+        {{ field }}
+        <button type="button" class="absolute inset-y-0 right-0 mt-1 hidden items-center px-3 text-gris hover:text-encre"
+                data-afficher-mot-de-passe aria-pressed="false"
+                aria-label="{% translate 'Afficher le mot de passe' %}"
+                data-texte-afficher="{% translate 'Afficher le mot de passe' %}"
+                data-texte-masquer="{% translate 'Masquer le mot de passe' %}">
+          <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
+    {% else %}
+      {{ field }}
+    {% endif %}
     {% if field.help_text %}<div class="text-xs text-gris" id="{{ field.auto_id }}_helptext">{{ field.help_text|safe }}</div>{% endif %}
     {{ field.errors }}
   </div>

@@ -9,6 +9,7 @@ class Simule(Fournisseur):
     """Agrégateur factice pour le développement : une page joue le rôle du téléphone de l'étudiant."""
 
     code = "simule"
+    nom = "simulateur (essai)"
 
     def initier(self, paiement, request):
         if not settings.DEBUG:

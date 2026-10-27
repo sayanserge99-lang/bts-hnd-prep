@@ -3,17 +3,34 @@
 
 {% block titre %}{{ tentative.quiz.titre }} — BTS-HND Prep{% endblock %}
 
-{% block contenu %}
-<div class="mx-auto max-w-2xl px-4 py-6">
-  <p class="text-sm text-gris">{{ tentative.quiz.matiere.nom }} · {{ tentative.quiz.titre }}</p>
-  <div class="mt-2 flex items-center gap-3">
-    <div class="h-2 flex-1 overflow-hidden rounded-full bg-bordure" role="progressbar" aria-valuemin="1" aria-valuemax="{{ total }}" aria-valuenow="{{ numero }}">
+{# Mode concentré (maquette) : ni menu ni pied de page pendant le quiz, une croix pour en sortir. #}
+{% block entete %}
+<header class="border-b border-bordure bg-white">
+  <div class="mx-auto flex max-w-2xl items-center gap-3 px-4 py-3">
+    <a href="{% url 'entrainement:accueil' %}" class="-ml-2 rounded-lg p-2 text-encre hover:bg-creme" aria-label="{% translate 'Quitter le quiz' %}">
+      <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>
+    </a>
+    <div class="min-w-0 flex-1">
+      <p class="font-semibold leading-tight">{{ tentative.quiz.matiere.nom }} · {{ tentative.quiz.get_mode_display }}</p>
+      {% if tentative.quiz.chapitre %}
+        <p class="truncate text-sm text-gris">{% blocktranslate with chapitre=tentative.quiz.chapitre.titre %}Chapitre : {{ chapitre }}{% endblocktranslate %}</p>
+      {% elif tentative.quiz.mode == "sujet" %}
+        <p class="truncate text-sm text-gris">{{ tentative.quiz.titre }}</p>
+      {% endif %}
+    </div>
+    <span class="shrink-0 text-sm font-semibold" aria-label="{% blocktranslate %}Question {{ numero }} sur {{ total }}{% endblocktranslate %}">{{ numero }} / {{ total }}</span>
+  </div>
+  <div class="mx-auto max-w-2xl px-4 pb-3">
+    <div class="h-2 overflow-hidden rounded-full bg-bordure" role="progressbar" aria-valuemin="1" aria-valuemax="{{ total }}" aria-valuenow="{{ numero }}">
       <div class="h-full bg-vert" style="width: {% widthratio numero total 100 %}%"></div>
     </div>
-    <span class="text-sm font-semibold">{{ numero }}/{{ total }}</span>
   </div>
+</header>
+{% endblock %}
 
-  <div id="zone-question" class="mt-6" aria-live="polite">
+{% block contenu %}
+<div class="mx-auto max-w-2xl px-4 py-6">
+  <div id="zone-question" aria-live="polite">
     {% if correction %}
       {% include "entrainement/_correction.html" %}
     {% else %}
@@ -22,3 +39,5 @@
   </div>
 </div>
 {% endblock %}
+
+{% block pied %}{% endblock %}

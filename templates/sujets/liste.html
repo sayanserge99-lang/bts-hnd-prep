@@ -18,20 +18,12 @@
   {% if not examen %}
     <p class="mt-4 text-gris">{% translate "Aucun sujet n'est encore disponible." %}</p>
   {% else %}
+    <p class="mt-2 text-sm text-gris">{{ examen.code }}{% if specialite %} · {{ specialite.nom }}{% endif %}</p>
     {# Sans JavaScript : formulaire GET classique. Avec HTMX : seuls les résultats sont rechargés. #}
     <form action="{% url 'sujets:liste' %}" method="get" class="mt-4 space-y-4"
           hx-get="{% url 'sujets:liste' %}" hx-target="#resultats" hx-push-url="true"
           hx-trigger="change, submit, keyup changed delay:400ms from:#q">
       <input type="hidden" name="examen" value="{{ examen.code }}">
-      <label class="block text-sm font-medium">{% translate "Spécialité" %}
-        <select name="specialite" class="champ mt-1">
-          <option value="">{% translate "Toutes les spécialités" %}</option>
-          {% for option in specialites %}
-            <option value="{{ option.code }}" {% if option == specialite %}selected{% endif %}>{{ option.nom }}</option>
-          {% endfor %}
-        </select>
-      </label>
-
       <label class="block text-sm font-medium" for="q">{% translate "Rechercher un sujet" %}</label>
       <input id="q" name="q" type="search" value="{{ filtres.q }}" class="champ -mt-3"
              placeholder="{% translate 'Matière, mot-clé…' %}" autocomplete="off">
@@ -50,7 +42,21 @@
         </div>
       </fieldset>
 
-      <div class="grid gap-3 sm:grid-cols-2">
+      {# Maquette : recherche et années d'abord ; le reste replié (ouvert si un de ces filtres est choisi). #}
+      <details class="group rounded-lg border border-bordure bg-white" {% if specialite or filtres.matiere or filtres.type or filtres.fourni_par or filtres.corrige %}open{% endif %}>
+        <summary class="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-sm font-semibold">
+          {% translate "Plus de filtres" %}
+          <svg aria-hidden="true" class="transition-transform group-open:rotate-180" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+        </summary>
+      <div class="grid gap-3 border-t border-bordure p-4 sm:grid-cols-2">
+        <label class="text-sm font-medium sm:col-span-2">{% translate "Spécialité" %}
+          <select name="specialite" class="champ mt-1">
+            <option value="">{% translate "Toutes les spécialités" %}</option>
+            {% for option in specialites %}
+              <option value="{{ option.code }}" {% if option == specialite %}selected{% endif %}>{{ option.nom }}</option>
+            {% endfor %}
+          </select>
+        </label>
         <label class="text-sm font-medium">{% translate "Matière" %}
           <select name="matiere" class="champ mt-1">
             <option value="">{% translate "Toutes les matières" %}</option>
@@ -87,6 +93,7 @@
         </label>
         {% endif %}
       </div>
+      </details>
 
       <noscript><button class="bouton-plein">{% translate "Filtrer" %}</button></noscript>
     </form>

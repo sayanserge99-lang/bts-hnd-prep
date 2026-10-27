@@ -91,6 +91,9 @@ def _activer(utilisateur, code_saisi):
     profil = getattr(utilisateur, "profil", None)
     if profil is None and code.offre.type == code.offre.Type.SESSION:
         raise CodeRefuse(_("Complétez d'abord votre profil (examen et spécialité)."))
+    if code.offre.type == code.offre.Type.SESSION and Abonnement.pass_en_cours(utilisateur):
+        # Le code n'est pas consommé : l'étudiant peut le garder pour la session suivante.
+        raise CodeRefuse(_("Vous avez déjà le Pass session : gardez ce code pour la session suivante."))
     debut = Abonnement.prochain_jour_libre(utilisateur)
     try:
         fin = code.offre.calculer_fin(profil.examen if profil else None, debut)

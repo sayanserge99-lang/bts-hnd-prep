@@ -9,6 +9,7 @@ from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.utils import timezone
+from django.utils.translation import get_language
 from django.utils.translation import gettext_lazy as _
 
 from catalogue.models import Session, Specialite
@@ -45,8 +46,8 @@ def champ_etablissement():
     return forms.ModelChoiceField(
         queryset=Etablissement.objects.all(),
         required=False,
-        label=_("Mon établissement"),
-        empty_label=_("Autre / non listé"),
+        label=_("Établissement"),
+        empty_label=_("Choisir dans la liste"),
     )
 
 
@@ -62,8 +63,11 @@ def regrouper_par_examen(champ):
 
 
 class InscriptionForm(UserCreationForm):
+    # Un seul champ de mot de passe (maquette) : l'œil du champ permet de relire ce qu'on tape.
+    password2 = None
     specialite = champ_specialite()
     etablissement = champ_etablissement()
+    marquer_facultatifs = True
     # CDC 10.2 : case non précochée, consentement enregistré avec sa version.
     accepte_conditions = forms.BooleanField(
         label=_("J'accepte les conditions générales et la politique de confidentialité."),
@@ -72,14 +76,21 @@ class InscriptionForm(UserCreationForm):
 
     class Meta:
         model = Utilisateur
-        fields = ("first_name", "last_name", "email", "langue")
+        fields = ("first_name", "last_name", "email")
         labels = {"first_name": _("Prénom"), "last_name": _("Nom")}
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for champ in ("first_name", "last_name"):
             self.fields[champ].required = True
+        self.fields["password1"].label = _("Mot de passe")
+        self.fields["password1"].help_text = _("8 caractères au minimum.")
         regrouper_par_examen(self.fields["specialite"])
+
+    def _post_clean(self):
+        super()._post_clean()
+        # Django vérifie la solidité sur le champ de confirmation, absent ici : on la vérifie sur le seul champ.
+        self.validate_password_for_user(self.instance, "password1")
 
     def clean_email(self):
         email = self.cleaned_data["email"].lower()
@@ -89,6 +100,8 @@ class InscriptionForm(UserCreationForm):
 
     @transaction.atomic
     def save(self, commit=True):
+        # Langue : celle de l'interface lue pendant l'inscription (modifiable dans le profil).
+        self.instance.langue = "en" if get_language().startswith("en") else "fr"
         utilisateur = super().save(commit=True)
         preparer_etudiant(utilisateur, self.cleaned_data["specialite"], self.cleaned_data["etablissement"])
         return utilisateur
@@ -106,6 +119,8 @@ def preparer_etudiant(utilisateur, specialite, etablissement=None):
 
 class FinInscriptionGoogleForm(forms.Form):
     """Première connexion avec Google : ce que Google ne donne pas, et le consentement (jamais présumé)."""
+
+    marquer_facultatifs = True
 
     first_name = forms.CharField(label=_("Prénom"), max_length=150)
     last_name = forms.CharField(label=_("Nom"), max_length=150)

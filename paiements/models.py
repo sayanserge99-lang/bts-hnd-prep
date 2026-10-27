@@ -158,6 +158,33 @@ class Abonnement(models.Model):
         return en_cours + timedelta(days=1) if en_cours else aujourd_hui
 
     @classmethod
+    def periodes(cls, utilisateur):
+        """Accès Premium en cours ou à venir, en périodes continues : un achat suivi d'un code ou de jours offerts
+        (qui commencent au lendemain) s'affiche comme une seule période. Chaque abonnement reste en base (reçu, origine)."""
+        periodes = []
+        abonnements = cls.objects.filter(utilisateur=utilisateur, statut=cls.Statut.ACTIF, fin__gte=timezone.localdate())
+        for abonnement in abonnements.select_related("offre").order_by("debut", "fin"):
+            origine = abonnement.offre.nom if abonnement.offre else _("Jours offerts (contribution)")
+            if periodes and abonnement.debut <= periodes[-1]["fin"] + timedelta(days=1):
+                periodes[-1]["fin"] = max(periodes[-1]["fin"], abonnement.fin)
+                if origine not in periodes[-1]["origines"]:
+                    periodes[-1]["origines"].append(origine)
+            else:
+                periodes.append({"debut": abonnement.debut, "fin": abonnement.fin, "origines": [origine]})
+        return periodes
+
+    @classmethod
+    def pass_en_cours(cls, utilisateur):
+        """Le Pass session actif de l'utilisateur, s'il en a un (il couvre la session jusqu'à sa fin officielle)."""
+        return (
+            cls.objects.filter(
+                utilisateur=utilisateur, statut=cls.Statut.ACTIF, offre__type=Offre.Type.SESSION, fin__gte=timezone.localdate()
+            )
+            .order_by("-fin")
+            .first()
+        )
+
+    @classmethod
     def offrir_jours(cls, utilisateur, jours, contribution):
         debut = cls.prochain_jour_libre(utilisateur)
         return cls.objects.create(

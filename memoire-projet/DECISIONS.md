@@ -111,3 +111,12 @@
 - **Référentiel par Excel (27/10)** : .xlsx plutôt que CSV (Excel abîme dates et accents des CSV sous Windows,
   listes déroulantes possibles). L'import ne supprime jamais rien (une matière retirée se gère dans l'admin) ;
   une matière est retrouvée par son nom dans la langue de l'examen, sans tenir compte de la casse ni des espaces.
+- **Maquettes (27/10, Serge Alain)** : pas de confirmation du mot de passe (œil « Afficher le mot de passe » à la
+  place) ; ordre : points 1-6 puis 7-10, un commit par groupe, captures comparées à la maquette ; un Pass session
+  finit à la date officielle de fin et ne se rachète pas tant qu'il est actif ; les périodes contiguës (achat, code,
+  jours offerts) s'affichent fusionnées ; envoi de sujet : seules les sessions terminées sont proposées, contrôle
+  aussi côté serveur, zone « Photographier ou choisir un fichier » (image/*, PDF, plusieurs fichiers).
+  Pour plus tard : annonces par e-mail (résumé hebdomadaire au plus, seulement s'il y a du nouveau dans la spécialité,
+  tâche Celery, case non cochée, consentement daté et versionné, désinscription en un clic) ; paires BTS ↔ HND
+  (champ facultatif « spécialité équivalente », un lien par paire lu dans les deux sens, dans le référentiel).
+  Contenu de démo marqué « [DÉMO] », commande refusée en production.

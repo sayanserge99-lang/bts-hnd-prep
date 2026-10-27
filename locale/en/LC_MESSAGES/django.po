@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-27 15:29+0100\n"
+"POT-Creation-Date: 2026-10-27 16:14+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,69 +38,74 @@ msgstr "Dates"
 msgid "codes de secours restants"
 msgstr "backup codes left"
 
-#: accounts/forms.py:21
+#: accounts/forms.py:22
 msgid ""
 "Trop de tentatives. Réessayez dans 15 minutes ou réinitialisez votre mot de "
 "passe."
 msgstr "Too many attempts. Try again in 15 minutes or reset your password."
 
-#: accounts/forms.py:39
+#: accounts/forms.py:40
 msgid "Spécialité préparée"
 msgstr "Specialty"
 
-#: accounts/forms.py:48 templates/base.html:53
-msgid "Mon établissement"
-msgstr "My institution"
+#: accounts/forms.py:49 templates/admin/statistiques.html:39
+msgid "Établissement"
+msgstr "Institution"
 
-#: accounts/forms.py:49
-msgid "Autre / non listé"
-msgstr "Other / not listed"
+#: accounts/forms.py:50
+msgid "Choisir dans la liste"
+msgstr "Choose from the list"
 
-#: accounts/forms.py:69 accounts/forms.py:116
+#: accounts/forms.py:73 accounts/forms.py:131
 msgid "J'accepte les conditions générales et la politique de confidentialité."
 msgstr "I accept the terms and conditions and the privacy policy."
 
-#: accounts/forms.py:76 accounts/forms.py:110 accounts/forms.py:181
+#: accounts/forms.py:80 accounts/forms.py:125 accounts/forms.py:196
 msgid "Prénom"
 msgstr "First name"
 
-#: accounts/forms.py:76 accounts/forms.py:111 accounts/forms.py:181
+#: accounts/forms.py:80 accounts/forms.py:126 accounts/forms.py:196
 msgid "Nom"
 msgstr "Last name"
 
-#: accounts/forms.py:87
-msgid "Un compte existe déjà avec cette adresse e-mail."
-msgstr "An account already exists with this email address."
-
-#: accounts/forms.py:112
-msgid "Langue"
-msgstr "Language"
-
-#: accounts/forms.py:161
-msgid "Adresse e-mail"
-msgstr "Email address"
-
-#: accounts/forms.py:175
-msgid "Session prévue"
-msgstr "Planned session"
-
-#: accounts/forms.py:198
-msgid "Cette session n'appartient pas à l'examen de votre spécialité."
-msgstr "This session does not belong to your specialty's exam."
-
-#: accounts/forms.py:214 templates/accounts/mot_de_passe.html:4
+#: accounts/forms.py:86 accounts/forms.py:229
+#: templates/accounts/mot_de_passe.html:4
 msgid "Mot de passe"
 msgstr "Password"
 
-#: accounts/forms.py:222
+#: accounts/forms.py:87
+msgid "8 caractères au minimum."
+msgstr "At least 8 characters."
+
+#: accounts/forms.py:98
+msgid "Un compte existe déjà avec cette adresse e-mail."
+msgstr "An account already exists with this email address."
+
+#: accounts/forms.py:127
+msgid "Langue"
+msgstr "Language"
+
+#: accounts/forms.py:176
+msgid "Adresse e-mail"
+msgstr "Email address"
+
+#: accounts/forms.py:190
+msgid "Session prévue"
+msgstr "Planned session"
+
+#: accounts/forms.py:213
+msgid "Cette session n'appartient pas à l'examen de votre spécialité."
+msgstr "This session does not belong to your specialty's exam."
+
+#: accounts/forms.py:237
 msgid "Pour confirmer, tapez votre adresse e-mail"
 msgstr "To confirm, type your email address"
 
-#: accounts/forms.py:230
+#: accounts/forms.py:245
 msgid "Ce n'est pas l'adresse e-mail de ce compte."
 msgstr "This is not the email address of this account."
 
-#: accounts/forms.py:233
+#: accounts/forms.py:248
 msgid "Mot de passe incorrect."
 msgstr "Incorrect password."
 
@@ -156,7 +161,7 @@ msgstr "Privacy policy"
 msgid "Partage des résultats avec l'établissement"
 msgstr "Sharing results with the institution"
 
-#: accounts/models.py:99 templates/base.html:87
+#: accounts/models.py:99 templates/base.html:91
 msgid "Conditions de vente"
 msgstr "Terms of sale"
 
@@ -197,50 +202,50 @@ msgid ""
 "Trop de comptes créés depuis cette connexion. Réessayez dans une heure."
 msgstr "Too many accounts created from this connection. Try again in an hour."
 
-#: accounts/views.py:49 accounts/views.py:237
+#: accounts/views.py:49 accounts/views.py:236
 msgid "Bienvenue ! Votre compte est créé."
 msgstr "Welcome! Your account has been created."
 
-#: accounts/views.py:109
+#: accounts/views.py:108
 msgid "Votre établissement ne voit plus vos résultats."
 msgstr "Your institution can no longer see your results."
 
-#: accounts/views.py:114
+#: accounts/views.py:113
 msgid "Votre établissement peut maintenant voir vos résultats."
 msgstr "Your institution can now see your results."
 
-#: accounts/views.py:122
+#: accounts/views.py:121
 msgid "Ce compte n'a pas de profil d'étude."
 msgstr "This account has no study profile."
 
-#: accounts/views.py:127
+#: accounts/views.py:126
 msgid "Profil enregistré."
 msgstr "Profile saved."
 
-#: accounts/views.py:174
+#: accounts/views.py:173
 msgid "Ce compte est lié à des paiements : contactez-nous pour le supprimer."
 msgstr "This account is linked to payments: contact us to delete it."
 
-#: accounts/views.py:177
+#: accounts/views.py:176
 msgid "Votre compte et vos données ont été supprimés."
 msgstr "Your account and your data have been deleted."
 
-#: accounts/views.py:205
+#: accounts/views.py:204
 msgid ""
 "La connexion avec Google n'a pas abouti. Réessayez, ou connectez-vous avec "
 "votre e-mail."
 msgstr ""
 "Signing in with Google did not work. Try again, or log in with your email."
 
-#: accounts/views.py:211
+#: accounts/views.py:210
 msgid "Ce compte est désactivé."
 msgstr "This account is disabled."
 
-#: accounts/views.py:286
+#: accounts/views.py:285
 msgid "Mot de passe enregistré."
 msgstr "Password saved."
 
-#: accounts/views.py:296
+#: accounts/views.py:295
 msgid "Mot de passe modifié. Vous pouvez vous connecter."
 msgstr "Password changed. You can now log in."
 
@@ -534,11 +539,11 @@ msgid "Année de la session"
 msgstr "Session year"
 
 #: communaute/forms.py:91 templates/catalogue/accueil.html:31
-#: templates/sujets/liste.html:26
+#: templates/sujets/liste.html:52
 msgid "Spécialité"
 msgstr "Specialty"
 
-#: communaute/forms.py:91 templates/sujets/liste.html:54
+#: communaute/forms.py:91 templates/sujets/liste.html:60
 msgid "Matière"
 msgstr "Subject"
 
@@ -584,7 +589,7 @@ msgstr "Write the marking guide or attach it as a document."
 msgid "Session"
 msgstr "Session"
 
-#: communaute/forms.py:174 templates/sujets/liste.html:62
+#: communaute/forms.py:174 templates/sujets/liste.html:68
 msgid "Type d'épreuve"
 msgstr "Paper type"
 
@@ -665,7 +670,7 @@ msgstr "Paper"
 
 #: communaute/models.py:20 templates/communaute/mes_contributions.html:21
 #: templates/sujets/detail.html:17 templates/sujets/detail.html:19
-#: templates/sujets/liste.html:81
+#: templates/sujets/liste.html:87
 msgid "Corrigé"
 msgstr "Marking guide"
 
@@ -1398,9 +1403,15 @@ msgid ""
 "fin."
 msgstr "This code is no longer valid: your institution's agreement has ended."
 
-#: paiements/codes.py:93 paiements/views.py:96
+#: paiements/codes.py:93 paiements/views.py:97
 msgid "Complétez d'abord votre profil (examen et spécialité)."
 msgstr "First complete your profile (exam and specialty)."
+
+#: paiements/codes.py:96
+msgid ""
+"Vous avez déjà le Pass session : gardez ce code pour la session suivante."
+msgstr ""
+"You already have the session pass: keep this code for the next session."
 
 #: paiements/models.py:15
 msgid "Durée en jours"
@@ -1474,25 +1485,38 @@ msgstr "subscription"
 msgid "jours offerts"
 msgstr "free days"
 
-#: paiements/service.py:43
+#: paiements/models.py:167
+msgid "Jours offerts (contribution)"
+msgstr "Free days (contribution)"
+
+#: paiements/service.py:40
+#, python-format
+msgid "Vous avez déjà le Pass session, valable jusqu'au %(fin)s."
+msgstr "You already have the session pass, valid until %(fin)s."
+
+#: paiements/service.py:55
 msgid "Le paiement n'est pas encore ouvert."
 msgstr "Payment is not open yet."
 
-#: paiements/service.py:66
+#: paiements/service.py:78
 #, python-format
 msgid "Montant reçu (%(recu)s FCFA) différent du prix (%(prix)s FCFA)."
 msgstr ""
 "Amount received (%(recu)s FCFA) differs from the price (%(prix)s FCFA)."
 
-#: paiements/service.py:70
+#: paiements/service.py:82
 msgid "Paiement refusé ou annulé."
 msgstr "Payment declined or cancelled."
 
-#: paiements/service.py:98
+#: paiements/service.py:93
+msgid "À régulariser : "
+msgstr "To be settled: "
+
+#: paiements/service.py:124
 msgid "Délai dépassé : aucune confirmation reçue."
 msgstr "Time limit exceeded: no confirmation received."
 
-#: paiements/service.py:106
+#: paiements/service.py:132
 #, python-format
 msgid "Votre reçu BTS-HND Prep n° %(numero)s"
 msgstr "Your BTS-HND Prep receipt no. %(numero)s"
@@ -1502,36 +1526,39 @@ msgstr "Your BTS-HND Prep receipt no. %(numero)s"
 msgid "Votre accès Premium se termine le %(fin)s"
 msgstr "Your Premium access ends on %(fin)s"
 
-#: paiements/views.py:28
+#: paiements/views.py:29
 msgid "Code d'accès"
 msgstr "Access code"
 
-#: paiements/views.py:29
+#: paiements/views.py:30
 msgid "Remis par votre établissement, par exemple ABCD-EFGH-JKLM."
 msgstr "Given by your institution, for example ABCD-EFGH-JKLM."
 
-#: paiements/views.py:46
+#: paiements/views.py:47
 #, python-format
 msgid "Code activé : %(offre)s, jusqu'au %(fin)s."
 msgstr "Code activated: %(offre)s, until %(fin)s."
 
-#: paiements/views.py:65
-msgid "Opérateur"
-msgstr "Operator"
-
-#: paiements/views.py:67
-msgid "Numéro Mobile Money"
-msgstr "Mobile Money number"
+#: paiements/views.py:66
+msgid "Payer avec"
+msgstr "Pay with"
 
 #: paiements/views.py:68
-msgid "Le numéro qui paie, par exemple 6 77 12 34 56."
-msgstr "The number that pays, for example 6 77 12 34 56."
+msgid "Numéro de téléphone"
+msgstr "Phone number"
 
-#: paiements/views.py:71
-msgid "J'ai lu et j'accepte les conditions de vente"
-msgstr "I have read and accept the terms of sale"
+#: paiements/views.py:69
+msgid ""
+"Vous recevrez une demande sur ce téléphone : validez-la avec votre code "
+"secret."
+msgstr ""
+"You will receive a request on this phone: confirm it with your secret code."
 
-#: paiements/views.py:76
+#: paiements/views.py:72
+msgid "J'ai lu et j'accepte les conditions générales de vente."
+msgstr "I have read and accept the terms of sale."
+
+#: paiements/views.py:77
 msgid "Numéro de mobile camerounais attendu (9 chiffres, commençant par 6)."
 msgstr "A Cameroonian mobile number is expected (9 digits, starting with 6)."
 
@@ -1898,13 +1925,13 @@ msgstr "In preparation"
 
 #: sujets/models.py:212 templates/entrainement/examens/auto_evaluation.html:37
 #: templates/sujets/_corrige.html:10 templates/sujets/_resultats.html:20
-#: templates/sujets/liste.html:85
+#: templates/sujets/liste.html:91
 msgid "Proposé par la communauté"
 msgstr "Community answer"
 
 #: sujets/models.py:213 templates/entrainement/examens/auto_evaluation.html:37
 #: templates/sujets/_corrige.html:8 templates/sujets/_resultats.html:18
-#: templates/sujets/liste.html:84
+#: templates/sujets/liste.html:90
 msgid "Vérifié par un enseignant"
 msgstr "Verified by a teacher"
 
@@ -2070,7 +2097,7 @@ msgstr "Continue with Google"
 
 #: templates/accounts/connexion.html:4 templates/accounts/connexion.html:8
 #: templates/accounts/connexion.html:12 templates/accounts/inscription.html:21
-#: templates/base.html:57
+#: templates/base.html:58
 msgid "Se connecter"
 msgstr "Log in"
 
@@ -2084,7 +2111,7 @@ msgstr "No account yet?"
 
 #: templates/accounts/connexion.html:17 templates/accounts/google_finir.html:4
 #: templates/accounts/inscription.html:4 templates/accounts/inscription.html:8
-#: templates/base.html:58
+#: templates/base.html:59
 msgid "Créer un compte"
 msgstr "Create an account"
 
@@ -2224,7 +2251,7 @@ msgstr "Edit my profile"
 
 #: templates/accounts/modifier_profil.html:8
 #: templates/accounts/mot_de_passe.html:8 templates/accounts/profil.html:4
-#: templates/base.html:54 templates/communaute/mes_contributions.html:9
+#: templates/base.html:55 templates/communaute/mes_contributions.html:9
 #: templates/paiements/activer_code.html:8 templates/paiements/recu.html:8
 #: templates/partenaires/mes_epreuves.html:9
 msgid "Mon espace"
@@ -2387,14 +2414,9 @@ msgid "Mon abonnement"
 msgstr "My subscription"
 
 #: templates/accounts/profil.html:85
-msgid "Jours offerts (contribution)"
-msgstr "Free days (contribution)"
-
-#: templates/accounts/profil.html:86 templates/paiements/commander.html:14
-#: templates/paiements/email_recu.txt:8 templates/paiements/recu.html:26
 #, python-format
-msgid "du %(debut)s au %(fin)s"
-msgstr "from %(debut)s to %(fin)s"
+msgid "Premium du %(debut)s au %(fin)s"
+msgstr "Premium from %(debut)s to %(fin)s"
 
 #: templates/accounts/profil.html:88
 msgid "Offre gratuite."
@@ -2519,7 +2541,7 @@ msgstr "Reject"
 #: templates/admin/communaute/contribution/valider.html:6
 #: templates/admin/entrainement/question/importer.html:6
 #: templates/admin/paiements/codeacces/generer.html:6
-#: templates/admin/sujets/sujet/importer.html:6 templates/base.html:99
+#: templates/admin/sujets/sujet/importer.html:6 templates/base.html:103
 msgid "Accueil"
 msgstr "Home"
 
@@ -2819,10 +2841,6 @@ msgid "Par établissement"
 msgstr "By institution"
 
 #: templates/admin/statistiques.html:39
-msgid "Établissement"
-msgstr "Institution"
-
-#: templates/admin/statistiques.html:39
 msgid "Inscrits"
 msgstr "Registered"
 
@@ -3016,79 +3034,83 @@ msgstr "Past BTS and HND papers, sorted by specialty, subject and year."
 msgid "Aller au contenu"
 msgstr "Skip to content"
 
-#: templates/base.html:33
+#: templates/base.html:34
 msgid "Navigation principale"
 msgstr "Main navigation"
 
-#: templates/base.html:34 templates/base.html:103
+#: templates/base.html:35 templates/base.html:107
 #: templates/sujets/liste.html:4 templates/sujets/liste.html:9
 msgid "Sujets"
 msgstr "Past papers"
 
-#: templates/base.html:36 templates/base.html:38 templates/base.html:108
-#: templates/base.html:113 templates/entrainement/accueil.html:4
+#: templates/base.html:37 templates/base.html:39 templates/base.html:112
+#: templates/base.html:117 templates/entrainement/accueil.html:4
 #: templates/entrainement/accueil.html:9
 #: templates/entrainement/examens/liste.html:9
 #: templates/entrainement/progression.html:9
 msgid "Entraînement"
 msgstr "Practice"
 
-#: templates/base.html:38 templates/base.html:113
+#: templates/base.html:39 templates/base.html:117
 #: templates/sujets/detail.html:19
 msgid "Bientôt"
 msgstr "Soon"
 
-#: templates/base.html:40 templates/entrainement/accueil.html:23
+#: templates/base.html:41 templates/entrainement/accueil.html:23
 #: templates/forum/accueil.html:4 templates/forum/accueil.html:9
 #: templates/forum/discussion.html:4 templates/forum/matiere.html:4
 #: templates/forum/matiere.html:9
 msgid "Forum"
 msgstr "Forum"
 
-#: templates/base.html:41 templates/paiements/commander.html:8
+#: templates/base.html:42 templates/paiements/commander.html:8
 #: templates/paiements/offres.html:4 templates/paiements/offres.html:9
 msgid "Offres"
 msgstr "Plans"
 
-#: templates/base.html:55
+#: templates/base.html:54
+msgid "Mon établissement"
+msgstr "My institution"
+
+#: templates/base.html:56
 msgid "Déconnexion"
 msgstr "Log out"
 
-#: templates/base.html:84
+#: templates/base.html:88
 msgid "Informations légales"
 msgstr "Legal information"
 
-#: templates/base.html:85 templates/pages/mentions_legales.html:4
+#: templates/base.html:89 templates/pages/mentions_legales.html:4
 #: templates/pages/mentions_legales.html:5
 msgid "Mentions légales"
 msgstr "Legal notice"
 
-#: templates/base.html:86
+#: templates/base.html:90
 msgid "Confidentialité"
 msgstr "Privacy"
 
-#: templates/base.html:88 templates/communaute/demande_retrait.html:4
+#: templates/base.html:92 templates/communaute/demande_retrait.html:4
 #: templates/communaute/demande_retrait.html:8
 #: templates/communaute/demande_retrait_recue.html:4
 msgid "Demande de retrait"
 msgstr "Takedown request"
 
-#: templates/base.html:89 templates/communaute/contact.html:4
+#: templates/base.html:93 templates/communaute/contact.html:4
 #: templates/communaute/contact.html:8
 #: templates/communaute/demande_retrait.html:22
 msgid "Contact"
 msgstr "Contact"
 
-#: templates/base.html:95
+#: templates/base.html:99
 msgid "Navigation mobile"
 msgstr "Mobile navigation"
 
-#: templates/base.html:119
+#: templates/base.html:123
 msgid "Profil"
 msgstr "Profile"
 
 #: templates/catalogue/_options_specialites.html:1
-#: templates/sujets/liste.html:28
+#: templates/sujets/liste.html:54
 msgid "Toutes les spécialités"
 msgstr "All specialties"
 
@@ -3820,6 +3842,20 @@ msgstr "Previous"
 msgid "Suivant"
 msgstr "Next"
 
+#: templates/entrainement/question.html:10
+msgid "Quitter le quiz"
+msgstr "Leave the quiz"
+
+#: templates/entrainement/question.html:16
+#, python-format
+msgid "Chapitre : %(chapitre)s"
+msgstr "Chapter: %(chapitre)s"
+
+#: templates/entrainement/question.html:21
+#, python-format
+msgid "Question %(numero)s sur %(total)s"
+msgstr "Question %(numero)s of %(total)s"
+
 #: templates/entrainement/resultat.html:11
 #, python-format
 msgid "%(justes)s bonne(s) réponse(s) sur %(total)s"
@@ -3840,6 +3876,18 @@ msgstr "Replay my mistakes"
 #: templates/entrainement/resultat.html:32
 msgid "Retour à l'entraînement"
 msgstr "Back to practice"
+
+#: templates/forms/champ.html:13 templates/forms/champ.html:20
+msgid "(facultatif)"
+msgstr "(optional)"
+
+#: templates/forms/champ.html:27 templates/forms/champ.html:28
+msgid "Afficher le mot de passe"
+msgstr "Show password"
+
+#: templates/forms/champ.html:29
+msgid "Masquer le mot de passe"
+msgstr "Hide password"
 
 #: templates/forum/_actions_auteur.html:4
 msgid "Modifier"
@@ -4063,68 +4111,68 @@ msgstr "Refresh"
 msgid "Référence"
 msgstr "Reference"
 
-#: templates/paiements/_formules.html:5 templates/paiements/offres.html:25
+#: templates/paiements/_formules.html:6 templates/paiements/offres.html:25
 msgid "Gratuit"
 msgstr "Free"
 
-#: templates/paiements/_formules.html:8
+#: templates/paiements/_formules.html:9
 msgid "Tous les sujets en consultation"
 msgstr "Read all papers"
 
-#: templates/paiements/_formules.html:9
+#: templates/paiements/_formules.html:10
 msgid "Téléchargement des sujets en PDF"
 msgstr "Download papers as PDF"
 
-#: templates/paiements/_formules.html:10
+#: templates/paiements/_formules.html:11
 msgid "Début des corrigés, quelques quiz par jour"
 msgstr "Start of marking guides, a few quizzes a day"
 
-#: templates/paiements/_formules.html:16 templates/paiements/commander.html:13
-#: templates/paiements/email_recu.txt:9 templates/paiements/recu.html:27
+#: templates/paiements/_formules.html:18 templates/paiements/email_recu.txt:9
+#: templates/paiements/recu.html:27
 msgid "TTC"
 msgstr "incl. VAT"
 
-#: templates/paiements/_formules.html:18
+#: templates/paiements/_formules.html:20
 #, python-format
 msgid "pendant %(n)s jour"
 msgid_plural "pendant %(n)s jours"
 msgstr[0] "for %(n)s day"
 msgstr[1] "for %(n)s days"
 
-#: templates/paiements/_formules.html:19
+#: templates/paiements/_formules.html:21
 #, python-format
 msgid "%(examen)s : jusqu'à la fin de la session %(annee)s (%(fin)s)"
 msgstr "%(examen)s: until the end of the %(annee)s session (%(fin)s)"
 
-#: templates/paiements/_formules.html:20
+#: templates/paiements/_formules.html:22
 msgid "jusqu'à la fin de la prochaine session"
 msgstr "until the end of the next session"
 
-#: templates/paiements/_formules.html:23
+#: templates/paiements/_formules.html:25
 msgid "Corrigés complets"
 msgstr "Full marking guides"
 
-#: templates/paiements/_formules.html:24
+#: templates/paiements/_formules.html:26 templates/paiements/commander.html:25
 msgid "QCM illimités et examens blancs"
 msgstr "Unlimited MCQs and mock exams"
 
-#: templates/paiements/_formules.html:25
+#: templates/paiements/_formules.html:27 templates/paiements/commander.html:26
 msgid "Suivi de vos points faibles"
 msgstr "Track your weak points"
 
-#: templates/paiements/_formules.html:28
+#: templates/paiements/_formules.html:30
 msgid "Choisir"
 msgstr "Choose"
 
-#: templates/paiements/_formules.html:30
+#: templates/paiements/_formules.html:32
 msgid "Paiement bientôt disponible"
 msgstr "Payment coming soon"
 
-#: templates/paiements/_formules.html:35 templates/paiements/offres.html:25
+#: templates/paiements/_formules.html:37 templates/paiements/offres.html:25
 msgid "Premium"
 msgstr "Premium"
 
-#: templates/paiements/_formules.html:36
+#: templates/paiements/_formules.html:38
 msgid ""
 "Corrigés complets, QCM illimités, examens blancs et suivi détaillé. Les prix"
 " seront annoncés à l'ouverture du paiement."
@@ -4149,34 +4197,54 @@ msgstr ""
 msgid "Paiement"
 msgstr "Payment"
 
-#: templates/paiements/commander.html:13
-msgid "Prix"
-msgstr "Price"
+#: templates/paiements/commander.html:9
+msgid "Obtenir le Pass session"
+msgstr "Get the session pass"
 
-#: templates/paiements/commander.html:14 templates/paiements/email_recu.txt:8
-#: templates/paiements/recu.html:26
-msgid "Accès Premium"
-msgstr "Premium access"
+#: templates/paiements/commander.html:17
+#, python-format
+msgid "Valable jusqu'à la fin officielle de la session %(annee)s (%(fin)s)"
+msgstr "Valid until the official end of the %(annee)s session (%(fin)s)"
 
-#: templates/paiements/commander.html:15
-msgid "Frais"
-msgstr "Fees"
+#: templates/paiements/commander.html:18
+#, python-format
+msgid "Accès Premium du %(debut)s au %(fin)s"
+msgstr "Premium access from %(debut)s to %(fin)s"
 
-#: templates/paiements/commander.html:15
-msgid "Aucun frais ajouté par BTS-HND Prep"
-msgstr "No fees added by BTS-HND Prep"
+#: templates/paiements/commander.html:21
+msgid "TTC, sans frais ajoutés"
+msgstr "All taxes included, no added fees"
 
-#: templates/paiements/commander.html:20
-msgid "Payer"
-msgstr "Pay"
+#: templates/paiements/commander.html:24
+msgid "Corrigés complets de toutes les matières"
+msgstr "Full answer keys for every subject"
 
-#: templates/paiements/commander.html:22
+#: templates/paiements/commander.html:32
+#, python-format
+msgid "Payer %(prix)s"
+msgstr "Pay %(prix)s"
+
+#: templates/paiements/commander.html:38
+#, python-format
+msgid "Paiement traité par %(agregateur)s."
+msgstr "Payment processed by %(agregateur)s."
+
+#: templates/paiements/commander.html:38
+msgid ""
+"Nous ne voyons jamais votre code secret. Un reçu vous est envoyé par e-mail."
+msgstr "We never see your secret code. A receipt is sent to you by email."
+
+#: templates/paiements/commander.html:39
 msgid "Lire les conditions de vente"
 msgstr "Read the terms of sale"
 
-#: templates/paiements/commander.html:22
-msgid "Vous confirmez ensuite le paiement sur votre téléphone."
-msgstr "You then confirm the payment on your phone."
+#: templates/paiements/commander.html:42
+msgid "Votre établissement vous a remis un code ?"
+msgstr "Did your institution give you a code?"
+
+#: templates/paiements/commander.html:43
+msgid "Utiliser un code d'accès"
+msgstr "Use an access code"
 
 #: templates/paiements/email_rappel.txt:3
 #, python-format
@@ -4210,6 +4278,15 @@ msgstr "Date"
 #: templates/paiements/email_recu.txt:7 templates/paiements/recu.html:25
 msgid "Offre"
 msgstr "Plan"
+
+#: templates/paiements/email_recu.txt:8 templates/paiements/recu.html:26
+msgid "Accès Premium"
+msgstr "Premium access"
+
+#: templates/paiements/email_recu.txt:8 templates/paiements/recu.html:26
+#, python-format
+msgid "du %(debut)s au %(fin)s"
+msgstr "from %(debut)s to %(fin)s"
 
 #: templates/paiements/email_recu.txt:9 templates/paiements/recu.html:27
 msgid "Montant payé"
@@ -4682,7 +4759,7 @@ msgstr "Coefficient"
 msgid "Source"
 msgstr "Source"
 
-#: templates/sujets/detail.html:89 templates/sujets/liste.html:71
+#: templates/sujets/detail.html:89 templates/sujets/liste.html:77
 msgid "Fourni par"
 msgstr "Provided by"
 
@@ -4701,46 +4778,50 @@ msgstr "A question about this paper? Ask it on the forum"
 msgid "Aucun sujet n'est encore disponible."
 msgstr "No papers are available yet."
 
-#: templates/sujets/liste.html:35
+#: templates/sujets/liste.html:27
 msgid "Rechercher un sujet"
 msgstr "Search for a paper"
 
-#: templates/sujets/liste.html:37
+#: templates/sujets/liste.html:29
 msgid "Matière, mot-clé…"
 msgstr "Subject, keyword…"
 
-#: templates/sujets/liste.html:40
+#: templates/sujets/liste.html:32
 msgid "Année"
 msgstr "Year"
 
-#: templates/sujets/liste.html:43
+#: templates/sujets/liste.html:35
 msgid "Toutes"
 msgstr "All"
 
-#: templates/sujets/liste.html:56
+#: templates/sujets/liste.html:48
+msgid "Plus de filtres"
+msgstr "More filters"
+
+#: templates/sujets/liste.html:62
 msgid "Toutes les matières"
 msgstr "All subjects"
 
-#: templates/sujets/liste.html:64
+#: templates/sujets/liste.html:70
 msgid "Tous les types"
 msgstr "All types"
 
-#: templates/sujets/liste.html:73
+#: templates/sujets/liste.html:79
 msgid "Tous les établissements"
 msgstr "All institutions"
 
-#: templates/sujets/liste.html:83
+#: templates/sujets/liste.html:89
 msgid "Avec ou sans corrigé"
 msgstr "With or without a marking guide"
 
-#: templates/sujets/liste.html:91
+#: templates/sujets/liste.html:98
 msgid "Filtrer"
 msgstr "Filter"
 
-#: templates/sujets/liste.html:95
+#: templates/sujets/liste.html:102
 msgid "Il manque un sujet ?"
 msgstr "A paper is missing?"
 
-#: templates/sujets/liste.html:96
+#: templates/sujets/liste.html:103
 msgid "Envoyez-le, il vous offre des jours d'abonnement"
 msgstr "Send it and earn free subscription days"

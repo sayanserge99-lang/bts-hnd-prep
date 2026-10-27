@@ -26,6 +26,7 @@ class Fournisseur:
     """Ce que le site attend d'un agrégateur."""
 
     code = ""
+    nom = ""  # nom commercial affiché à l'étudiant (« Paiement traité par … »)
 
     def initier(self, paiement, request):
         """Lance le paiement chez l'agrégateur. Renvoie l'adresse où envoyer l'étudiant, ou None s'il confirme

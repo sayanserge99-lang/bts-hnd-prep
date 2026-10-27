@@ -81,9 +81,9 @@
   <section class="carte flex flex-wrap items-center justify-between gap-3 text-sm">
     <div>
       <h2 class="text-base font-semibold">{% translate "Mon abonnement" %}</h2>
-      {% for abonnement in abonnements %}
-        <p>{% if abonnement.offre %}{{ abonnement.offre.nom }}{% else %}{% translate "Jours offerts (contribution)" %}{% endif %} :
-          {% blocktranslate with debut=abonnement.debut|date:"d/m/Y" fin=abonnement.fin|date:"d/m/Y" %}du {{ debut }} au {{ fin }}{% endblocktranslate %}</p>
+      {% for periode in periodes %}
+        <p>{% blocktranslate with debut=periode.debut|date:"d/m/Y" fin=periode.fin|date:"d/m/Y" %}Premium du {{ debut }} au {{ fin }}{% endblocktranslate %}
+          <span class="block text-xs text-gris">{{ periode.origines|join:" + " }}</span></p>
       {% empty %}
         <p class="text-gris">{% translate "Offre gratuite." %}</p>
       {% endfor %}

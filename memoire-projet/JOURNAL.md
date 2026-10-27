@@ -174,3 +174,8 @@
   contrairement à ce que j'avais affirmé à Serge Alain). Corrigée à deux niveaux + 5 tests ; contre-épreuves
   (garde de Session, filet de publies()) → échecs attendus. Essai sur la base de dev (faute de frappe et date
   repoussée signalées, rien d'enregistré). 420/420.
+- 27/10 : maquette complète (13 écrans) comparée à l'application par captures ; décisions de Serge Alain.
+  Groupe A fait (libellés, inscription, paiement, quiz, formules, filtres) et point 3 (Pass unique, périodes
+  fusionnées). Erreurs : j'avais dit à Serge Alain que l'œil du mot de passe existait (faux, ajouté) ; variable
+  `erreur` d'un except utilisée dans un on_commit (effacée par Python) → trouvée par le test. Contre-épreuves :
+  solidité du mot de passe (4 échecs attendus), refus du second Pass, code non consommé. 435/435.
