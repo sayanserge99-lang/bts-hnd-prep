@@ -99,3 +99,8 @@
   Sauvegardes : chiffrement symétrique GPG (outil présent partout, restauration sans logiciel particulier).
 - **Interface** : Tailwind v4 en exécutable autonome (pas de Node), polices du système, HTMX servi localement ;
   les pages marchent aussi sans JavaScript (formulaire GET classique).
+- **Valeurs de lancement (27/10, Serge Alain)** : Pass session 5 000 FCFA, Premium mensuel 1 500 FCFA, 3 quiz
+  gratuits par jour, 7 jours de Premium par sujet validé. Visiteurs sans compte : 3 sujets différents par jour
+  (pas 3 requêtes : un lecteur PDF demande le fichier en plusieurs fois), compteur de session + plafond de 30 par
+  adresse IP (un campus partage souvent une adresse ; le but est d'amener au compte gratuit, pas de bloquer).
+  La règle de publication passe avant le quota (un sujet non publié reste introuvable).

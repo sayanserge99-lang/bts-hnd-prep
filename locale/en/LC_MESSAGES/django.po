@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-27 13:03+0100\n"
+"POT-Creation-Date: 2026-10-27 14:44+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -141,12 +141,12 @@ msgid "Cette spécialité n'appartient pas à l'examen choisi."
 msgstr "This specialty does not belong to the chosen exam."
 
 #: accounts/models.py:96 templates/accounts/google_finir.html:16
-#: templates/accounts/inscription.html:17
+#: templates/accounts/inscription.html:18
 msgid "Conditions générales"
 msgstr "Terms and conditions"
 
 #: accounts/models.py:97 templates/accounts/google_finir.html:17
-#: templates/accounts/inscription.html:18
+#: templates/accounts/inscription.html:19
 #: templates/pages/confidentialite.html:4
 #: templates/pages/confidentialite.html:5
 msgid "Politique de confidentialité"
@@ -197,50 +197,50 @@ msgid ""
 "Trop de comptes créés depuis cette connexion. Réessayez dans une heure."
 msgstr "Too many accounts created from this connection. Try again in an hour."
 
-#: accounts/views.py:49 accounts/views.py:235
+#: accounts/views.py:49 accounts/views.py:237
 msgid "Bienvenue ! Votre compte est créé."
 msgstr "Welcome! Your account has been created."
 
-#: accounts/views.py:107
+#: accounts/views.py:109
 msgid "Votre établissement ne voit plus vos résultats."
 msgstr "Your institution can no longer see your results."
 
-#: accounts/views.py:112
+#: accounts/views.py:114
 msgid "Votre établissement peut maintenant voir vos résultats."
 msgstr "Your institution can now see your results."
 
-#: accounts/views.py:120
+#: accounts/views.py:122
 msgid "Ce compte n'a pas de profil d'étude."
 msgstr "This account has no study profile."
 
-#: accounts/views.py:125
+#: accounts/views.py:127
 msgid "Profil enregistré."
 msgstr "Profile saved."
 
-#: accounts/views.py:172
+#: accounts/views.py:174
 msgid "Ce compte est lié à des paiements : contactez-nous pour le supprimer."
 msgstr "This account is linked to payments: contact us to delete it."
 
-#: accounts/views.py:175
+#: accounts/views.py:177
 msgid "Votre compte et vos données ont été supprimés."
 msgstr "Your account and your data have been deleted."
 
-#: accounts/views.py:203
+#: accounts/views.py:205
 msgid ""
 "La connexion avec Google n'a pas abouti. Réessayez, ou connectez-vous avec "
 "votre e-mail."
 msgstr ""
 "Signing in with Google did not work. Try again, or log in with your email."
 
-#: accounts/views.py:209
+#: accounts/views.py:211
 msgid "Ce compte est désactivé."
 msgstr "This account is disabled."
 
-#: accounts/views.py:284
+#: accounts/views.py:286
 msgid "Mot de passe enregistré."
 msgstr "Password saved."
 
-#: accounts/views.py:294
+#: accounts/views.py:296
 msgid "Mot de passe modifié. Vous pouvez vous connecter."
 msgstr "Password changed. You can now log in."
 
@@ -273,7 +273,7 @@ msgstr ""
 msgid "Code incorrect."
 msgstr "Incorrect code."
 
-#: catalogue/models.py:9 config/settings.py:220
+#: catalogue/models.py:9 config/settings.py:222
 msgid "Français"
 msgstr "French"
 
@@ -585,7 +585,7 @@ msgstr "Duration (minutes)"
 msgid "Exemple : MINESUP, BTS session 2025."
 msgstr "Example: MINESUP, HND 2025 session."
 
-#: communaute/forms.py:178 templates/sujets/detail.html:75
+#: communaute/forms.py:178 templates/sujets/detail.html:85
 msgid "Barème"
 msgstr "Marking scheme"
 
@@ -814,7 +814,7 @@ msgid ""
 "Vous avez déjà envoyé plusieurs messages aujourd'hui. Nous vous répondrons."
 msgstr "You have already sent several messages today. We will reply to you."
 
-#: config/settings.py:220
+#: config/settings.py:222
 msgid "English"
 msgstr "English"
 
@@ -1969,15 +1969,24 @@ msgstr "favourite"
 msgid "Une spécialité choisie n'est pas rattachée à la matière du sujet."
 msgstr "A chosen specialty is not linked to the paper's subject."
 
-#: sujets/views.py:204
+#: sujets/views.py:178
+#, python-format
+msgid ""
+"Sans compte, on peut ouvrir %(n)s sujets par jour. Créez un compte gratuit "
+"pour tout lire."
+msgstr ""
+"Without an account, you can open %(n)s papers a day. Create a free account "
+"to read them all."
+
+#: sujets/views.py:214
 msgid "Décrivez l'erreur en quelques mots (10 caractères au moins)."
 msgstr "Describe the mistake in a few words (at least 10 characters)."
 
-#: sujets/views.py:207
+#: sujets/views.py:217
 msgid "Vous avez déjà beaucoup signalé aujourd'hui. Merci ! Revenez demain."
 msgstr "You have already reported a lot today. Thank you! Come back tomorrow."
 
-#: sujets/views.py:212
+#: sujets/views.py:222
 msgid "Merci ! L'enseignant relira ce passage."
 msgstr "Thank you! The teacher will review this part."
 
@@ -2049,7 +2058,7 @@ msgid "Continuer avec Google"
 msgstr "Continue with Google"
 
 #: templates/accounts/connexion.html:4 templates/accounts/connexion.html:8
-#: templates/accounts/connexion.html:12 templates/accounts/inscription.html:20
+#: templates/accounts/connexion.html:12 templates/accounts/inscription.html:21
 #: templates/base.html:57
 msgid "Se connecter"
 msgstr "Log in"
@@ -2184,7 +2193,7 @@ msgstr ""
 "create your account."
 
 #: templates/accounts/google_finir.html:12
-#: templates/accounts/inscription.html:12
+#: templates/accounts/inscription.html:13
 msgid "Créer mon compte"
 msgstr "Create my account"
 
@@ -2192,7 +2201,7 @@ msgstr "Create my account"
 msgid "Gratuit. Nous ne demandons que le nécessaire."
 msgstr "Free. We only ask for what we need."
 
-#: templates/accounts/inscription.html:20
+#: templates/accounts/inscription.html:21
 msgid "Déjà inscrit ?"
 msgstr "Already registered?"
 
@@ -3491,15 +3500,15 @@ msgstr "Whole subject"
 msgid "Lancer un quiz"
 msgstr "Start a quiz"
 
-#: templates/entrainement/accueil.html:62 templates/sujets/detail.html:53
+#: templates/entrainement/accueil.html:62 templates/sujets/detail.html:63
 msgid "Téléchargé ✓ : à retrouver dans Hors ligne"
 msgstr "Downloaded ✓: find it in Offline"
 
-#: templates/entrainement/accueil.html:63 templates/sujets/detail.html:54
+#: templates/entrainement/accueil.html:63 templates/sujets/detail.html:64
 msgid "Téléchargement impossible : vérifiez la connexion."
 msgstr "Download failed: check your connection."
 
-#: templates/entrainement/accueil.html:63 templates/sujets/detail.html:54
+#: templates/entrainement/accueil.html:63 templates/sujets/detail.html:64
 msgid "Télécharger pour le hors ligne"
 msgstr "Download for offline"
 
@@ -3568,13 +3577,13 @@ msgid "Voir ma note"
 msgstr "See my mark"
 
 #: templates/entrainement/examens/consignes.html:11
-#: templates/sujets/detail.html:65
+#: templates/sujets/detail.html:75
 msgid "Durée"
 msgstr "Duration"
 
 #: templates/entrainement/examens/consignes.html:11
 #: templates/entrainement/examens/liste.html:24
-#: templates/sujets/detail.html:66
+#: templates/sujets/detail.html:76
 #, python-format
 msgid "%(h)s minutes"
 msgstr "%(h)s minutes"
@@ -3786,7 +3795,7 @@ msgid "Aucune tentative terminée pour le moment."
 msgstr "No completed attempts yet."
 
 #: templates/entrainement/progression.html:94 templates/forum/matiere.html:26
-#: templates/sujets/_resultats.html:34 templates/sujets/detail.html:72
+#: templates/sujets/_resultats.html:34 templates/sujets/detail.html:82
 msgid "Pages"
 msgstr "Pages"
 
@@ -4539,7 +4548,7 @@ msgstr "Where is the mistake, and what would the right answer be?"
 msgid "Se connecter pour signaler une erreur"
 msgstr "Log in to report a mistake"
 
-#: templates/sujets/_corrige.html:49 templates/sujets/detail.html:92
+#: templates/sujets/_corrige.html:49 templates/sujets/detail.html:102
 msgid "Demander le retrait de ce document"
 msgstr "Request removal of this document"
 
@@ -4616,45 +4625,64 @@ msgstr "Kept offline ✓ (tap to remove)"
 msgid "Impossible : vérifiez la connexion et la place libre."
 msgstr "Not possible: check your connection and free space."
 
-#: templates/sujets/detail.html:45
+#: templates/sujets/detail.html:44
+#, python-format
+msgid "Sans compte : encore %(n)s sujet à ouvrir aujourd'hui."
+msgid_plural "Sans compte : encore %(n)s sujets à ouvrir aujourd'hui."
+msgstr[0] "Without an account: %(n)s more paper to open today."
+msgstr[1] "Without an account: %(n)s more papers to open today."
+
+#: templates/sujets/detail.html:46
+msgid ""
+"Sans compte, la limite du jour est atteinte (les sujets déjà ouverts restent"
+" lisibles)."
+msgstr ""
+"Without an account, today's limit is reached (papers already opened can "
+"still be read)."
+
+#: templates/sujets/detail.html:48
+msgid "Compte gratuit : sans limite"
+msgstr "Free account: no limit"
+
+#: templates/sujets/detail.html:55
 msgid "Entraînez-vous sur cette épreuve"
 msgstr "Practise on this paper"
 
-#: templates/sujets/detail.html:46
+#: templates/sujets/detail.html:56
 #, python-format
 msgid "%(n)s question tirée de ce sujet, corrigée tout de suite."
 msgid_plural "%(n)s questions tirées de ce sujet, corrigées tout de suite."
 msgstr[0] "%(n)s question from this paper, marked straight away."
 msgstr[1] "%(n)s questions from this paper, marked straight away."
 
-#: templates/sujets/detail.html:49
+#: templates/sujets/detail.html:59
 msgid "Quiz sur cette épreuve"
 msgstr "Quiz on this paper"
 
-#: templates/sujets/detail.html:58
+#: templates/sujets/detail.html:68
 msgid "Se connecter pour faire le quiz"
 msgstr "Log in to take the quiz"
 
-#: templates/sujets/detail.html:68
+#: templates/sujets/detail.html:78
 msgid "Coefficient"
 msgstr "Coefficient"
 
-#: templates/sujets/detail.html:78
+#: templates/sujets/detail.html:88
 msgid "Source"
 msgstr "Source"
 
-#: templates/sujets/detail.html:79 templates/sujets/liste.html:71
+#: templates/sujets/detail.html:89 templates/sujets/liste.html:71
 msgid "Fourni par"
 msgstr "Provided by"
 
-#: templates/sujets/detail.html:85
+#: templates/sujets/detail.html:95
 #, python-format
 msgid "%(n)s question sur ce sujet au forum"
 msgid_plural "%(n)s questions sur ce sujet au forum"
 msgstr[0] "%(n)s question about this paper on the forum"
 msgstr[1] "%(n)s questions about this paper on the forum"
 
-#: templates/sujets/detail.html:86
+#: templates/sujets/detail.html:96
 msgid "Une question sur ce sujet ? Posez-la au forum"
 msgstr "A question about this paper? Ask it on the forum"
 

@@ -165,3 +165,7 @@
   robots/sitemap, retrait des sujets sur les téléphones, édition des messages du forum, réindexation au renommage.
   Erreur d'échappement dans un script d'insertion (\n devenu saut de ligne) → corrigée. 21 tests + essai jsdom
   (piège 12/120) ; contre-épreuves (réindexation, sujets retirés) → échecs attendus. Captures 404 et Contact. 386/386.
+- 27/10 : étape 2 — Serge Alain valide les valeurs proposées. Quota des visiteurs (3 sujets/jour) ; l'inscription
+  ramène désormais au sujet (`next`, adresse vérifiée). Contre-épreuve (quota désactivé) → 3 échecs attendus.
+  Essai sur le serveur de dev : 3 PDF puis renvoi à l'inscription. « encore 0 sujets » remplacé par un message
+  de limite atteinte. 396/396.

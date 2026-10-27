@@ -40,7 +40,7 @@
 - [ ] Rédiger les pages légales (mentions, confidentialité, CGV, contact) : contenu à fournir par Serge Alain / juriste.
 - [ ] Renseigner DJANGO_ADMINS dans .env.production pour être prévenu des demandes de retrait.
 - [x] Demande de retrait des corrigés (fait avec les corrigés, V2).
-- [ ] Décider le quota de téléchargement des visiteurs (CDC 7 : « limité ») ; aujourd'hui tout est ouvert.
+- [x] Quota des visiteurs : 3 sujets différents par jour, puis compte gratuit (27/10).
 - [ ] Accueil : apparier spécialités BTS ↔ HND comme sur la maquette (aucun lien en base aujourd'hui).
 - [ ] Alpine.js : pas encore nécessaire (ajouter quand il le sera : minuteur d'examen blanc, menus).
 - [x] Modérateurs limités à leurs matières (liste, fiches, actions, listes de choix), accès admin automatique.
@@ -65,7 +65,7 @@
 - [x] Examens blancs V2 : minuteur serveur, sauvegarde continue, reprise, remise auto, auto-évaluation.
 - [ ] Examens blancs : tester le minuteur sur un vrai téléphone (mise en veille, changement d'onglet).
 - [x] QCM V2 : quiz rapide, correction immédiate, révision des erreurs, cohérence des questions, quota prêt.
-- [ ] Fixer QUIZ_GRATUITS_PAR_JOUR (CDC 7 : quotas « restent à fixer »).
+- [x] QUIZ_GRATUITS_PAR_JOUR = 3 (validé le 27/10).
 - [x] Corrigés V2 : rendu Markdown/MathML sûr, badges, filtre, signalement, retrait, aperçu admin.
 - [ ] Corrige : décider si on ajoute `verifie_par` (FK utilisateur) pour tracer la vérification.
 - [x] V3 : filigrane nominatif et lien temporaire sur le PDF du corrigé Premium (CDC 4).
@@ -73,8 +73,8 @@
 - [x] Affichage MathML vérifié sur Chrome Android (Galaxy A15) : fraction et tableaux OK.
 - [ ] Vérifier aussi sur Firefox et sur l'ancien navigateur Samsung Internet.
 - [x] V3 module 1 : contributions (envoi de sujets et de corrigés, file de modération, récompense).
-- [ ] Fixer JOURS_OFFERTS_PAR_SUJET avec Serge Alain (7 jours pour l'instant). Tant que le paiement est fermé,
-      tout est gratuit : les jours offerts aujourd'hui expirent avant l'ouverture du Premium.
+- [x] JOURS_OFFERTS_PAR_SUJET = 7 (validé le 27/10). Tant que le paiement est fermé, tout est gratuit : les
+      jours offerts aujourd'hui expirent avant l'ouverture du Premium.
 - [ ] Contributions : pas de conversion WebP des photos (assemblées en PDF), pas de recadrage automatique.
 - [x] Audit de sécurité : limites anti-abus (admin comprise), CSP, adresse d'admin réglable, pip-audit en CI.
 - [x] Double authentification de l'équipe ; sauvegardes chiffrées et copiées hors du serveur ; script de
@@ -88,7 +88,8 @@
       notification, consulter) ; régler PAIEMENT_FOURNISSEUR, PAIEMENT_SECRET, EXPLOITANT_* dans .env.production.
 - [ ] Remboursement : aucune procédure dans le site (à traiter à la main, à écrire dans les conditions de vente).
 - [x] V3 module 4 : Premium (règle unique, page Offres, protection des PDF de corrigés).
-- [ ] Fixer les prix (Pass session, mensuel) : les offres de démo sont celles de l'étude de faisabilité.
+- [x] Prix validés le 27/10 : Pass session 5 000, mensuel 1 500.
+- [ ] En production : créer ces deux offres dans l'admin (la commande de démo n'y tourne pas).
 - [x] Rappel par e-mail 3 jours avant la fin d'un abonnement ; passage automatique à « expiré » (chaque matin).
 - [x] V3 module 3 : codes d'accès (génération par lot, activation, suivi par l'établissement).
 - [ ] Codes d'accès : pas de date d'expiration propre au code (il vit tant que la convention est active) ; prix et

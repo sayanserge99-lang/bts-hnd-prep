@@ -8,7 +8,7 @@
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **386 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
+- `pytest` : **396 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
   10 statistiques, 16 Google).
 - **Connexion Google (V2)** `accounts/google.py` : OpenID Connect sans dépendance (state, PKCE, nonce ; vérifie iss,
   aud, exp, email_verified). Compte existant → connecté ; sinon page « Dernière étape » (spécialité + consentement
@@ -20,6 +20,11 @@
   convention de partenariat active ; voit les résultats des étudiants confirmés qui ont activé « Partager mes
   résultats » (consentement révocable, tracé). Étudiant confirmé : page « Épreuves de mon établissement »,
   PDF servi après contrôle (404 sinon). Lien « Mon établissement » dans l'en-tête des responsables.
+- **Avant le lancement, étape 2 (27/10)** : valeurs validées par Serge Alain (Pass 5 000, mensuel 1 500, 3 quiz
+  gratuits/jour, 7 jours par sujet). Visiteurs sans compte : 3 sujets différents par jour (`sujets/quota.py`,
+  PDF_VISITEUR_PAR_JOUR ; compteur dans la session, plafond 30 par adresse IP ; rouvrir un sujet ne compte pas ;
+  le 4e renvoie vers l'inscription, qui ramène au sujet par `next` vérifié ; le bouton hors ligne reçoit un 429).
+  La fiche indique ce qui reste. Inscrits : aucune limite.
 - **Avant le lancement, étape 1 (27/10)** : pages d'erreur du site (404, 403, 403_csrf « page expirée », 400, et
   500 autonome bilingue) ; Contact réel (`communaute.views.contact`, modèle MessageContact, admin, piège à robots,
   5/jour/IP, aucun e-mail à l'adresse saisie) ; `robots.txt` (sans l'adresse d'admin) et `sitemap.xml`
@@ -65,7 +70,7 @@
   (`paiements/offres.py`, gabarit `_formules.html` partagé avec l'accueil) : offres actives de la base, prix TTC
   (filtre `fcfa`, espace fine insécable), fin du Pass par examen, comparatif CDC 7, lien code d'accès. Tous les
   liens « Offres / Voir le Pass session » y mènent ; plus de prix écrit en dur. Démo : 2 offres d'exemple
-  (5 000 Pass, 1 500 / 30 j) [À FIXER]. PDF des corrigés (CDC 4) : lien signé valable 15 min et propre au compte
+  (5 000 Pass, 1 500 / 30 j), prix validés par Serge Alain le 27/10 (à créer dans l'admin en production). PDF des corrigés (CDC 4) : lien signé valable 15 min et propre au compte
   (`sujets/filigrane.py`), filigrane e-mail + date sur chaque page (pypdf, Helvetica, 18 % d'opacité), servi par
   Django, `Cache-Control: private, no-store`. Vérifié par capture (page Offres sur téléphone, page filigranée).
 - **Codes d'accès (V3, module 3, 23/10)** `paiements/codes.py` : admin « Codes d'accès → Générer des codes »
@@ -88,7 +93,7 @@
   Corrigé proposé depuis l'onglet Corrigé d'un sujet publié (texte ou document). « Mes contributions » (statut, motif,
   jours offerts). Admin : file de modération, boutons Valider / Rejeter, PDF servi par une vue. Valider = sujet créé
   en **brouillon** (session en cours refusée) + jours offerts (`Abonnement.offrir_jours`, à la suite de l'abonnement
-  en cours, JOURS_OFFERTS_PAR_SUJET = 7 [À FIXER]) ; corrigé = « Proposé par la communauté » en brouillon, sans
+  en cours, JOURS_OFFERTS_PAR_SUJET = 7, validé le 27/10) ; corrigé = « Proposé par la communauté » en brouillon, sans
   récompense. Rejeter = motif obligatoire + fichier supprimé. E-mail au contributeur. Contre-épreuve faite.
 - **Quiz sur une épreuve (23/10, options 1 + 2 choisies par Serge Alain)** : `Question.sujet` (facultatif) ;
   bouton « Quiz sur cette épreuve » sur la fiche du sujet (toutes ses questions, max 40, mode `sujet` du Quiz).
@@ -121,7 +126,7 @@
 - **QCM (V2, module 2)** `/entrainement/` : matières de la spécialité, quiz rapide de 10 questions (matière ou chapitre),
   une question à la fois, correction immédiate + explication (HTMX), note /20, révision des erreurs (dernière réponse
   fausse), derniers quiz. Questions publiées par le modérateur seulement si cohérentes. Table `ReponseQuestion`.
-  Limite de quiz par jour prête (QUIZ_GRATUITS_PAR_JOUR, [À FIXER]), active seulement avec PAIEMENT_ACTIF. Les tests d'OCR demandent Tesseract/Ghostscript (Docker, CI).
+  Limite de quiz par jour prête (QUIZ_GRATUITS_PAR_JOUR = 3, validé le 27/10), active seulement avec PAIEMENT_ACTIF. Les tests d'OCR demandent Tesseract/Ghostscript (Docker, CI).
 - **Corrigés (V2, module 1)** : onglets Sujet/Corrigé, Markdown + tableaux + formules en MathML (`sujets/rendu.py`,
   nettoyé par nh3), badges vérifié/communauté/en préparation + filtre dans la liste, avertissement, signalement
   (connecté), demande de retrait d'un corrigé, aperçu dans l'admin. Règle de publication appliquée aux corrigés.
@@ -155,8 +160,7 @@
 ## Prochaine étape
 
 **Plan avant la mise en ligne (27/10, validé par Serge Alain ; la mise en ligne vient en dernier)** :
-1. code (fait le 27/10) ; 2. décisions de Serge Alain (prix, quiz gratuits/jour, jours offerts, quota visiteurs,
-expiration des codes) ; 3. contenu (sessions et dates officielles, matières, vrais sujets d'informatique, pages
+1. code (fait le 27/10) ; 2. décisions de Serge Alain (faites le 27/10, sauf l'expiration des codes d'accès) ; 3. contenu (sessions et dates officielles, matières, vrais sujets d'informatique, pages
 légales, HINTEL, responsables, relecture anglaise) ; 4. essais réels (Galaxy, Firefox, Samsung Internet, quelques
 étudiants sur le Wi-Fi) ; 5. comptes externes (e-mails, Sentry, stockage, Google, agrégateur, VPS, domaine) ;
 6. mise en ligne.

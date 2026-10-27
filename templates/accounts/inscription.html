@@ -9,6 +9,7 @@
   <p class="mt-1 text-sm text-gris">{% translate "Gratuit. Nous ne demandons que le nécessaire." %}</p>
   <form method="post" class="formulaire carte mt-6 space-y-4" novalidate>
     {% csrf_token %}
+    {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
     {% translate "Créer mon compte" as bouton %}
     {% include "accounts/_formulaire.html" %}
   </form>
@@ -17,6 +18,6 @@
     <a class="underline" href="{% url 'conditions_de_vente' %}">{% translate "Conditions générales" %}</a> ·
     <a class="underline" href="{% url 'confidentialite' %}">{% translate "Politique de confidentialité" %}</a>
   </p>
-  <p class="mt-4 text-sm">{% translate "Déjà inscrit ?" %} <a class="font-semibold text-vert underline" href="{% url 'accounts:connexion' %}">{% translate "Se connecter" %}</a></p>
+  <p class="mt-4 text-sm">{% translate "Déjà inscrit ?" %} <a class="font-semibold text-vert underline" href="{% url 'accounts:connexion' %}{% if next %}?next={{ next|urlencode }}{% endif %}">{% translate "Se connecter" %}</a></p>
 </div>
 {% endblock %}

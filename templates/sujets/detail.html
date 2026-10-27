@@ -38,6 +38,16 @@
               data-texte-erreur="{% translate 'Impossible : vérifiez la connexion et la place libre.' %}">{% translate "Garder hors ligne" %}</button>
     {% endif %}
   </div>
+  {% if sujets_restants is not None %}
+    <p class="mt-3 text-sm text-gris">
+      {% if sujets_restants %}
+        {% blocktranslate count n=sujets_restants %}Sans compte : encore {{ n }} sujet à ouvrir aujourd'hui.{% plural %}Sans compte : encore {{ n }} sujets à ouvrir aujourd'hui.{% endblocktranslate %}
+      {% else %}
+        {% translate "Sans compte, la limite du jour est atteinte (les sujets déjà ouverts restent lisibles)." %}
+      {% endif %}
+      <a href="{% url 'accounts:inscription' %}?next={{ request.path|urlencode }}" class="text-vert underline">{% translate "Compte gratuit : sans limite" %}</a>
+    </p>
+  {% endif %}
 
   {% if nb_questions %}
     {# Quiz sur cette épreuve : les questions tirées de ce sujet. #}

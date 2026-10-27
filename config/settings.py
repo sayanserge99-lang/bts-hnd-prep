@@ -105,10 +105,12 @@ CONNEXION_ESSAIS_MAX = 5
 CONNEXION_BLOCAGE_SECONDES = 15 * 60
 
 # CDC 3.8 : quiz par jour de l'offre gratuite, appliqué seulement une fois le paiement ouvert.
-# [À FIXER] : le quota exact reste à décider (CDC 7) ; 3 est une valeur d'attente.
+# Valeurs fixées par Serge Alain le 27/10 (de même pour les deux suivantes).
 QUIZ_GRATUITS_PAR_JOUR = 3
-# Contributions (CDC 3.7). [À FIXER] avec Serge Alain : nombre de jours offerts par sujet validé.
+# Contributions (CDC 3.7) : jours de Premium offerts par sujet validé.
 JOURS_OFFERTS_PAR_SUJET = 7
+# Sujets différents qu'un visiteur sans compte peut ouvrir par jour (sujets/quota.py) ; un compte gratuit lève la limite.
+PDF_VISITEUR_PAR_JOUR = 3
 CONTRIBUTIONS_PAR_JOUR = 10
 # Forum (CDC 3.7) : messages par jour et par compte, signalements qui masquent un message en attendant le modérateur.
 FORUM_MESSAGES_PAR_JOUR = 30

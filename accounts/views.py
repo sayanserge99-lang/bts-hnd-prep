@@ -47,8 +47,10 @@ def inscription(request):
         utilisateur = form.save()
         login(request, utilisateur, backend="django.contrib.auth.backends.ModelBackend")
         messages.success(request, _("Bienvenue ! Votre compte est créé."))
-        return avec_langue(redirect("accounts:profil"), utilisateur)
-    return render(request, "accounts/inscription.html", {"form": form})
+        # Venu d'un sujet (limite des visiteurs atteinte) : on l'y ramène.
+        suite = suite_sure(request, request.POST.get("next"))
+        return avec_langue(redirect(suite), utilisateur)
+    return render(request, "accounts/inscription.html", {"form": form, "next": request.GET.get("next", request.POST.get("next", ""))})
 
 
 class Connexion(auth_views.LoginView):

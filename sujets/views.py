@@ -1,4 +1,4 @@
-from urllib.parse import quote
+from urllib.parse import quote, urlencode
 
 from django.conf import settings
 from django.contrib import messages
@@ -22,6 +22,7 @@ from config.securite import SIGNALEMENTS_CORRIGE_PAR_COMPTE
 from paiements.acces import lit_le_corrige_complet
 from partenaires.models import Etablissement
 
+from . import quota
 from .filigrane import filigraner, jeton_valide
 from .models import ConsultationJour, Corrige, Favori, Sujet
 
@@ -139,6 +140,7 @@ def detail(request, pk):
             "complet": lit_le_corrige_complet(request.user),
             "nb_questions": sujet.questions.visibles().count() if settings.FONCTIONNALITES["entrainement"] else 0,
             "nb_discussions": sujet.discussions.visibles().count() if settings.FONCTIONNALITES["forum"] else 0,
+            "sujets_restants": quota.restants(request),
         },
     )
 
@@ -169,6 +171,14 @@ def envoyer_pdf(request, fichier, nom):
 
 def pdf(request, pk):
     sujet = get_object_or_404(Sujet.objects.publies().select_related("session"), pk=pk)
+    if not quota.peut_ouvrir(request, sujet.pk):
+        # Requête du bouton « Garder hors ligne » : un refus, sinon le téléphone garderait la page d'inscription.
+        if request.headers.get("Sec-Fetch-Mode") in ("cors", "no-cors", "same-origin"):
+            return HttpResponse(status=429)
+        messages.info(request, _("Sans compte, on peut ouvrir %(n)s sujets par jour. Créez un compte gratuit pour tout lire.")
+                      % {"n": settings.PDF_VISITEUR_PAR_JOUR})
+        fiche = reverse("sujets:detail", args=[sujet.pk])
+        return redirect(f"{reverse('accounts:inscription')}?{urlencode({'next': fiche})}")
     ConsultationJour.compter(sujet, "pdf", request.user)
     return envoyer_pdf(request, sujet.fichier, f"{slugify(sujet.titre)}-{sujet.session.annee}.pdf")
 
