@@ -136,3 +136,25 @@ class AffectationModerateur(models.Model):
 
     def __str__(self):
         return f"{self.moderateur} → {self.matiere}"
+
+
+class DoubleAuthentification(models.Model):
+    """Code à 6 chiffres exigé de l'équipe pour entrer dans l'administration (accounts/double_auth.py)."""
+
+    utilisateur = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="double_auth")
+    # Partagé avec l'application du téléphone : jamais affiché dans l'administration.
+    secret = models.CharField(max_length=64)
+    active_le = models.DateTimeField(_("activée le"), null=True, blank=True, help_text=_("Vide : mise en place pas terminée."))
+    dernier_pas = models.BigIntegerField(default=0, help_text=_("Dernier code accepté : il ne peut pas resservir."))
+    codes_secours = models.JSONField(default=list, blank=True)
+
+    class Meta:
+        verbose_name = _("double authentification")
+        verbose_name_plural = _("doubles authentifications")
+
+    def __str__(self):
+        return str(self.utilisateur)
+
+    @property
+    def active(self):
+        return self.active_le is not None

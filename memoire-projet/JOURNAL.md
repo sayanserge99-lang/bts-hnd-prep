@@ -141,3 +141,9 @@
   inscriptions et réinitialisations sans limite, pas de CSP, signalements illimités, adresse d'admin par défaut, pas
   d'audit des dépendances. 8 tests ; contre-épreuve (limite admin retirée → 2 échecs). Première capture CSP trompeuse
   (Chrome n'affichait rien même sur une page piège) → bonne option trouvée, puis vérification refaite. 338/338 verts.
+- 27/10 : Serge Alain demande de corriger les points restants. Docker Desktop arrêté (PC redémarré) → relancé.
+  Double authentification de l'équipe (16 tests verts du premier coup, dont les 6 valeurs de la RFC 6238 ;
+  contre-épreuve sans l'intergiciel → 5 échecs ; capture du QR code). Sauvegardes chiffrées + copie distante
+  (essai complet dans Debian avec faux docker/rclone). Script de durcissement du serveur (shellcheck propre ; une
+  remarque SC2016 voulue, annotée). accounts.W001 + adresse d'admin réglée dans la CI. Images dev reconstruites
+  (qrcode). 355/355 verts.

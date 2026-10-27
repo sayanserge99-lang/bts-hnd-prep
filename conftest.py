@@ -15,6 +15,11 @@ def media_temporaire(settings, tmp_path):
 
 
 @pytest.fixture(autouse=True)
+def sans_double_auth(settings):
+    settings.DOUBLE_AUTH_EQUIPE = False
+
+
+@pytest.fixture(autouse=True)
 def cache_isole(settings):
     # Cache en mémoire propre à chaque test : pas de Redis partagé avec le serveur de développement,
     # et aucun échec de connexion qui passe d'un test à l'autre.

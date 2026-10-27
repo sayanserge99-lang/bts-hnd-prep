@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titre %}{% translate "Double authentification" %} — BTS-HND Prep{% endblock %}
+
+{% block contenu %}
+<div class="mx-auto max-w-md px-4 py-8">
+  <h1 class="text-2xl font-bold">{% translate "Code de vérification" %}</h1>
+  <p class="mt-2 text-sm text-gris">{% translate "Ouvrez votre application d'authentification et tapez le code de BTS-HND Prep. Téléphone perdu ? Tapez un de vos codes de secours." %}</p>
+  <form method="post" class="formulaire carte mt-6 space-y-4" novalidate>
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ suite }}">
+    {% translate "Vérifier" as bouton %}
+    {% include "accounts/_formulaire.html" %}
+  </form>
+</div>
+{% endblock %}

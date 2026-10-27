@@ -17,6 +17,8 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").sp
 CSRF_TRUSTED_ORIGINS = [o for o in os.environ.get("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",") if o]
 # Adresse de l'administration : changer « admin/ » en production éloigne les robots qui la cherchent.
 ADMIN_URL = os.environ.get("DJANGO_ADMIN_URL", "admin/").strip("/") + "/"
+# Code à 6 chiffres (application du téléphone) exigé de l'équipe pour l'administration.
+DOUBLE_AUTH_EQUIPE = True
 # Content-Security-Policy : sites où un formulaire peut mener (page de paiement de l'agrégateur, par exemple).
 CSP_FORM_ACTION_EN_PLUS = [o for o in os.environ.get("CSP_FORM_ACTION_EN_PLUS", "").split(",") if o]
 
@@ -49,6 +51,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "config.securite.DoubleAuthEquipe",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]

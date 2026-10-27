@@ -113,3 +113,12 @@ def test_aucun_script_en_ligne_dans_les_gabarits():
 def test_le_service_worker_ne_garde_jamais_l_administration(client):
     contenu = client.get(reverse("service_worker")).content.decode()
     assert f'startsWith("/{settings.ADMIN_URL}")' in contenu
+
+
+def test_la_mise_en_ligne_refuse_l_adresse_d_administration_par_defaut(settings):
+    from django.core.checks import run_checks
+
+    settings.ADMIN_URL = "admin/"
+    assert "accounts.W001" in [alerte.id for alerte in run_checks(include_deployment_checks=True)]
+    settings.ADMIN_URL = "gestion-7f3k/"
+    assert "accounts.W001" not in [alerte.id for alerte in run_checks(include_deployment_checks=True)]

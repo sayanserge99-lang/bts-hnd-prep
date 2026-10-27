@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titre %}{% translate "Codes de secours" %} — BTS-HND Prep{% endblock %}
+
+{% block contenu %}
+<div class="mx-auto max-w-md px-4 py-8">
+  <h1 class="text-2xl font-bold">✓ {% translate "Double authentification activée" %}</h1>
+  <p class="mt-3 rounded-lg border border-ambre/40 bg-ambre-clair p-3 text-sm">{% translate "Notez ces codes de secours et gardez-les en lieu sûr (pas dans le téléphone). Chacun remplace une fois le code de l'application si vous perdez votre téléphone. Ils ne seront plus jamais affichés." %}</p>
+  <ul class="carte mt-4 grid grid-cols-2 gap-2 font-mono text-base">
+    {% for code in codes %}<li>{{ code }}</li>{% endfor %}
+  </ul>
+  <a href="{{ suite }}" class="bouton-plein mt-6">{% translate "J'ai noté mes codes, continuer" %}</a>
+</div>
+{% endblock %}

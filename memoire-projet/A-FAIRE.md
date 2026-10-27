@@ -27,7 +27,7 @@
 - [ ] django-storages si stockage S3 (aujourd'hui : volume Docker `fichiers`).
 - [ ] Retouche des photos de sujets (recadrage, contraste) avant publication : manuelle (étude de faisabilité 2.1).
 - [ ] Images WebP (CDC 4) : à traiter avec l'envoi de photos par les contributeurs (V3).
-- [ ] Copier les sauvegardes hors du serveur (autre machine ou stockage distant).
+- [x] Copier les sauvegardes hors du serveur (rclone, chiffrées).
 - [ ] Créer un superutilisateur : `docker compose exec web python manage.py createsuperuser` (à faire par Serge Alain).
 - [x] Tailwind + HTMX, gabarit de base, sélecteur de langue, accueil, catalogue, fiche sujet, pages légales vides.
 - [x] Comptes : inscription, connexion avec blocage, mot de passe oublié, espace perso, favoris, export, suppression.
@@ -76,9 +76,11 @@
       tout est gratuit : les jours offerts aujourd'hui expirent avant l'ouverture du Premium.
 - [ ] Contributions : pas de conversion WebP des photos (assemblées en PDF), pas de recadrage automatique.
 - [x] Audit de sécurité : limites anti-abus (admin comprise), CSP, adresse d'admin réglable, pip-audit en CI.
-- [ ] Sécurité, à faire : double authentification (code à 6 chiffres) pour les comptes de l'équipe ; copies des
-      sauvegardes hors du serveur, chiffrées ; pare-feu du VPS (ufw : 22, 80, 443) et fail2ban ; mises à jour
-      automatiques d'Ubuntu ; choisir DJANGO_ADMIN_URL à la mise en ligne.
+- [x] Double authentification de l'équipe ; sauvegardes chiffrées et copiées hors du serveur ; script de
+      durcissement du VPS ; refus de l'adresse d'admin par défaut en production.
+- [ ] À la mise en ligne : lancer deploy/securiser-serveur.sh (après avoir installé sa clé SSH), créer la phrase
+      de sauvegarde et la destination rclone, choisir DJANGO_ADMIN_URL, activer sa double authentification,
+      faire une restauration d'essai.
 - [x] V3 module 5 : paiement Mobile Money (parcours complet, agrégateur simulé, reçus).
 - [ ] Choisir l'agrégateur (Serge Alain) puis écrire sa classe dans paiements/fournisseurs/ (initier, format de sa
       notification, consulter) ; régler PAIEMENT_FOURNISSEUR, PAIEMENT_SECRET, EXPLOITANT_* dans .env.production.

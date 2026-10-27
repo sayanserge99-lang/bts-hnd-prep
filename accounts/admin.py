@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 
 from .forms import ConnexionAdminForm, UtilisateurChangeForm, UtilisateurCreationForm
-from .models import AffectationModerateur, Consentement, ProfilEtude, Utilisateur
+from .models import AffectationModerateur, Consentement, DoubleAuthentification, ProfilEtude, Utilisateur
 
 
 class AffectationModerateurInline(admin.TabularInline):
@@ -50,3 +50,23 @@ class AffectationModerateurAdmin(admin.ModelAdmin):
 
 # Connexion à l'administration : mêmes limites d'essais que le site (accounts.forms.ConnexionLimiteeMixin).
 admin.site.login_form = ConnexionAdminForm
+
+
+@admin.register(DoubleAuthentification)
+class DoubleAuthentificationAdmin(admin.ModelAdmin):
+    """Téléphone perdu : supprimer la ligne oblige la personne à scanner un nouveau QR code à sa prochaine connexion."""
+
+    list_display = ("utilisateur", "active_le", "codes_restants")
+    search_fields = ("utilisateur__email",)
+    fields = ("utilisateur", "active_le", "codes_restants")
+    readonly_fields = fields  # le secret n'est jamais montré
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return request.user.is_superuser
+
+    @admin.display(description=_("codes de secours restants"))
+    def codes_restants(self, appareil):
+        return len(appareil.codes_secours)

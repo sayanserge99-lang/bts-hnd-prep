@@ -93,5 +93,9 @@
 - **Sécurité** (23/10) : limites dans le cache Redis (simples, partagées entre processus) plutôt qu'une bibliothèque ;
   le blocage refuse même le bon mot de passe ; « mot de passe oublié » répond toujours pareil (ni limite ni existence
   du compte révélées). CSP stricte pour les scripts, tolérante pour les styles en ligne (barres de progression).
+- **Double authentification** (27/10) : obligatoire pour l'équipe, seulement pour l'administration (les étudiants
+  ne sont pas concernés) ; TOTP standard (toutes les applications), écrit à la main plutôt qu'avec django-otp
+  (pas de modèles ni de pages de plus à maintenir) ; secret en clair dans la base (indispensable au calcul).
+  Sauvegardes : chiffrement symétrique GPG (outil présent partout, restauration sans logiciel particulier).
 - **Interface** : Tailwind v4 en exécutable autonome (pas de Node), polices du système, HTMX servi localement ;
   les pages marchent aussi sans JavaScript (formulaire GET classique).

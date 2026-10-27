@@ -8,6 +8,7 @@ class AccountsConfig(AppConfig):
     verbose_name = "Comptes"
 
     def ready(self):
+        from . import checks  # noqa: F401  (enregistre les vérifications)
         from .models import Utilisateur
         from .signals import ouvrir_l_administration, synchroniser_administrateur
 

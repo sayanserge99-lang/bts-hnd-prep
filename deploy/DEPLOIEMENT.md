@@ -14,6 +14,11 @@ sudo usermod -aG docker "$USER"   # puis se déconnecter et se reconnecter
 sudo mkdir -p /srv/bts-hnd-prep && sudo chown "$USER" /srv/bts-hnd-prep
 git clone https://github.com/sayanserge99-lang/bts-hnd-prep.git /srv/bts-hnd-prep
 cd /srv/bts-hnd-prep
+
+# Sécurité du serveur : pare-feu (22, 80, 443), fail2ban, mises à jour automatiques, SSH par clé.
+# Installez d'abord votre clé SSH (depuis votre PC : ssh-copy-id utilisateur@serveur), sinon le script
+# laisse la connexion par mot de passe ouverte pour ne pas vous enfermer dehors.
+sudo sh deploy/securiser-serveur.sh
 ```
 
 Avant la mise en production réelle, faites valider le choix de l'hébergeur au regard de la
@@ -49,6 +54,12 @@ docker compose -f compose.prod.yaml --env-file .env.production exec web python m
 Les migrations s'appliquent automatiquement au démarrage du conteneur `web`.
 Le site répond alors sur le port 80 du serveur.
 
+**Double authentification de l'équipe.** À la première ouverture de l'administration, chaque membre de
+l'équipe (vous compris) scanne un QR code avec une application (Google Authenticator, Microsoft
+Authenticator ou Aegis) et note ses 10 codes de secours. Ensuite, le code à 6 chiffres est demandé à chaque
+session. Téléphone perdu : un autre administrateur supprime sa ligne dans **Comptes → Doubles
+authentifications** ; si vous êtes seul administrateur, gardez vos codes de secours hors du téléphone.
+
 ## 4. HTTPS (Let's Encrypt)
 
 > Cette étape n'a pas encore été testée : elle demande un vrai nom de domaine.
@@ -63,21 +74,33 @@ Le site répond alors sur le port 80 du serveur.
 
 ## 5. Sauvegardes (CDC 4 : quotidiennes, 30 jours)
 
+Les sauvegardes sont **chiffrées** (AES-256) et **copiées hors du serveur** : une sauvegarde restée sur la
+même machine disparaît avec elle, et une sauvegarde en clair chez un hébergeur expose les données des étudiants.
+
+1. La phrase de chiffrement, lisible par root seulement. **Notez-la aussi ailleurs** (gestionnaire de mots de
+   passe, papier) : sans elle, les sauvegardes sont illisibles, même pour vous.
+   ```sh
+   sudo apt install -y gnupg rclone
+   openssl rand -base64 32 | sudo tee /root/.btshnd-sauvegarde-phrase && sudo chmod 600 /root/.btshnd-sauvegarde-phrase
+   ```
+2. L'espace de stockage distant (Backblaze B2, Google Drive, OneDrive…) : `sudo rclone config`, créer une
+   destination, par exemple `b2`, puis vérifier avec `sudo rclone lsd b2:`.
+3. La sauvegarde chaque nuit (crontab de root : `sudo crontab -e`) :
+   ```sh
+   0 3 * * * cd /srv/bts-hnd-prep && DESTINATION_DISTANTE=b2:btshnd-sauvegardes sh deploy/sauvegarde.sh >> /var/log/btshnd-sauvegarde.log 2>&1
+   ```
+
+Restaurer la base (déchiffrer, puis `pg_restore`) :
+
 ```sh
-crontab -e
-# ajouter :
-0 3 * * * cd /srv/bts-hnd-prep && sh deploy/sauvegarde.sh >> /var/log/btshnd-sauvegarde.log 2>&1
-```
-
-Les sauvegardes vont dans `sauvegardes/`. Copiez-les aussi hors du serveur : une sauvegarde
-restée sur la même machine disparaît avec elle.
-
-Restaurer la base :
-
-```sh
+sudo gpg --batch --pinentry-mode loopback --passphrase-file /root/.btshnd-sauvegarde-phrase \
+    -d sauvegardes/base_AAAA-MM-JJ_HHMM.dump.gpg > /tmp/base.dump
 docker compose -f compose.prod.yaml --env-file .env.production exec -T db \
-    sh -c 'pg_restore -U "$POSTGRES_USER" -d "$POSTGRES_DB" --clean' < sauvegardes/base_AAAA-MM-JJ_HHMM.dump
+    sh -c 'pg_restore -U "$POSTGRES_USER" -d "$POSTGRES_DB" --clean' < /tmp/base.dump
+rm /tmp/base.dump
 ```
+
+Essayez une restauration une fois par trimestre : une sauvegarde jamais restaurée n'est qu'un espoir.
 
 ## 6. Importer des sujets en lot
 

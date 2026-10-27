@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-23 14:10+0100\n"
+"POT-Creation-Date: 2026-10-27 11:19+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,6 +33,10 @@ msgstr "Roles"
 #: accounts/admin.py:29
 msgid "Dates"
 msgstr "Dates"
+
+#: accounts/admin.py:70
+msgid "codes de secours restants"
+msgstr "backup codes left"
 
 #: accounts/forms.py:21
 msgid ""
@@ -168,6 +172,26 @@ msgstr "consent"
 msgid "affectation de modérateur"
 msgstr "moderator assignment"
 
+#: accounts/models.py:147
+msgid "activée le"
+msgstr "enabled on"
+
+#: accounts/models.py:147
+msgid "Vide : mise en place pas terminée."
+msgstr "Empty: setup not finished."
+
+#: accounts/models.py:148
+msgid "Dernier code accepté : il ne peut pas resservir."
+msgstr "Last accepted code: it cannot be used again."
+
+#: accounts/models.py:152
+msgid "double authentification"
+msgstr "two-factor authentication"
+
+#: accounts/models.py:153
+msgid "doubles authentifications"
+msgstr "two-factor authentications"
+
 #: accounts/views.py:44
 msgid ""
 "Trop de comptes créés depuis cette connexion. Réessayez dans une heure."
@@ -220,7 +244,36 @@ msgstr "Password saved."
 msgid "Mot de passe modifié. Vous pouvez vous connecter."
 msgstr "Password changed. You can now log in."
 
-#: catalogue/models.py:9 config/settings.py:204
+#: accounts/views_double_auth.py:25
+msgid "Code à 6 chiffres"
+msgstr "6-digit code"
+
+#: accounts/views_double_auth.py:26
+msgid "Affiché par l'application d'authentification de votre téléphone."
+msgstr "Shown by the authenticator app on your phone."
+
+#: accounts/views_double_auth.py:70
+msgid "Code incorrect. Vérifiez l'heure de votre téléphone, puis réessayez."
+msgstr "Incorrect code. Check your phone's clock, then try again."
+
+#: accounts/views_double_auth.py:90
+msgid "Trop d'essais. Réessayez dans 15 minutes."
+msgstr "Too many attempts. Try again in 15 minutes."
+
+#: accounts/views_double_auth.py:96
+#, python-format
+msgid ""
+"Code de secours utilisé : il vous en reste %(n)s. Téléphone perdu ? Demandez"
+" à un administrateur de réinitialiser votre double authentification."
+msgstr ""
+"Backup code used: you have %(n)s left. Lost your phone? Ask an administrator"
+" to reset your two-factor authentication."
+
+#: accounts/views_double_auth.py:102
+msgid "Code incorrect."
+msgstr "Incorrect code."
+
+#: catalogue/models.py:9 config/settings.py:207
 msgid "Français"
 msgstr "French"
 
@@ -685,7 +738,7 @@ msgstr ""
 "Thank you! Your marking guide will be reviewed by a moderator before it is "
 "published."
 
-#: config/settings.py:204
+#: config/settings.py:207
 msgid "English"
 msgstr "English"
 
@@ -1853,6 +1906,88 @@ msgstr "No account yet?"
 #: templates/base.html:58
 msgid "Créer un compte"
 msgstr "Create an account"
+
+#: templates/accounts/double_auth_codes.html:4
+msgid "Codes de secours"
+msgstr "Backup codes"
+
+#: templates/accounts/double_auth_codes.html:8
+msgid "Double authentification activée"
+msgstr "Two-factor authentication enabled"
+
+#: templates/accounts/double_auth_codes.html:9
+msgid ""
+"Notez ces codes de secours et gardez-les en lieu sûr (pas dans le "
+"téléphone). Chacun remplace une fois le code de l'application si vous perdez"
+" votre téléphone. Ils ne seront plus jamais affichés."
+msgstr ""
+"Write down these backup codes and keep them somewhere safe (not on the "
+"phone). Each one replaces the app code once if you lose your phone. They "
+"will never be shown again."
+
+#: templates/accounts/double_auth_codes.html:13
+msgid "J'ai noté mes codes, continuer"
+msgstr "I have written down my codes, continue"
+
+#: templates/accounts/double_auth_configurer.html:4
+#: templates/accounts/double_auth_verifier.html:4
+msgid "Double authentification"
+msgstr "Two-factor authentication"
+
+#: templates/accounts/double_auth_configurer.html:8
+msgid "Protéger votre compte de l'équipe"
+msgstr "Protect your team account"
+
+#: templates/accounts/double_auth_configurer.html:9
+msgid ""
+"Votre compte ouvre l'administration (publication des sujets). En plus du mot"
+" de passe, un code à 6 chiffres affiché par votre téléphone vous sera "
+"demandé : un mot de passe volé ne suffira plus."
+msgstr ""
+"Your account opens the administration (publishing papers). Besides the "
+"password, you will be asked for a 6-digit code shown by your phone: a stolen"
+" password will no longer be enough."
+
+#: templates/accounts/double_auth_configurer.html:12
+msgid ""
+"Installez une application d'authentification : Google Authenticator, "
+"Microsoft Authenticator ou Aegis."
+msgstr ""
+"Install an authenticator app: Google Authenticator, Microsoft Authenticator "
+"or Aegis."
+
+#: templates/accounts/double_auth_configurer.html:14
+msgid "Dans l'application, ajoutez un compte en scannant ce QR code :"
+msgstr "In the app, add an account by scanning this QR code:"
+
+#: templates/accounts/double_auth_configurer.html:16
+msgid "Impossible de scanner ? Saisissez cette clé à la main :"
+msgstr "Cannot scan? Enter this key by hand:"
+
+#: templates/accounts/double_auth_configurer.html:19
+msgid "Tapez le code à 6 chiffres affiché par l'application."
+msgstr "Type the 6-digit code shown by the app."
+
+#: templates/accounts/double_auth_configurer.html:25
+#: templates/paiements/activer_code.html:13
+msgid "Activer"
+msgstr "Activate"
+
+#: templates/accounts/double_auth_verifier.html:8
+msgid "Code de vérification"
+msgstr "Verification code"
+
+#: templates/accounts/double_auth_verifier.html:9
+msgid ""
+"Ouvrez votre application d'authentification et tapez le code de BTS-HND "
+"Prep. Téléphone perdu ? Tapez un de vos codes de secours."
+msgstr ""
+"Open your authenticator app and type the BTS-HND Prep code. Lost your phone?"
+" Type one of your backup codes."
+
+#: templates/accounts/double_auth_verifier.html:13
+msgid "Vérifier"
+msgstr "Verify"
 
 #: templates/accounts/email_reinitialisation.txt:1
 msgid "Bonjour,"
@@ -3787,10 +3922,6 @@ msgid ""
 msgstr ""
 "Is your institution a BTS-HND Prep partner? The code it gave you opens the "
 "Premium subscription. It can only be used once."
-
-#: templates/paiements/activer_code.html:13
-msgid "Activer"
-msgstr "Activate"
 
 #: templates/paiements/commander.html:4 templates/paiements/suivi.html:4
 msgid "Paiement"

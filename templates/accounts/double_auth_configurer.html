@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titre %}{% translate "Double authentification" %} — BTS-HND Prep{% endblock %}
+
+{% block contenu %}
+<div class="mx-auto max-w-md px-4 py-8">
+  <h1 class="text-2xl font-bold">{% translate "Protéger votre compte de l'équipe" %}</h1>
+  <p class="mt-2 text-sm text-gris">{% translate "Votre compte ouvre l'administration (publication des sujets). En plus du mot de passe, un code à 6 chiffres affiché par votre téléphone vous sera demandé : un mot de passe volé ne suffira plus." %}</p>
+
+  <ol class="carte mt-6 list-decimal space-y-4 pl-8 text-sm">
+    <li>{% translate "Installez une application d'authentification : Google Authenticator, Microsoft Authenticator ou Aegis." %}</li>
+    <li>
+      {% translate "Dans l'application, ajoutez un compte en scannant ce QR code :" %}
+      <div class="mt-3 w-48 rounded-lg bg-white p-2">{{ qr }}</div>
+      <p class="mt-2 text-xs text-gris">{% translate "Impossible de scanner ? Saisissez cette clé à la main :" %}</p>
+      <p class="mt-1 font-mono text-sm break-all">{{ secret }}</p>
+    </li>
+    <li>{% translate "Tapez le code à 6 chiffres affiché par l'application." %}</li>
+  </ol>
+
+  <form method="post" class="formulaire carte mt-4 space-y-4" novalidate>
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ suite }}">
+    {% translate "Activer" as bouton %}
+    {% include "accounts/_formulaire.html" %}
+  </form>
+</div>
+{% endblock %}

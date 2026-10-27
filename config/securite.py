@@ -4,8 +4,14 @@ Les limites comptent dans le cache Redis (partagé entre les processus Gunicorn)
 bloque pendant `duree` secondes à partir de la première tentative comptée.
 """
 
+from urllib.parse import urlencode
+
 from django.conf import settings
 from django.core.cache import cache
+from django.shortcuts import redirect
+from django.urls import reverse
+
+from accounts.double_auth import est_verifiee
 
 
 def adresse_ip(request):
@@ -48,6 +54,37 @@ INSCRIPTIONS_PAR_IP = Limite("inscription-ip", 5, 60 * 60)
 REINITIALISATIONS_PAR_IP = Limite("reinitialisation-ip", 5, 60 * 60)
 REINITIALISATIONS_PAR_EMAIL = Limite("reinitialisation-email", 3, 60 * 60)
 SIGNALEMENTS_CORRIGE_PAR_COMPTE = Limite("signalement-corrige", 10, 24 * 60 * 60)
+# 10^6 codes possibles, 3 valables à la fois : 5 essais par quart d'heure rendent la devinette sans espoir.
+DOUBLE_AUTH_ESSAIS = Limite("double-auth", 5, 15 * 60)
+
+
+class DoubleAuthEquipe:
+    """L'administration exige, en plus du mot de passe, le code du téléphone (accounts/double_auth.py).
+
+    Un mot de passe volé ne suffit donc plus pour publier un sujet. Ne concerne que l'équipe (is_staff),
+    et seulement dans l'administration : les étudiants ne voient aucune différence.
+    """
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        if self._a_verifier(request):
+            # Import tardif : accounts importe ce module au démarrage.
+            from accounts.models import DoubleAuthentification
+
+            active = DoubleAuthentification.objects.filter(utilisateur=request.user, active_le__isnull=False).exists()
+            page = "accounts:double_auth" if active else "accounts:double_auth_configurer"
+            return redirect(f"{reverse(page)}?{urlencode({'next': request.get_full_path()})}")
+        return self.get_response(request)
+
+    def _a_verifier(self, request):
+        if not settings.DOUBLE_AUTH_EQUIPE or not request.user.is_authenticated or not request.user.is_staff:
+            return False
+        prefixe = "/" + settings.ADMIN_URL
+        if not request.path.startswith(prefixe) or request.path.startswith(prefixe + "logout/"):
+            return False
+        return not est_verifiee(request)
 
 
 class EnTetesDeSecurite:

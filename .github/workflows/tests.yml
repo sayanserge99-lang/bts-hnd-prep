@@ -79,7 +79,7 @@ jobs:
       # Réglages de production (HTTPS activé) : tout avertissement de sécurité fait échouer.
       - name: Contrôle de sécurité de la production
         run: |
-          export DJANGO_PRODUCTION=1 DJANGO_HTTPS=1 DJANGO_ALLOWED_HOSTS=bts-hnd-prep.example.com
+          export DJANGO_PRODUCTION=1 DJANGO_HTTPS=1 DJANGO_ALLOWED_HOSTS=bts-hnd-prep.example.com DJANGO_ADMIN_URL=gestion-ci/
           export DJANGO_SECRET_KEY="$(python -c 'import secrets; print(secrets.token_urlsafe(50))')"
           python manage.py check --deploy --fail-level WARNING
 

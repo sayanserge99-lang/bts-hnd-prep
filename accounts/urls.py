@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 
 from paiements.views import activer_code
 
-from . import views
+from . import views, views_double_auth
 
 app_name = "accounts"
 
@@ -25,6 +25,8 @@ urlpatterns = [
     path("profil/modifier/", views.modifier_profil, name="modifier_profil"),
     path("profil/mot-de-passe/", views.mot_de_passe, name="mot_de_passe"),
     path("profil/code/", activer_code, name="activer_code"),
+    path("double-authentification/", views_double_auth.verifier, name="double_auth"),
+    path("double-authentification/configurer/", views_double_auth.configurer, name="double_auth_configurer"),
     path("profil/partage/", views.basculer_partage, name="partage"),
     path("profil/mes-donnees/", views.exporter, name="exporter"),
     path("profil/supprimer/", views.supprimer, name="supprimer"),
