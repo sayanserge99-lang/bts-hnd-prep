@@ -7,6 +7,7 @@ donc par la règle de publication (CDC 4.2). Un sujet d'une session en cours est
 from pathlib import Path
 
 from django.conf import settings
+from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
 from django.core.mail import send_mail
 from django.db import transaction
@@ -69,6 +70,10 @@ def nom_affiche(utilisateur):
 @transaction.atomic
 def valider_sujet(contribution, moderateur, *, session, titre, type_epreuve, duree, source, specialites, bareme=""):
     """Crée le sujet en brouillon avec le PDF de la contribution, puis offre les jours au contributeur."""
+    # Règle absolue (CDC 4.2) : l'année déclarée compte, pas seulement la session choisie dans le formulaire
+    # (sinon un sujet de 2027 pourrait être classé « 2025 » et publié avant la fin de sa session).
+    if session_non_terminee(contribution.matiere, contribution.annee):
+        raise ValidationError(_("Session pas encore terminée : cette contribution ne peut être que refusée."))
     sujet = Sujet(
         titre=titre, session=session, matiere=contribution.matiere, type_epreuve=type_epreuve, duree=duree,
         source=source, bareme=bareme, statut=Sujet.Statut.BROUILLON,

@@ -1,11 +1,13 @@
 """Contributions (CDC 3.7, 4.1, 4.2, 10.1) : envoi, contrôles, modération, récompense."""
 
 import io
+import re
 from datetime import date, timedelta
 
 import pytest
 from django.contrib.auth.models import Group
 from django.core import mail
+from django.core.exceptions import ValidationError
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.urls import reverse
 from django.utils import timezone
@@ -13,6 +15,7 @@ from PIL import Image
 
 from accounts.models import AffectationModerateur, ProfilEtude, Utilisateur
 from catalogue.models import Matiere, SpecialiteMatiere
+from communaute import contributions
 from communaute.models import Contribution
 from paiements.models import Abonnement, Offre, Paiement
 from sujets.models import Corrige, Sujet
@@ -204,15 +207,16 @@ def test_rejeter_supprime_le_fichier_et_previent(admin_client, etudiant, comptab
     chemin = contribution.fichier.name
     url = reverse("admin:communaute_contribution_rejeter", args=[contribution.pk])
     admin_client.post(url, {"motif": ""})  # motif obligatoire
+    admin_client.post(url, {"motif": "autre", "message": ""})  # « Autre » demande un message
     assert Contribution.objects.get().statut == Contribution.Statut.EN_ATTENTE
 
     with django_capture_on_commit_callbacks(execute=True):
-        admin_client.post(url, {"motif": "Photo illisible."})
+        admin_client.post(url, {"motif": "illisible", "message": "Photo illisible."})
 
     contribution.refresh_from_db()
     assert contribution.statut == Contribution.Statut.REJETEE and not contribution.fichier
     assert not contribution.fichier.storage.exists(chemin)
-    assert "Photo illisible." in mail.outbox[0].body
+    assert "Illisible — Photo illisible." in mail.outbox[0].body
     assert not Abonnement.objects.exists()
     admin_client.force_login(etudiant)
     assert "Photo illisible." in admin_client.get(reverse("communaute:mes_contributions")).content.decode()
@@ -220,7 +224,7 @@ def test_rejeter_supprime_le_fichier_et_previent(admin_client, etudiant, comptab
 
 def test_une_contribution_traitee_ne_se_retraite_pas(admin_client, etudiant, comptabilite, compta_generale):
     contribution = contribution_sujet(etudiant, compta_generale, comptabilite)
-    admin_client.post(reverse("admin:communaute_contribution_rejeter", args=[contribution.pk]), {"motif": "Doublon."})
+    admin_client.post(reverse("admin:communaute_contribution_rejeter", args=[contribution.pk]), {"motif": "deja_en_ligne"})
     assert admin_client.get(reverse("admin:communaute_contribution_valider", args=[contribution.pk])).status_code == 404
 
 
@@ -305,3 +309,57 @@ def test_la_zone_accepte_photos_et_pdf_en_plusieurs_fichiers(client, etudiant):
     assert 'accept="image/*,application/pdf"' in page and "multiple" in page
     assert "Photographier ou choisir un fichier" in page
     assert "d&#x27;une session terminée" in page or "d'une session terminée" in page  # certification
+
+
+# --- Modération d'après la maquette : contrôles en clair, pas de validation d'une session en cours -----------
+
+def test_les_controles_sont_ecrits_en_clair(admin_client, etudiant, comptabilite, compta_generale, creer_sujet, session_terminee, session_en_cours):
+    propre = contribution_sujet(etudiant, compta_generale, comptabilite, annee=2024)
+    creer_sujet(session_terminee, statut=Sujet.Statut.PUBLIE)
+    doublon = contribution_sujet(etudiant, compta_generale, comptabilite, annee=session_terminee.annee)
+    en_cours = contribution_sujet(etudiant, compta_generale, comptabilite, annee=session_en_cours.annee)
+
+    page = admin_client.get(reverse("admin:communaute_contribution_changelist")).content.decode()
+
+    assert "✓ Session terminée, pas de doublon" in page
+    assert "⚠ Doublon possible" in page and "Comparer avec le sujet en ligne" in page
+    assert "⛔ Session pas encore terminée" in page and "Publication impossible, même par un administrateur." in page
+    for contribution in (propre, doublon):
+        assert reverse("admin:communaute_contribution_valider", args=[contribution.pk]) in page
+    assert reverse("admin:communaute_contribution_valider", args=[en_cours.pk]) not in page
+
+
+def test_une_session_non_terminee_n_affiche_jamais_valider_et_ne_se_valide_pas(
+    admin_client, etudiant, comptabilite, compta_generale, session_terminee, session_en_cours
+):
+    contribution = contribution_sujet(etudiant, compta_generale, comptabilite, annee=session_en_cours.annee)
+    valider = reverse("admin:communaute_contribution_valider", args=[contribution.pk])
+
+    fiche = admin_client.get(reverse("admin:communaute_contribution_change", args=[contribution.pk])).content.decode()
+    assert valider not in fiche and "Refuser et supprimer" in fiche
+    liste = admin_client.get(reverse("admin:communaute_contribution_changelist")).content.decode()
+    assert valider not in liste
+
+    # Validation forcée par requête, en la classant dans une session terminée : refusée.
+    reponse = admin_client.post(valider, {
+        "session": session_terminee.pk, "titre": "X", "type_epreuve": "ecrite", "duree": 240, "source": "X",
+        "specialites": [comptabilite.pk],
+    })
+    assert reponse.status_code == 302 and "motif=session_non_terminee" in reponse.url
+    contribution.refresh_from_db()
+    assert contribution.statut == Contribution.Statut.EN_ATTENTE and not Sujet.objects.exists()
+    assert not Abonnement.objects.exists()
+
+    # Et le service lui-même refuse, même appelé sans passer par l'admin.
+    with pytest.raises(ValidationError):
+        contributions.valider_sujet(contribution, etudiant, session=session_terminee, titre="X", type_epreuve="ecrite",
+                                    duree=240, source="X", specialites=[comptabilite])
+    assert not Sujet.objects.exists()
+
+
+def test_refuser_une_session_non_terminee_preselectionne_le_motif(admin_client, etudiant, comptabilite, compta_generale, session_en_cours):
+    contribution = contribution_sujet(etudiant, compta_generale, comptabilite, annee=session_en_cours.annee)
+    url = reverse("admin:communaute_contribution_rejeter", args=[contribution.pk]) + "?motif=session_non_terminee"
+    page = admin_client.get(url).content.decode()
+    assert re.search(r'value="session_non_terminee"[^>]*checked', page)
+    assert "Déjà en ligne" in page and "Pages manquantes" in page and "Message (facultatif)" in page

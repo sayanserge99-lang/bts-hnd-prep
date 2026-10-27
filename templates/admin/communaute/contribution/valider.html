@@ -23,7 +23,7 @@
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="{% translate 'Valider' %}" class="default">
-    <a href="{% url 'admin:communaute_contribution_rejeter' contribution.pk %}" class="button">{% translate "Rejeter plutôt" %}</a>
+    <a href="{% url 'admin:communaute_contribution_rejeter' contribution.pk %}" class="button">{% translate "Refuser plutôt" %}</a>
   </form>
 </div>
 {% endblock %}

@@ -82,6 +82,13 @@ class Contribution(models.Model):
         return f"{self.matiere} {self.annee}"
 
     @property
+    def session_terminee(self):
+        """Faux si la session de cette année n'est pas finie : la contribution ne peut alors pas être validée."""
+        from .contributions import session_non_terminee
+
+        return self.type != self.Type.SUJET or not session_non_terminee(self.matiere, self.annee)
+
+    @property
     def doublons(self):
         """CDC 3.7 : sujets déjà présents pour la même année et la même matière."""
         if self.type != self.Type.SUJET:

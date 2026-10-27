@@ -4,6 +4,8 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
 from django.urls import path, reverse
+from django.utils import timezone
+from django.utils.formats import date_format
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import ngettext
@@ -23,7 +25,9 @@ CIBLES = ("sujet__matiere", "corrige__sujet__matiere")
 class ContributionAdmin(LimiteAuxMatieresDuModerateur, admin.ModelAdmin):
     """File de modération (CDC 3.9) : valider (sujet ou corrigé créé en brouillon) ou rejeter avec motif."""
 
-    list_display = ("libelle", "type", "utilisateur", "statut", "alerte_doublon", "cree_le")
+    # Maquette (écran 7) : document, envoyé par, contrôles en clair, décision.
+    list_display = ("document", "envoye_par", "controles", "decision")
+    list_display_links = ("document",)
     list_filter = ("statut", "type", "matiere__examen")
     search_fields = ("utilisateur__email", "matiere__nom_fr", "matiere__nom_en", "commentaire")
     readonly_fields = (
@@ -40,9 +44,52 @@ class ContributionAdmin(LimiteAuxMatieresDuModerateur, admin.ModelAdmin):
     def libelle(self, contribution):
         return contribution.libelle
 
-    @admin.display(description=_("doublon ?"), boolean=True)
-    def alerte_doublon(self, contribution):
-        return contribution.doublons.exists() if contribution.type == Contribution.Type.SUJET else None
+    @admin.display(description=_("document"), ordering="-cree_le")
+    def document(self, contribution):
+        return format_html("{}<br><small>{} · {}</small>", contribution.libelle, contribution.get_type_display(),
+                           date_format(timezone.localtime(contribution.cree_le), "d/m/Y H:i"))
+
+    @admin.display(description=_("envoyé par"), ordering="utilisateur__email")
+    def envoye_par(self, contribution):
+        return contributions.nom_affiche(contribution.utilisateur)
+
+    @admin.display(description=_("contrôles"))
+    def controles(self, contribution):
+        """Maquette (écran 7) : l'état en clair, icône + texte, jamais la couleur seule."""
+        if contribution.type != Contribution.Type.SUJET:
+            return "—"
+        if not contribution.session_terminee:
+            return format_html(
+                '<strong style="color:#b42318">⛔ {}</strong><br><small>{}</small>',
+                _("Session pas encore terminée"), _("Publication impossible, même par un administrateur."),
+            )
+        doublon = contribution.doublons.select_related("session").first()
+        if doublon:
+            if doublon.statut == doublon.Statut.PUBLIE:
+                lien = reverse("sujets:detail", args=[doublon.pk])
+            else:
+                lien = reverse("admin:sujets_sujet_change", args=[doublon.pk])
+            return format_html(
+                '<strong style="color:#7a5a00">⚠ {}</strong><br><a href="{}" target="_blank" rel="noopener">{}</a>',
+                _("Doublon possible"), lien, _("Comparer avec le sujet en ligne"),
+            )
+        return format_html('<strong style="color:#0f6b4f">✓ {}</strong>', _("Session terminée, pas de doublon"))
+
+    @admin.display(description=_("décision"))
+    def decision(self, contribution):
+        if contribution.statut != Contribution.Statut.EN_ATTENTE:
+            return contribution.get_statut_display()
+        rejeter = reverse("admin:communaute_contribution_rejeter", args=[contribution.pk])
+        if not contribution.session_terminee:
+            # Un seul choix possible : aucun bouton « Valider » (CDC 4.2).
+            return format_html(
+                '<a class="button" style="background:#b42318;color:#fff;white-space:nowrap" href="{}?motif=session_non_terminee">{}</a>',
+                rejeter, _("Refuser et supprimer"),
+            )
+        valider = reverse("admin:communaute_contribution_valider", args=[contribution.pk])
+        return format_html('<span style="white-space:nowrap"><a class="button" href="{}">{}</a> '
+                           '<a class="button default" href="{}">{}</a></span>',
+                           rejeter, _("Refuser"), valider, _("Valider"))
 
     @admin.display(description=_("fichier"))
     def lien_fichier(self, contribution):
@@ -82,6 +129,7 @@ class ContributionAdmin(LimiteAuxMatieresDuModerateur, admin.ModelAdmin):
             "contribution": contribution,
             "form": form,
             "doublons": contribution.doublons.select_related("session"),
+            "controles": self.controles(contribution),
         }
         return TemplateResponse(request, f"admin/communaute/contribution/{gabarit}", contexte)
 
@@ -89,6 +137,10 @@ class ContributionAdmin(LimiteAuxMatieresDuModerateur, admin.ModelAdmin):
         if not self.has_change_permission(request):
             raise PermissionDenied
         contribution = self._contribution(request, pk)
+        if not contribution.session_terminee:
+            # Même par une requête forgée : une contribution d'une session en cours ne se valide pas.
+            self.message_user(request, _("Session pas encore terminée : cette contribution ne peut être que refusée."), messages.ERROR)
+            return redirect(reverse("admin:communaute_contribution_rejeter", args=[contribution.pk]) + "?motif=session_non_terminee")
         if contribution.type == Contribution.Type.SUJET:
             form = ValidationSujetForm(request.POST or None, contribution=contribution)
         else:
@@ -107,12 +159,12 @@ class ContributionAdmin(LimiteAuxMatieresDuModerateur, admin.ModelAdmin):
         if not self.has_change_permission(request):
             raise PermissionDenied
         contribution = self._contribution(request, pk)
-        form = RejetForm(request.POST or None)
+        form = RejetForm(request.POST or None, initial={"motif": request.GET.get("motif")})
         if form.is_valid():
-            contributions.rejeter(contribution, request.user, form.cleaned_data["motif"])
+            contributions.rejeter(contribution, request.user, form.texte())
             self.message_user(request, _("Contribution rejetée ; le fichier est supprimé."), messages.WARNING)
             return redirect("admin:communaute_contribution_changelist")
-        return self._page(request, contribution, form, _("Rejeter la contribution"), "rejeter.html")
+        return self._page(request, contribution, form, _("Refuser la contribution"), "rejeter.html")
 
 
 @admin.register(Signalement)

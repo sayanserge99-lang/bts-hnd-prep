@@ -6,18 +6,18 @@
   <a href="{% url 'admin:index' %}">{% translate "Accueil" %}</a>
   &rsaquo; <a href="{% url 'admin:communaute_contribution_changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
   &rsaquo; <a href="{% url 'admin:communaute_contribution_change' contribution.pk %}">{{ contribution.libelle }}</a>
-  &rsaquo; {% translate "Rejeter" %}
+  &rsaquo; {% translate "Refuser" %}
 </div>
 {% endblock %}
 
 {% block content %}
 <div id="content-main">
   {% include "admin/communaute/contribution/_resume.html" %}
-  <p>{% translate "Sujet d'une session en cours, origine douteuse, illisible, doublon sans intérêt… Le motif est envoyé au contributeur et le fichier est supprimé." %}</p>
+  <p>{% translate "Le motif est envoyé au contributeur et le fichier est supprimé." %}</p>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="{% translate 'Rejeter' %}" class="default">
+    <input type="submit" value="{% translate 'Refuser et supprimer' %}" class="default">
   </form>
 </div>
 {% endblock %}

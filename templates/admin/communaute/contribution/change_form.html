@@ -3,8 +3,13 @@
 
 {% block object-tools-items %}
   {% if original.statut == "en_attente" and has_change_permission %}
-    <li><a href="{% url 'admin:communaute_contribution_valider' original.pk %}">{% translate "Valider" %}</a></li>
-    <li><a href="{% url 'admin:communaute_contribution_rejeter' original.pk %}">{% translate "Rejeter" %}</a></li>
+    {% if original.session_terminee %}
+      <li><a href="{% url 'admin:communaute_contribution_valider' original.pk %}">{% translate "Valider" %}</a></li>
+      <li><a href="{% url 'admin:communaute_contribution_rejeter' original.pk %}">{% translate "Refuser" %}</a></li>
+    {% else %}
+      {# Session pas encore terminée : seul le refus est proposé (CDC 4.2). #}
+      <li><a href="{% url 'admin:communaute_contribution_rejeter' original.pk %}?motif=session_non_terminee" style="background:#b42318">{% translate "Refuser et supprimer" %}</a></li>
+    {% endif %}
   {% endif %}
   {{ block.super }}
 {% endblock %}

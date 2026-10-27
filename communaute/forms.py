@@ -246,10 +246,32 @@ class ValidationCorrigeForm(forms.Form):
 
 
 class RejetForm(forms.Form):
-    motif = forms.CharField(
-        widget=forms.Textarea(attrs={"rows": 4}), label=_("Motif du rejet"),
-        help_text=_("Envoyé au contributeur. Le fichier est supprimé."),
+    """Maquette (écran 7) : motif prédéfini + message facultatif, envoyés à l'étudiant."""
+
+    MOTIFS = [
+        ("deja_en_ligne", _("Déjà en ligne")),
+        ("illisible", _("Illisible")),
+        ("pages_manquantes", _("Pages manquantes")),
+        ("session_non_terminee", _("Session non terminée")),
+        ("autre", _("Autre")),
+    ]
+    motif = forms.ChoiceField(choices=MOTIFS, widget=forms.RadioSelect, label=_("Motif du refus"))
+    message = forms.CharField(
+        widget=forms.Textarea(attrs={"rows": 3}), required=False, max_length=1000, label=_("Message (facultatif)"),
+        help_text=_("Le motif est envoyé à l'étudiant. Restez courtois : il a voulu aider."),
     )
+
+    def clean(self):
+        donnees = super().clean()
+        if donnees.get("motif") == "autre" and not donnees.get("message", "").strip():
+            self.add_error("message", _("Pour « Autre », écrivez le motif en quelques mots."))
+        return donnees
+
+    def texte(self):
+        """Ce que reçoit l'étudiant : le motif, puis le message s'il y en a un."""
+        libelle = dict(self.MOTIFS)[self.cleaned_data["motif"]]
+        message = self.cleaned_data["message"].strip()
+        return f"{libelle} — {message}" if message else str(libelle)
 
 
 class ContactForm(forms.ModelForm):
