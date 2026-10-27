@@ -16,7 +16,7 @@
 ## Squelette (suite)
 
 - [x] Recherche plein texte : index GIN, accents ignorés (fr_unaccent), débuts de mot, titre et matière > texte.
-- [ ] Recherche : un renommage de matière ne met pas l'index à jour (lancer `reindexer_recherche`) ; à automatiser si besoin.
+- [x] Recherche : renommer une matière réindexe ses sujets (signal).
 - [x] Docker de développement : `Dockerfile` (Python 3.13), `compose.yaml` (web, PostgreSQL 17, Redis 7).
 - [x] Docker de production : Gunicorn, Nginx, X-Accel-Redirect, X-Real-IP, SMTP, check --deploy, sauvegardes.
 - [ ] HTTPS Let's Encrypt sur le vrai serveur (procédure écrite dans deploy/DEPLOIEMENT.md, non testée).
@@ -39,7 +39,7 @@
 - [x] Formulaire de demande de retrait (sujets) avec actions d'admin Accepter / Refuser.
 - [ ] Rédiger les pages légales (mentions, confidentialité, CGV, contact) : contenu à fournir par Serge Alain / juriste.
 - [ ] Renseigner DJANGO_ADMINS dans .env.production pour être prévenu des demandes de retrait.
-- [ ] Demande de retrait des corrigés : à ajouter avec les corrigés (V2).
+- [x] Demande de retrait des corrigés (fait avec les corrigés, V2).
 - [ ] Décider le quota de téléchargement des visiteurs (CDC 7 : « limité ») ; aujourd'hui tout est ouvert.
 - [ ] Accueil : apparier spécialités BTS ↔ HND comme sur la maquette (aucun lien en base aujourd'hui).
 - [ ] Alpine.js : pas encore nécessaire (ajouter quand il le sera : minuteur d'examen blanc, menus).
@@ -58,7 +58,8 @@
 - [x] « Définir un mot de passe » (compte Google) / « Changer mon mot de passe » dans Mon espace.
 - [x] Statistiques back-office V2 : tableau de bord administrateur, compteur anonyme des consultations.
 - [x] Hors ligne V2 : installable, sujets gardés (fiche, corrigé, PDF), quiz téléchargés + synchronisés.
-- [ ] Hors ligne : essai réel sur téléphone ; un sujet retiré (demande de retrait) reste sur les téléphones qui l'ont gardé.
+- [x] Hors ligne : un sujet retiré est effacé des téléphones dès qu'ils ont du réseau.
+- [ ] Hors ligne : essai réel sur téléphone (Galaxy).
 - [ ] Hors ligne : compter les consultations de PDF (statistiques) — les lectures hors ligne ne sont pas vues.
 - [x] Progression V2 : taux par matière/chapitre, points faibles + quiz conseillé, compte à rebours, historique.
 - [x] Examens blancs V2 : minuteur serveur, sauvegarde continue, reprise, remise auto, auto-évaluation.
@@ -81,6 +82,7 @@
 - [ ] À la mise en ligne : lancer deploy/securiser-serveur.sh (après avoir installé sa clé SSH), créer la phrase
       de sauvegarde et la destination rclone, choisir DJANGO_ADMIN_URL, activer sa double authentification,
       faire une restauration d'essai.
+- [x] Pages d'erreur, formulaire de contact, robots.txt et sitemap.xml.
 - [x] V3 module 5 : paiement Mobile Money (parcours complet, agrégateur simulé, reçus).
 - [ ] Choisir l'agrégateur (Serge Alain) puis écrire sa classe dans paiements/fournisseurs/ (initier, format de sa
       notification, consulter) ; régler PAIEMENT_FOURNISSEUR, PAIEMENT_SECRET, EXPLOITANT_* dans .env.production.
@@ -92,8 +94,8 @@
 - [ ] Codes d'accès : pas de date d'expiration propre au code (il vit tant que la convention est active) ; prix et
       facturation des lots aux IPES hors plateforme (à décider avec Serge Alain).
 - [x] V3 module 2 : forum (questions-réponses par matière, signalements, modération).
-- [ ] Forum : pas de modification ni de suppression de ses propres messages, pas de recherche, pas d'abonnement
-      à une discussion (seul l'auteur de la question est prévenu). À ajouter selon les retours.
+- [x] Forum : modifier et supprimer ses propres messages.
+- [ ] Forum : pas de recherche ni d'abonnement à une discussion (seul l'auteur de la question est prévenu).
 
 ## Étude de faisabilité (reporté, « on les fera le moment venu »)
 

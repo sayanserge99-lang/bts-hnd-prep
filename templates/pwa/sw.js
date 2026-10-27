@@ -64,6 +64,10 @@ self.addEventListener("fetch", (evenement) => {
       .then((reponse) => {
         const html = (reponse.headers.get("Content-Type") || "").startsWith("text/html");
         if (reponse.ok && requete.mode === "navigate" && html && pagePublique(url)) garderCopie(PAGES, requete, reponse);
+        // Sujet retiré (CDC 10.1) : la copie gardée ne doit plus s'afficher sans réseau.
+        if (reponse.status === 404 && pagePublique(url)) {
+          caches.keys().then((noms) => noms.forEach((nom) => caches.open(nom).then((cache) => cache.delete(requete, { ignoreSearch: true }))));
+        }
         return reponse;
       })
       .catch(() => caches.match(requete, { ignoreSearch: url.pathname.startsWith("/static/") }).then((trouve) => {

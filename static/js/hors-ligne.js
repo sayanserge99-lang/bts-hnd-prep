@@ -75,6 +75,48 @@
     montrer(bouton);
   }
 
+  // --- Sujets retirés (CDC 10.1) : effacés du téléphone dès qu'il a du réseau -------
+
+  var CLE_VERIFICATION = "btshnd-retraits-verifies";
+  var INTERVALLE_VERIFICATION = 6 * 60 * 60 * 1000;
+
+  function effacerCopies(ids) {
+    // Toutes les copies : fiche, onglet corrigé, PDF, dans tous les caches (sujets gardés et pages vues).
+    var motif = new RegExp("^/sujets/(" + ids.join("|") + ")/");
+    return caches.keys().then(function (noms) {
+      return Promise.all(noms.map(function (nom) {
+        return caches.open(nom).then(function (cache) {
+          return cache.keys().then(function (requetes) {
+            return Promise.all(requetes.filter(function (requete) {
+              return motif.test(new URL(requete.url).pathname);
+            }).map(function (requete) { return cache.delete(requete); }));
+          });
+        });
+      }));
+    });
+  }
+
+  function nettoyerSujetsRetires(force) {
+    if (!disponible || !navigator.onLine) return Promise.resolve();
+    var ids = Object.keys(lire().sujets);
+    var derniere = 0;
+    try { derniere = Number(window.localStorage.getItem(CLE_VERIFICATION)) || 0; } catch (erreur) {}
+    if (!ids.length || (!force && Date.now() - derniere < INTERVALLE_VERIFICATION)) return Promise.resolve();
+    return fetch("/hors-ligne/retires/?ids=" + ids.join(","), { credentials: "same-origin" })
+      .then(function (reponse) { return reponse.ok ? reponse.json() : { retires: [] }; })
+      .then(function (resultat) {
+        try { window.localStorage.setItem(CLE_VERIFICATION, String(Date.now())); } catch (erreur) {}
+        var retires = (resultat.retires || []).map(String);
+        if (!retires.length) return;
+        return effacerCopies(retires).then(function () {
+          var donnees = lire();
+          retires.forEach(function (id) { delete donnees.sujets[id]; });
+          ecrire(donnees);
+        });
+      })
+      .catch(function () {});
+  }
+
   // --- Téléchargement d'un quiz (page Entraînement) ----------------------------------
 
   function preparerBoutonQuiz(bouton) {
@@ -287,8 +329,14 @@
     afficherListes(page);
   }
   synchroniser(page);
-  window.addEventListener("online", function () { synchroniser(page); });
+  var nettoyage = nettoyerSujetsRetires(false).then(function () { if (page) afficherListes(page); });
+  window.addEventListener("online", function () {
+    synchroniser(page);
+    nettoyerSujetsRetires(true).then(function () { if (page) afficherListes(page); });
+  });
 
   // Tests (jsdom) : accès aux fonctions pures sans les exposer en production.
-  if (window.__TEST_HORS_LIGNE__) window.__HORS_LIGNE__ = { estCorrecte: estCorrecte, normaliser: normaliser, lire: lire };
+  if (window.__TEST_HORS_LIGNE__) {
+    window.__HORS_LIGNE__ = { estCorrecte: estCorrecte, normaliser: normaliser, lire: lire, nettoyage: nettoyage };
+  }
 })();

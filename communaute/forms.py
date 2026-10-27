@@ -9,7 +9,7 @@ from catalogue.models import Matiere, Session, Specialite
 from sujets.models import Corrige, Sujet
 
 from . import contributions
-from .models import Contribution, DemandeRetrait
+from .models import Contribution, DemandeRetrait, MessageContact
 
 
 class PlusieursFichiers(forms.ClearableFileInput):
@@ -225,3 +225,21 @@ class RejetForm(forms.Form):
         widget=forms.Textarea(attrs={"rows": 4}), label=_("Motif du rejet"),
         help_text=_("Envoyé au contributeur. Le fichier est supprimé."),
     )
+
+
+class ContactForm(forms.ModelForm):
+    # Piège à robots : champ invisible pour les personnes, que beaucoup de robots remplissent quand même.
+    site_web = forms.CharField(required=False, widget=forms.HiddenInput)
+
+    class Meta:
+        model = MessageContact
+        fields = ("nom", "email", "objet", "message")
+        labels = {"nom": _("Votre nom"), "email": _("Votre e-mail"), "objet": _("Objet"), "message": _("Votre message")}
+        help_texts = {"email": _("Pour vous répondre ; il n'est jamais affiché ni transmis.")}
+        widgets = {"message": forms.Textarea(attrs={"rows": 6})}
+
+    def clean_message(self):
+        message = self.cleaned_data["message"].strip()
+        if len(message) < 10:
+            raise ValidationError(_("Écrivez quelques mots de plus (10 caractères au moins)."))
+        return message

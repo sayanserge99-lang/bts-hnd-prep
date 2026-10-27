@@ -1,0 +1,9 @@
+{% load i18n %}
+{% if user == auteur %}
+  <div class="mt-2 flex flex-wrap items-center gap-3 text-xs">
+    <a href="{% url 'forum:modifier' type_cible cible_pk %}" class="text-vert underline">{% translate "Modifier" %}</a>
+    <form method="post" action="{% url 'forum:supprimer' type_cible cible_pk %}">{% csrf_token %}
+      <button class="text-red-700 underline">{% translate "Supprimer" %}</button>
+    </form>
+  </div>
+{% endif %}

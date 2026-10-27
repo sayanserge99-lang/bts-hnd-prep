@@ -1,0 +1,7 @@
+{% extends "_erreur.html" %}
+{% load i18n %}
+
+{% block titre %}{% translate "Accès refusé" %} — BTS-HND Prep{% endblock %}
+{% block code %}403{% endblock %}
+{% block titre_erreur %}{% translate "Accès refusé" %}{% endblock %}
+{% block explication %}{% translate "Cette page est réservée à d'autres comptes (équipe, responsable d'établissement…)." %}{% endblock %}

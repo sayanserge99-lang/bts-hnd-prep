@@ -1,14 +1,17 @@
 from django.conf import settings
 from django.contrib import admin
+from django.contrib.sitemaps.views import sitemap
 from django.urls import include, path
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 
 from accounts.views import changer_langue
-from catalogue.views import accueil, hors_ligne, manifeste, options_specialites, service_worker, statistiques
-from communaute.views import demande_retrait
+from catalogue.views import (
+    accueil, hors_ligne, manifeste, options_specialites, service_worker, statistiques, sujets_retires,
+)
+from communaute.views import contact, demande_retrait
+from config import plan_du_site
 from paiements.views import offres
-
 
 admin.site.site_header = _("BTS-HND Prep — Administration")
 admin.site.site_title = _("BTS-HND Prep")
@@ -22,8 +25,11 @@ def page(nom):
 urlpatterns = [
     path("", accueil, name="accueil"),
     path("sw.js", service_worker, name="service_worker"),
+    path("robots.txt", plan_du_site.robots, name="robots"),
+    path("sitemap.xml", sitemap, {"sitemaps": plan_du_site.PLANS}, name="plan_du_site"),
     path("manifest.webmanifest", manifeste, name="manifeste"),
     path("hors-ligne/", hors_ligne, name="hors_ligne"),
+    path("hors-ligne/retires/", sujets_retires, name="sujets_retires"),
     path("specialites/", options_specialites, name="options_specialites"),
     path("sujets/", include("sujets.urls")),
     path("compte/", include("accounts.urls")),
@@ -43,7 +49,8 @@ urlpatterns = [
         TemplateView.as_view(template_name="communaute/demande_retrait_recue.html"),
         name="demande_retrait_recue",
     ),
-    path("contact/", page("contact"), name="contact"),
+    path("contact/", contact, name="contact"),
+    path("contact/envoye/", TemplateView.as_view(template_name="communaute/contact_envoye.html"), name="contact_envoye"),
     path("langue/", changer_langue, name="set_language"),
     # Avant admin.site.urls : sinon l'admin prendrait « statistiques » pour une application.
     path(f"{settings.ADMIN_URL}statistiques/", admin.site.admin_view(statistiques), name="statistiques"),

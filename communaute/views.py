@@ -10,10 +10,10 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.utils.translation import gettext as _
 
-from config.securite import adresse_ip
+from config.securite import CONTACTS_PAR_IP, adresse_ip
 from sujets.models import Corrige, Sujet
 
-from .forms import DemandeRetraitForm, EnvoiSujetForm, PropositionCorrigeForm
+from .forms import ContactForm, DemandeRetraitForm, EnvoiSujetForm, PropositionCorrigeForm
 
 
 def document_vise(request):
@@ -101,3 +101,29 @@ def mes_contributions(request):
             "jours_par_sujet": settings.JOURS_OFFERTS_PAR_SUJET,
         },
     )
+
+
+def contact(request):
+    """Page Contact : le message est enregistré (admin « Messages de contact ») et l'équipe prévenue."""
+    initial = {}
+    if request.user.is_authenticated:
+        initial = {"nom": request.user.get_full_name(), "email": request.user.email}
+    form = ContactForm(request.POST or None, initial=initial)
+    if form.is_valid():
+        ip = adresse_ip(request)
+        if form.cleaned_data["site_web"]:
+            return redirect("contact_envoye")  # robot : on fait comme si, sans rien enregistrer
+        if CONTACTS_PAR_IP.atteinte(ip):
+            form.add_error(None, _("Vous avez déjà envoyé plusieurs messages aujourd'hui. Nous vous répondrons."))
+        else:
+            CONTACTS_PAR_IP.compter(ip)
+            message = form.save(commit=False)
+            message.utilisateur = request.user if request.user.is_authenticated else None
+            message.save()
+            mail_admins(
+                f"Contact : {message.get_objet_display()} — {message.nom}",
+                f"{message.email}\n\n{message.message}",
+                fail_silently=True,
+            )
+            return redirect("contact_envoye")
+    return render(request, "communaute/contact.html", {"form": form})

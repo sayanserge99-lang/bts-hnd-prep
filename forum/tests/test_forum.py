@@ -205,3 +205,47 @@ def test_les_statistiques_comptent_les_signalements(client, question, ben):
     SignalementForum.objects.create(utilisateur=ben, discussion=question, motif="Hors sujet")
     client.force_login(Utilisateur.objects.create_superuser(email="admin@example.com", password="Administration-2027"))
     assert "signalements du forum" in client.get(reverse("statistiques")).content.decode()
+
+
+# --- Modifier et supprimer ses messages ----------------------------------------------------------------------
+
+def test_l_auteur_modifie_sa_question(client, awa, question):
+    client.force_login(awa)
+    client.post(reverse("forum:modifier", args=["discussion", question.pk]), {"titre": "Annuité dégressive, comment ?", "texte": "Précision."})
+    question.refresh_from_db()
+    assert question.titre == "Annuité dégressive, comment ?" and question.modifie_le
+    assert "modifiée le" in client.get(reverse("forum:discussion", args=[question.pk])).content.decode()
+
+
+def test_personne_d_autre_ne_modifie_ni_ne_supprime(client, ben, question):
+    client.force_login(ben)
+    assert client.get(reverse("forum:modifier", args=["discussion", question.pk])).status_code == 404
+    assert client.post(reverse("forum:supprimer", args=["discussion", question.pk])).status_code == 404
+    page = client.get(reverse("forum:discussion", args=[question.pk])).content.decode()
+    assert reverse("forum:modifier", args=["discussion", question.pk]) not in page
+
+
+def test_supprimer_sa_reponse(client, ben, question):
+    reponse = Reponse.objects.create(discussion=question, auteur=ben, texte="Erreur de ma part")
+    client.force_login(ben)
+    client.post(reverse("forum:supprimer", args=["reponse", reponse.pk]))
+    assert not Reponse.objects.exists()
+
+
+def test_une_question_deja_repondue_reste(client, awa, ben, question):
+    Reponse.objects.create(discussion=question, auteur=ben, texte="Voici la méthode.")
+    client.force_login(awa)
+    client.post(reverse("forum:supprimer", args=["discussion", question.pk]))
+    assert Discussion.objects.filter(pk=question.pk).exists() and Reponse.objects.count() == 1
+
+
+def test_supprimer_sa_question_sans_reponse(client, awa, question):
+    client.force_login(awa)
+    reponse = client.post(reverse("forum:supprimer", args=["discussion", question.pk]))
+    assert reponse.url == reverse("forum:matiere", args=[question.matiere_id]) and not Discussion.objects.exists()
+
+
+def test_un_message_masque_ne_se_retouche_pas(client, awa, question):
+    Discussion.objects.filter(pk=question.pk).update(masquee=True)
+    client.force_login(awa)
+    assert client.get(reverse("forum:modifier", args=["discussion", question.pk])).status_code == 404

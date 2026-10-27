@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-27 12:27+0100\n"
+"POT-Creation-Date: 2026-10-27 13:03+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -273,7 +273,7 @@ msgstr ""
 msgid "Code incorrect."
 msgstr "Incorrect code."
 
-#: catalogue/models.py:9 config/settings.py:219
+#: catalogue/models.py:9 config/settings.py:220
 msgid "Français"
 msgstr "French"
 
@@ -364,7 +364,7 @@ msgstr "title"
 msgid "chapitre"
 msgstr "chapter"
 
-#: catalogue/views.py:67 templates/admin/base_site.html:16
+#: catalogue/views.py:78 templates/admin/base_site.html:16
 #: templates/paiements/offres.html:31
 msgid "Statistiques"
 msgstr "Statistics"
@@ -435,6 +435,17 @@ msgid "%d demande refusée."
 msgid_plural "%d demandes refusées."
 msgstr[0] "%d request refused."
 msgstr[1] "%d requests refused."
+
+#: communaute/admin.py:165
+msgid "Marquer comme traités"
+msgstr "Mark as handled"
+
+#: communaute/admin.py:168
+#, python-format
+msgid "%d message traité."
+msgid_plural "%d messages traités."
+msgstr[0] "%d message handled."
+msgstr[1] "%d messages handled."
 
 #: communaute/contributions.py:32
 msgid "Ajoutez le document (PDF ou photos)."
@@ -610,6 +621,30 @@ msgstr "Reason for rejection"
 msgid "Envoyé au contributeur. Le fichier est supprimé."
 msgstr "Sent to the contributor. The file is deleted."
 
+#: communaute/forms.py:237
+msgid "Votre nom"
+msgstr "Your name"
+
+#: communaute/forms.py:237
+msgid "Votre e-mail"
+msgstr "Your email"
+
+#: communaute/forms.py:237
+msgid "Objet"
+msgstr "Subject"
+
+#: communaute/forms.py:237
+msgid "Votre message"
+msgstr "Your message"
+
+#: communaute/forms.py:238
+msgid "Pour vous répondre ; il n'est jamais affiché ni transmis."
+msgstr "So that we can reply; it is never shown or passed on."
+
+#: communaute/forms.py:244
+msgid "Écrivez quelques mots de plus (10 caractères au moins)."
+msgstr "Write a few more words (at least 10 characters)."
+
 #: communaute/models.py:19 templates/admin/statistiques.html:75
 #: templates/communaute/mes_contributions.html:22
 #: templates/entrainement/examens/consignes.html:12
@@ -719,6 +754,42 @@ msgstr "takedown request"
 msgid "demandes de retrait"
 msgstr "takedown requests"
 
+#: communaute/models.py:195
+msgid "Question sur le site"
+msgstr "Question about the site"
+
+#: communaute/models.py:196
+msgid "Erreur dans un sujet ou un corrigé"
+msgstr "Mistake in a paper or marking guide"
+
+#: communaute/models.py:197
+msgid "Partenariat pour un établissement"
+msgstr "Partnership for an institution"
+
+#: communaute/models.py:198
+msgid "Paiement ou abonnement"
+msgstr "Payment or subscription"
+
+#: communaute/models.py:199
+msgid "Autre"
+msgstr "Other"
+
+#: communaute/models.py:202
+msgid "e-mail"
+msgstr "email"
+
+#: communaute/models.py:208 forum/models.py:72
+msgid "traité"
+msgstr "handled"
+
+#: communaute/models.py:212
+msgid "message de contact"
+msgstr "contact message"
+
+#: communaute/models.py:213
+msgid "messages de contact"
+msgstr "contact messages"
+
 #: communaute/views.py:41
 msgid ""
 "Trop de demandes envoyées aujourd'hui. Écrivez-nous depuis la page Contact."
@@ -738,19 +809,24 @@ msgstr ""
 "Thank you! Your marking guide will be reviewed by a moderator before it is "
 "published."
 
-#: config/settings.py:219
+#: communaute/views.py:117
+msgid ""
+"Vous avez déjà envoyé plusieurs messages aujourd'hui. Nous vous répondrons."
+msgstr "You have already sent several messages today. We will reply to you."
+
+#: config/settings.py:220
 msgid "English"
 msgstr "English"
 
-#: config/urls.py:13
+#: config/urls.py:16
 msgid "BTS-HND Prep — Administration"
 msgstr "BTS-HND Prep — Administration"
 
-#: config/urls.py:14
+#: config/urls.py:17
 msgid "BTS-HND Prep"
 msgstr "BTS-HND Prep"
 
-#: config/urls.py:15
+#: config/urls.py:18
 msgid "Tableau de bord"
 msgstr "Dashboard"
 
@@ -1055,7 +1131,7 @@ msgstr "attempt"
 msgid "Identifiants des choix cochés, ou texte de la réponse courte."
 msgstr "IDs of the ticked choices, or the short answer text."
 
-#: entrainement/models.py:231 forum/models.py:53 forum/models.py:58
+#: entrainement/models.py:231 forum/models.py:54 forum/models.py:60
 msgid "réponse"
 msgstr "answer"
 
@@ -1180,23 +1256,23 @@ msgstr "details"
 msgid "Choisie par l'auteur de la question : celle qui l'a aidé."
 msgstr "Chosen by the person who asked: the one that helped."
 
-#: forum/models.py:36 forum/models.py:54
+#: forum/models.py:36 forum/models.py:55
 msgid "masquée"
 msgstr "hidden"
 
-#: forum/models.py:43
+#: forum/models.py:38 forum/models.py:57
+msgid "modifiée le"
+msgstr "edited on"
+
+#: forum/models.py:44
 msgid "discussion"
 msgstr "discussion"
 
-#: forum/models.py:70
-msgid "traité"
-msgstr "handled"
-
-#: forum/models.py:74
+#: forum/models.py:76
 msgid "signalement du forum"
 msgstr "forum report"
 
-#: forum/models.py:75 templates/admin/statistiques.html:61
+#: forum/models.py:77 templates/admin/statistiques.html:61
 msgid "signalements du forum"
 msgstr "forum reports"
 
@@ -1204,21 +1280,37 @@ msgstr "forum reports"
 msgid "Nouvelle réponse à votre question"
 msgstr "New answer to your question"
 
-#: forum/views.py:87 forum/views.py:105
+#: forum/views.py:88 forum/views.py:106
 msgid "Vous avez beaucoup écrit aujourd'hui : revenez demain."
 msgstr "You have written a lot today: come back tomorrow."
 
-#: forum/views.py:145
+#: forum/views.py:146
 msgid "Indiquez en quelques mots pourquoi vous signalez ce message."
 msgstr "Say in a few words why you are reporting this message."
 
-#: forum/views.py:147
+#: forum/views.py:148
 msgid "Merci, un modérateur va regarder ce message."
 msgstr "Thank you, a moderator will look at this message."
 
-#: forum/views.py:149
+#: forum/views.py:150
 msgid "Vous avez déjà signalé ce message."
 msgstr "You have already reported this message."
+
+#: forum/views.py:192
+msgid "Votre réponse est supprimée."
+msgstr "Your answer has been deleted."
+
+#: forum/views.py:196
+msgid ""
+"D'autres personnes ont répondu : la question reste. Modifiez-la, ou demandez"
+" au modérateur."
+msgstr ""
+"Other people have answered: the question stays. Edit it, or ask the "
+"moderator."
+
+#: forum/views.py:200
+msgid "Votre question est supprimée."
+msgstr "Your question has been deleted."
 
 #: paiements/admin.py:38
 msgid "Établissement (convention active)"
@@ -1873,7 +1965,7 @@ msgstr "views per day"
 msgid "favori"
 msgstr "favourite"
 
-#: sujets/signals.py:21
+#: sujets/signals.py:23
 msgid "Une spécialité choisie n'est pas rattachée à la matière du sujet."
 msgstr "A chosen specialty is not linked to the paper's subject."
 
@@ -1888,6 +1980,62 @@ msgstr "You have already reported a lot today. Thank you! Come back tomorrow."
 #: sujets/views.py:212
 msgid "Merci ! L'enseignant relira ce passage."
 msgstr "Thank you! The teacher will review this part."
+
+#: templates/400.html:4 templates/400.html:6
+msgid "Demande incorrecte"
+msgstr "Bad request"
+
+#: templates/400.html:7
+msgid "Le lien suivi est incomplet ou abîmé."
+msgstr "The link you followed is incomplete or broken."
+
+#: templates/403.html:4 templates/403.html:6
+msgid "Accès refusé"
+msgstr "Access denied"
+
+#: templates/403.html:7
+msgid ""
+"Cette page est réservée à d'autres comptes (équipe, responsable "
+"d'établissement…)."
+msgstr ""
+"This page is reserved for other accounts (team, institution manager…)."
+
+#: templates/403_csrf.html:5
+msgid "Page expirée"
+msgstr "Page expired"
+
+#: templates/403_csrf.html:7
+msgid "La page a expiré"
+msgstr "The page has expired"
+
+#: templates/403_csrf.html:8
+msgid ""
+"Par sécurité, ce formulaire n'est plus valable. Revenez à la page "
+"précédente, rechargez-la, puis renvoyez votre saisie."
+msgstr ""
+"For security, this form is no longer valid. Go back to the previous page, "
+"reload it, then send your entry again."
+
+#: templates/404.html:4 templates/404.html:6
+msgid "Page introuvable"
+msgstr "Page not found"
+
+#: templates/404.html:7
+msgid ""
+"Cette page n'existe pas ou n'est plus disponible. Un sujet peut aussi avoir "
+"été retiré à la demande de son auteur."
+msgstr ""
+"This page does not exist or is no longer available. A paper may also have "
+"been removed at its author's request."
+
+#: templates/_erreur.html:10 templates/communaute/contact_envoye.html:10
+#: templates/communaute/demande_retrait_recue.html:10
+msgid "Retour à l'accueil"
+msgstr "Back to home"
+
+#: templates/_erreur.html:11 templates/catalogue/accueil.html:36
+msgid "Voir les sujets"
+msgstr "See the papers"
 
 #: templates/accounts/_bouton_google.html:4
 #: templates/admin/entrainement/question/importer.html:26
@@ -2062,7 +2210,7 @@ msgstr "Edit my profile"
 msgid "Mon espace"
 msgstr "My space"
 
-#: templates/accounts/modifier_profil.html:12
+#: templates/accounts/modifier_profil.html:12 templates/forum/modifier.html:12
 msgid "Enregistrer"
 msgstr "Save"
 
@@ -2905,8 +3053,9 @@ msgstr "Privacy"
 msgid "Demande de retrait"
 msgstr "Takedown request"
 
-#: templates/base.html:89 templates/communaute/demande_retrait.html:22
-#: templates/pages/contact.html:4 templates/pages/contact.html:5
+#: templates/base.html:89 templates/communaute/contact.html:4
+#: templates/communaute/contact.html:8
+#: templates/communaute/demande_retrait.html:22
 msgid "Contact"
 msgstr "Contact"
 
@@ -2951,10 +3100,6 @@ msgstr "Marking guides available; practice tests are coming soon."
 #: templates/catalogue/accueil.html:21 templates/sujets/liste.html:11
 msgid "Examen"
 msgstr "Exam"
-
-#: templates/catalogue/accueil.html:36
-msgid "Voir les sujets"
-msgstr "See the papers"
 
 #: templates/catalogue/accueil.html:41
 msgid "Derniers sujets publiés"
@@ -3030,6 +3175,41 @@ msgstr "Choose your plan"
 msgid "Comparer les offres en détail"
 msgstr "Compare the offers in detail"
 
+#: templates/communaute/contact.html:9
+msgid ""
+"Une question, une erreur à signaler, un établissement qui souhaite devenir "
+"partenaire ? Écrivez-nous, nous répondons par e-mail."
+msgstr ""
+"A question, a mistake to report, an institution that wants to become a "
+"partner? Write to us, we reply by email."
+
+#: templates/communaute/contact.html:11
+msgid "Vous êtes titulaire des droits sur un document et voulez son retrait ?"
+msgstr "Do you hold the rights to a document and want it removed?"
+
+#: templates/communaute/contact.html:12
+msgid "Utilisez la demande de retrait"
+msgstr "Use the takedown request"
+
+#: templates/communaute/contact.html:12
+msgid "le document est masqué dès réception."
+msgstr "the document is hidden as soon as it is received."
+
+#: templates/communaute/contact.html:15 templates/forum/_signaler.html:9
+#: templates/sujets/_corrige.html:43
+msgid "Envoyer"
+msgstr "Send"
+
+#: templates/communaute/contact_envoye.html:4
+#: templates/communaute/contact_envoye.html:8
+msgid "Message envoyé"
+msgstr "Message sent"
+
+#: templates/communaute/contact_envoye.html:9
+msgid ""
+"Merci ! Nous vous répondrons par e-mail, en général sous quelques jours."
+msgstr "Thank you! We will reply by email, usually within a few days."
+
 #: templates/communaute/demande_retrait.html:11
 msgid ""
 "Vous êtes titulaire des droits sur ce document et souhaitez qu'il soit "
@@ -3070,10 +3250,6 @@ msgid ""
 msgstr ""
 "The document is hidden from now on. We are reviewing your request and will "
 "reply by email."
-
-#: templates/communaute/demande_retrait_recue.html:10
-msgid "Retour à l'accueil"
-msgstr "Back to home"
 
 #: templates/communaute/email_accuse_retrait.txt:1
 #: templates/communaute/email_decision_contribution.txt:1
@@ -3645,16 +3821,24 @@ msgstr "Replay my mistakes"
 msgid "Retour à l'entraînement"
 msgstr "Back to practice"
 
+#: templates/forum/_actions_auteur.html:4
+msgid "Modifier"
+msgstr "Edit"
+
+#: templates/forum/_actions_auteur.html:6 templates/partenaires/espace.html:48
+msgid "Supprimer"
+msgstr "Delete"
+
 #: templates/forum/_ligne_discussion.html:3
 msgid "Résolue"
 msgstr "Solved"
 
 #: templates/forum/_ligne_discussion.html:5 templates/forum/discussion.html:12
-#: templates/forum/discussion.html:23
+#: templates/forum/discussion.html:25
 msgid "Un étudiant"
 msgstr "A student"
 
-#: templates/forum/_ligne_discussion.html:6 templates/forum/discussion.html:19
+#: templates/forum/_ligne_discussion.html:6 templates/forum/discussion.html:21
 #, python-format
 msgid "%(n)s réponse"
 msgid_plural "%(n)s réponses"
@@ -3672,10 +3856,6 @@ msgstr "Insult, advertising, paper from an ongoing session…"
 #: templates/forum/_signaler.html:8
 msgid "Motif du signalement"
 msgstr "Reason for the report"
-
-#: templates/forum/_signaler.html:9 templates/sujets/_corrige.html:43
-msgid "Envoyer"
-msgstr "Send"
 
 #: templates/forum/accueil.html:10
 msgid ""
@@ -3700,31 +3880,36 @@ msgid_plural "%(n)s discussions"
 msgstr[0] "%(n)s discussion"
 msgstr[1] "%(n)s discussions"
 
-#: templates/forum/discussion.html:22
+#: templates/forum/discussion.html:15 templates/forum/discussion.html:27
+#, python-format
+msgid "modifiée le %(date)s"
+msgstr "edited on %(date)s"
+
+#: templates/forum/discussion.html:24
 msgid "A aidé l'auteur de la question"
 msgstr "Helped the person who asked"
 
-#: templates/forum/discussion.html:23
+#: templates/forum/discussion.html:25
 msgid "équipe"
 msgstr "team"
 
-#: templates/forum/discussion.html:28
+#: templates/forum/discussion.html:32
 msgid "Retirer « m'a aidé »"
 msgstr "Remove “helped me”"
 
-#: templates/forum/discussion.html:28
+#: templates/forum/discussion.html:32
 msgid "Cette réponse m'a aidé"
 msgstr "This answer helped me"
 
-#: templates/forum/discussion.html:35
+#: templates/forum/discussion.html:39
 msgid "Pas encore de réponse."
 msgstr "No answer yet."
 
-#: templates/forum/discussion.html:42
+#: templates/forum/discussion.html:46
 msgid "Répondre"
 msgstr "Answer"
 
-#: templates/forum/discussion.html:46
+#: templates/forum/discussion.html:50
 msgid "Se connecter pour répondre"
 msgstr "Log in to answer"
 
@@ -3767,6 +3952,10 @@ msgstr "Previous"
 msgid "Suivantes"
 msgstr "Next"
 
+#: templates/forum/modifier.html:4 templates/forum/modifier.html:9
+msgid "Modifier mon message"
+msgstr "Edit my message"
+
 #: templates/forum/nouvelle.html:10
 #, python-format
 msgid "Sur le sujet %(titre)s %(annee)s"
@@ -3790,7 +3979,7 @@ msgid "Conditions générales de vente"
 msgstr "Terms of sale"
 
 #: templates/pages/conditions_de_vente.html:8
-#: templates/pages/confidentialite.html:8 templates/pages/contact.html:8
+#: templates/pages/confidentialite.html:8
 #: templates/pages/mentions_legales.html:8
 msgid "Contenu en cours de rédaction."
 msgstr "Content being written."
@@ -4169,10 +4358,6 @@ msgstr "Remove"
 #: templates/partenaires/espace.html:47
 msgid "Publier"
 msgstr "Publish"
-
-#: templates/partenaires/espace.html:48
-msgid "Supprimer"
-msgstr "Delete"
 
 #: templates/partenaires/espace.html:52
 msgid "Aucune épreuve déposée."

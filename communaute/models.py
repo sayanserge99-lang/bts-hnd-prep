@@ -186,3 +186,32 @@ class DemandeRetrait(models.Model):
         self.statut = statut
         self.traitee_le = timezone.now()
         self.save(update_fields=["statut", "traitee_le"])
+
+
+class MessageContact(models.Model):
+    """Message envoyé depuis la page Contact : gardé ici, donc jamais perdu si un e-mail n'arrive pas."""
+
+    class Objet(models.TextChoices):
+        QUESTION = "question", _("Question sur le site")
+        ERREUR = "erreur", _("Erreur dans un sujet ou un corrigé")
+        ETABLISSEMENT = "etablissement", _("Partenariat pour un établissement")
+        PAIEMENT = "paiement", _("Paiement ou abonnement")
+        AUTRE = "autre", _("Autre")
+
+    nom = models.CharField(max_length=150)
+    email = models.EmailField(_("e-mail"))
+    objet = models.CharField(max_length=20, choices=Objet.choices)
+    message = models.TextField(max_length=3000)
+    utilisateur = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name="messages_contact"
+    )
+    traite = models.BooleanField(_("traité"), default=False)
+    cree_le = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _("message de contact")
+        verbose_name_plural = _("messages de contact")
+        ordering = ["traite", "-cree_le"]
+
+    def __str__(self):
+        return f"{self.get_objet_display()} · {self.nom}"

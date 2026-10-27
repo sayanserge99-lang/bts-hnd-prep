@@ -35,6 +35,7 @@ class Discussion(models.Model):
     )
     masquee = models.BooleanField(_("masquée"), default=False)
     cree_le = models.DateTimeField(auto_now_add=True)
+    modifie_le = models.DateTimeField(_("modifiée le"), null=True, blank=True)
     derniere_activite = models.DateTimeField(auto_now_add=True, db_index=True)
 
     objects = DiscussionQuerySet.as_manager()
@@ -53,6 +54,7 @@ class Reponse(models.Model):
     texte = models.TextField(_("réponse"), max_length=LONGUEUR_MAX)
     masquee = models.BooleanField(_("masquée"), default=False)
     cree_le = models.DateTimeField(auto_now_add=True)
+    modifie_le = models.DateTimeField(_("modifiée le"), null=True, blank=True)
 
     class Meta:
         verbose_name = _("réponse")

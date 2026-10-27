@@ -161,3 +161,7 @@
   commit). Cause : PAIEMENT_ESSAI=1 du .env local ouvrait le paiement dans le conteneur, les tests supposaient le
   contraire (la CI, sans .env, était verte). Correction : conftest fixe PAIEMENT_ACTIF=False pour tous les tests.
   Règle pour la suite : le commit ne part que si pytest réussit (&&). 365/365 verts en local avec le .env d'essai.
+- 27/10 : plan avant lancement proposé (6 étapes, mise en ligne en dernier), étape 1 faite : pages d'erreur, contact,
+  robots/sitemap, retrait des sujets sur les téléphones, édition des messages du forum, réindexation au renommage.
+  Erreur d'échappement dans un script d'insertion (\n devenu saut de ligne) → corrigée. 21 tests + essai jsdom
+  (piège 12/120) ; contre-épreuves (réindexation, sujets retirés) → échecs attendus. Captures 404 et Contact. 386/386.

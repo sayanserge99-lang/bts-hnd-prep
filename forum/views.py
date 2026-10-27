@@ -9,6 +9,7 @@ from django.db.models import Count, Max, Q
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
@@ -151,3 +152,50 @@ def signaler(request, type_cible, pk):
     if not Discussion.objects.visibles().filter(pk=discussion.pk).exists():
         return redirect("forum:matiere", pk=discussion.matiere_id)
     return redirect("forum:discussion", pk=discussion.pk)
+
+
+def message_de_l_auteur(request, type_cible, pk):
+    """Sa propre question ou réponse, visible : on ne retouche pas un message que la modération a masqué."""
+    if type_cible == "discussion":
+        return get_object_or_404(Discussion.objects.visibles(), pk=pk, auteur=request.user)
+    if type_cible == "reponse":
+        return get_object_or_404(
+            Reponse.objects.filter(masquee=False, discussion__in=Discussion.objects.visibles()), pk=pk, auteur=request.user
+        )
+    raise Http404
+
+
+@forum_ouvert
+@login_required
+def modifier(request, type_cible, pk):
+    message = message_de_l_auteur(request, type_cible, pk)
+    discussion = message if type_cible == "discussion" else message.discussion
+    classe = DiscussionForm if type_cible == "discussion" else ReponseForm
+    form = classe(request.POST or None, instance=message)
+    if form.is_valid():
+        message = form.save(commit=False)
+        message.modifie_le = timezone.now()
+        message.save()
+        ancre = "" if type_cible == "discussion" else f"#reponse-{message.pk}"
+        return redirect(reverse("forum:discussion", args=[discussion.pk]) + ancre)
+    return render(request, "forum/modifier.html", {"form": form, "discussion": discussion, "type_cible": type_cible})
+
+
+@forum_ouvert
+@login_required
+@require_POST
+def supprimer(request, type_cible, pk):
+    message = message_de_l_auteur(request, type_cible, pk)
+    if type_cible == "reponse":
+        discussion = message.discussion
+        message.delete()
+        messages.success(request, _("Votre réponse est supprimée."))
+        return redirect("forum:discussion", pk=discussion.pk)
+    # Une question à laquelle d'autres ont répondu ne disparaît pas : ce serait effacer leurs réponses.
+    if message.reponses.exclude(auteur=request.user).exists():
+        messages.error(request, _("D'autres personnes ont répondu : la question reste. Modifiez-la, ou demandez au modérateur."))
+        return redirect("forum:discussion", pk=message.pk)
+    matiere = message.matiere_id
+    message.delete()
+    messages.success(request, _("Votre question est supprimée."))
+    return redirect("forum:matiere", pk=matiere)

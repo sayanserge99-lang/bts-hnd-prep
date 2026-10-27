@@ -1,0 +1,20 @@
+{% load static %}<!doctype html>
+{# Autonome : s'affiche même si la base ou le reste du site est en panne (aucune donnée, aucun gabarit parent). #}
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Erreur — BTS-HND Prep</title>
+  <link rel="stylesheet" href="{% static 'css/app.css' %}">
+</head>
+<body class="flex min-h-screen items-center justify-center bg-creme px-4 font-sans text-encre">
+  <div class="max-w-xl text-center">
+    <p class="text-2xl font-bold">BTS-HND <span class="text-vert">Prep</span></p>
+    <h1 class="mt-6 text-2xl font-bold">Un problème est survenu de notre côté</h1>
+    <p class="mt-2 text-gris">L'équipe est prévenue. Réessayez dans quelques minutes.</p>
+    <h2 class="mt-6 text-xl font-bold">Something went wrong on our side</h2>
+    <p class="mt-2 text-gris">The team has been notified. Please try again in a few minutes.</p>
+    <a href="/" class="bouton-plein mt-8">Accueil · Home</a>
+  </div>
+</body>
+</html>

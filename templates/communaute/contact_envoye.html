@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titre %}{% translate "Message envoyé" %} — BTS-HND Prep{% endblock %}
+
+{% block contenu %}
+<div class="mx-auto max-w-xl px-4 py-16 text-center">
+  <h1 class="text-2xl font-bold">✓ {% translate "Message envoyé" %}</h1>
+  <p class="mt-3 text-gris">{% translate "Merci ! Nous vous répondrons par e-mail, en général sous quelques jours." %}</p>
+  <a href="{% url 'accueil' %}" class="bouton-plein mt-8">{% translate "Retour à l'accueil" %}</a>
+</div>
+{% endblock %}

@@ -12,6 +12,8 @@
     <p class="text-sm text-gris">{{ discussion.auteur.first_name|default:_("Un étudiant") }} · {{ discussion.cree_le|date:"d/m/Y H:i" }}
       {% if discussion.sujet %} · <a href="{% url 'sujets:detail' discussion.sujet_id %}" class="text-vert underline">{{ discussion.sujet.titre }} {{ discussion.sujet.session.annee }}</a>{% endif %}</p>
     {% if discussion.texte %}<div class="corrige">{{ discussion.texte|message }}</div>{% endif %}
+    {% if discussion.modifie_le %}<p class="text-xs text-gris">{% blocktranslate with date=discussion.modifie_le|date:"d/m/Y H:i" %}modifiée le {{ date }}{% endblocktranslate %}</p>{% endif %}
+    {% include "forum/_actions_auteur.html" with auteur=discussion.auteur type_cible="discussion" cible_pk=discussion.pk %}
     {% include "forum/_signaler.html" with auteur=discussion.auteur type_cible="discussion" cible_pk=discussion.pk %}
   </article>
 
@@ -22,6 +24,8 @@
         {% if reponse.pk == discussion.reponse_acceptee_id %}<p class="text-xs font-semibold uppercase tracking-wide text-vert">✓ {% translate "A aidé l'auteur de la question" %}</p>{% endif %}
         <p class="text-sm text-gris">{{ reponse.auteur.first_name|default:_("Un étudiant") }}{% if reponse.auteur.is_staff %} · <span class="text-vert">{% translate "équipe" %}</span>{% endif %} · {{ reponse.cree_le|date:"d/m/Y H:i" }}</p>
         <div class="corrige">{{ reponse.texte|message }}</div>
+        {% if reponse.modifie_le %}<p class="text-xs text-gris">{% blocktranslate with date=reponse.modifie_le|date:"d/m/Y H:i" %}modifiée le {{ date }}{% endblocktranslate %}</p>{% endif %}
+        {% include "forum/_actions_auteur.html" with auteur=reponse.auteur type_cible="reponse" cible_pk=reponse.pk %}
         <div class="flex flex-wrap items-start gap-4">
           {% if est_auteur and reponse.auteur != user %}
             <form method="post" action="{% url 'forum:accepter' reponse.pk %}">{% csrf_token %}

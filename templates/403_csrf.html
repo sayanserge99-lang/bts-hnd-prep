@@ -1,0 +1,8 @@
+{% extends "_erreur.html" %}
+{% load i18n %}
+
+{# Formulaire envoyé trop tard (page ouverte longtemps) ou depuis un autre site : on l'explique simplement. #}
+{% block titre %}{% translate "Page expirée" %} — BTS-HND Prep{% endblock %}
+{% block code %}⏱{% endblock %}
+{% block titre_erreur %}{% translate "La page a expiré" %}{% endblock %}
+{% block explication %}{% translate "Par sécurité, ce formulaire n'est plus valable. Revenez à la page précédente, rechargez-la, puis renvoyez votre saisie." %}{% endblock %}

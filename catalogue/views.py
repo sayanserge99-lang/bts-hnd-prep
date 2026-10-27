@@ -4,6 +4,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.core.exceptions import PermissionDenied
 from django.db.models import Max, Min
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.templatetags.static import static
 from django.utils.translation import gettext as _
@@ -55,6 +56,16 @@ def manifeste(request):
 def hors_ligne(request):
     """Page gardée sur le téléphone : sujets et quiz téléchargés, consultables sans connexion."""
     return render(request, "pwa/hors_ligne.html")
+
+
+def sujets_retires(request):
+    """CDC 10.1 : parmi les sujets gardés sur un téléphone, ceux qui ne sont plus publiés (retirés, masqués) ;
+    le téléphone efface alors ses copies. Ne révèle rien de plus que la fiche (qui répond « introuvable »)."""
+    demandes = {int(valeur) for valeur in request.GET.get("ids", "").split(",")[:200] if valeur.isdigit()}
+    encore = set(Sujet.objects.publies().filter(pk__in=demandes).values_list("pk", flat=True))
+    reponse = JsonResponse({"retires": sorted(demandes - encore)})
+    reponse["Cache-Control"] = "no-store"
+    return reponse
 
 
 def statistiques(request):

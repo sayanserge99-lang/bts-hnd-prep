@@ -54,6 +54,7 @@ INSCRIPTIONS_PAR_IP = Limite("inscription-ip", 5, 60 * 60)
 REINITIALISATIONS_PAR_IP = Limite("reinitialisation-ip", 5, 60 * 60)
 REINITIALISATIONS_PAR_EMAIL = Limite("reinitialisation-email", 3, 60 * 60)
 SIGNALEMENTS_CORRIGE_PAR_COMPTE = Limite("signalement-corrige", 10, 24 * 60 * 60)
+CONTACTS_PAR_IP = Limite("contact-ip", 5, 24 * 60 * 60)
 # 10^6 codes possibles, 3 valables à la fois : 5 essais par quart d'heure rendent la devinette sans espoir.
 DOUBLE_AUTH_ESSAIS = Limite("double-auth", 5, 15 * 60)
 

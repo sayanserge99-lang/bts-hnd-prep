@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block contenu %}
+<div class="mx-auto max-w-xl px-4 py-16 text-center">
+  <p class="text-6xl font-extrabold text-vert">{% block code %}{% endblock %}</p>
+  <h1 class="mt-4 text-2xl font-bold">{% block titre_erreur %}{% endblock %}</h1>
+  <p class="mt-3 text-gris">{% block explication %}{% endblock %}</p>
+  <div class="mt-8 flex flex-wrap justify-center gap-3">
+    <a href="{% url 'accueil' %}" class="bouton-plein">{% translate "Retour à l'accueil" %}</a>
+    <a href="{% url 'sujets:liste' %}" class="bouton-contour">{% translate "Voir les sujets" %}</a>
+  </div>
+</div>
+{% endblock %}

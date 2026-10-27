@@ -11,4 +11,6 @@ urlpatterns = [
     path("discussion/<int:pk>/", views.discussion, name="discussion"),
     path("reponse/<int:pk>/accepter/", views.accepter, name="accepter"),
     path("signaler/<str:type_cible>/<int:pk>/", views.signaler, name="signaler"),
+    path("modifier/<str:type_cible>/<int:pk>/", views.modifier, name="modifier"),
+    path("supprimer/<str:type_cible>/<int:pk>/", views.supprimer, name="supprimer"),
 ]
