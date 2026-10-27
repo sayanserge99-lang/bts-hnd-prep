@@ -9,3 +9,6 @@ staticfiles/
 static/css/
 .env.production
 sauvegardes/
+
+# Réglages personnels de l'éditeur
+.vscode/
