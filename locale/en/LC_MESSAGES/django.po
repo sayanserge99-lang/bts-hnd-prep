@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-27 14:44+0100\n"
+"POT-Creation-Date: 2026-10-27 15:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -281,7 +281,7 @@ msgstr "French"
 msgid "Anglais"
 msgstr "English"
 
-#: catalogue/models.py:19 catalogue/models.py:77 catalogue/models.py:98
+#: catalogue/models.py:19 catalogue/models.py:117 catalogue/models.py:138
 msgid "nom"
 msgstr "name"
 
@@ -290,77 +290,88 @@ msgid "examen"
 msgstr "exam"
 
 #: catalogue/models.py:41
+#, python-format
+msgid ""
+"%(n)s sujet(s) publié(s) dans cette session : la fin officielle ne peut pas "
+"passer au %(date)s, qui n'est pas encore passé. Si la date était fausse, "
+"masquez d'abord ces sujets."
+msgstr ""
+"%(n)s paper(s) already published in this session: the official end date "
+"cannot move to %(date)s, which has not passed yet. If the date was wrong, "
+"hide those papers first."
+
+#: catalogue/models.py:67
 msgid "année"
 msgstr "year"
 
-#: catalogue/models.py:42
+#: catalogue/models.py:68
 msgid "date de début"
 msgstr "start date"
 
-#: catalogue/models.py:44
+#: catalogue/models.py:70
 msgid "date de fin officielle"
 msgstr "official end date"
 
-#: catalogue/models.py:45
+#: catalogue/models.py:71
 msgid ""
 "Aucun sujet de la session ne peut être publié avant le lendemain de cette "
 "date."
 msgstr ""
 "No paper from this session can be published before the day after this date."
 
-#: catalogue/models.py:51
+#: catalogue/models.py:77
 msgid "session"
 msgstr "session"
 
-#: catalogue/models.py:71
+#: catalogue/models.py:111
 msgid "Commerciale"
 msgstr "Commercial"
 
-#: catalogue/models.py:72
+#: catalogue/models.py:112
 msgid "Industrielle"
 msgstr "Industrial"
 
-#: catalogue/models.py:73
+#: catalogue/models.py:113
 msgid "Santé"
 msgstr "Health"
 
-#: catalogue/models.py:78
+#: catalogue/models.py:118
 msgid "filière"
 msgstr "field"
 
-#: catalogue/models.py:80
+#: catalogue/models.py:120
 msgid "ordre d'affichage"
 msgstr "display order"
 
-#: catalogue/models.py:80
+#: catalogue/models.py:120
 msgid "Plus petit = affiché en premier."
 msgstr "Smaller = shown first."
 
-#: catalogue/models.py:84
+#: catalogue/models.py:124
 msgid "spécialité"
 msgstr "specialty"
 
-#: catalogue/models.py:101
+#: catalogue/models.py:141
 msgid "matière"
 msgstr "subject"
 
-#: catalogue/models.py:113
+#: catalogue/models.py:153
 msgid "matière d'une spécialité"
 msgstr "subject of a specialty"
 
-#: catalogue/models.py:114
+#: catalogue/models.py:154
 msgid "matières des spécialités"
 msgstr "subjects of specialties"
 
-#: catalogue/models.py:124
+#: catalogue/models.py:164
 msgid "La spécialité et la matière doivent appartenir au même examen."
 msgstr "The specialty and the subject must belong to the same exam."
 
-#: catalogue/models.py:130
+#: catalogue/models.py:170
 msgid "titre"
 msgstr "title"
 
-#: catalogue/models.py:134
+#: catalogue/models.py:174
 msgid "chapitre"
 msgstr "chapter"
 
@@ -581,7 +592,7 @@ msgstr "Paper type"
 msgid "Durée (minutes)"
 msgstr "Duration (minutes)"
 
-#: communaute/forms.py:176 sujets/models.py:101
+#: communaute/forms.py:176 sujets/models.py:103
 msgid "Exemple : MINESUP, BTS session 2025."
 msgstr "Example: MINESUP, HND 2025 session."
 
@@ -1062,7 +1073,7 @@ msgstr "number of questions"
 msgid "quiz"
 msgstr "quiz"
 
-#: entrainement/models.py:144 sujets/models.py:95
+#: entrainement/models.py:144 sujets/models.py:97
 msgid "durée (minutes)"
 msgstr "duration (minutes)"
 
@@ -1592,7 +1603,7 @@ msgstr "Internal mock exam"
 msgid "Rattrapage"
 msgstr "Resit"
 
-#: partenaires/models.py:107 sujets/models.py:94
+#: partenaires/models.py:107 sujets/models.py:96
 msgid "type d'épreuve"
 msgstr "paper type"
 
@@ -1604,7 +1615,7 @@ msgstr "academic year"
 msgid "Par exemple 2025-2026."
 msgstr "For example 2025-2026."
 
-#: partenaires/models.py:109 sujets/models.py:97 sujets/models.py:237
+#: partenaires/models.py:109 sujets/models.py:99 sujets/models.py:239
 msgid "fichier PDF"
 msgstr "PDF file"
 
@@ -1829,87 +1840,87 @@ msgstr ""
 "The %(session)s session officially ends on %(date)s: its papers cannot be "
 "published before then."
 
-#: sujets/models.py:78 sujets/models.py:214
+#: sujets/models.py:80 sujets/models.py:216
 msgid "Brouillon"
 msgstr "Draft"
 
-#: sujets/models.py:79 sujets/models.py:215
+#: sujets/models.py:81 sujets/models.py:217
 msgid "Publié"
 msgstr "Published"
 
-#: sujets/models.py:80 sujets/models.py:216
+#: sujets/models.py:82 sujets/models.py:218
 msgid "Masqué (demande de retrait en cours)"
 msgstr "Hidden (takedown request pending)"
 
-#: sujets/models.py:83
+#: sujets/models.py:85
 msgid "Écrite"
 msgstr "Written"
 
-#: sujets/models.py:84
+#: sujets/models.py:86
 msgid "Pratique"
 msgstr "Practical"
 
-#: sujets/models.py:92
+#: sujets/models.py:94
 msgid "Uniquement des spécialités auxquelles la matière est rattachée."
 msgstr "Only specialties the subject is linked to."
 
-#: sujets/models.py:96
+#: sujets/models.py:98
 msgid "barème"
 msgstr "marking scheme"
 
-#: sujets/models.py:98
+#: sujets/models.py:100
 msgid "nombre de pages"
 msgstr "number of pages"
 
-#: sujets/models.py:99
+#: sujets/models.py:101
 msgid "Rempli par la tâche d'extraction, sert à la recherche."
 msgstr "Filled in by the extraction task, used for search."
 
-#: sujets/models.py:104
+#: sujets/models.py:106
 msgid "fourni par"
 msgstr "provided by"
 
-#: sujets/models.py:104
+#: sujets/models.py:106
 msgid "Établissement qui a transmis le sujet (filtre du catalogue)."
 msgstr "Institution that provided the paper (catalogue filter)."
 
-#: sujets/models.py:114
+#: sujets/models.py:116
 msgid "sujet"
 msgstr "paper"
 
-#: sujets/models.py:136
+#: sujets/models.py:138
 msgid "La matière n'appartient pas à l'examen de la session."
 msgstr "The subject does not belong to the session's exam."
 
-#: sujets/models.py:209
+#: sujets/models.py:211
 msgid "En préparation"
 msgstr "In preparation"
 
-#: sujets/models.py:210 templates/entrainement/examens/auto_evaluation.html:37
+#: sujets/models.py:212 templates/entrainement/examens/auto_evaluation.html:37
 #: templates/sujets/_corrige.html:10 templates/sujets/_resultats.html:20
 #: templates/sujets/liste.html:85
 msgid "Proposé par la communauté"
 msgstr "Community answer"
 
-#: sujets/models.py:211 templates/entrainement/examens/auto_evaluation.html:37
+#: sujets/models.py:213 templates/entrainement/examens/auto_evaluation.html:37
 #: templates/sujets/_corrige.html:8 templates/sujets/_resultats.html:18
 #: templates/sujets/liste.html:84
 msgid "Vérifié par un enseignant"
 msgstr "Verified by a teacher"
 
-#: sujets/models.py:219
+#: sujets/models.py:221
 msgid "Plateforme"
 msgstr "Platform"
 
-#: sujets/models.py:220
+#: sujets/models.py:222
 msgid "Enseignant"
 msgstr "Teacher"
 
-#: sujets/models.py:221
+#: sujets/models.py:223
 msgid "Partagé"
 msgstr "Shared"
 
-#: sujets/models.py:224
+#: sujets/models.py:226
 #, python-brace-format
 msgid ""
 "Markdown : **gras**, listes, tableaux (| a | b |), code entre ```. Formules "
@@ -1918,50 +1929,50 @@ msgstr ""
 "Markdown: **bold**, lists, tables (| a | b |), code between ```. Formulas: "
 "$x^2$ inline, $$\\frac{a}{b}$$ on its own line."
 
-#: sujets/models.py:230
+#: sujets/models.py:232
 msgid "début du corrigé"
 msgstr "start of the marking guide"
 
-#: sujets/models.py:231
+#: sujets/models.py:233
 msgid "Visible par tous (par exemple l'exercice 1). "
 msgstr "Visible to everyone (for example question 1). "
 
-#: sujets/models.py:234
+#: sujets/models.py:236
 msgid "suite du corrigé"
 msgstr "rest of the marking guide"
 
-#: sujets/models.py:235
+#: sujets/models.py:237
 msgid ""
 "Réservée aux abonnés une fois le paiement ouvert (CDC 3.3) ; visible par "
 "tous d'ici là."
 msgstr ""
 "Reserved for subscribers once payment opens; visible to everyone until then."
 
-#: sujets/models.py:241
+#: sujets/models.py:243
 msgid "titulaire des droits"
 msgstr "rights holder"
 
-#: sujets/models.py:243
+#: sujets/models.py:245
 msgid "régime de propriété"
 msgstr "ownership"
 
-#: sujets/models.py:254
+#: sujets/models.py:256
 msgid "corrigé"
 msgstr "marking guide"
 
-#: sujets/models.py:297
+#: sujets/models.py:299
 msgid "PDF ouverts ou téléchargés"
 msgstr "PDFs opened or downloaded"
 
-#: sujets/models.py:300
+#: sujets/models.py:302
 msgid "consultations du jour"
 msgstr "daily views"
 
-#: sujets/models.py:301
+#: sujets/models.py:303
 msgid "consultations par jour"
 msgstr "views per day"
 
-#: sujets/models.py:326
+#: sujets/models.py:328
 msgid "favori"
 msgstr "favourite"
 

@@ -29,7 +29,9 @@ def _message_interdiction(session):
 
 class SujetQuerySet(models.QuerySet):
     def publies(self):
-        return self.filter(statut=Sujet.Statut.PUBLIE)
+        # Le statut suffirait si toutes les écritures passaient par save() ; la date relue à chaque affichage
+        # garantit la règle absolue même si une session ou un sujet était modifié par un autre chemin.
+        return self.filter(statut=Sujet.Statut.PUBLIE, session__date_fin_officielle__lt=timezone.localdate())
 
     def publiables(self, aujourd_hui=None):
         return self.filter(session__date_fin_officielle__lt=aujourd_hui or timezone.localdate())

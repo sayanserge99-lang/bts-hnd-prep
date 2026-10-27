@@ -22,8 +22,9 @@
 - [ ] HTTPS Let's Encrypt sur le vrai serveur (procédure écrite dans deploy/DEPLOIEMENT.md, non testée).
 - [x] Celery : texte, OCR des scans, compression, pages, index ; action d'admin « Relancer le traitement ».
 - [x] Import de sujets en lot (ZIP + CSV, photos acceptées, simulation, doublons, commande serveur).
-- [ ] Avant le premier vrai import : saisir sessions 2020-2026 (dates de fin officielles réelles) et matières/coefficients
-      d'après la circulaire du MINESUP (CDC 3.10).
+- [x] Classeur du référentiel et commande d'import (27/10).
+- [ ] Serge Alain : remplir `contenu/referentiel-a-remplir.xlsx` — sessions 2020-2026 (dates de fin officielles
+      réelles), spécialités, matières/coefficients d'après la circulaire du MINESUP (CDC 3.10), chapitres.
 - [ ] django-storages si stockage S3 (aujourd'hui : volume Docker `fichiers`).
 - [ ] Retouche des photos de sujets (recadrage, contraste) avant publication : manuelle (étude de faisabilité 2.1).
 - [ ] Images WebP (CDC 4) : à traiter avec l'envoi de photos par les contributeurs (V3).

@@ -150,3 +150,47 @@ def test_demande_de_retrait_masque_le_sujet(creer_sujet, session_terminee):
 
     sujet.refresh_from_db()
     assert sujet.statut == Sujet.Statut.MASQUE
+
+
+# --- La date de fin d'une session déjà publiée ne peut pas être repoussée dans le futur -----------------------
+
+def test_repousser_la_fin_d_une_session_publiee_est_refuse(creer_sujet, session_terminee):
+    creer_sujet(session_terminee, statut=PUBLIE)
+    session_terminee.date_fin_officielle = timezone.localdate() + timedelta(days=10)
+    with pytest.raises(ValidationError, match="masquez d'abord ces sujets"):
+        session_terminee.save()
+
+
+def test_repousser_par_mise_a_jour_groupee_est_refuse(creer_sujet, session_terminee):
+    creer_sujet(session_terminee, statut=PUBLIE)
+    with pytest.raises(ValidationError):
+        type(session_terminee).objects.filter(pk=session_terminee.pk).update(date_fin_officielle=timezone.localdate())
+
+
+def test_le_superutilisateur_ne_peut_pas_repousser_la_fin_dans_l_admin(admin_client, creer_sujet, session_terminee):
+    creer_sujet(session_terminee, statut=PUBLIE)
+    plus_tard = timezone.localdate() + timedelta(days=10)
+    reponse = admin_client.post(reverse("admin:catalogue_session_change", args=[session_terminee.pk]), {
+        "examen": session_terminee.examen_id, "annee": session_terminee.annee,
+        "date_debut": session_terminee.date_debut.isoformat(), "date_fin_officielle": plus_tard.isoformat(),
+    })
+    assert "masquez d&#x27;abord ces sujets" in reponse.content.decode()
+    session_terminee.refresh_from_db()
+    assert session_terminee.date_fin_officielle < timezone.localdate()
+
+
+def test_repousser_la_fin_reste_possible_sans_sujet_publie(creer_sujet, session_terminee):
+    creer_sujet(session_terminee)  # brouillon
+    session_terminee.date_fin_officielle = timezone.localdate() + timedelta(days=10)
+    session_terminee.save()
+
+
+def test_un_sujet_n_est_jamais_montre_avant_la_fin_meme_par_un_autre_chemin(creer_sujet, session_terminee):
+    """Filet : si la date était changée sans passer par Django (SQL direct), la liste publique l'ignore."""
+    from django.db import connection
+
+    sujet = creer_sujet(session_terminee, statut=PUBLIE)
+    with connection.cursor() as curseur:
+        curseur.execute("UPDATE catalogue_session SET date_fin_officielle = %s WHERE id = %s",
+                        [timezone.localdate(), session_terminee.pk])
+    assert not Sujet.objects.publies().filter(pk=sujet.pk).exists()

@@ -8,7 +8,7 @@
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **396 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
+- `pytest` : **420 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
   10 statistiques, 16 Google).
 - **Connexion Google (V2)** `accounts/google.py` : OpenID Connect sans dépendance (state, PKCE, nonce ; vérifie iss,
   aud, exp, email_verified). Compte existant → connecté ; sinon page « Dernière étape » (spécialité + consentement
@@ -20,6 +20,14 @@
   convention de partenariat active ; voit les résultats des étudiants confirmés qui ont activé « Partager mes
   résultats » (consentement révocable, tracé). Étudiant confirmé : page « Épreuves de mon établissement »,
   PDF servi après contrôle (404 sinon). Lien « Mon établissement » dans l'en-tête des responsables.
+- **Avant le lancement, étape 3 commencée (27/10)** : référentiel par classeur Excel (`catalogue/referentiel.py`,
+  commandes `modele_referentiel` et `importer_referentiel`, modèle prêt dans `contenu/referentiel-a-remplir.xlsx`) :
+  sessions, spécialités, matières, coefficients, chapitres ; essai à blanc par défaut, tout ou rien, erreurs avec
+  feuille et ligne, jamais de suppression, case de traduction vide = valeur gardée ; lecture sur l'entrée standard
+  pour la production. Dépendance ajoutée : openpyxl.
+  **Faille corrigée dans la règle de publication** : `publies()` ne regardait que le statut ; repousser la fin
+  d'une session (admin) laissait ses sujets publiés en ligne avant la nouvelle date. Désormais `Session.save/clean`
+  et `SessionQuerySet.update` refusent une fin à venir s'il y a des sujets publiés, et `publies()` relit aussi la date.
 - **Avant le lancement, étape 2 (27/10)** : valeurs validées par Serge Alain (Pass 5 000, mensuel 1 500, 3 quiz
   gratuits/jour, 7 jours par sujet). Visiteurs sans compte : 3 sujets différents par jour (`sujets/quota.py`,
   PDF_VISITEUR_PAR_JOUR ; compteur dans la session, plafond 30 par adresse IP ; rouvrir un sujet ne compte pas ;
@@ -186,7 +194,8 @@ pages légales, essai hors ligne sur le Galaxy.
 - Pour Claude : Python et Docker ne sont pas dans le PATH de sa session. Utiliser `.venv/Scripts/python`
   et `export PATH="/c/Users/ayoun/AppData/Local/Programs/DockerDesktop/resources/bin:$PATH"`.
   Ne pas éditer ces fichiers avec `sed` quand le texte contient des barres obliques inverses.
-- Règle critique : `sujets/models.py` (`Sujet.save`, `SujetQuerySet`) et `sujets/admin.py` (action `publier`).
+- Règle critique : `sujets/models.py` (`Sujet.save`, `SujetQuerySet`, `publies()` qui relit la date),
+  `sujets/admin.py` (action `publier`) et `catalogue/models.py` (`Session.save`, `_fin_trop_tardive`).
 - Recherche : `Sujet.objects.rechercher(texte, langue)` ; index mis à jour par `Sujet.save()`,
   sinon `manage.py reindexer_recherche`.
 - Tests : `sujets/tests/test_regle_publication.py`, `sujets/tests/test_recherche.py`, `accounts/tests/test_groupes.py`.

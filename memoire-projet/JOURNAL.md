@@ -169,3 +169,8 @@
   ramène désormais au sujet (`next`, adresse vérifiée). Contre-épreuve (quota désactivé) → 3 échecs attendus.
   Essai sur le serveur de dev : 3 PDF puis renvoi à l'inscription. « encore 0 sujets » remplacé par un message
   de limite atteinte. 396/396.
+- 27/10 : étape 3 — classeur du référentiel et import. En testant, découverte d'une faille : repousser la fin
+  d'une session laissait ses sujets publiés visibles avant la nouvelle date (publies() ne relisait pas la date,
+  contrairement à ce que j'avais affirmé à Serge Alain). Corrigée à deux niveaux + 5 tests ; contre-épreuves
+  (garde de Session, filet de publies()) → échecs attendus. Essai sur la base de dev (faute de frappe et date
+  repoussée signalées, rien d'enregistré). 420/420.

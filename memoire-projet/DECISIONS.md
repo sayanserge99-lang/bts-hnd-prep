@@ -16,6 +16,10 @@
   (le jour de fin lui-même compte encore comme session en cours).
 - Appliquée dans `Sujet.save()`, `Sujet.clean()`, `SujetQuerySet.update/bulk_update/bulk_create`
   et l'action admin « Publier ». Couverte par `sujets/tests/test_regle_publication.py`.
+- (27/10) La date de fin d'une session qui a des sujets publiés ne peut pas passer à une date à venir
+  (`Session.save/clean`, `SessionQuerySet.update`, import du référentiel) : si la date était fausse, on masque
+  d'abord les sujets. Filet : `Sujet.objects.publies()` exige aussi `date_fin_officielle < aujourd'hui`, donc un
+  sujet n'est jamais montré trop tôt, même si la base était modifiée par un autre chemin.
 
 ## Validées le 22/10/2026 (points de l'analyse du CDC v2)
 
@@ -104,3 +108,6 @@
   (pas 3 requêtes : un lecteur PDF demande le fichier en plusieurs fois), compteur de session + plafond de 30 par
   adresse IP (un campus partage souvent une adresse ; le but est d'amener au compte gratuit, pas de bloquer).
   La règle de publication passe avant le quota (un sujet non publié reste introuvable).
+- **Référentiel par Excel (27/10)** : .xlsx plutôt que CSV (Excel abîme dates et accents des CSV sous Windows,
+  listes déroulantes possibles). L'import ne supprime jamais rien (une matière retirée se gère dans l'admin) ;
+  une matière est retrouvée par son nom dans la langue de l'examen, sans tenir compte de la casse ni des espaces.

@@ -26,7 +26,33 @@ class Examen(models.Model):
         return self.code
 
 
+def _fin_trop_tardive(session_ou_sessions, fin):
+    """Message si des sujets publiés deviendraient « publiés avant la fin officielle » (règle absolue, CDC 4.2)."""
+    if fin is None or fin < timezone.localdate():
+        return None
+    filtre = {"session__in": session_ou_sessions} if isinstance(session_ou_sessions, models.QuerySet) else {"session": session_ou_sessions}
+    # Import tardif : les sujets dépendent du catalogue, pas l'inverse.
+    from sujets.models import Sujet
+
+    publies = Sujet.objects.filter(statut=Sujet.Statut.PUBLIE, **filtre).count()
+    if not publies:
+        return None
+    return ValidationError(
+        _("%(n)s sujet(s) publié(s) dans cette session : la fin officielle ne peut pas passer au %(date)s, qui n'est "
+          "pas encore passé. Si la date était fausse, masquez d'abord ces sujets."),
+        code="fin_apres_publication",
+        params={"n": publies, "date": fin.strftime("%d/%m/%Y")},
+    )
+
+
 class SessionQuerySet(models.QuerySet):
+    # Les opérations groupées contournent save() : on y applique la même règle.
+    def update(self, **kwargs):
+        erreur = _fin_trop_tardive(self, kwargs.get("date_fin_officielle"))
+        if erreur:
+            raise erreur
+        return super().update(**kwargs)
+
     def prochaine(self, examen, a_partir_du):
         """Première session de l'examen dont la date de fin officielle n'est pas passée."""
         return (
@@ -60,6 +86,20 @@ class Session(models.Model):
 
     def __str__(self):
         return f"{self.examen} {self.annee}"
+
+    def clean(self):
+        if self.pk:
+            erreur = _fin_trop_tardive(self, self.date_fin_officielle)
+            if erreur:
+                raise ValidationError({"date_fin_officielle": erreur})
+
+    def save(self, *args, **kwargs):
+        # Aucun rôle, superutilisateur compris, ne peut passer outre (comme pour la publication d'un sujet).
+        if self.pk:
+            erreur = _fin_trop_tardive(self, self.date_fin_officielle)
+            if erreur:
+                raise erreur
+        super().save(*args, **kwargs)
 
     def est_terminee(self, aujourd_hui=None):
         # Le jour de fin compte encore comme session en cours.

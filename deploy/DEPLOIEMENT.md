@@ -103,7 +103,22 @@ rm /tmp/base.dump
 
 Essayez une restauration une fois par trimestre : une sauvegarde jamais restaurée n'est qu'un espoir.
 
-## 6. Importer des sujets en lot
+## 6. Importer le référentiel puis les sujets
+
+Avant les sujets : sessions (avec leurs dates de fin officielles), spécialités, matières, coefficients et
+chapitres. Remplissez `contenu/referentiel-a-remplir.xlsx` (Excel ou LibreOffice ; la page « Lisez-moi »
+explique chaque feuille), puis :
+
+```sh
+# Vérification (rien n'est enregistré ; les erreurs donnent la feuille et la ligne), puis import réel :
+docker compose -f compose.prod.yaml --env-file .env.production exec -T web python manage.py importer_referentiel - < referentiel.xlsx
+docker compose -f compose.prod.yaml --env-file .env.production exec -T web python manage.py importer_referentiel - --appliquer < referentiel.xlsx
+```
+
+L'import ne supprime rien et peut être relancé avec le même fichier. La date de fin d'une session qui a déjà
+des sujets publiés ne peut pas être repoussée à une date à venir (règle de publication) : masquez d'abord ces sujets.
+
+### Sujets en lot
 
 Depuis l'admin : **Sujets → Importer des sujets** (ZIP jusqu'à 200 Mo). Pour un très gros lot,
 copiez sur le serveur un dossier contenant `sujets.csv` et les fichiers, puis :
