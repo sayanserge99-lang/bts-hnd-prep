@@ -8,7 +8,7 @@
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **458 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
+- `pytest` : **470 tests verts + 2 essais JavaScript** (sautés sans Node, lancés par la CI) (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
   10 statistiques, 16 Google).
 - **Connexion Google (V2)** `accounts/google.py` : OpenID Connect sans dépendance (state, PKCE, nonce ; vérifie iss,
   aud, exp, email_verified). Compte existant → connecté ; sinon page « Dernière étape » (spécialité + consentement
@@ -20,6 +20,13 @@
   convention de partenariat active ; voit les résultats des étudiants confirmés qui ont activé « Partager mes
   résultats » (consentement révocable, tracé). Étudiant confirmé : page « Épreuves de mon établissement »,
   PDF servi après contrôle (404 sinon). Lien « Mon établissement » dans l'en-tête des responsables.
+- **Décisions du 27/10 appliquées** — offres de lancement par la migration `paiements/0005` (Pass 5 000, mensuel
+  1 500 ; fixture `offres_vides` dans conftest, marque `offres_de_lancement`), cumul Pass ↔ mensuel testé dans les
+  deux sens ; examen blanc fermé à 0:00 dans la page (réponses figées, envoi immédiat ou au retour du réseau, marge
+  serveur de 90 s pour le transport seulement), essais jsdom dans `tests_js/` lancés par
+  `entrainement/tests/test_examen_js.py` (sautés sans Node ; la CI installe jsdom) ; « Signaler cette question »
+  (`Signalement.question`, contrainte à trois cibles, vue `entrainement:signaler_question`, limite 10/jour, file
+  du modérateur de la matière via `question__chapitre__matiere`).
 - **Maquettes, écrans 7, 9, 10 (27/10)** — Modération : colonnes Document / Envoyé par / Contrôles / Décision ;
   contrôles en clair (`ContributionAdmin.controles`, icône + texte) ; `Contribution.session_terminee` ; session non
   terminée : seul « Refuser et supprimer », validation refusée par la vue (redirection vers le refus) et par

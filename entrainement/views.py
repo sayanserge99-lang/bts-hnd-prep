@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.core.mail import mail_admins
 from django.db import IntegrityError
 from django.db.models import Case, Count, Prefetch, Q, When
 from django.shortcuts import get_object_or_404, redirect, render
@@ -8,6 +9,8 @@ from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
 from accounts.models import Consentement
+from communaute.models import Signalement
+from config.securite import SIGNALEMENTS_QUESTION_PAR_COMPTE
 from catalogue.models import Chapitre, Matiere
 from sujets.models import Sujet
 from sujets.views import est_requete_htmx
@@ -227,3 +230,25 @@ def resultat(request, pk):
             "partage": Consentement.partage_actif(request.user),
         },
     )
+
+
+@login_required
+@require_POST
+def signaler_question(request, pk):
+    """Maquette (écran 8) : « Signaler cette question » ; le modérateur de la matière la relit dans sa file."""
+    question = get_object_or_404(Question.objects.visibles().select_related("chapitre__matiere"), pk=pk)
+    motif = request.POST.get("motif", "").strip()
+    if len(motif) < 10:
+        message, ok = _("Décrivez le problème en quelques mots (10 caractères au moins)."), False
+    elif SIGNALEMENTS_QUESTION_PAR_COMPTE.atteinte(request.user.pk):
+        message, ok = _("Vous avez déjà beaucoup signalé aujourd'hui. Merci ! Revenez demain."), False
+    else:
+        SIGNALEMENTS_QUESTION_PAR_COMPTE.compter(request.user.pk)
+        Signalement.objects.create(utilisateur=request.user, question=question, motif=motif[:2000])
+        mail_admins(f"Question signalée : {question.chapitre.matiere} · {question.chapitre}", motif, fail_silently=True)
+        message, ok = _("Merci ! Le modérateur de la matière relira cette question."), True
+    if est_requete_htmx(request):
+        return render(request, "entrainement/_signalement_envoye.html", {"message": message, "ok": ok, "question": question})
+    (messages.success if ok else messages.error)(request, message)
+    suite = request.POST.get("suite", "")
+    return redirect(suite if suite.startswith("/entrainement/") else "entrainement:accueil")

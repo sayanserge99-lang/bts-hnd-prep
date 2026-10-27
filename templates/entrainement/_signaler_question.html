@@ -1,0 +1,18 @@
+{% load i18n %}
+{# Maquette (écran 8) : « Signaler cette question ». Rien de la réponse ici : seulement l'identifiant de la question. #}
+<div id="signaler-{{ question.pk }}" class="pt-2">
+  <details>
+    <summary class="inline-flex cursor-pointer items-center gap-2 text-sm text-gris hover:text-encre">
+      <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 21V4h11l-1.5 4L16 12H5"/></svg>
+      {% translate "Signaler cette question" %}
+    </summary>
+    <form method="post" action="{% url 'entrainement:signaler_question' question.pk %}" class="mt-3 space-y-2"
+          hx-post="{% url 'entrainement:signaler_question' question.pk %}" hx-target="#signaler-{{ question.pk }}" hx-swap="outerHTML">
+      {% csrf_token %}
+      <input type="hidden" name="suite" value="{{ request.path }}">
+      <label for="motif-question-{{ question.pk }}" class="block text-sm font-medium">{% translate "Quel est le problème ? (énoncé faux, réponse contestable, faute…)" %}</label>
+      <textarea id="motif-question-{{ question.pk }}" name="motif" rows="3" required minlength="10" maxlength="2000" class="champ"></textarea>
+      <button class="bouton-contour">{% translate "Envoyer au modérateur" %}</button>
+    </form>
+  </details>
+</div>

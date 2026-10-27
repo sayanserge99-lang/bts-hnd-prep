@@ -191,3 +191,8 @@
   base, battues par bg-white) ; « 1 minutes ». Essai jsdom bloqué par le minuteur (process.exit ajouté).
   Contre-épreuves : garde de modération, heure de fin, touche Entrée. Question de Serge Alain sur l'offre mensuelle :
   répondue sans rien modifier. 458/458.
+- 27/10 : trois décisions de Serge Alain appliquées, un commit chacune. Offres par migration (fixture de tests pour
+  repartir d'un catalogue vide) ; cas limite trouvé : un Pass demandé quand un mois couvre déjà toute la session →
+  message clair. Verrou à 0:00 : jsdom a montré qu'un clic annulé décochait quand même la réponse → réponses figées
+  rétablies à chaque tentative, sauvegarde automatique coupée ; essais jsdom versés au dépôt (tests_js/). Examen de
+  démo expiré (minuteur réel) → recommencé par donnees_demo. Signalement de question + contre-épreuve du filtrage.

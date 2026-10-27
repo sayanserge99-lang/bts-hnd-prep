@@ -6,9 +6,15 @@ from django.utils.translation import gettext_lazy as _
 
 from sujets.models import Corrige, Sujet
 
-# Signalement et DemandeRetrait visent soit un sujet, soit un corrigé, jamais les deux.
+# Une demande de retrait vise soit un sujet, soit un corrigé, jamais les deux.
 UNE_SEULE_CIBLE = (Q(sujet__isnull=False) & Q(corrige__isnull=True)) | (
     Q(sujet__isnull=True) & Q(corrige__isnull=False)
+)
+# Un signalement vise exactement un sujet, un corrigé ou une question de quiz (maquette, écran 8).
+UNE_SEULE_CIBLE_SIGNALEMENT = (
+    (Q(sujet__isnull=False) & Q(corrige__isnull=True) & Q(question__isnull=True))
+    | (Q(sujet__isnull=True) & Q(corrige__isnull=False) & Q(question__isnull=True))
+    | (Q(sujet__isnull=True) & Q(corrige__isnull=True) & Q(question__isnull=False))
 )
 
 
@@ -105,15 +111,20 @@ class Signalement(models.Model):
     utilisateur = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="signalements")
     sujet = models.ForeignKey(Sujet, on_delete=models.CASCADE, null=True, blank=True, related_name="signalements")
     corrige = models.ForeignKey(Corrige, on_delete=models.CASCADE, null=True, blank=True, related_name="signalements")
+    question = models.ForeignKey(
+        "entrainement.Question", on_delete=models.CASCADE, null=True, blank=True, related_name="signalements"
+    )
     motif = models.TextField()
     statut = models.CharField(max_length=10, choices=Statut.choices, default=Statut.OUVERT)
     cree_le = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name = _("signalement")
-        constraints = [models.CheckConstraint(condition=UNE_SEULE_CIBLE, name="signalement_une_seule_cible")]
+        constraints = [models.CheckConstraint(condition=UNE_SEULE_CIBLE_SIGNALEMENT, name="signalement_une_seule_cible")]
 
     def __str__(self):
+        if self.question_id:
+            return f"Signalement · {_('question')} « {str(self.question.enonce)[:60]} »"
         return f"Signalement · {self.sujet or self.corrige}"
 
 

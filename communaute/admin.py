@@ -169,9 +169,32 @@ class ContributionAdmin(LimiteAuxMatieresDuModerateur, admin.ModelAdmin):
 
 @admin.register(Signalement)
 class SignalementAdmin(LimiteAuxMatieresDuModerateur, admin.ModelAdmin):
-    chemins_matiere = CIBLES
-    list_display = ("__str__", "utilisateur", "statut", "cree_le")
-    list_filter = ("statut",)
+    # Une question de quiz est rattachée à la matière de son chapitre : le modérateur de la matière la voit.
+    chemins_matiere = (*CIBLES, "question__chapitre__matiere")
+    list_display = ("__str__", "cible", "motif_court", "utilisateur", "statut", "cree_le")
+    list_filter = ("statut", ("question", admin.EmptyFieldListFilter))
+    list_select_related = ("question__chapitre", "sujet", "corrige__sujet", "utilisateur")
+    readonly_fields = ("utilisateur", "sujet", "corrige", "question", "lien_cible", "motif", "cree_le")
+
+    @admin.display(description=_("cible"))
+    def cible(self, signalement):
+        if signalement.question_id:
+            return _("Question (%(chapitre)s)") % {"chapitre": signalement.question.chapitre.titre}
+        return _("Corrigé") if signalement.corrige_id else _("Sujet")
+
+    @admin.display(description=_("motif"))
+    def motif_court(self, signalement):
+        return signalement.motif[:80]
+
+    @admin.display(description=_("ouvrir"))
+    def lien_cible(self, signalement):
+        if signalement.question_id:
+            url = reverse("admin:entrainement_question_change", args=[signalement.question_id])
+        elif signalement.corrige_id:
+            url = reverse("admin:sujets_corrige_change", args=[signalement.corrige_id])
+        else:
+            url = reverse("admin:sujets_sujet_change", args=[signalement.sujet_id])
+        return format_html('<a href="{}">{}</a>', url, _("Ouvrir dans l'administration"))
 
 
 @admin.register(DemandeRetrait)

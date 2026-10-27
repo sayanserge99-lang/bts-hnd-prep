@@ -1,0 +1,5 @@
+{% load i18n %}
+<div id="signaler-{{ question.pk }}" class="pt-2" role="status">
+  <p class="text-sm {% if ok %}text-vert{% else %}text-red-700{% endif %}">{{ message }}</p>
+  {% if not ok %}{% include "entrainement/_signaler_question.html" %}{% endif %}
+</div>

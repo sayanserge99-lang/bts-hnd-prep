@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-27 21:52+0100\n"
+"POT-Creation-Date: 2026-10-27 21:58+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -407,7 +407,7 @@ msgstr "chapter"
 msgid "Statistiques"
 msgstr "Statistics"
 
-#: communaute/admin.py:43 communaute/models.py:60 paiements/admin.py:106
+#: communaute/admin.py:43 communaute/models.py:66 paiements/admin.py:106
 msgid "contribution"
 msgstr "contribution"
 
@@ -510,33 +510,69 @@ msgstr "Contribution rejected; the file has been deleted."
 msgid "Refuser la contribution"
 msgstr "Refuse the contribution"
 
+#: communaute/admin.py:179
+msgid "cible"
+msgstr "target"
+
+#: communaute/admin.py:182
+#, python-format
+msgid "Question (%(chapitre)s)"
+msgstr "Question (%(chapitre)s)"
+
+#: communaute/admin.py:183 communaute/models.py:26
+#: templates/communaute/mes_contributions.html:21
+#: templates/sujets/detail.html:17 templates/sujets/detail.html:19
+#: templates/sujets/liste.html:87
+msgid "Corrigé"
+msgstr "Marking guide"
+
+#: communaute/admin.py:183 communaute/models.py:25
+#: templates/admin/statistiques.html:75
+#: templates/communaute/mes_contributions.html:22
+#: templates/entrainement/examens/consignes.html:12
+#: templates/sujets/detail.html:15
+msgid "Sujet"
+msgstr "Paper"
+
 #: communaute/admin.py:185
+msgid "motif"
+msgstr "reason"
+
+#: communaute/admin.py:189
+msgid "ouvrir"
+msgstr "open"
+
+#: communaute/admin.py:197
+msgid "Ouvrir dans l'administration"
+msgstr "Open in the administration"
+
+#: communaute/admin.py:208
 msgid "Accepter : supprimer le document"
 msgstr "Accept: delete the document"
 
-#: communaute/admin.py:191
+#: communaute/admin.py:214
 #, python-format
 msgid "%d demande acceptée."
 msgid_plural "%d demandes acceptées."
 msgstr[0] "%d request accepted."
 msgstr[1] "%d requests accepted."
 
-#: communaute/admin.py:194
+#: communaute/admin.py:217
 msgid "Refuser : republier le contenu"
 msgstr "Refuse: republish the content"
 
-#: communaute/admin.py:201
+#: communaute/admin.py:224
 #, python-format
 msgid "%d demande refusée."
 msgid_plural "%d demandes refusées."
 msgstr[0] "%d request refused."
 msgstr[1] "%d requests refused."
 
-#: communaute/admin.py:217
+#: communaute/admin.py:240
 msgid "Marquer comme traités"
 msgstr "Mark as handled"
 
-#: communaute/admin.py:220
+#: communaute/admin.py:243
 #, python-format
 msgid "%d message traité."
 msgid_plural "%d messages traités."
@@ -743,7 +779,7 @@ msgstr "Missing pages"
 msgid "Session non terminée"
 msgstr "Session not over"
 
-#: communaute/forms.py:256 communaute/models.py:206
+#: communaute/forms.py:256 communaute/models.py:217
 msgid "Autre"
 msgstr "Other"
 
@@ -787,144 +823,135 @@ msgstr "So that we can reply; it is never shown or passed on."
 msgid "Écrivez quelques mots de plus (10 caractères au moins)."
 msgstr "Write a few more words (at least 10 characters)."
 
-#: communaute/models.py:19 templates/admin/statistiques.html:75
-#: templates/communaute/mes_contributions.html:22
-#: templates/entrainement/examens/consignes.html:12
-#: templates/sujets/detail.html:15
-msgid "Sujet"
-msgstr "Paper"
-
-#: communaute/models.py:20 templates/communaute/mes_contributions.html:21
-#: templates/sujets/detail.html:17 templates/sujets/detail.html:19
-#: templates/sujets/liste.html:87
-msgid "Corrigé"
-msgstr "Marking guide"
-
-#: communaute/models.py:23 paiements/models.py:54
+#: communaute/models.py:29 paiements/models.py:54
 msgid "En attente"
 msgstr "Pending"
 
-#: communaute/models.py:24 templates/communaute/mes_contributions.html:24
+#: communaute/models.py:30 templates/communaute/mes_contributions.html:24
 msgid "Validée"
 msgstr "Approved"
 
-#: communaute/models.py:25
+#: communaute/models.py:31
 msgid "Rejetée"
 msgstr "Rejected"
 
-#: communaute/models.py:32
+#: communaute/models.py:38
 msgid "corrigé rédigé"
 msgstr "written marking guide"
 
-#: communaute/models.py:33
+#: communaute/models.py:39
 msgid "année proposée"
 msgstr "proposed year"
 
-#: communaute/models.py:38
+#: communaute/models.py:44
 msgid "sujet corrigé"
 msgstr "paper answered"
 
-#: communaute/models.py:38
+#: communaute/models.py:44
 msgid "Pour un corrigé proposé : le sujet publié qu'il corrige."
 msgstr "For a proposed marking guide: the published paper it answers."
 
-#: communaute/models.py:41
+#: communaute/models.py:47
 msgid "je certifie avoir le droit de partager ce document"
 msgstr "I certify that I have the right to share this document"
 
-#: communaute/models.py:46 communaute/models.py:50
+#: communaute/models.py:52 communaute/models.py:56
 msgid "Renseigné une fois validée."
 msgstr "Filled in once approved."
 
-#: communaute/models.py:52
+#: communaute/models.py:58
 msgid "jours d'abonnement offerts"
 msgstr "free subscription days"
 
-#: communaute/models.py:81
+#: communaute/models.py:87
 #, python-format
 msgid "Corrigé de « %(sujet)s »"
 msgstr "Marking guide for “%(sujet)s”"
 
-#: communaute/models.py:101
+#: communaute/models.py:107
 msgid "Ouvert"
 msgstr "Open"
 
-#: communaute/models.py:102
+#: communaute/models.py:108
 msgid "Traité"
 msgstr "Handled"
 
-#: communaute/models.py:103
+#: communaute/models.py:109
 msgid "Rejeté"
 msgstr "Rejected"
 
-#: communaute/models.py:113
+#: communaute/models.py:122
 msgid "signalement"
 msgstr "report"
 
-#: communaute/models.py:122
+#: communaute/models.py:127 entrainement/models.py:65 forum/models.py:32
+msgid "question"
+msgstr "question"
+
+#: communaute/models.py:133
 msgid "Reçue"
 msgstr "Received"
 
-#: communaute/models.py:123
+#: communaute/models.py:134
 msgid "Acceptée (contenu supprimé)"
 msgstr "Accepted (content deleted)"
 
-#: communaute/models.py:124
+#: communaute/models.py:135
 msgid "Refusée (contenu republié)"
 msgstr "Refused (content republished)"
 
-#: communaute/models.py:127
+#: communaute/models.py:138
 msgid "nom du demandeur"
 msgstr "requester's name"
 
-#: communaute/models.py:128
+#: communaute/models.py:139
 msgid "e-mail du demandeur"
 msgstr "requester's email"
 
-#: communaute/models.py:135
+#: communaute/models.py:146
 msgid ""
 "je certifie être titulaire des droits sur ce contenu ou mandaté par lui"
 msgstr ""
 "I certify that I hold the rights to this content or act on behalf of the "
 "rights holder"
 
-#: communaute/models.py:142
+#: communaute/models.py:153
 msgid "demande de retrait"
 msgstr "takedown request"
 
-#: communaute/models.py:143
+#: communaute/models.py:154
 msgid "demandes de retrait"
 msgstr "takedown requests"
 
-#: communaute/models.py:202
+#: communaute/models.py:213
 msgid "Question sur le site"
 msgstr "Question about the site"
 
-#: communaute/models.py:203
+#: communaute/models.py:214
 msgid "Erreur dans un sujet ou un corrigé"
 msgstr "Mistake in a paper or marking guide"
 
-#: communaute/models.py:204
+#: communaute/models.py:215
 msgid "Partenariat pour un établissement"
 msgstr "Partnership for an institution"
 
-#: communaute/models.py:205
+#: communaute/models.py:216
 msgid "Paiement ou abonnement"
 msgstr "Payment or subscription"
 
-#: communaute/models.py:209
+#: communaute/models.py:220
 msgid "e-mail"
 msgstr "email"
 
-#: communaute/models.py:215 forum/models.py:75
+#: communaute/models.py:226 forum/models.py:75
 msgid "traité"
 msgstr "handled"
 
-#: communaute/models.py:219
+#: communaute/models.py:230
 msgid "message de contact"
 msgstr "contact message"
 
-#: communaute/models.py:220
+#: communaute/models.py:231
 msgid "messages de contact"
 msgstr "contact messages"
 
@@ -1149,10 +1176,6 @@ msgstr "Shown after the answer."
 msgid "publiée"
 msgstr "published"
 
-#: entrainement/models.py:65 forum/models.py:32
-msgid "question"
-msgstr "question"
-
 #: entrainement/models.py:72
 msgid "Ce sujet n'est pas de la même matière que le chapitre."
 msgstr "This paper is not in the same subject as the chapter."
@@ -1294,7 +1317,7 @@ msgstr[1] "%(n)s days ago"
 msgid "Révision : %(titre)s"
 msgstr "Review: %(titre)s"
 
-#: entrainement/views.py:68 entrainement/views.py:90
+#: entrainement/views.py:71 entrainement/views.py:93
 msgid ""
 "Vous avez fait tous vos quiz gratuits du jour. Revenez demain ou passez au "
 "Pass session."
@@ -1302,14 +1325,26 @@ msgstr ""
 "You have used all your free quizzes for today. Come back tomorrow or get the"
 " Session pass."
 
-#: entrainement/views.py:79 entrainement/views.py:94
+#: entrainement/views.py:82 entrainement/views.py:97
 #: entrainement/views_hors_ligne.py:74
 msgid "Aucune question disponible pour ce choix pour le moment."
 msgstr "No questions available for this choice yet."
 
-#: entrainement/views.py:148
+#: entrainement/views.py:151
 msgid "Choisissez une réponse avant de valider."
 msgstr "Choose an answer before submitting."
+
+#: entrainement/views.py:242
+msgid "Décrivez le problème en quelques mots (10 caractères au moins)."
+msgstr "Describe the problem in a few words (at least 10 characters)."
+
+#: entrainement/views.py:244 sujets/views.py:217
+msgid "Vous avez déjà beaucoup signalé aujourd'hui. Merci ! Revenez demain."
+msgstr "You have already reported a lot today. Thank you! Come back tomorrow."
+
+#: entrainement/views.py:249
+msgid "Merci ! Le modérateur de la matière relira cette question."
+msgstr "Thank you! The subject moderator will review this question."
 
 #: entrainement/views_examens.py:16
 #: templates/entrainement/examens/liste.html:15
@@ -2166,10 +2201,6 @@ msgstr ""
 #: sujets/views.py:214
 msgid "Décrivez l'erreur en quelques mots (10 caractères au moins)."
 msgstr "Describe the mistake in a few words (at least 10 characters)."
-
-#: sujets/views.py:217
-msgid "Vous avez déjà beaucoup signalé aujourd'hui. Merci ! Revenez demain."
-msgstr "You have already reported a lot today. Thank you! Come back tomorrow."
 
 #: sujets/views.py:222
 msgid "Merci ! L'enseignant relira ce passage."
@@ -3575,11 +3606,11 @@ msgstr "Your choice"
 msgid "Explication"
 msgstr "Explanation"
 
-#: templates/entrainement/_correction.html:36
+#: templates/entrainement/_correction.html:38
 msgid "Voir mon résultat"
 msgstr "See my result"
 
-#: templates/entrainement/_correction.html:38 templates/pwa/hors_ligne.html:15
+#: templates/entrainement/_correction.html:40 templates/pwa/hors_ligne.html:15
 msgid "Question suivante"
 msgstr "Next question"
 
@@ -3590,6 +3621,18 @@ msgstr "Several answers possible."
 #: templates/entrainement/_formulaire_question.html:17
 msgid "Une seule réponse."
 msgstr "One answer only."
+
+#: templates/entrainement/_signaler_question.html:7
+msgid "Signaler cette question"
+msgstr "Report this question"
+
+#: templates/entrainement/_signaler_question.html:13
+msgid "Quel est le problème ? (énoncé faux, réponse contestable, faute…)"
+msgstr "What is wrong? (incorrect statement, disputable answer, typo…)"
+
+#: templates/entrainement/_signaler_question.html:15
+msgid "Envoyer au modérateur"
+msgstr "Send to the moderator"
 
 #: templates/entrainement/accueil.html:10
 msgid "Quiz de 10 questions tirées au hasard, corrigées au fur et à mesure."

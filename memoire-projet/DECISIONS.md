@@ -138,3 +138,5 @@
 - **Fin de l'examen blanc (27/10, Serge Alain)** : à 0:00 la copie se ferme dans la page (réponses figées, panneaux
   inertes, toute modification annulée, sauvegarde automatique coupée) et part tout de suite (au retour du réseau si
   hors connexion) ; la marge serveur de 90 s ne sert qu'au transport, puis tout est refusé. Annoncé dans les consignes.
+- **Signaler une question (27/10)** : entité Signalement (troisième cible, exactement une par signalement), dans la
+  file du modérateur de la matière du chapitre ; motif de 10 caractères au moins, 10 par jour et par compte.

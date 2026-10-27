@@ -32,6 +32,8 @@
     </div>
   {% endif %}
 
+  {% include "entrainement/_signaler_question.html" %}
+
   {% if derniere %}
     <a href="{% url 'entrainement:resultat' tentative.pk %}" class="bouton-plein w-full sm:w-auto">{% translate "Voir mon résultat" %}</a>
   {% else %}
