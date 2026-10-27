@@ -4,52 +4,106 @@
 {% block titre %}{% translate "Mon espace" %} — BTS-HND Prep{% endblock %}
 
 {% block contenu %}
-<div class="mx-auto max-w-3xl space-y-6 px-4 py-6">
-  <div>
-    <h1 class="text-2xl font-bold">{% blocktranslate with prenom=user.first_name %}Bonjour {{ prenom }}{% endblocktranslate %}</h1>
-    {% if profil %}
-      <p class="mt-1 text-gris">{{ profil.examen.code }} · {{ profil.specialite }}{% if profil.session_prevue %} · {% blocktranslate with annee=profil.session_prevue.annee %}session {{ annee }}{% endblocktranslate %}{% endif %}</p>
-    {% endif %}
-    <a href="{% url 'accounts:modifier_profil' %}" class="mt-2 inline-block text-sm text-vert underline">{% translate "Modifier mon profil" %}</a>
+{# Profil en blocs (maquette, écran 12) : études, abonnement, confidentialité ; puis les raccourcis de révision. #}
+<div class="mx-auto max-w-3xl space-y-5 px-4 py-6">
+  <div class="flex items-center gap-4">
+    <span class="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-vert text-xl font-bold text-white" aria-hidden="true">{{ user.first_name|slice:":1"|upper }}{{ user.last_name|slice:":1"|upper }}</span>
+    <div class="min-w-0">
+      <h1 class="text-2xl font-bold">{{ user.get_full_name|default:user.email }}</h1>
+      <p class="truncate text-gris">{{ user.email }}</p>
+    </div>
   </div>
 
-  {% if profil.etablissement %}
-    <section class="carte space-y-3 text-sm">
-      <p><span class="text-gris">{% translate "Mon établissement :" %}</span> <strong>{{ profil.etablissement.nom }}</strong>
-        {% if profil.etablissement_valide %}<span class="ml-1 rounded bg-vert-clair px-2 py-0.5 text-xs font-semibold text-vert">✓ {% translate "validé" %}</span>
-        {% else %}<span class="ml-1 rounded bg-ambre-clair px-2 py-0.5 text-xs font-semibold text-ambre">{% translate "en attente de validation par l'établissement" %}</span>{% endif %}</p>
+  <section class="carte divide-y divide-bordure p-0">
+    <h2 class="px-5 pb-2 pt-4 text-xs font-semibold uppercase tracking-wide text-gris">{% translate "Mes études" %}</h2>
+    <div class="flex items-center justify-between gap-3 px-5 py-3">
+      <span>{% if profil %}{{ profil.examen.code }} · {{ profil.specialite }}{% if profil.session_prevue %} · {% blocktranslate with annee=profil.session_prevue.annee %}session {{ annee }}{% endblocktranslate %}{% endif %}{% else %}{% translate "Examen et spécialité à compléter" %}{% endif %}</span>
+      <a href="{% url 'accounts:modifier_profil' %}" class="font-semibold text-vert">{% translate "Modifier" %}</a>
+    </div>
+    <div class="flex flex-wrap items-center justify-between gap-3 px-5 py-3">
+      <span>{% translate "Établissement" %}</span>
+      <span class="text-right text-gris">{% if profil.etablissement %}{{ profil.etablissement.nom }}
+          {% if profil.etablissement_valide %}<span class="ml-1 rounded bg-vert-clair px-2 py-0.5 text-xs font-semibold text-vert">✓ {% translate "validé" %}</span>
+          {% else %}<span class="ml-1 rounded bg-ambre-clair px-2 py-0.5 text-xs font-semibold text-ambre">{% translate "en attente de validation par l'établissement" %}</span>{% endif %}
+        {% else %}{% translate "Non renseigné" %}{% endif %}</span>
+    </div>
+    {% if profil.etablissement_valide %}
+      <div class="px-5 py-3"><a href="{% url 'partenaires:mes_epreuves' %}" class="text-vert underline">{% translate "Épreuves de mon établissement" %}</a></div>
+    {% endif %}
+    <div class="flex items-center justify-between gap-3 px-5 py-3">
+      <span>{% translate "Langue de l'interface" %}</span>
+      <span class="text-gris">{{ user.get_langue_display }}</span>
+    </div>
+  </section>
+
+  {# CDC 3.8 : abonnement en cours ; un code d'accès remis par l'établissement l'active. CDC 10.7 : reçus. #}
+  <section class="carte space-y-3">
+    <div class="flex flex-wrap items-center justify-between gap-3">
+      <div>
+        <h2 class="text-xs font-semibold uppercase tracking-wide text-gris">{% translate "Abonnement" %}</h2>
+        {% for periode in periodes %}
+          <p class="font-semibold">{% blocktranslate with debut=periode.debut|date:"d/m/Y" fin=periode.fin|date:"d/m/Y" %}Premium du {{ debut }} au {{ fin }}{% endblocktranslate %}</p>
+          <p class="text-xs text-gris">{{ periode.origines|join:" + " }}</p>
+        {% empty %}
+          <p class="text-lg font-semibold">{% translate "Gratuit" %}</p>
+        {% endfor %}
+      </div>
+      {% if not periodes and paiement_actif %}<a href="{% url 'offres' %}" class="bouton-plein">{% translate "Passer au Pass" %}</a>{% endif %}
+    </div>
+    {% if paiements %}
+      <ul class="text-sm">{% for paiement in paiements %}
+        <li><a href="{% url 'paiements:recu' paiement.reference %}" class="text-vert underline">{% translate "Reçu" %} {{ paiement.numero_recu }}</a> · {{ paiement.offre.nom }} · {{ paiement.confirme_le|date:"d/m/Y" }}</li>
+      {% endfor %}</ul>
+    {% endif %}
+    <a href="{% url 'accounts:activer_code' %}" class="inline-block text-sm text-vert underline">{% translate "J'ai un code d'accès" %}</a>
+  </section>
+
+  {# CDC 10.2 et 10.6 : partage désactivé par défaut et révocable ; export et suppression depuis le profil. #}
+  <section class="carte divide-y divide-bordure p-0">
+    <h2 class="px-5 pb-2 pt-4 text-xs font-semibold uppercase tracking-wide text-gris">{% translate "Confidentialité" %}</h2>
+    <div class="flex items-start justify-between gap-4 px-5 py-3">
+      <div>
+        <p class="font-semibold">{% translate "Partager mes résultats avec mon établissement" %}</p>
+        <p class="text-sm text-gris">{% if profil.etablissement_valide %}{% translate "Votre établissement verra vos scores aux quiz et examens blancs. Vous pouvez arrêter à tout moment." %}{% else %}{% translate "Possible quand votre établissement a validé votre inscription." %}{% endif %}</p>
+      </div>
       {% if profil.etablissement_valide %}
-        <a href="{% url 'partenaires:mes_epreuves' %}" class="bouton-contour">{% translate "Épreuves de mon établissement" %}</a>
-        {# CDC 10.6 : désactivé par défaut, révocable à tout moment. #}
-        <form method="post" action="{% url 'accounts:partage' %}" class="flex flex-wrap items-center gap-3">
+        <form method="post" action="{% url 'accounts:partage' %}">
           {% csrf_token %}
-          <span>{% if partage %}{% translate "Votre établissement voit vos résultats." %}{% else %}{% translate "Votre établissement ne voit pas vos résultats." %}{% endif %}</span>
-          <button class="bouton-contour">{% if partage %}{% translate "Ne plus partager mes résultats" %}{% else %}{% translate "Partager mes résultats avec mon établissement" %}{% endif %}</button>
+          <button role="switch" aria-checked="{% if partage %}true{% else %}false{% endif %}"
+                  aria-label="{% translate 'Partager mes résultats avec mon établissement' %}"
+                  class="relative mt-1 inline-flex h-7 w-12 shrink-0 items-center rounded-full border-2 {% if partage %}border-vert bg-vert{% else %}border-gris/50 bg-white{% endif %}">
+            <span class="inline-block h-5 w-5 rounded-full shadow {% if partage %}translate-x-5 bg-white{% else %}translate-x-0.5 bg-gris/60{% endif %} transition-transform"></span>
+          </button>
         </form>
       {% endif %}
-    </section>
-  {% endif %}
+    </div>
+    <div class="flex flex-col gap-3 px-5 py-4 text-sm">
+      <a href="{% url 'accounts:exporter' %}" class="font-semibold text-vert">{% translate "Télécharger mes données" %}</a>
+      <a href="{% url 'accounts:mot_de_passe' %}" class="font-semibold text-vert">{% if user.has_usable_password %}{% translate "Changer mon mot de passe" %}{% else %}{% translate "Définir un mot de passe" %}{% endif %}</a>
+      <a href="{% url 'confidentialite' %}" class="font-semibold text-vert">{% translate "Politique de confidentialité" %}</a>
+      <a href="{% url 'accounts:supprimer' %}" class="font-semibold text-red-700">{% translate "Supprimer mon compte" %}</a>
+    </div>
+  </section>
 
-  {% if session %}
-    <p class="carte flex items-center gap-4">
-      <span class="text-3xl font-extrabold text-vert">{{ jours }}</span>
-      <span>{% blocktranslate with nom=session count n=jours %}jour avant la session {{ nom }}{% plural %}jours avant la session {{ nom }}{% endblocktranslate %}</span>
-    </p>
-  {% endif %}
-
+  {# Raccourcis de révision (hors maquette du profil, mais utiles ici). #}
   {% if fonctionnalites.entrainement %}
+    <a href="{% url 'entrainement:progression' %}" class="carte flex items-center justify-between gap-3 hover:border-vert">
+      <span><span class="block font-semibold">{% translate "Tableau de bord" %}</span>
+        <span class="text-sm text-gris">{% if session %}{% blocktranslate with nom=session count n=jours %}{{ n }} jour avant la session {{ nom }}{% plural %}{{ n }} jours avant la session {{ nom }}{% endblocktranslate %}{% else %}{% translate "Résultats, points faibles et dernières activités" %}{% endif %}</span></span>
+      <span aria-hidden="true">→</span>
+    </a>
+  {% endif %}
+
   <section>
-    <h2 class="text-lg font-semibold">{% translate "Mes derniers résultats" %}</h2>
+    <h2 class="text-lg font-semibold">{% translate "Mes favoris" %}</h2>
     <ul class="mt-3 space-y-2">
-      {% for resultat in resultats %}
-        <li class="carte flex justify-between gap-3"><span>{% if resultat.quiz %}{{ resultat.quiz.titre }}{% else %}{{ resultat.examen_blanc.titre }}{% endif %}</span><span class="font-semibold">{{ resultat.note|floatformat:"-1" }}/20</span></li>
+      {% for favori in favoris %}
+        <li><a href="{% url 'sujets:detail' favori.sujet.pk %}" class="carte block hover:border-vert">{{ favori.sujet.titre }} — {{ favori.sujet.session.annee }}</a></li>
       {% empty %}
-        <li class="text-sm text-gris">{% translate "Faites un premier quiz pour voir votre progression." %}</li>
+        <li class="text-sm text-gris">{% translate "Ajoutez des sujets à vos favoris depuis leur fiche pour les retrouver ici." %}</li>
       {% endfor %}
     </ul>
-    <a href="{% url 'entrainement:progression' %}" class="bouton-contour mt-3">{% translate "Ma progression" %}</a>
   </section>
-  {% endif %}
 
   {% if profil %}
   <section>
@@ -65,56 +119,12 @@
   </section>
   {% endif %}
 
-  <section>
-    <h2 class="text-lg font-semibold">{% translate "Mes favoris" %}</h2>
-    <ul class="mt-3 space-y-2">
-      {% for favori in favoris %}
-        <li><a href="{% url 'sujets:detail' favori.sujet.pk %}" class="carte block hover:border-vert">{{ favori.sujet.titre }} — {{ favori.sujet.session.annee }}</a></li>
-      {% empty %}
-        <li class="text-sm text-gris">{% translate "Ajoutez des sujets à vos favoris depuis leur fiche pour les retrouver ici." %}</li>
-      {% endfor %}
-    </ul>
-  </section>
-
-  {# CDC 10.2 : export et suppression depuis le profil. #}
-  {# CDC 3.8 : abonnement en cours ; un code d'accès remis par l'établissement l'active. #}
-  <section class="carte flex flex-wrap items-center justify-between gap-3 text-sm">
-    <div>
-      <h2 class="text-base font-semibold">{% translate "Mon abonnement" %}</h2>
-      {% for periode in periodes %}
-        <p>{% blocktranslate with debut=periode.debut|date:"d/m/Y" fin=periode.fin|date:"d/m/Y" %}Premium du {{ debut }} au {{ fin }}{% endblocktranslate %}
-          <span class="block text-xs text-gris">{{ periode.origines|join:" + " }}</span></p>
-      {% empty %}
-        <p class="text-gris">{% translate "Offre gratuite." %}</p>
-      {% endfor %}
-      {% if paiements %}
-        <p class="mt-2 font-semibold">{% translate "Mes paiements" %}</p>
-        <ul>{% for paiement in paiements %}
-          <li><a href="{% url 'paiements:recu' paiement.reference %}" class="text-vert underline">{% translate "Reçu" %} {{ paiement.numero_recu }}</a> · {{ paiement.offre.nom }} · {{ paiement.confirme_le|date:"d/m/Y" }}</li>
-        {% endfor %}</ul>
-      {% endif %}
-    </div>
-    <a href="{% url 'accounts:activer_code' %}" class="bouton-contour">{% translate "J'ai un code d'accès" %}</a>
-  </section>
-
   {% if fonctionnalites.contributions %}
-    <section class="carte flex flex-wrap items-center justify-between gap-3 text-sm">
-      <div>
-        <h2 class="text-base font-semibold">{% translate "Mes contributions" %}</h2>
-        <p class="text-gris">{% translate "Envoyez des sujets de sessions passées ou proposez des corrigés." %}</p>
-      </div>
-      <a href="{% url 'communaute:mes_contributions' %}" class="bouton-contour">{% translate "Mes contributions" %}</a>
-    </section>
+    <a href="{% url 'communaute:mes_contributions' %}" class="carte flex items-center justify-between gap-3 hover:border-vert">
+      <span><span class="block font-semibold">{% translate "Mes contributions" %}</span>
+        <span class="text-sm text-gris">{% translate "Envoyez des sujets de sessions passées ou proposez des corrigés." %}</span></span>
+      <span aria-hidden="true">→</span>
+    </a>
   {% endif %}
-
-  <section class="carte space-y-2 text-sm">
-    <h2 class="text-base font-semibold">{% translate "Mes données" %}</h2>
-    <p class="text-gris">{% translate "Vous pouvez récupérer toutes vos données ou supprimer votre compte à tout moment." %}</p>
-    <div class="flex flex-wrap gap-3">
-      <a href="{% url 'accounts:mot_de_passe' %}" class="bouton-contour">{% if user.has_usable_password %}{% translate "Changer mon mot de passe" %}{% else %}{% translate "Définir un mot de passe" %}{% endif %}</a>
-      <a href="{% url 'accounts:exporter' %}" class="bouton-contour">{% translate "Télécharger mes données" %}</a>
-      <a href="{% url 'accounts:supprimer' %}" class="bouton-contour text-red-700">{% translate "Supprimer mon compte" %}</a>
-    </div>
-  </section>
 </div>
 {% endblock %}

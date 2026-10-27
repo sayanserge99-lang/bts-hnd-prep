@@ -110,7 +110,8 @@
 ## Maquettes
 
 - [x] Groupe A (27/10) : libellés, inscription sans confirmation + œil, paiement, quiz concentré, formules, filtres.
-- [ ] Groupe B : tableau de bord, inscription BTS/HND en cartes, profil en blocs, envoi de sujet (sessions terminées).
+- [x] Groupe B (27/10) : tableau de bord, inscription BTS/HND en cartes, profil en blocs, envoi de sujet.
+- [ ] Menu : la maquette nomme « Tableau de bord » et « Examens blancs » dans la barre du haut (connecté).
 - [x] Données de démo « [DÉMO] » (27/10) : etudiant.demo@example.com / Demo-BTS-2027, quiz terminé (15/20), examen
       blanc commencé, 3 contributions en attente (dont session 2027 non terminée) ; refusée si DEBUG est faux.
 - [ ] Écrans 7, 9, 10 comparés (27/10), écarts à traiter : résultat de quiz par chapitre (barres, conseil, « S'entraîner

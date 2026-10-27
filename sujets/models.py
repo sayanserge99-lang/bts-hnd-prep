@@ -187,7 +187,7 @@ class CorrigeQuerySet(models.QuerySet):
         return self.filter(
             publication=Corrige.Publication.PUBLIE,
             statut__in=[Corrige.Statut.VERIFIE, Corrige.Statut.COMMUNAUTE],
-            sujet__statut=Sujet.Statut.PUBLIE,
+            sujet__in=Sujet.objects.publies(),
         ).order_by(
             # Le corrigé vérifié par un enseignant passe en premier (CDC 10.7).
             models.Case(models.When(statut=Corrige.Statut.VERIFIE, then=0), default=1),

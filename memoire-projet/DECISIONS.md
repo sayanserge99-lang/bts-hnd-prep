@@ -120,3 +120,6 @@
   tâche Celery, case non cochée, consentement daté et versionné, désinscription en un clic) ; paires BTS ↔ HND
   (champ facultatif « spécialité équivalente », un lien par paire lu dans les deux sens, dans le référentiel).
   Contenu de démo marqué « [DÉMO] », commande refusée en production.
+- **Groupe B (27/10)** : la langue d'un nouveau compte est celle de l'interface pendant l'inscription (modifiable
+  dans le profil) ; l'examen n'est plus déduit de la spécialité mais choisi (cartes), et les deux doivent concorder.
+  Le profil ne montre plus les derniers résultats : ils sont sur le tableau de bord (CDC 3.1), lié depuis le profil.

@@ -18,7 +18,6 @@ from django.views.i18n import set_language
 
 from entrainement import progression
 from paiements.models import Abonnement, Paiement
-from entrainement.models import Tentative
 from sujets.models import Sujet
 
 from config.securite import INSCRIPTIONS_PAR_IP, REINITIALISATIONS_PAR_EMAIL, REINITIALISATIONS_PAR_IP, adresse_ip
@@ -73,7 +72,7 @@ def profil(request):
             .select_related("session", "matiere")
             .order_by("-date_publication")[:5]
         )
-    favoris = request.user.favoris.filter(sujet__statut=Sujet.Statut.PUBLIE).select_related("sujet__session", "sujet__matiere")
+    favoris = request.user.favoris.filter(sujet__in=Sujet.objects.publies()).select_related("sujet__session", "sujet__matiere")
     session = progression.prochaine_session(request.user)
     return render(
         request,
@@ -82,10 +81,6 @@ def profil(request):
             "profil": profil_etude,
             "recents": recents,
             "favoris": favoris,
-            # CDC 3.1 : le tableau de bord montre les derniers résultats.
-            "resultats": Tentative.objects.filter(utilisateur=request.user, note__isnull=False)
-            .select_related("quiz", "examen_blanc")
-            .order_by("-fin")[:3],
             "session": session,
             "jours": progression.jours_restants(session),
             "partage": Consentement.partage_actif(request.user),

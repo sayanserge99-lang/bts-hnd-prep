@@ -1,0 +1,4 @@
+{% load i18n %}{# Variante pour les formulaires (inscription) : valeurs = identifiants, la spécialité déjà choisie reste cochée. #}
+<option value="">{% translate "Choisir votre spécialité" %}</option>
+{% for specialite in specialites %}<option value="{{ specialite.pk }}"{% if specialite.pk|stringformat:"s" == choisie %} selected{% endif %}>{{ specialite.nom }}</option>
+{% endfor %}

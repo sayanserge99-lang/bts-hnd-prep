@@ -1,10 +1,8 @@
-{% load i18n %}{# Variables : taux (objet Taux), libelle #}
-<div>
-  <div class="flex items-baseline justify-between gap-3 text-sm">
-    <span>{{ libelle }}</span>
-    <span class="whitespace-nowrap font-semibold">{{ taux.pourcentage }} % <span class="font-normal text-gris">({{ taux.justes }}/{{ taux.total }})</span></span>
+{% load i18n %}{# Variables : taux (objet Taux), libelle. Maquette : vert, ambre sous 50 % (à travailler en priorité). #}
+<div class="grid grid-cols-[minmax(0,10rem)_1fr_auto] items-center gap-3 text-sm sm:grid-cols-[minmax(0,12rem)_1fr_auto]">
+  <span>{{ libelle }}</span>
+  <div class="h-2 overflow-hidden rounded-full bg-bordure" role="img" aria-label="{% blocktranslate with p=taux.pourcentage %}{{ p }} % de réussite{% endblocktranslate %}">
+    <div class="h-full rounded-full {% if taux.pourcentage < 50 %}bg-yellow-500{% else %}bg-vert{% endif %}" style="width: {{ taux.pourcentage }}%"></div>
   </div>
-  <div class="mt-1 h-2 overflow-hidden rounded-full bg-bordure" role="img" aria-label="{% blocktranslate with p=taux.pourcentage %}{{ p }} % de réussite{% endblocktranslate %}">
-    <div class="h-full {% if taux.pourcentage < 50 %}bg-red-600{% elif taux.pourcentage < 75 %}bg-amber-500{% else %}bg-vert{% endif %}" style="width: {{ taux.pourcentage }}%"></div>
-  </div>
+  <span class="whitespace-nowrap text-right {% if taux.pourcentage < 50 %}font-semibold text-ambre{% endif %}" title="{{ taux.justes }}/{{ taux.total }}">{{ taux.pourcentage }} %</span>
 </div>

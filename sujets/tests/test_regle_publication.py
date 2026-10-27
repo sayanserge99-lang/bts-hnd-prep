@@ -194,3 +194,35 @@ def test_un_sujet_n_est_jamais_montre_avant_la_fin_meme_par_un_autre_chemin(cree
         curseur.execute("UPDATE catalogue_session SET date_fin_officielle = %s WHERE id = %s",
                         [timezone.localdate(), session_terminee.pk])
     assert not Sujet.objects.publies().filter(pk=sujet.pk).exists()
+
+
+def test_rien_de_la_session_ne_reste_visible_si_la_date_change_par_un_autre_chemin(creer_sujet, session_terminee, compta_generale):
+    """Corrigés, questions, examens blancs, discussions et favoris suivent le même filet que publies()."""
+    from django.db import connection
+
+    from accounts.models import Utilisateur
+    from catalogue.models import Chapitre
+    from entrainement.models import ExamenBlanc, Question
+    from forum.models import Discussion
+    from sujets.models import Corrige, Favori
+
+    sujet = creer_sujet(session_terminee, statut=PUBLIE)
+    awa = Utilisateur.objects.create_user(email="awa@example.com", password="Revision-2027")
+    Corrige.objects.create(sujet=sujet, statut=Corrige.Statut.VERIFIE, publication=Corrige.Publication.PUBLIE,
+                           auteur="M. Test", titulaire_droits="Test", regime_propriete=Corrige.RegimePropriete.PLATEFORME,
+                           partie_gratuite="Début", contenu="Suite")
+    chapitre = Chapitre.objects.create(matiere=compta_generale, titre="Amortissements")
+    Question.objects.create(chapitre=chapitre, type="vrai_faux", enonce="?", sujet=sujet, publiee=True, langue="fr")
+    ExamenBlanc.objects.create(titre="Examen", sujet=sujet, duree=60, publie=True)
+    Discussion.objects.create(matiere=compta_generale, sujet=sujet, auteur=awa, titre="Question", texte="")
+    Favori.objects.create(utilisateur=awa, sujet=sujet)
+    visibles = lambda: (Corrige.objects.visibles().count(), Question.objects.visibles().count(),  # noqa: E731
+                        ExamenBlanc.objects.visibles().count(), Discussion.objects.visibles().count())
+    assert visibles() == (1, 1, 1, 1)
+
+    with connection.cursor() as curseur:
+        curseur.execute("UPDATE catalogue_session SET date_fin_officielle = %s WHERE id = %s",
+                        [timezone.localdate(), session_terminee.pk])
+
+    assert visibles() == (0, 0, 0, 0)
+    assert not awa.favoris.filter(sujet__in=Sujet.objects.publies()).exists()

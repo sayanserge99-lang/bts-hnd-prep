@@ -8,7 +8,7 @@
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **435 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
+- `pytest` : **449 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
   10 statistiques, 16 Google).
 - **Connexion Google (V2)** `accounts/google.py` : OpenID Connect sans dépendance (state, PKCE, nonce ; vérifie iss,
   aud, exp, email_verified). Compte existant → connecté ; sinon page « Dernière étape » (spécialité + consentement
@@ -20,6 +20,18 @@
   convention de partenariat active ; voit les résultats des étudiants confirmés qui ont activé « Partager mes
   résultats » (consentement révocable, tracé). Étudiant confirmé : page « Épreuves de mon établissement »,
   PDF servi après contrôle (404 sinon). Lien « Mon établissement » dans l'en-tête des responsables.
+- **Maquettes, groupe B (27/10)** — tableau de bord (`entrainement:progression`) d'après l'écran 4 : salutation,
+  3 tuiles (jours avant la session, taux global `progression.bilan`, série `serie_en_cours` : jours d'affilée avec
+  un quiz/examen terminé, encore valable si rien aujourd'hui), maîtrise par matière sur 30 jours (barres vertes,
+  ambre < 50 %), points faibles (Premium), dernières activités (`jour_relatif`), note de confidentialité.
+  Inscription : examen en deux cartes (`forms/cartes_examen.html`, HTMX recharge les spécialités via
+  `options_specialites?valeur=pk` ; `hx-include="[name='examen'], #id_specialite"` — `this` ne marche pas en
+  htmx 2.0.4) ; spécialité vérifiée contre l'examen côté serveur. Profil en blocs (Mes études, Abonnement,
+  Confidentialité avec interrupteur de partage) + raccourcis ; derniers résultats déplacés au tableau de bord.
+  Envoi de sujet : liste des seules sessions terminées (groupées par examen) + contrôle serveur (examen de la
+  spécialité), message de la règle au lieu de « choix invalide » ; zone « Photographier ou choisir un fichier »
+  (`forms/zone_fichiers.html`, image/* + PDF, plusieurs fichiers). Filet de la règle étendu : corrigés, questions,
+  examens blancs, discussions et favoris relisent aussi la date de fin (test par SQL direct).
 - **Maquettes, groupe A (27/10)** — maquette complète de 13 écrans reçue ; décisions de Serge Alain dans DECISIONS.
   Libellés sans deux-points (`templates/forms/champ.html`, fieldset + légende pour les radios, « (facultatif) » si le
   formulaire a `marquer_facultatifs`) ; inscription à un seul mot de passe (`password2 = None`, solidité revérifiée sur

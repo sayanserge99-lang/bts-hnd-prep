@@ -180,3 +180,8 @@
   `erreur` d'un except utilisée dans un on_commit (effacée par Python) → trouvée par le test. Contre-épreuves :
   solidité du mot de passe (4 échecs attendus), refus du second Pass, code non consommé. 435/435.
 - 27/10 : données de démo « [DÉMO] » (point 6) + test (refus sans DEBUG, rien en double). Captures des écrans 7, 9, 10.
+- 27/10 : groupe B (tableau de bord, cartes BTS/HND, profil en blocs, envoi de sujet) + filet de visibilité étendu.
+  Défauts trouvés par les captures : liste des spécialités vidée par HTMX (hx-include « this » sans effet en
+  htmx 2) → sélecteur explicite, vérifié dans Chrome (BTS puis HND coché) ; tableau d'activités coupé sur
+  téléphone → matière sous l'activité. Contre-épreuves : filet de visibilité (4 contenus restaient visibles),
+  contrôle serveur de la session (valeur forgée acceptée). Test de la règle d'envoi inchangé. 449/449.

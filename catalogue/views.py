@@ -82,4 +82,8 @@ def statistiques(request):
 def options_specialites(request):
     """Fragment HTMX : la liste des spécialités suit l'examen choisi."""
     specialites = Specialite.objects.filter(examen__code=request.GET.get("examen"))
+    if request.GET.get("valeur") == "pk":
+        # Inscription (cartes BTS / HND) : identifiants, et la spécialité déjà choisie si elle convient.
+        return render(request, "catalogue/_options_specialites_pk.html",
+                      {"specialites": specialites, "choisie": request.GET.get("specialite", "")})
     return render(request, "catalogue/_options_specialites.html", {"specialites": specialites})

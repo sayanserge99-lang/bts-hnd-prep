@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-27 16:14+0100\n"
+"POT-Creation-Date: 2026-10-27 16:40+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,74 +38,91 @@ msgstr "Dates"
 msgid "codes de secours restants"
 msgstr "backup codes left"
 
-#: accounts/forms.py:22
+#: accounts/forms.py:23
 msgid ""
 "Trop de tentatives. Réessayez dans 15 minutes ou réinitialisez votre mot de "
 "passe."
 msgstr "Too many attempts. Try again in 15 minutes or reset your password."
 
-#: accounts/forms.py:40
+#: accounts/forms.py:41
 msgid "Spécialité préparée"
 msgstr "Specialty"
 
-#: accounts/forms.py:49 templates/admin/statistiques.html:39
+#: accounts/forms.py:50 templates/accounts/profil.html:24
+#: templates/admin/statistiques.html:39
 msgid "Établissement"
 msgstr "Institution"
 
-#: accounts/forms.py:50
+#: accounts/forms.py:51
 msgid "Choisir dans la liste"
 msgstr "Choose from the list"
 
-#: accounts/forms.py:73 accounts/forms.py:131
+#: accounts/forms.py:71
+msgid "Examen préparé"
+msgstr "Exam"
+
+#: accounts/forms.py:78 accounts/forms.py:149
 msgid "J'accepte les conditions générales et la politique de confidentialité."
 msgstr "I accept the terms and conditions and the privacy policy."
 
-#: accounts/forms.py:80 accounts/forms.py:125 accounts/forms.py:196
+#: accounts/forms.py:85 accounts/forms.py:143 accounts/forms.py:214
 msgid "Prénom"
 msgstr "First name"
 
-#: accounts/forms.py:80 accounts/forms.py:126 accounts/forms.py:196
+#: accounts/forms.py:85 accounts/forms.py:144 accounts/forms.py:214
 msgid "Nom"
 msgstr "Last name"
 
-#: accounts/forms.py:86 accounts/forms.py:229
+#: accounts/forms.py:91 accounts/forms.py:247
 #: templates/accounts/mot_de_passe.html:4
 msgid "Mot de passe"
 msgstr "Password"
 
-#: accounts/forms.py:87
+#: accounts/forms.py:92
 msgid "8 caractères au minimum."
 msgstr "At least 8 characters."
 
-#: accounts/forms.py:98
+#: accounts/forms.py:94
+msgid "En français"
+msgstr "En français"
+
+#: accounts/forms.py:105
+#, python-format
+msgid ""
+"Cette spécialité n'appartient pas au %(examen)s : choisissez-en une dans la "
+"liste."
+msgstr ""
+"This specialty is not part of the %(examen)s: choose one from the list."
+
+#: accounts/forms.py:116
 msgid "Un compte existe déjà avec cette adresse e-mail."
 msgstr "An account already exists with this email address."
 
-#: accounts/forms.py:127
+#: accounts/forms.py:145
 msgid "Langue"
 msgstr "Language"
 
-#: accounts/forms.py:176
+#: accounts/forms.py:194
 msgid "Adresse e-mail"
 msgstr "Email address"
 
-#: accounts/forms.py:190
+#: accounts/forms.py:208
 msgid "Session prévue"
 msgstr "Planned session"
 
-#: accounts/forms.py:213
+#: accounts/forms.py:231
 msgid "Cette session n'appartient pas à l'examen de votre spécialité."
 msgstr "This session does not belong to your specialty's exam."
 
-#: accounts/forms.py:237
+#: accounts/forms.py:255
 msgid "Pour confirmer, tapez votre adresse e-mail"
 msgstr "To confirm, type your email address"
 
-#: accounts/forms.py:245
+#: accounts/forms.py:263
 msgid "Ce n'est pas l'adresse e-mail de ce compte."
 msgstr "This is not the email address of this account."
 
-#: accounts/forms.py:248
+#: accounts/forms.py:266
 msgid "Mot de passe incorrect."
 msgstr "Incorrect password."
 
@@ -151,7 +168,7 @@ msgid "Conditions générales"
 msgstr "Terms and conditions"
 
 #: accounts/models.py:97 templates/accounts/google_finir.html:17
-#: templates/accounts/inscription.html:19
+#: templates/accounts/inscription.html:19 templates/accounts/profil.html:83
 #: templates/pages/confidentialite.html:4
 #: templates/pages/confidentialite.html:5
 msgid "Politique de confidentialité"
@@ -197,55 +214,55 @@ msgstr "two-factor authentication"
 msgid "doubles authentifications"
 msgstr "two-factor authentications"
 
-#: accounts/views.py:44
+#: accounts/views.py:43
 msgid ""
 "Trop de comptes créés depuis cette connexion. Réessayez dans une heure."
 msgstr "Too many accounts created from this connection. Try again in an hour."
 
-#: accounts/views.py:49 accounts/views.py:236
+#: accounts/views.py:48 accounts/views.py:231
 msgid "Bienvenue ! Votre compte est créé."
 msgstr "Welcome! Your account has been created."
 
-#: accounts/views.py:108
+#: accounts/views.py:103
 msgid "Votre établissement ne voit plus vos résultats."
 msgstr "Your institution can no longer see your results."
 
-#: accounts/views.py:113
+#: accounts/views.py:108
 msgid "Votre établissement peut maintenant voir vos résultats."
 msgstr "Your institution can now see your results."
 
-#: accounts/views.py:121
+#: accounts/views.py:116
 msgid "Ce compte n'a pas de profil d'étude."
 msgstr "This account has no study profile."
 
-#: accounts/views.py:126
+#: accounts/views.py:121
 msgid "Profil enregistré."
 msgstr "Profile saved."
 
-#: accounts/views.py:173
+#: accounts/views.py:168
 msgid "Ce compte est lié à des paiements : contactez-nous pour le supprimer."
 msgstr "This account is linked to payments: contact us to delete it."
 
-#: accounts/views.py:176
+#: accounts/views.py:171
 msgid "Votre compte et vos données ont été supprimés."
 msgstr "Your account and your data have been deleted."
 
-#: accounts/views.py:204
+#: accounts/views.py:199
 msgid ""
 "La connexion avec Google n'a pas abouti. Réessayez, ou connectez-vous avec "
 "votre e-mail."
 msgstr ""
 "Signing in with Google did not work. Try again, or log in with your email."
 
-#: accounts/views.py:210
+#: accounts/views.py:205
 msgid "Ce compte est désactivé."
 msgstr "This account is disabled."
 
-#: accounts/views.py:285
+#: accounts/views.py:280
 msgid "Mot de passe enregistré."
 msgstr "Password saved."
 
-#: accounts/views.py:295
+#: accounts/views.py:290
 msgid "Mot de passe modifié. Vous pouvez vous connecter."
 msgstr "Password changed. You can now log in."
 
@@ -519,43 +536,70 @@ msgstr ""
 "You have already sent a lot today. Thank you! Come back tomorrow for the "
 "rest."
 
-#: communaute/forms.py:82
+#: communaute/forms.py:83
 msgid "Le sujet"
 msgstr "The paper"
 
-#: communaute/forms.py:82
+#: communaute/forms.py:83
 msgid "Un PDF, ou une photo par page (JPG ou PNG, 10 au plus), dans l'ordre."
 msgstr "A PDF, or one photo per page (JPG or PNG, 10 at most), in order."
 
-#: communaute/forms.py:85
+#: communaute/forms.py:87
 msgid ""
 "Je l'envoie quand même (meilleure qualité, pages manquantes dans celui du "
 "site…)"
 msgstr ""
 "Send it anyway (better quality, pages missing from the one on the site…)"
 
-#: communaute/forms.py:91
-msgid "Année de la session"
-msgstr "Session year"
-
-#: communaute/forms.py:91 templates/catalogue/accueil.html:31
+#: communaute/forms.py:93 templates/catalogue/accueil.html:31
 #: templates/sujets/liste.html:52
 msgid "Spécialité"
 msgstr "Specialty"
 
-#: communaute/forms.py:91 templates/sujets/liste.html:60
+#: communaute/forms.py:93 templates/entrainement/progression.html:106
+#: templates/sujets/liste.html:60
 msgid "Matière"
 msgstr "Subject"
 
-#: communaute/forms.py:92
-msgid "Facultatif : épreuve pratique, pages manquantes, provenance…"
-msgstr "Optional: practical exam, missing pages, origin…"
+#: communaute/forms.py:94
+msgid "Épreuve pratique, pages manquantes, provenance…"
+msgstr "Practical paper, missing pages, where it comes from…"
 
-#: communaute/forms.py:109
+#: communaute/forms.py:111 communaute/forms.py:197
+msgid "Session"
+msgstr "Session"
+
+#: communaute/forms.py:111
+msgid "Choisir la session"
+msgstr "Choose the session"
+
+#: communaute/forms.py:114
+#, python-format
+msgid ""
+"La session %(value)s n'est pas terminée (ou n'existe pas) : nous n'acceptons"
+" aucun sujet d'une session en cours."
+msgstr ""
+"The %(value)s session is not over (or does not exist): we never accept "
+"papers from an ongoing session."
+
+#: communaute/forms.py:118
+msgid ""
+"Je certifie avoir le droit de partager ce document, et qu'il s'agit d'un "
+"sujet d'une session terminée."
+msgstr ""
+"I certify that I have the right to share this document, and that it is a "
+"paper from a finished session."
+
+#: communaute/forms.py:129
 msgid "Cette matière n'est pas au programme de la spécialité choisie."
 msgstr "This subject is not part of the chosen specialty."
 
-#: communaute/forms.py:114
+#: communaute/forms.py:134
+#, python-format
+msgid "Choisissez une session terminée du %(examen)s."
+msgstr "Choose a finished %(examen)s session."
+
+#: communaute/forms.py:139
 #, python-format
 msgid ""
 "La session %(annee)s n'est pas terminée : nous n'acceptons aucun sujet d'une"
@@ -564,7 +608,7 @@ msgstr ""
 "The %(annee)s session is not over: we accept no paper from an ongoing "
 "session."
 
-#: communaute/forms.py:120
+#: communaute/forms.py:145
 #, python-format
 msgid ""
 "Nous avons déjà ce sujet (%(matiere)s %(annee)s). Cochez la case si le vôtre"
@@ -573,39 +617,35 @@ msgstr ""
 "We already have this paper (%(matiere)s %(annee)s). Tick the box if yours "
 "adds something."
 
-#: communaute/forms.py:137
+#: communaute/forms.py:162
 msgid "Ou le corrigé en document"
 msgstr "Or the marking guide as a document"
 
-#: communaute/forms.py:138
+#: communaute/forms.py:163
 msgid "Un PDF, ou une photo par page (JPG ou PNG, 10 au plus)."
 msgstr "A PDF, or one photo per page (JPG or PNG, 10 at most)."
 
-#: communaute/forms.py:154
+#: communaute/forms.py:179
 msgid "Rédigez le corrigé ou joignez-le en document."
 msgstr "Write the marking guide or attach it as a document."
 
-#: communaute/forms.py:172
-msgid "Session"
-msgstr "Session"
-
-#: communaute/forms.py:174 templates/sujets/liste.html:68
+#: communaute/forms.py:199 templates/sujets/liste.html:68
 msgid "Type d'épreuve"
 msgstr "Paper type"
 
-#: communaute/forms.py:175
+#: communaute/forms.py:200
 msgid "Durée (minutes)"
 msgstr "Duration (minutes)"
 
-#: communaute/forms.py:176 sujets/models.py:103
+#: communaute/forms.py:201 sujets/models.py:103
 msgid "Exemple : MINESUP, BTS session 2025."
 msgstr "Example: MINESUP, HND 2025 session."
 
-#: communaute/forms.py:178 templates/sujets/detail.html:85
+#: communaute/forms.py:203 templates/sujets/detail.html:85
 msgid "Barème"
 msgstr "Marking scheme"
 
-#: communaute/forms.py:197
+#: communaute/forms.py:222
 msgid ""
 "Session en cours : un tel sujet est suspect (CDC 4.2). Rejetez la "
 "contribution au lieu de la valider."
@@ -613,51 +653,51 @@ msgstr ""
 "Ongoing session: such a paper is suspicious (CDC 4.2). Reject the "
 "contribution instead of approving it."
 
-#: communaute/forms.py:204
+#: communaute/forms.py:229
 msgid "Titulaire des droits"
 msgstr "Rights holder"
 
-#: communaute/forms.py:206
+#: communaute/forms.py:231
 msgid "Début du corrigé (visible par tous)"
 msgstr "Start of the marking guide (visible to all)"
 
-#: communaute/forms.py:208
+#: communaute/forms.py:233
 msgid "Suite du corrigé"
 msgstr "Rest of the marking guide"
 
-#: communaute/forms.py:219
+#: communaute/forms.py:244
 msgid "Le corrigé est vide."
 msgstr "The marking guide is empty."
 
-#: communaute/forms.py:225
+#: communaute/forms.py:250
 msgid "Motif du rejet"
 msgstr "Reason for rejection"
 
-#: communaute/forms.py:226
+#: communaute/forms.py:251
 msgid "Envoyé au contributeur. Le fichier est supprimé."
 msgstr "Sent to the contributor. The file is deleted."
 
-#: communaute/forms.py:237
+#: communaute/forms.py:262
 msgid "Votre nom"
 msgstr "Your name"
 
-#: communaute/forms.py:237
+#: communaute/forms.py:262
 msgid "Votre e-mail"
 msgstr "Your email"
 
-#: communaute/forms.py:237
+#: communaute/forms.py:262
 msgid "Objet"
 msgstr "Subject"
 
-#: communaute/forms.py:237
+#: communaute/forms.py:262
 msgid "Votre message"
 msgstr "Your message"
 
-#: communaute/forms.py:238
+#: communaute/forms.py:263
 msgid "Pour vous répondre ; il n'est jamais affiché ni transmis."
 msgstr "So that we can reply; it is never shown or passed on."
 
-#: communaute/forms.py:244
+#: communaute/forms.py:269
 msgid "Écrivez quelques mots de plus (10 caractères au moins)."
 msgstr "Write a few more words (at least 10 characters)."
 
@@ -794,7 +834,7 @@ msgstr "Other"
 msgid "e-mail"
 msgstr "email"
 
-#: communaute/models.py:208 forum/models.py:72
+#: communaute/models.py:208 forum/models.py:75
 msgid "traité"
 msgstr "handled"
 
@@ -842,7 +882,8 @@ msgstr "BTS-HND Prep — Administration"
 msgid "BTS-HND Prep"
 msgstr "BTS-HND Prep"
 
-#: config/urls.py:18
+#: config/urls.py:18 templates/accounts/profil.html:91
+#: templates/entrainement/progression.html:4
 msgid "Tableau de bord"
 msgstr "Dashboard"
 
@@ -972,45 +1013,45 @@ msgstr "this question already exists in this chapter"
 msgid "Le tableau ne contient aucune ligne."
 msgstr "The spreadsheet has no rows."
 
-#: entrainement/models.py:29
+#: entrainement/models.py:30
 msgid "Choix unique"
 msgstr "Single choice"
 
-#: entrainement/models.py:30
+#: entrainement/models.py:31
 msgid "Choix multiple"
 msgstr "Multiple choice"
 
-#: entrainement/models.py:31
+#: entrainement/models.py:32
 msgid "Vrai / faux"
 msgstr "True / false"
 
-#: entrainement/models.py:32
+#: entrainement/models.py:33
 msgid "Réponse courte"
 msgstr "Short answer"
 
-#: entrainement/models.py:35
+#: entrainement/models.py:36
 msgid "Facile"
 msgstr "Easy"
 
-#: entrainement/models.py:36
+#: entrainement/models.py:37
 msgid "Moyenne"
 msgstr "Medium"
 
-#: entrainement/models.py:37
+#: entrainement/models.py:38
 msgid "Difficile"
 msgstr "Hard"
 
-#: entrainement/models.py:46
+#: entrainement/models.py:47
 msgid ""
 "Facultatif : le sujet dont la question est tirée (« Quiz sur cette épreuve "
 "»)."
 msgstr "Optional: the paper the question comes from (“Quiz on this paper”)."
 
-#: entrainement/models.py:48
+#: entrainement/models.py:49
 msgid "énoncé"
 msgstr "question text"
 
-#: entrainement/models.py:53
+#: entrainement/models.py:54
 msgid ""
 "Réponse courte uniquement. Plusieurs réponses acceptées : séparez-les par | "
 "(exemple : 40 %|40%|0,4)."
@@ -1018,138 +1059,153 @@ msgstr ""
 "Short answer only. Several accepted answers: separate them with | (example: "
 "40 %|40%|0.4)."
 
-#: entrainement/models.py:55
+#: entrainement/models.py:56
 msgid "Affichée après la réponse (CDC 3.4)."
 msgstr "Shown after the answer."
 
-#: entrainement/models.py:59 partenaires/models.py:110
+#: entrainement/models.py:60 partenaires/models.py:110
 msgid "publiée"
 msgstr "published"
 
-#: entrainement/models.py:64 forum/models.py:29
+#: entrainement/models.py:65 forum/models.py:32
 msgid "question"
 msgstr "question"
 
-#: entrainement/models.py:71
+#: entrainement/models.py:72
 msgid "Ce sujet n'est pas de la même matière que le chapitre."
 msgstr "This paper is not in the same subject as the chapter."
 
-#: entrainement/models.py:84
+#: entrainement/models.py:85
 msgid "Indiquez la réponse attendue."
 msgstr "Enter the expected answer."
 
-#: entrainement/models.py:86
+#: entrainement/models.py:87
 msgid "Une question vrai/faux a exactement deux choix (Vrai et Faux)."
 msgstr "A true/false question has exactly two choices (True and False)."
 
-#: entrainement/models.py:88
+#: entrainement/models.py:89
 msgid "Il faut au moins deux choix."
 msgstr "At least two choices are needed."
 
-#: entrainement/models.py:90
+#: entrainement/models.py:91
 msgid "Il faut exactement une bonne réponse."
 msgstr "Exactly one right answer is needed."
 
-#: entrainement/models.py:92
+#: entrainement/models.py:93
 msgid "Il faut au moins une bonne réponse."
 msgstr "At least one right answer is needed."
 
-#: entrainement/models.py:102 entrainement/models.py:103
+#: entrainement/models.py:103 entrainement/models.py:104
 msgid "choix"
 msgstr "choice"
 
-#: entrainement/models.py:113
+#: entrainement/models.py:114
 msgid "Quiz rapide"
 msgstr "Quick quiz"
 
-#: entrainement/models.py:114
+#: entrainement/models.py:115
 msgid "Révision des erreurs"
 msgstr "Review mistakes"
 
-#: entrainement/models.py:115
+#: entrainement/models.py:116
 msgid "Quiz sur une épreuve"
 msgstr "Quiz on a paper"
 
-#: entrainement/models.py:124
+#: entrainement/models.py:125
 msgid "nombre de questions"
 msgstr "number of questions"
 
-#: entrainement/models.py:128 entrainement/models.py:129
+#: entrainement/models.py:129 entrainement/models.py:130
 msgid "quiz"
 msgstr "quiz"
 
-#: entrainement/models.py:144 sujets/models.py:97
+#: entrainement/models.py:145 sujets/models.py:97
 msgid "durée (minutes)"
 msgstr "duration (minutes)"
 
-#: entrainement/models.py:144
+#: entrainement/models.py:145
 msgid "Durée réelle de l'épreuve (CDC 3.5)."
 msgstr "Real duration of the paper."
 
-#: entrainement/models.py:145
+#: entrainement/models.py:146
 msgid "consignes"
 msgstr "instructions"
 
-#: entrainement/models.py:145
+#: entrainement/models.py:146
 msgid "Affichées avant le départ du minuteur."
 msgstr "Shown before the timer starts."
 
-#: entrainement/models.py:148
+#: entrainement/models.py:149
 msgid "points de la partie QCM"
 msgstr "points for the MCQ part"
 
-#: entrainement/models.py:148
+#: entrainement/models.py:149
 msgid "La partie QCM est notée sur ces points ; 0 s'il n'y en a pas."
 msgstr "The MCQ part is marked out of these points; 0 if there is none."
 
-#: entrainement/models.py:150
+#: entrainement/models.py:151
 msgid "publié"
 msgstr "published"
 
-#: entrainement/models.py:155
+#: entrainement/models.py:156
 msgid "examen blanc"
 msgstr "mock exam"
 
-#: entrainement/models.py:156
+#: entrainement/models.py:157
 msgid "examens blancs"
 msgstr "mock exams"
 
-#: entrainement/models.py:167
+#: entrainement/models.py:168
 msgid ""
 "Publiez d'abord le sujet : un examen blanc ne peut pas le dévoiler avant."
 msgstr "Publish the paper first: a mock exam must not reveal it before then."
 
-#: entrainement/models.py:174
+#: entrainement/models.py:175
 msgid "critère"
 msgstr "criterion"
 
-#: entrainement/models.py:179
+#: entrainement/models.py:180
 msgid "critère du barème"
 msgstr "marking criterion"
 
-#: entrainement/models.py:180
+#: entrainement/models.py:181
 msgid "critères du barème"
 msgstr "marking criteria"
 
-#: entrainement/models.py:195
+#: entrainement/models.py:196
 msgid "heure de fin prévue"
 msgstr "scheduled end time"
 
-#: entrainement/models.py:195
+#: entrainement/models.py:196
 msgid "Fixée par le serveur : le chrono reprend après une coupure."
 msgstr "Set by the server: the timer resumes after a connection loss."
 
-#: entrainement/models.py:202
+#: entrainement/models.py:203
 msgid "tentative"
 msgstr "attempt"
 
-#: entrainement/models.py:226
+#: entrainement/models.py:227
 msgid "Identifiants des choix cochés, ou texte de la réponse courte."
 msgstr "IDs of the ticked choices, or the short answer text."
 
-#: entrainement/models.py:231 forum/models.py:54 forum/models.py:60
+#: entrainement/models.py:232 forum/models.py:57 forum/models.py:63
 msgid "réponse"
 msgstr "answer"
+
+#: entrainement/progression.py:90
+msgid "Aujourd'hui"
+msgstr "Today"
+
+#: entrainement/progression.py:92
+msgid "Hier"
+msgstr "Yesterday"
+
+#: entrainement/progression.py:94
+#, python-format
+msgid "Il y a %(n)s jour"
+msgid_plural "Il y a %(n)s jours"
+msgstr[0] "%(n)s day ago"
+msgstr[1] "%(n)s days ago"
 
 #: entrainement/quiz.py:54
 #, python-format
@@ -1260,35 +1316,35 @@ msgstr "Your answer"
 msgid "Pourquoi signalez-vous ce message ?"
 msgstr "Why are you reporting this message?"
 
-#: forum/models.py:26
+#: forum/models.py:29
 msgid "Facultatif : le sujet dont parle la question."
 msgstr "Optional: the paper the question is about."
 
-#: forum/models.py:31
+#: forum/models.py:34
 msgid "détails"
 msgstr "details"
 
-#: forum/models.py:34
+#: forum/models.py:37
 msgid "Choisie par l'auteur de la question : celle qui l'a aidé."
 msgstr "Chosen by the person who asked: the one that helped."
 
-#: forum/models.py:36 forum/models.py:55
+#: forum/models.py:39 forum/models.py:58
 msgid "masquée"
 msgstr "hidden"
 
-#: forum/models.py:38 forum/models.py:57
+#: forum/models.py:41 forum/models.py:60
 msgid "modifiée le"
 msgstr "edited on"
 
-#: forum/models.py:44
+#: forum/models.py:47
 msgid "discussion"
 msgstr "discussion"
 
-#: forum/models.py:76
+#: forum/models.py:79
 msgid "signalement du forum"
 msgstr "forum report"
 
-#: forum/models.py:77 templates/admin/statistiques.html:61
+#: forum/models.py:80 templates/admin/statistiques.html:61
 msgid "signalements du forum"
 msgstr "forum reports"
 
@@ -2244,7 +2300,7 @@ msgid "Déjà inscrit ?"
 msgstr "Already registered?"
 
 #: templates/accounts/modifier_profil.html:4
-#: templates/accounts/modifier_profil.html:9 templates/accounts/profil.html:13
+#: templates/accounts/modifier_profil.html:9
 #: templates/partenaires/mes_epreuves.html:28
 msgid "Modifier mon profil"
 msgstr "Edit my profile"
@@ -2261,7 +2317,7 @@ msgstr "My space"
 msgid "Enregistrer"
 msgstr "Save"
 
-#: templates/accounts/mot_de_passe.html:10 templates/accounts/profil.html:114
+#: templates/accounts/mot_de_passe.html:10 templates/accounts/profil.html:82
 msgid "Définir un mot de passe"
 msgstr "Set a password"
 
@@ -2273,7 +2329,7 @@ msgstr ""
 "Your account was created with Google. With a password, you can also log in "
 "with your email and use “Forgot password”."
 
-#: templates/accounts/mot_de_passe.html:13 templates/accounts/profil.html:114
+#: templates/accounts/mot_de_passe.html:13 templates/accounts/profil.html:82
 msgid "Changer mon mot de passe"
 msgstr "Change my password"
 
@@ -2322,148 +2378,142 @@ msgstr "This link is no longer valid. Request a new one."
 msgid "Nouveau lien"
 msgstr "New link"
 
-#: templates/accounts/profil.html:9
-#, python-format
-msgid "Bonjour %(prenom)s"
-msgstr "Hello %(prenom)s"
+#: templates/accounts/profil.html:18
+msgid "Mes études"
+msgstr "My studies"
 
-#: templates/accounts/profil.html:11
+#: templates/accounts/profil.html:20
 #, python-format
 msgid "session %(annee)s"
 msgstr "%(annee)s session"
 
-#: templates/accounts/profil.html:18
-msgid "Mon établissement :"
-msgstr "My institution:"
+#: templates/accounts/profil.html:20
+msgid "Examen et spécialité à compléter"
+msgstr "Exam and specialty to fill in"
 
-#: templates/accounts/profil.html:19
+#: templates/accounts/profil.html:21 templates/forum/_actions_auteur.html:4
+msgid "Modifier"
+msgstr "Edit"
+
+#: templates/accounts/profil.html:26
 msgid "validé"
 msgstr "confirmed"
 
-#: templates/accounts/profil.html:20
+#: templates/accounts/profil.html:27
 msgid "en attente de validation par l'établissement"
 msgstr "awaiting confirmation by the institution"
 
-#: templates/accounts/profil.html:22 templates/partenaires/mes_epreuves.html:4
+#: templates/accounts/profil.html:28 templates/admin/statistiques.html:43
+msgid "Non renseigné"
+msgstr "Not given"
+
+#: templates/accounts/profil.html:31 templates/partenaires/mes_epreuves.html:4
 #: templates/partenaires/mes_epreuves.html:10
 msgid "Épreuves de mon établissement"
 msgstr "My institution's papers"
 
-#: templates/accounts/profil.html:26
-msgid "Votre établissement voit vos résultats."
-msgstr "Your institution can see your results."
+#: templates/accounts/profil.html:34
+msgid "Langue de l'interface"
+msgstr "Interface language"
 
-#: templates/accounts/profil.html:26
-msgid "Votre établissement ne voit pas vos résultats."
-msgstr "Your institution cannot see your results."
+#: templates/accounts/profil.html:43
+msgid "Abonnement"
+msgstr "Subscription"
 
-#: templates/accounts/profil.html:27
-msgid "Ne plus partager mes résultats"
-msgstr "Stop sharing my results"
-
-#: templates/accounts/profil.html:27
-msgid "Partager mes résultats avec mon établissement"
-msgstr "Share my results with my institution"
-
-#: templates/accounts/profil.html:36
-#: templates/entrainement/progression.html:17
-#, python-format
-msgid "jour avant la session %(nom)s"
-msgid_plural "jours avant la session %(nom)s"
-msgstr[0] "day before the %(nom)s session"
-msgstr[1] "days before the %(nom)s session"
-
-#: templates/accounts/profil.html:42
-msgid "Mes derniers résultats"
-msgstr "My latest results"
-
-#: templates/accounts/profil.html:47
-#: templates/entrainement/progression.html:50
-msgid "Faites un premier quiz pour voir votre progression."
-msgstr "Take a first quiz to see your progress."
-
-#: templates/accounts/profil.html:50 templates/entrainement/accueil.html:18
-#: templates/entrainement/progression.html:4
-#: templates/entrainement/progression.html:10
-msgid "Ma progression"
-msgstr "My progress"
-
-#: templates/accounts/profil.html:56
-msgid "Sujets récents de votre spécialité"
-msgstr "Recent papers for your specialty"
-
-#: templates/accounts/profil.html:61
-msgid "Aucun sujet publié pour le moment."
-msgstr "No papers published yet."
-
-#: templates/accounts/profil.html:64
-msgid "Tous les sujets de ma spécialité"
-msgstr "All papers for my specialty"
-
-#: templates/accounts/profil.html:69
-msgid "Mes favoris"
-msgstr "My favourites"
-
-#: templates/accounts/profil.html:74
-msgid ""
-"Ajoutez des sujets à vos favoris depuis leur fiche pour les retrouver ici."
-msgstr "Add papers to your favourites from their page to find them here."
-
-#: templates/accounts/profil.html:83
-msgid "Mon abonnement"
-msgstr "My subscription"
-
-#: templates/accounts/profil.html:85
+#: templates/accounts/profil.html:45
 #, python-format
 msgid "Premium du %(debut)s au %(fin)s"
 msgstr "Premium from %(debut)s to %(fin)s"
 
-#: templates/accounts/profil.html:88
-msgid "Offre gratuite."
-msgstr "Free plan."
+#: templates/accounts/profil.html:48 templates/paiements/_formules.html:6
+#: templates/paiements/offres.html:25
+msgid "Gratuit"
+msgstr "Free"
 
-#: templates/accounts/profil.html:91
-msgid "Mes paiements"
-msgstr "My payments"
+#: templates/accounts/profil.html:51
+msgid "Passer au Pass"
+msgstr "Get the Pass"
 
-#: templates/accounts/profil.html:93 templates/paiements/email_recu.txt:5
+#: templates/accounts/profil.html:55 templates/paiements/email_recu.txt:5
 #: templates/paiements/recu.html:4 templates/paiements/recu.html:19
 msgid "Reçu"
 msgstr "Receipt"
 
-#: templates/accounts/profil.html:97 templates/paiements/offres.html:40
+#: templates/accounts/profil.html:58 templates/paiements/offres.html:40
 msgid "J'ai un code d'accès"
 msgstr "I have an access code"
 
-#: templates/accounts/profil.html:103 templates/accounts/profil.html:106
+#: templates/accounts/profil.html:63 templates/base.html:90
+msgid "Confidentialité"
+msgstr "Privacy"
+
+#: templates/accounts/profil.html:66 templates/accounts/profil.html:73
+msgid "Partager mes résultats avec mon établissement"
+msgstr "Share my results with my institution"
+
+#: templates/accounts/profil.html:67
+msgid ""
+"Votre établissement verra vos scores aux quiz et examens blancs. Vous pouvez"
+" arrêter à tout moment."
+msgstr ""
+"Your institution will see your quiz and mock exam scores. You can stop at "
+"any time."
+
+#: templates/accounts/profil.html:67
+msgid "Possible quand votre établissement a validé votre inscription."
+msgstr "Available once your institution has confirmed your enrolment."
+
+#: templates/accounts/profil.html:81
+msgid "Télécharger mes données"
+msgstr "Download my data"
+
+#: templates/accounts/profil.html:84 templates/accounts/supprimer.html:4
+#: templates/accounts/supprimer.html:8
+msgid "Supprimer mon compte"
+msgstr "Delete my account"
+
+#: templates/accounts/profil.html:92
+#, python-format
+msgid "%(n)s jour avant la session %(nom)s"
+msgid_plural "%(n)s jours avant la session %(nom)s"
+msgstr[0] "%(n)s day before the %(nom)s session"
+msgstr[1] "%(n)s days before the %(nom)s session"
+
+#: templates/accounts/profil.html:92
+msgid "Résultats, points faibles et dernières activités"
+msgstr "Results, weak points and recent activity"
+
+#: templates/accounts/profil.html:98
+msgid "Mes favoris"
+msgstr "My favourites"
+
+#: templates/accounts/profil.html:103
+msgid ""
+"Ajoutez des sujets à vos favoris depuis leur fiche pour les retrouver ici."
+msgstr "Add papers to your favourites from their page to find them here."
+
+#: templates/accounts/profil.html:110
+msgid "Sujets récents de votre spécialité"
+msgstr "Recent papers for your specialty"
+
+#: templates/accounts/profil.html:115
+msgid "Aucun sujet publié pour le moment."
+msgstr "No papers published yet."
+
+#: templates/accounts/profil.html:118
+msgid "Tous les sujets de ma spécialité"
+msgstr "All papers for my specialty"
+
+#: templates/accounts/profil.html:124
 #: templates/communaute/envoyer_sujet.html:8
 #: templates/communaute/mes_contributions.html:4
 #: templates/communaute/mes_contributions.html:10
 msgid "Mes contributions"
 msgstr "My contributions"
 
-#: templates/accounts/profil.html:104
+#: templates/accounts/profil.html:125
 msgid "Envoyez des sujets de sessions passées ou proposez des corrigés."
 msgstr "Send papers from past sessions or propose marking guides."
-
-#: templates/accounts/profil.html:111
-msgid "Mes données"
-msgstr "My data"
-
-#: templates/accounts/profil.html:112
-msgid ""
-"Vous pouvez récupérer toutes vos données ou supprimer votre compte à tout "
-"moment."
-msgstr "You can download all your data or delete your account at any time."
-
-#: templates/accounts/profil.html:115
-msgid "Télécharger mes données"
-msgstr "Download my data"
-
-#: templates/accounts/profil.html:116 templates/accounts/supprimer.html:4
-#: templates/accounts/supprimer.html:8
-msgid "Supprimer mon compte"
-msgstr "Delete my account"
 
 #: templates/accounts/supprimer.html:9
 msgid ""
@@ -2741,6 +2791,7 @@ msgstr "Question"
 #: templates/admin/entrainement/question/importer.html:55
 #: templates/admin/sujets/sujet/importer.html:54
 #: templates/entrainement/examens/resultat.html:4
+#: templates/entrainement/progression.html:108
 #: templates/entrainement/resultat.html:4
 msgid "Résultat"
 msgstr "Result"
@@ -2853,10 +2904,6 @@ msgstr "Active (%(n)s d)"
 #, python-format
 msgid "Réussite aux questions (%(n)s j)"
 msgstr "Question success (%(n)s d)"
-
-#: templates/admin/statistiques.html:43
-msgid "Non renseigné"
-msgstr "Not given"
 
 #: templates/admin/statistiques.html:51
 msgid ""
@@ -3047,7 +3094,6 @@ msgstr "Past papers"
 #: templates/base.html:117 templates/entrainement/accueil.html:4
 #: templates/entrainement/accueil.html:9
 #: templates/entrainement/examens/liste.html:9
-#: templates/entrainement/progression.html:9
 msgid "Entraînement"
 msgstr "Practice"
 
@@ -3085,10 +3131,6 @@ msgstr "Legal information"
 msgid "Mentions légales"
 msgstr "Legal notice"
 
-#: templates/base.html:90
-msgid "Confidentialité"
-msgstr "Privacy"
-
 #: templates/base.html:92 templates/communaute/demande_retrait.html:4
 #: templates/communaute/demande_retrait.html:8
 #: templates/communaute/demande_retrait_recue.html:4
@@ -3113,6 +3155,10 @@ msgstr "Profile"
 #: templates/sujets/liste.html:54
 msgid "Toutes les spécialités"
 msgstr "All specialties"
+
+#: templates/catalogue/_options_specialites_pk.html:2
+msgid "Choisir votre spécialité"
+msgstr "Choose your specialty"
 
 #: templates/catalogue/accueil.html:10
 #, python-format
@@ -3366,17 +3412,18 @@ msgstr[1] ""
 "before publication, and each approved paper earns you %(n)s free "
 "subscription days."
 
-#: templates/communaute/envoyer_sujet.html:14
+#: templates/communaute/envoyer_sujet.html:16
 msgid ""
-"Jamais de sujet d'une session en cours ni de document obtenu par une fuite :"
-" la fraude aux examens est sanctionnée par la loi."
+"Seules les sessions terminées sont proposées. Un sujet de la session en "
+"cours ou d'origine douteuse est toujours refusé : la fraude aux examens est "
+"sanctionnée par la loi."
 msgstr ""
-"Never a paper from an ongoing session or a leaked document: exam fraud is "
-"punishable by law."
+"Only finished sessions are listed. A paper from the ongoing session or of "
+"doubtful origin is always refused: exam fraud is punished by law."
 
-#: templates/communaute/envoyer_sujet.html:17
-msgid "Envoyer le sujet"
-msgstr "Send the paper"
+#: templates/communaute/envoyer_sujet.html:20
+msgid "Envoyer pour vérification"
+msgstr "Send for review"
 
 #: templates/communaute/mes_contributions.html:14
 msgid "Proposer un corrigé (depuis la fiche d'un sujet)"
@@ -3423,7 +3470,7 @@ msgstr ""
 msgid "Envoyer le corrigé"
 msgstr "Send the marking guide"
 
-#: templates/entrainement/_barre_taux.html:7
+#: templates/entrainement/_barre_taux.html:4
 #, python-format
 msgid "%(p)s %% de réussite"
 msgstr "%(p)s%% success"
@@ -3482,6 +3529,10 @@ msgid "Sujets et quiz gardés sur ce téléphone"
 msgstr "Papers and quizzes kept on this phone"
 
 #: templates/entrainement/accueil.html:18
+msgid "Ma progression"
+msgstr "My progress"
+
+#: templates/entrainement/accueil.html:18
 msgid "Réussite par chapitre, points faibles, jours avant la session"
 msgstr "Success by chapter, weak points, days before the session"
 
@@ -3529,7 +3580,7 @@ msgid "Toute la matière"
 msgstr "Whole subject"
 
 #: templates/entrainement/accueil.html:58
-#: templates/entrainement/progression.html:51
+#: templates/entrainement/progression.html:54
 msgid "Lancer un quiz"
 msgstr "Start a quiz"
 
@@ -3721,7 +3772,7 @@ msgstr ""
 "the page."
 
 #: templates/entrainement/examens/liste.html:16
-#: templates/entrainement/progression.html:69
+#: templates/entrainement/progression.html:81
 #: templates/sujets/_corrige.html:29
 msgid "Voir le Pass session"
 msgstr "See the Session pass"
@@ -3745,7 +3796,7 @@ msgid "Mes examens blancs"
 msgstr "My mock exams"
 
 #: templates/entrainement/examens/liste.html:42
-#: templates/entrainement/progression.html:85
+#: templates/entrainement/progression.html:124
 msgid "Auto-évaluation à faire"
 msgstr "Self-assessment to do"
 
@@ -3765,28 +3816,88 @@ msgstr "Review the corrections"
 msgid "Autres examens blancs"
 msgstr "Other mock exams"
 
-#: templates/entrainement/progression.html:18
+#: templates/entrainement/progression.html:11
 #, python-format
-msgid "Début prévu le %(date)s"
-msgstr "Starts on %(date)s"
+msgid "Bonjour %(prenom)s"
+msgstr "Hello %(prenom)s"
 
-#: templates/entrainement/progression.html:20
+#: templates/entrainement/progression.html:14
+msgid "Lancer un quiz rapide"
+msgstr "Start a quick quiz"
+
+#: templates/entrainement/progression.html:21
+#, python-format
+msgid "Avant la session %(annee)s"
+msgstr "Before the %(annee)s session"
+
+#: templates/entrainement/progression.html:22
+#: templates/entrainement/progression.html:38
+#, python-format
+msgid "%(n)s jour"
+msgid_plural "%(n)s jours"
+msgstr[0] "%(n)s day"
+msgstr[1] "%(n)s days"
+
+#: templates/entrainement/progression.html:23
+#, python-format
+msgid "D'après la date officielle d'ouverture (%(date)s)"
+msgstr "Based on the official opening date (%(date)s)"
+
+#: templates/entrainement/progression.html:25
 msgid "La date de la prochaine session n'est pas encore connue."
 msgstr "The date of the next session is not known yet."
 
-#: templates/entrainement/progression.html:21
+#: templates/entrainement/progression.html:26
 msgid "Indiquer ma session"
 msgstr "Set my session"
 
-#: templates/entrainement/progression.html:27
-msgid "Mes points faibles"
-msgstr "My weak points"
+#: templates/entrainement/progression.html:30
+msgid "Bonnes réponses"
+msgstr "Correct answers"
 
-#: templates/entrainement/progression.html:36
-msgid "Quiz conseillé sur ce chapitre"
-msgstr "Recommended quiz on this chapter"
+#: templates/entrainement/progression.html:32
+#, python-format
+msgid "Sur %(n)s question répondue"
+msgid_plural "Sur %(n)s questions répondues"
+msgstr[0] "Out of %(n)s answered question"
+msgstr[1] "Out of %(n)s answered questions"
 
-#: templates/entrainement/progression.html:42
+#: templates/entrainement/progression.html:35
+msgid "Série en cours"
+msgstr "Current streak"
+
+#: templates/entrainement/progression.html:39
+msgid "Au moins un quiz par jour"
+msgstr "At least one quiz a day"
+
+#: templates/entrainement/progression.html:46
+msgid "Maîtrise par matière"
+msgstr "Mastery by subject"
+
+#: templates/entrainement/progression.html:47
+#, python-format
+msgid "Bonnes réponses, %(n)s derniers jours"
+msgstr "Correct answers, last %(n)s days"
+
+#: templates/entrainement/progression.html:53
+msgid "Faites un premier quiz pour voir votre progression."
+msgstr "Take a first quiz to see your progress."
+
+#: templates/entrainement/progression.html:57
+#, python-format
+msgid "En ambre : matière sous %(n)s %%, à travailler en priorité."
+msgstr "In amber: subject below %(n)s %%, work on it first."
+
+#: templates/entrainement/progression.html:61
+msgid "Vos points faibles"
+msgstr "Your weak points"
+
+#: templates/entrainement/progression.html:72
+#: templates/paiements/_etat.html:10
+msgid "S'entraîner"
+msgstr "Practise"
+
+#: templates/entrainement/progression.html:78
 #, python-format
 msgid ""
 "Vos points faibles apparaîtront quand vous aurez répondu à au moins %(n)s "
@@ -3795,52 +3906,64 @@ msgstr ""
 "Your weak points will appear once you have answered at least %(n)s questions"
 " in the same chapter."
 
-#: templates/entrainement/progression.html:46
-msgid "Réussite par matière"
-msgstr "Success by subject"
-
-#: templates/entrainement/progression.html:58
-msgid "Réussite par chapitre"
-msgstr "Success by chapter"
-
-#: templates/entrainement/progression.html:68
+#: templates/entrainement/progression.html:80
 msgid ""
 "Le détail par chapitre et vos points faibles sont inclus dans le Pass "
 "session."
 msgstr ""
 "The chapter breakdown and your weak points are included in the Session pass."
 
-#: templates/entrainement/progression.html:73
-msgid "Historique"
-msgstr "History"
+#: templates/entrainement/progression.html:88
+msgid "Réussite par chapitre"
+msgstr "Success by chapter"
 
-#: templates/entrainement/progression.html:79
-#: templates/paiements/offres.html:29 templates/partenaires/espace.html:77
-msgid "Quiz"
-msgstr "Quiz"
+#: templates/entrainement/progression.html:99
+msgid "Dernières activités"
+msgstr "Recent activity"
 
-#: templates/entrainement/progression.html:84
+#: templates/entrainement/progression.html:105
+msgid "Activité"
+msgstr "Activity"
+
+#: templates/entrainement/progression.html:107
+#: templates/paiements/email_recu.txt:6
+msgid "Date"
+msgstr "Date"
+
+#: templates/entrainement/progression.html:121
 msgid "Examen blanc"
 msgstr "Mock exam"
 
-#: templates/entrainement/progression.html:90
-msgid "Aucune tentative terminée pour le moment."
-msgstr "No completed attempts yet."
-
-#: templates/entrainement/progression.html:94 templates/forum/matiere.html:26
+#: templates/entrainement/progression.html:133 templates/forum/matiere.html:26
 #: templates/sujets/_resultats.html:34 templates/sujets/detail.html:82
 msgid "Pages"
 msgstr "Pages"
 
-#: templates/entrainement/progression.html:95
+#: templates/entrainement/progression.html:134
 #: templates/sujets/_resultats.html:36
 msgid "Précédent"
 msgstr "Previous"
 
-#: templates/entrainement/progression.html:96
+#: templates/entrainement/progression.html:135
 #: templates/sujets/_resultats.html:40
 msgid "Suivant"
 msgstr "Next"
+
+#: templates/entrainement/progression.html:139
+msgid "Aucune tentative terminée pour le moment."
+msgstr "No completed attempts yet."
+
+#: templates/entrainement/progression.html:143
+msgid ""
+"Ces statistiques ne sont visibles que par vous. Votre établissement ne les "
+"voit que si vous l'avez autorisé dans votre"
+msgstr ""
+"These statistics are visible only to you. Your institution sees them only if"
+" you allowed it in your"
+
+#: templates/entrainement/progression.html:144
+msgid "profil"
+msgstr "profile"
 
 #: templates/entrainement/question.html:10
 msgid "Quitter le quiz"
@@ -3889,9 +4012,18 @@ msgstr "Show password"
 msgid "Masquer le mot de passe"
 msgstr "Hide password"
 
-#: templates/forum/_actions_auteur.html:4
-msgid "Modifier"
-msgstr "Edit"
+#: templates/forms/zone_fichiers.html:6
+msgid "Photographier ou choisir un fichier"
+msgstr "Take a photo or choose a file"
+
+#: templates/forms/zone_fichiers.html:7
+msgid "Photos ou PDF · toutes les pages, bien à plat et lisibles"
+msgstr "Photos or PDF · every page, flat and readable"
+
+#: templates/forms/zone_fichiers.html:9
+#, python-format
+msgid "%%(n)s fichiers choisis"
+msgstr "%%(n)s files selected"
 
 #: templates/forum/_actions_auteur.html:6 templates/partenaires/espace.html:48
 msgid "Supprimer"
@@ -4069,10 +4201,6 @@ msgstr ""
 msgid "Voir le reçu"
 msgstr "View the receipt"
 
-#: templates/paiements/_etat.html:10
-msgid "S'entraîner"
-msgstr "Practise"
-
 #: templates/paiements/_etat.html:13
 msgid "Paiement non abouti"
 msgstr "Payment not completed"
@@ -4110,10 +4238,6 @@ msgstr "Refresh"
 #: templates/paiements/recu.html:29
 msgid "Référence"
 msgstr "Reference"
-
-#: templates/paiements/_formules.html:6 templates/paiements/offres.html:25
-msgid "Gratuit"
-msgstr "Free"
 
 #: templates/paiements/_formules.html:9
 msgid "Tous les sujets en consultation"
@@ -4271,10 +4395,6 @@ msgstr ""
 msgid "Merci pour votre paiement. Voici votre reçu."
 msgstr "Thank you for your payment. Here is your receipt."
 
-#: templates/paiements/email_recu.txt:6
-msgid "Date"
-msgstr "Date"
-
 #: templates/paiements/email_recu.txt:7 templates/paiements/recu.html:25
 msgid "Offre"
 msgstr "Plan"
@@ -4331,6 +4451,10 @@ msgstr "The beginning"
 #: templates/paiements/offres.html:28
 msgid "Complets, avec le PDF"
 msgstr "Complete, with the PDF"
+
+#: templates/paiements/offres.html:29 templates/partenaires/espace.html:77
+msgid "Quiz"
+msgstr "Quiz"
 
 #: templates/paiements/offres.html:29
 #, python-format

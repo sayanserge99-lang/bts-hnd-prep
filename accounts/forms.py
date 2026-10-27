@@ -9,6 +9,7 @@ from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.utils import timezone
+from django.utils.html import format_html
 from django.utils.translation import get_language
 from django.utils.translation import gettext_lazy as _
 
@@ -37,7 +38,7 @@ class UtilisateurChangeForm(UserChangeForm):
 def champ_specialite():
     return forms.ModelChoiceField(
         queryset=Specialite.objects.select_related("examen").order_by("examen__code", "ordre", "nom"),
-        label=_("Spécialité préparée"),
+        label=_("Spécialité"),
     )
 
 
@@ -59,12 +60,16 @@ def regrouper_par_examen(champ):
     groupes = {}
     for specialite in champ.queryset:
         groupes.setdefault(specialite.examen.code, []).append((specialite.pk, specialite.nom))
-    champ.choices = [("", "---------"), *groupes.items()]
+    champ.choices = [("", _("Choisir votre spécialité")), *groupes.items()]
 
 
 class InscriptionForm(UserCreationForm):
     # Un seul champ de mot de passe (maquette) : l'œil du champ permet de relire ce qu'on tape.
     password2 = None
+    # Maquette : l'examen en deux cartes, puis la spécialité de cet examen (forms/cartes_examen.html).
+    examen = forms.ChoiceField(
+        label=_("Examen préparé"), widget=forms.RadioSelect, initial="BTS"
+    )
     specialite = champ_specialite()
     etablissement = champ_etablissement()
     marquer_facultatifs = True
@@ -85,7 +90,20 @@ class InscriptionForm(UserCreationForm):
             self.fields[champ].required = True
         self.fields["password1"].label = _("Mot de passe")
         self.fields["password1"].help_text = _("8 caractères au minimum.")
+        self.fields["examen"].choices = [
+            ("BTS", format_html('<span class="block font-bold">BTS</span><span class="block text-sm text-gris">{}</span>', _("En français"))),
+            ("HND", format_html('<span class="block font-bold">HND</span><span class="block text-sm text-gris">{}</span>', "In English")),
+        ]
+        self.fields["examen"].widget.template_name = "forms/cartes_examen.html"
+        self.order_fields(["first_name", "last_name", "email", "password1", "examen", "specialite", "etablissement"])
         regrouper_par_examen(self.fields["specialite"])
+
+    def clean(self):
+        donnees = super().clean()
+        specialite, examen = donnees.get("specialite"), donnees.get("examen")
+        if specialite and examen and specialite.examen.code != examen:
+            self.add_error("specialite", _("Cette spécialité n'appartient pas au %(examen)s : choisissez-en une dans la liste.") % {"examen": examen})
+        return donnees
 
     def _post_clean(self):
         super()._post_clean()

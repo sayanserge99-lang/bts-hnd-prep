@@ -33,7 +33,7 @@ def inscrire(client, comptabilite, **champs):
         "specialite": comptabilite.pk,
         "password1": MOT_DE_PASSE,
         "password2": MOT_DE_PASSE,
-        "accepte_conditions": "on",
+        "accepte_conditions": "on", "examen": "BTS",
         **champs,
     }
     return client.post(reverse("accounts:inscription"), donnees)

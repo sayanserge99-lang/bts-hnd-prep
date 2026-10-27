@@ -76,10 +76,12 @@ class EnvoiMixin:
 
 
 class EnvoiSujetForm(EnvoiMixin, forms.ModelForm):
-    """CDC 3.7 : photo ou PDF + année, spécialité, matière."""
+    """CDC 3.7 : photo ou PDF + session, spécialité, matière."""
 
+    # Maquette : grande zone « Photographier ou choisir un fichier » ; sur téléphone, image/* propose l'appareil photo.
     fichiers = ChampPlusieursFichiers(
         label=_("Le sujet"), help_text=_("Un PDF, ou une photo par page (JPG ou PNG, 10 au plus), dans l'ordre."),
+        widget=PlusieursFichiers(attrs={"accept": "image/*,application/pdf"}),
     )
     envoyer_quand_meme = forms.BooleanField(
         label=_("Je l'envoie quand même (meilleure qualité, pages manquantes dans celui du site…)"), required=False,
@@ -88,16 +90,34 @@ class EnvoiSujetForm(EnvoiMixin, forms.ModelForm):
     class Meta:
         model = Contribution
         fields = ("specialite", "matiere", "annee", "fichiers", "commentaire", "certifie_droits", "envoyer_quand_meme")
-        labels = {"annee": _("Année de la session"), "specialite": _("Spécialité"), "matiere": _("Matière")}
-        help_texts = {"commentaire": _("Facultatif : épreuve pratique, pages manquantes, provenance…")}
+        labels = {"specialite": _("Spécialité"), "matiere": _("Matière")}
+        help_texts = {"commentaire": _("Épreuve pratique, pages manquantes, provenance…")}
+        widgets = {"commentaire": forms.Textarea(attrs={"rows": 3})}
+
+    marquer_facultatifs = True
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields["fichiers"].widget.template_name = "forms/zone_fichiers.html"
         self.fields["specialite"].required = True
         self.fields["specialite"].queryset = Specialite.objects.select_related("examen").order_by("examen__code", "ordre", "nom")
         self.fields["matiere"].queryset = Matiere.objects.select_related("examen").order_by("examen__code", "nom")
-        self.fields["annee"].required = True
-        self.fields["annee"].widget.attrs.update({"min": 2000, "max": timezone.localdate().year})
+        # Règle absolue (CDC 4.2) : seules les sessions terminées sont proposées ; clean() revérifie côté serveur.
+        terminees = Session.objects.filter(date_fin_officielle__lt=timezone.localdate()).select_related("examen")
+        groupes = {}
+        for session in terminees.order_by("examen__code", "-annee"):
+            groupes.setdefault(session.examen.code, []).append((session.annee, str(session.annee)))
+        self.fields["annee"] = forms.TypedChoiceField(
+            label=_("Session"), coerce=int, choices=[("", _("Choisir la session")), *groupes.items()],
+            # Une année absente de la liste (session en cours, valeur forgée) : on dit la règle, pas « choix invalide ».
+            error_messages={"invalid_choice": _(
+                "La session %(value)s n'est pas terminée (ou n'existe pas) : nous n'acceptons aucun sujet d'une session en cours."
+            )},
+        )
+        self.fields["certifie_droits"].label = _(
+            "Je certifie avoir le droit de partager ce document, et qu'il s'agit d'un sujet d'une session terminée."
+        )
+        self.order_fields(["fichiers", "specialite", "annee", "matiere", "commentaire", "certifie_droits", "envoyer_quand_meme"])
         self.doublons = Sujet.objects.none()
         # La case n'apparaît que si le sujet existe déjà (voir clean).
         self.fields["envoyer_quand_meme"].widget = forms.HiddenInput()
@@ -107,6 +127,11 @@ class EnvoiSujetForm(EnvoiMixin, forms.ModelForm):
         specialite, matiere, annee = donnees.get("specialite"), donnees.get("matiere"), donnees.get("annee")
         if specialite and matiere and not matiere.specialites.filter(pk=specialite.pk).exists():
             self.add_error("matiere", _("Cette matière n'est pas au programme de la spécialité choisie."))
+        if specialite and annee and not Session.objects.filter(
+            examen=specialite.examen, annee=annee, date_fin_officielle__lt=timezone.localdate()
+        ).exists():
+            # La liste ne propose que des sessions terminées ; une valeur forgée ou d'un autre examen est refusée ici.
+            self.add_error("annee", _("Choisissez une session terminée du %(examen)s.") % {"examen": specialite.examen.code})
         if matiere and annee:
             # Règle absolue (CDC 4.2) : un sujet d'une session en cours n'est même pas accepté en contribution.
             if contributions.session_non_terminee(matiere, annee):

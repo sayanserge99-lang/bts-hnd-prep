@@ -1,7 +1,7 @@
 """Contributions (CDC 3.7, 4.1, 4.2, 10.1) : envoi, contrôles, modération, récompense."""
 
 import io
-from datetime import timedelta
+from datetime import date, timedelta
 
 import pytest
 from django.contrib.auth.models import Group
@@ -276,3 +276,32 @@ def test_un_corrige_vide_ou_pour_un_sujet_non_publie_est_refuse(client, etudiant
     publie = creer_sujet(session_terminee, statut=Sujet.Statut.PUBLIE)
     client.post(reverse("communaute:proposer_corrige", args=[publie.pk]), {"texte": "  ", "certifie_droits": "on"})
     assert not Contribution.objects.exists()
+
+
+# --- Envoi d'un sujet d'après la maquette : sessions terminées seulement, zone photo -------------------------
+
+def test_seules_les_sessions_terminees_sont_proposees(client, etudiant, session_terminee, session_en_cours):
+    client.force_login(etudiant)
+    page = client.get(reverse("communaute:envoyer_sujet")).content.decode()
+    assert f'<option value="{session_terminee.annee}"' in page
+    assert f'<option value="{session_en_cours.annee}"' not in page
+
+
+def test_une_session_terminee_d_un_autre_examen_est_refusee(client, etudiant, comptabilite, compta_generale, session_terminee):
+    """Valeur forgée : 2024 existe au HND mais pas au BTS ; le serveur ne se fie pas à la liste."""
+    from catalogue.models import Examen, Session
+
+    hnd = Examen.objects.create(code="HND", nom="Higher National Diploma", langue="en")
+    Session.objects.create(examen=hnd, annee=2024, date_debut=date(2024, 5, 1), date_fin_officielle=date(2024, 5, 30))
+    client.force_login(etudiant)
+    reponse = envoyer(client, comptabilite, compta_generale, 2024)
+    assert "Choisissez une session terminée du BTS" in reponse.content.decode()
+    assert not Contribution.objects.exists()
+
+
+def test_la_zone_accepte_photos_et_pdf_en_plusieurs_fichiers(client, etudiant):
+    client.force_login(etudiant)
+    page = client.get(reverse("communaute:envoyer_sujet")).content.decode()
+    assert 'accept="image/*,application/pdf"' in page and "multiple" in page
+    assert "Photographier ou choisir un fichier" in page
+    assert "d&#x27;une session terminée" in page or "d'une session terminée" in page  # certification

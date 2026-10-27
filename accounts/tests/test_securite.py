@@ -56,7 +56,7 @@ def test_creation_de_comptes_en_serie(client, comptabilite):
         client.post(reverse("accounts:inscription"), {
             "email": f"robot{numero}@example.com", "first_name": "Robot", "last_name": "Test",
             "password1": MOT_DE_PASSE, "password2": MOT_DE_PASSE, "specialite": comptabilite.pk,
-            "langue": "fr", "accepte_conditions": "on",
+            "langue": "fr", "accepte_conditions": "on", "examen": "BTS",
         }, REMOTE_ADDR="198.51.100.9")
         client.logout()
     assert Utilisateur.objects.filter(email__startswith="robot").count() == securite.INSCRIPTIONS_PAR_IP.maximum

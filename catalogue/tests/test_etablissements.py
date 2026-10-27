@@ -51,7 +51,7 @@ def test_inscription_avec_etablissement(client, comptabilite, iai):
     client.post(reverse("accounts:inscription"), {
         "first_name": "Awa", "last_name": "Ngono", "email": "awa@example.com", "langue": "fr",
         "specialite": comptabilite.pk, "etablissement": iai.pk,
-        "password1": MOT_DE_PASSE, "password2": MOT_DE_PASSE, "accepte_conditions": "on",
+        "password1": MOT_DE_PASSE, "password2": MOT_DE_PASSE, "accepte_conditions": "on", "examen": "BTS",
     })
     assert Utilisateur.objects.get().profil.etablissement == iai
 
@@ -62,7 +62,7 @@ def test_l_etablissement_est_facultatif(client, comptabilite, iai):
 
     client.post(reverse("accounts:inscription"), {
         "first_name": "Awa", "last_name": "Ngono", "email": "awa@example.com", "langue": "fr",
-        "specialite": comptabilite.pk, "password1": MOT_DE_PASSE, "password2": MOT_DE_PASSE, "accepte_conditions": "on",
+        "specialite": comptabilite.pk, "password1": MOT_DE_PASSE, "password2": MOT_DE_PASSE, "accepte_conditions": "on", "examen": "BTS",
     })
     assert Utilisateur.objects.get().profil.etablissement is None
 

@@ -93,7 +93,7 @@ def test_apres_l_inscription_on_revient_au_sujet(client, sujets, comptabilite):
     assert f'name="next" value="{fiche}"' in page
     reponse = client.post(reverse("accounts:inscription"), {
         "first_name": "Awa", "last_name": "Ngo", "email": "awa@example.com", "langue": "fr",
-        "password1": "Revision-2027-ok", "password2": "Revision-2027-ok", "accepte_conditions": "on", "specialite": comptabilite.pk, "next": fiche,
+        "password1": "Revision-2027-ok", "password2": "Revision-2027-ok", "accepte_conditions": "on", "examen": "BTS", "specialite": comptabilite.pk, "next": fiche,
     })
     assert reponse.status_code == 302 and reponse.url == fiche
 
@@ -101,7 +101,7 @@ def test_apres_l_inscription_on_revient_au_sujet(client, sujets, comptabilite):
 def test_l_inscription_ne_renvoie_pas_vers_un_autre_site(client, comptabilite):
     reponse = client.post(reverse("accounts:inscription"), {
         "first_name": "Awa", "last_name": "Ngo", "email": "awa@example.com", "langue": "fr",
-        "password1": "Revision-2027-ok", "password2": "Revision-2027-ok", "accepte_conditions": "on",
+        "password1": "Revision-2027-ok", "password2": "Revision-2027-ok", "accepte_conditions": "on", "examen": "BTS",
         "specialite": comptabilite.pk,
         "next": "https://piege.example/",
     })

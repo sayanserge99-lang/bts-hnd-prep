@@ -7,6 +7,15 @@
     bouton.addEventListener("click", function () { window.print(); });
   });
 
+  // Zone « Photographier ou choisir un fichier » (templates/forms/zone_fichiers.html) : ce qui a été choisi.
+  document.querySelectorAll("[data-fichiers-choisis]").forEach(function (zone) {
+    var champ = zone.parentNode.querySelector("input[type=file]");
+    champ.addEventListener("change", function () {
+      var noms = Array.prototype.map.call(champ.files, function (fichier) { return fichier.name; });
+      zone.textContent = noms.length > 2 ? zone.dataset.textePlusieurs.replace("%(n)s", noms.length) : noms.join(", ");
+    });
+  });
+
   // Œil des champs de mot de passe (templates/forms/champ.html) : on relit ce qu'on a tapé, sans confirmation.
   document.querySelectorAll("[data-afficher-mot-de-passe]").forEach(function (bouton) {
     var champ = bouton.parentNode.querySelector("input");

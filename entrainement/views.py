@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db import IntegrityError
-from django.db.models import Case, Count, Prefetch, When
+from django.db.models import Case, Count, Prefetch, Q, When
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
@@ -171,16 +171,23 @@ def progression_etudiant(request):
     session = progression.prochaine_session(request.user)
     historique = Paginator(
         Tentative.objects.filter(utilisateur=request.user, fin__isnull=False)
-        .select_related("quiz__matiere", "examen_blanc__sujet__matiere")
+        .select_related("quiz__matiere", "examen_blanc__sujet__session__examen", "examen_blanc__sujet__matiere")
+        .annotate(repondues=Count("reponses_donnees"), justes=Count("reponses_donnees", filter=Q(reponses_donnees__correcte=True)))
         .order_by("-fin"),
         20,
     ).get_page(request.GET.get("page"))
+    for passee in historique:
+        passee.quand = progression.jour_relatif(passee.fin)
     return render(
         request,
         "entrainement/progression.html",
         {
             "completes": completes,
-            "matieres": progression.taux_par_matiere(request.user),
+            "bilan": progression.bilan(request.user),
+            "serie": progression.serie_en_cours(request.user),
+            "matieres": progression.taux_par_matiere(request.user, progression.JOURS_MAITRISE),
+            "jours_maitrise": progression.JOURS_MAITRISE,
+            "seuil": progression.SEUIL_PRIORITE,
             "chapitres": chapitres,
             "points_faibles": progression.points_faibles(request.user, chapitres) if completes else [],
             "reponses_minimum": progression.REPONSES_MINIMUM,

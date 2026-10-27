@@ -16,7 +16,7 @@ MOT_DE_PASSE = "Revision-BTS-2027"
 
 def inscrire(client, comptabilite, **champs):
     donnees = {"first_name": "Awa", "last_name": "Ngono", "email": "awa@example.com", "specialite": comptabilite.pk,
-               "password1": MOT_DE_PASSE, "accepte_conditions": "on", **champs}
+               "password1": MOT_DE_PASSE, "accepte_conditions": "on", "examen": "BTS", **champs}
     return client.post(reverse("accounts:inscription"), donnees)
 
 
@@ -70,3 +70,32 @@ def test_reinitialisation_de_bout_en_bout(client, comptabilite):
     assert not authenticate(email="awa@example.com", password=MOT_DE_PASSE)
     # Le lien ne sert qu'une fois.
     assert 'name="new_password1"' not in client.get(lien, follow=True).content.decode()
+
+
+# --- Examen préparé en deux cartes (maquette) --------------------------------------------------------------
+
+@pytest.fixture
+def software(db):
+    from catalogue.models import Examen, Specialite
+
+    hnd = Examen.objects.create(code="HND", nom="Higher National Diploma", langue="en")
+    return Specialite.objects.create(examen=hnd, code="SWE", nom="Software Engineering", filiere="industrielle")
+
+
+def test_les_deux_cartes_d_examen(client, comptabilite):
+    page = client.get(reverse("accounts:inscription")).content.decode()
+    assert 'name="examen" value="BTS"' in page and 'name="examen" value="HND"' in page
+    assert "En français" in page and "In English" in page
+    assert 'hx-get="/specialites/?valeur=pk"' in page
+
+
+def test_une_specialite_d_un_autre_examen_est_refusee(client, comptabilite, software):
+    reponse = inscrire(client, comptabilite, specialite=software.pk, examen="BTS")
+    assert reponse.status_code == 200 and "n&#x27;appartient pas au BTS" in reponse.content.decode()
+    assert not Utilisateur.objects.exists()
+    assert inscrire(client, comptabilite, specialite=software.pk, examen="HND").status_code == 302
+
+
+def test_la_liste_suit_l_examen_et_garde_le_choix(client, comptabilite, software):
+    fragment = client.get(reverse("options_specialites"), {"examen": "HND", "valeur": "pk", "specialite": software.pk}).content.decode()
+    assert f'value="{software.pk}" selected' in fragment and "Comptabilité" not in fragment

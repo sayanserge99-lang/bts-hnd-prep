@@ -15,7 +15,8 @@ def filtre_questions_visibles(prefixe=""):
     sinon un quiz rapide de la matière ferait fuiter un sujet dont la session n'est pas terminée.
     """
     return Q(**{f"{prefixe}publiee": True}) & (
-        Q(**{f"{prefixe}sujet__isnull": True}) | Q(**{f"{prefixe}sujet__statut": "publie"})
+        Q(**{f"{prefixe}sujet__isnull": True})
+        | Q(**{f"{prefixe}sujet__statut": "publie", f"{prefixe}sujet__session__date_fin_officielle__lt": timezone.localdate()})
     )
 
 
@@ -135,7 +136,7 @@ class Quiz(models.Model):
 class ExamenBlancQuerySet(models.QuerySet):
     def visibles(self):
         # Un examen blanc reprend un sujet : il n'est visible que si ce sujet est publié (CDC 4.2).
-        return self.filter(publie=True, sujet__statut="publie")
+        return self.filter(publie=True, sujet__statut="publie", sujet__session__date_fin_officielle__lt=timezone.localdate())
 
 
 class ExamenBlanc(models.Model):

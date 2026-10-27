@@ -1,0 +1,12 @@
+{# Examen préparé en deux cartes (maquette). Avec HTMX, la liste des spécialités suit la carte cochée ; #}
+{# sans JavaScript, elle reste complète (groupée par examen) et le serveur vérifie la cohérence. #}
+<div class="grid grid-cols-2 gap-3"
+     hx-get="{% url 'options_specialites' %}?valeur=pk" hx-trigger="load, change" hx-target="#id_specialite"
+     hx-include="[name='examen'], #id_specialite">
+  {% for group, options, index in widget.optgroups %}{% for option in options %}
+    <label for="{{ option.attrs.id }}">
+      <input type="{{ option.type }}" name="{{ option.name }}" value="{{ option.value|stringformat:'s' }}"{% include "django/forms/widgets/attrs.html" with widget=option %}>
+      <span>{{ option.label }}</span>
+    </label>
+  {% endfor %}{% endfor %}
+</div>

@@ -8,6 +8,7 @@ d'une session en cours (CDC 4.2) ; un texte recopié se signale et se masque com
 from django.conf import settings
 from django.db import models
 from django.db.models import Q
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 LONGUEUR_MAX = 5000
@@ -16,7 +17,9 @@ LONGUEUR_MAX = 5000
 class DiscussionQuerySet(models.QuerySet):
     def visibles(self):
         # Une discussion rattachée à un sujet suit la visibilité du sujet (masqué après une demande de retrait…).
-        return self.filter(masquee=False).filter(Q(sujet__isnull=True) | Q(sujet__statut="publie"))
+        return self.filter(masquee=False).filter(
+            Q(sujet__isnull=True) | Q(sujet__statut="publie", sujet__session__date_fin_officielle__lt=timezone.localdate())
+        )
 
 
 class Discussion(models.Model):
