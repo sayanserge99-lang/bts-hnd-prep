@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-27 17:27+0100\n"
+"POT-Creation-Date: 2026-10-27 17:42+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1316,7 +1316,7 @@ msgstr "Choose an answer before submitting."
 msgid "Les examens blancs sont réservés aux abonnés du Pass session."
 msgstr "Mock exams are reserved for Session pass subscribers."
 
-#: entrainement/views_examens.py:91
+#: entrainement/views_examens.py:95
 msgid "Épreuve terminée : réponses non enregistrées."
 msgstr "Exam over: answers not saved."
 
@@ -1390,7 +1390,7 @@ msgstr ""
 "depreciation charge?”"
 
 #: forum/forms.py:25 templates/entrainement/_formulaire_question.html:12
-#: templates/entrainement/examens/epreuve.html:38
+#: templates/entrainement/examens/epreuve.html:47
 msgid "Votre réponse"
 msgstr "Your answer"
 
@@ -3781,40 +3781,52 @@ msgstr "Resume the exam"
 msgid "Commencer l'épreuve"
 msgstr "Start the exam"
 
-#: templates/entrainement/examens/epreuve.html:14
+#: templates/entrainement/examens/epreuve.html:12
+#: templates/entrainement/progression.html:122
+msgid "Examen blanc"
+msgstr "Mock exam"
+
+#: templates/entrainement/examens/epreuve.html:15
 msgid ""
 "Hors connexion : vos réponses restent ici et partiront au retour du réseau."
 msgstr ""
 "Offline: your answers stay here and will be sent when the connection "
 "returns."
 
-#: templates/entrainement/examens/epreuve.html:14
+#: templates/entrainement/examens/epreuve.html:15
 msgid "Sauvegarde automatique activée"
 msgstr "Automatic saving on"
 
-#: templates/entrainement/examens/epreuve.html:16
+#: templates/entrainement/examens/epreuve.html:17
 msgid "Temps restant"
 msgstr "Time left"
 
-#: templates/entrainement/examens/epreuve.html:22
+#: templates/entrainement/examens/epreuve.html:25
 msgid "Ouvrir le sujet (PDF)"
 msgstr "Open the paper (PDF)"
 
-#: templates/entrainement/examens/epreuve.html:32
+#: templates/entrainement/examens/epreuve.html:38
 #, python-format
-msgid "Partie QCM (sur %(p)s points)"
-msgstr "MCQ part (out of %(p)s points)"
+msgid "Partie 1 · Question %(n)s sur %(total)s"
+msgstr "Part 1 · Question %(n)s of %(total)s"
 
-#: templates/entrainement/examens/epreuve.html:35
-#, python-format
-msgid "Question %(n)s"
-msgstr "Question %(n)s"
+#: templates/entrainement/examens/epreuve.html:40
+#: templates/entrainement/examens/epreuve.html:42
+msgid "Marquer"
+msgstr "Flag"
 
-#: templates/entrainement/examens/epreuve.html:53
-msgid "Partie rédactionnelle"
-msgstr "Written part"
+#: templates/entrainement/examens/epreuve.html:40
+#: templates/entrainement/examens/epreuve.html:42
+#: templates/entrainement/examens/epreuve.html:85
+msgid "Marquée"
+msgstr "Flagged"
 
-#: templates/entrainement/examens/epreuve.html:54
+#: templates/entrainement/examens/epreuve.html:60
+#: templates/entrainement/examens/epreuve.html:79
+msgid "Partie 2 : rédaction"
+msgstr "Part 2: written answers"
+
+#: templates/entrainement/examens/epreuve.html:61
 msgid ""
 "Composez sur papier comme le jour de l'examen, ou tapez vos réponses ici : "
 "vous les comparerez au corrigé après la remise."
@@ -3822,11 +3834,59 @@ msgstr ""
 "Write on paper as on exam day, or type your answers here: you will compare "
 "them with the marking guide after handing in."
 
-#: templates/entrainement/examens/epreuve.html:55
+#: templates/entrainement/examens/epreuve.html:62
 msgid "Votre copie"
 msgstr "Your answers"
 
-#: templates/entrainement/examens/epreuve.html:59
+#: templates/entrainement/examens/epreuve.html:66
+msgid ""
+"La correction s'affiche seulement quand vous rendez votre copie, comme le "
+"jour de l'examen."
+msgstr "Answers are shown only when you hand in your paper, as on exam day."
+
+#: templates/entrainement/examens/epreuve.html:69
+#: templates/entrainement/examens/epreuve.html:71
+msgid "Questions"
+msgstr "Questions"
+
+#: templates/entrainement/examens/epreuve.html:70
+msgid "répondue"
+msgstr "answered"
+
+#: templates/entrainement/examens/epreuve.html:70
+msgid "marquée"
+msgstr "flagged"
+
+#: templates/entrainement/examens/epreuve.html:75
+#, python-format
+msgid "Question %(n)s"
+msgstr "Question %(n)s"
+
+#: templates/entrainement/examens/epreuve.html:80
+msgid "Rédaction"
+msgstr "Writing"
+
+#: templates/entrainement/examens/epreuve.html:83
+msgid "Répondue"
+msgstr "Answered"
+
+#: templates/entrainement/examens/epreuve.html:84
+msgid "En cours"
+msgstr "Current"
+
+#: templates/entrainement/examens/epreuve.html:91
+msgid "Précédente"
+msgstr "Previous"
+
+#: templates/entrainement/examens/epreuve.html:92
+msgid "Suivante"
+msgstr "Next"
+
+#: templates/entrainement/examens/epreuve.html:94
+msgid "Rendre votre copie maintenant ? Vous ne pourrez plus la modifier."
+msgstr "Hand in your paper now? You will not be able to change it."
+
+#: templates/entrainement/examens/epreuve.html:94
 msgid "Rendre ma copie"
 msgstr "Hand in my paper"
 
@@ -3996,10 +4056,6 @@ msgstr "Activity"
 #: templates/paiements/email_recu.txt:6
 msgid "Date"
 msgstr "Date"
-
-#: templates/entrainement/progression.html:122
-msgid "Examen blanc"
-msgstr "Mock exam"
 
 #: templates/entrainement/progression.html:135 templates/forum/matiere.html:26
 #: templates/sujets/_resultats.html:34 templates/sujets/detail.html:82

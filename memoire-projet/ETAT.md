@@ -8,7 +8,7 @@
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **449 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
+- `pytest` : **458 tests verts** (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
   10 statistiques, 16 Google).
 - **Connexion Google (V2)** `accounts/google.py` : OpenID Connect sans dépendance (state, PKCE, nonce ; vérifie iss,
   aud, exp, email_verified). Compte existant → connecté ; sinon page « Dernière étape » (spécialité + consentement
@@ -20,6 +20,15 @@
   convention de partenariat active ; voit les résultats des étudiants confirmés qui ont activé « Partager mes
   résultats » (consentement révocable, tracé). Étudiant confirmé : page « Épreuves de mon établissement »,
   PDF servi après contrôle (404 sinon). Lien « Mon établissement » dans l'en-tête des responsables.
+- **Maquettes, écrans 7, 9, 10 (27/10)** — Modération : colonnes Document / Envoyé par / Contrôles / Décision ;
+  contrôles en clair (`ContributionAdmin.controles`, icône + texte) ; `Contribution.session_terminee` ; session non
+  terminée : seul « Refuser et supprimer », validation refusée par la vue (redirection vers le refus) et par
+  `contributions.valider_sujet` (l'année de la contribution compte, pas la session choisie : trou fermé) ; `RejetForm`
+  à motifs prédéfinis + message. Résultat du quiz : score, barres par chapitre (`progression.bilan_par_chapitre`),
+  `chapitre_a_revoir`, conseil au rythme de l'étudiant (`quiz.minutes_pour_un_quiz`), « S'entraîner sur … », erreurs
+  commentées, phrase selon le partage. Examen blanc : une question par panneau (examen.js, sans JS tout s'affiche),
+  grille répondue / en cours / marquée + légende, « Marquer » enregistré (`reponses["marquees"]`, `lire_marquees`),
+  Entrée ne rend plus la copie, remise confirmée ; essai jsdom (`essai-js/essai-examen.js`, 18 vérifications).
 - **Maquettes, groupe B (27/10)** — tableau de bord (`entrainement:progression`) d'après l'écran 4 : salutation,
   3 tuiles (jours avant la session, taux global `progression.bilan`, série `serie_en_cours` : jours d'affilée avec
   un quiz/examen terminé, encore valable si rien aujourd'hui), maîtrise par matière sur 30 jours (barres vertes,

@@ -1,5 +1,6 @@
 """Examens blancs (CDC 3.5) : durée réelle, sauvegarde continue, reprise, soumission automatique, auto-évaluation."""
 
+import re
 from datetime import timedelta
 from decimal import Decimal
 
@@ -110,7 +111,7 @@ def test_les_reponses_enregistrees_reviennent_apres_une_coupure(client, etudiant
     # Rechargement de la page, comme après une coupure réseau.
     page = client.get(reverse("entrainement:epreuve", args=[tentative.pk])).content.decode()
     assert "Annuité : 2 400 000" in page
-    assert f'value="{bonne(questions[0])}" class="mt-1 h-5 w-5 shrink-0 accent-vert" checked' in page
+    assert re.search(rf'value="{bonne(questions[0])}"[^>]*checked', page)
 
 
 def test_la_sauvegarde_est_refusee_une_fois_le_temps_ecoule(client, etudiant, examen):
@@ -249,3 +250,48 @@ def test_l_admin_refuse_un_examen_publie_sur_un_sujet_non_publie(creer_sujet, se
     brouillon = creer_sujet(session_en_cours)
     with pytest.raises(ValidationError):
         ExamenBlanc(titre="X", sujet=brouillon, duree=60, publie=True).full_clean()
+
+
+# --- Une question à la fois (maquette, écran 10) --------------------------------------------------------
+
+def test_une_question_par_panneau_avec_grille_et_marque(client, etudiant, examen, questions):
+    client.force_login(etudiant)
+    tentative = demarrer(client, examen)
+    page = client.get(reverse("entrainement:epreuve", args=[tentative.pk])).content.decode()
+    assert page.count("data-panneau") == len(questions) + 1  # + la partie rédactionnelle
+    assert page.count("data-case") == len(questions) + 1
+    assert "Partie 1 · Question 1 sur 2" in page and "data-marquer" in page
+    assert "Répondue" in page and "En cours" in page and "Marquée" in page
+    assert "La correction s&#x27;affiche seulement" in page or "La correction s'affiche seulement" in page
+
+
+def test_les_questions_marquees_sont_enregistrees_et_reviennent(client, etudiant, examen, questions):
+    client.force_login(etudiant)
+    tentative = demarrer(client, examen)
+    marquee = questions[1].pk
+    client.post(reverse("entrainement:enregistrer", args=[tentative.pk]), {"marquees": f"{marquee},999999,abc"})
+    tentative.refresh_from_db()
+    assert tentative.reponses["marquees"] == [marquee]  # une question d'une autre épreuve est ignorée
+    page = client.get(reverse("entrainement:epreuve", args=[tentative.pk])).content.decode()
+    assert f'id="marquees" value="{marquee}"' in page and 'aria-pressed="true"' in page
+
+
+def test_une_reponse_envoyee_apres_l_heure_de_fin_est_refusee(client, etudiant, examen, questions, settings):
+    """Au-delà de l'heure de fin (et de la marge de transmission), ni enregistrée, ni comptée à la remise."""
+    client.force_login(etudiant)
+    tentative = demarrer(client, examen)
+    client.post(reverse("entrainement:enregistrer", args=[tentative.pk]), {f"q-{questions[0].pk}": mauvaise(questions[0])})
+    Tentative.objects.filter(pk=tentative.pk).update(
+        fin_prevue=timezone.now() - timedelta(seconds=settings.EXAMEN_DELAI_GRACE_SECONDES + 1)
+    )
+
+    tardive = {f"q-{questions[0].pk}": bonne(questions[0]), f"q-{questions[1].pk}": bonne(questions[1])}
+    assert client.post(reverse("entrainement:enregistrer", args=[tentative.pk]), tardive).status_code == 409
+    tentative.refresh_from_db()
+    assert tentative.reponses["brouillon"] == {str(questions[0].pk): [mauvaise(questions[0])]}
+
+    # La remise tardive non plus ne fait pas entrer ces réponses : seules comptent celles d'avant la fin.
+    client.post(reverse("entrainement:rendre", args=[tentative.pk]), tardive)
+    tentative.refresh_from_db()
+    assert tentative.fin is not None and tentative.reponses["justes_qcm"] == 0
+    assert tentative.fin <= tentative.fin_prevue

@@ -110,3 +110,16 @@
     @apply my-3 overflow-x-auto;
   }
 }
+
+/* Grille de l'examen blanc (examen.js) : répondue, en cours, marquée — l'état est aussi dit en mots (aria-label).
+   Hors de toute couche : ces états doivent l'emporter sur les classes du bouton (bg-white, border-gris/50). */
+[data-case][data-repondue="1"] {
+  @apply border-vert bg-vert text-white;
+}
+[data-case][aria-current="step"] {
+  @apply border-2 border-encre bg-vert-clair text-encre;
+}
+[data-case][data-marquee="1"]::after {
+  content: "";
+  @apply absolute -right-1 -top-1 h-3 w-3 rounded-full bg-yellow-500 ring-2 ring-white;
+}

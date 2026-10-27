@@ -114,7 +114,7 @@
 - [ ] Menu : la maquette nomme « Tableau de bord » et « Examens blancs » dans la barre du haut (connecté).
 - [x] Données de démo « [DÉMO] » (27/10) : etudiant.demo@example.com / Demo-BTS-2027, quiz terminé (15/20), examen
       blanc commencé, 3 contributions en attente (dont session 2027 non terminée) ; refusée si DEBUG est faux.
-- [ ] Écrans 7, 9, 10 comparés (27/10), écarts à traiter : résultat de quiz par chapitre (barres, conseil, « S'entraîner
+- [x] Écrans 7, 9, 10 faits (27/10). Écarts qui étaient relevés : résultat de quiz par chapitre (barres, conseil, « S'entraîner
       sur … ») ; examen blanc une question à la fois (grille, « Marquer », Précédente/Suivante, heure de sauvegarde) ;
       modération : colonne « Contrôles » en clair (la coche verte de « Doublon ? » signale un doublon : trompeur) et
       « Refuser et supprimer » pour une session non terminée.
@@ -126,3 +126,9 @@
 - [ ] Mobile : badge « Bientôt » sur l'onglet Entraînement.
 - [ ] Écran corrigé : étiqueter « écran V3 ».
 - [ ] Texte du Pass : « valable jusqu'à la fin de la session 2027 ».
+
+## Questions ouvertes pour Serge Alain (27/10)
+
+- [ ] Offre mensuelle « Premium 30 jours » : garder ou retirer ? (le CDC v2, §3.8, prévoit « mensuelle ou par session »).
+- [ ] Examen blanc : garder la marge de 90 s après l'heure de fin (réseau lent) ou la réduire ?
+- [ ] Quiz : « Signaler cette question » (maquette, écran 8) reste à faire.

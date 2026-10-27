@@ -65,9 +65,12 @@ def epreuve(request, pk):
         return redirect("entrainement:auto_evaluation", pk=tentative.pk)
     brouillon = tentative.reponses.get("brouillon", {})
     questions = list(Question.objects.filter(pk__in=tentative.ordre).prefetch_related("choix").order_by("pk"))
+    marquees = tentative.reponses.get(examen_blanc.CHAMP_MARQUEES, [])
     for question in questions:
         # Réponses déjà enregistrées : la page rechargée après une coupure les retrouve cochées.
         question.deja = brouillon.get(str(question.pk), [] if question.type != Question.Type.REPONSE_COURTE else "")
+        question.repondue = bool(question.deja)
+        question.marquee = question.pk in marquees
     return render(
         request,
         "entrainement/examens/epreuve.html",
@@ -78,6 +81,7 @@ def epreuve(request, pk):
             # Le navigateur compte à rebours depuis cette valeur : pas de dépendance à l'horloge du téléphone.
             "secondes_restantes": examen_blanc.secondes_restantes(tentative),
             "copie": tentative.reponses.get(examen_blanc.CHAMP_COPIE, ""),
+            "marquees": ",".join(str(pk) for pk in marquees),
         },
     )
 

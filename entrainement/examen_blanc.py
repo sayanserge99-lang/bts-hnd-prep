@@ -13,6 +13,7 @@ from .correction import est_correcte
 from .models import ExamenBlanc, Question, ReponseQuestion, Tentative
 
 CHAMP_COPIE = "copie"
+CHAMP_MARQUEES = "marquees"
 
 
 def peut_passer_un_examen(utilisateur):
@@ -73,12 +74,22 @@ def lire_formulaire(tentative, donnees):
     return brouillon, donnees.get(CHAMP_COPIE, "")
 
 
+def lire_marquees(tentative, donnees):
+    """Questions marquées « pour y revenir » (maquette) : seulement des questions de cette épreuve."""
+    permises = set(tentative.ordre)
+    valeurs = donnees.get(CHAMP_MARQUEES, "").split(",")
+    return sorted({int(valeur) for valeur in valeurs if valeur.isdigit() and int(valeur) in permises})
+
+
 def enregistrer(tentative, donnees):
     """Sauvegarde continue. Faux si l'épreuve est rendue ou expirée : la réponse arrive trop tard."""
     if tentative.fin is not None or est_expiree(tentative):
         return False
     brouillon, copie = lire_formulaire(tentative, donnees)
-    tentative.reponses.update({"brouillon": brouillon, CHAMP_COPIE: copie, "enregistre_le": timezone.now().isoformat()})
+    tentative.reponses.update({
+        "brouillon": brouillon, CHAMP_COPIE: copie, CHAMP_MARQUEES: lire_marquees(tentative, donnees),
+        "enregistre_le": timezone.now().isoformat(),
+    })
     tentative.save(update_fields=["reponses"])
     return True
 

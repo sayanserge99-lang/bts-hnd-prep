@@ -185,3 +185,9 @@
   htmx 2) → sélecteur explicite, vérifié dans Chrome (BTS puis HND coché) ; tableau d'activités coupé sur
   téléphone → matière sous l'activité. Contre-épreuves : filet de visibilité (4 contenus restaient visibles),
   contrôle serveur de la session (valeur forgée acceptée). Test de la règle d'envoi inchangé. 449/449.
+- 27/10 : écrans 7 (modération), 9 (résultat de quiz), 10 (examen blanc), un commit chacun. Trou trouvé et fermé :
+  une contribution d'une session en cours pouvait être validée en choisissant une autre session. Défauts vus aux
+  captures : colonne Décision coupée (tableau resserré) ; grille de l'examen sans couleurs (règles CSS dans la couche
+  base, battues par bg-white) ; « 1 minutes ». Essai jsdom bloqué par le minuteur (process.exit ajouté).
+  Contre-épreuves : garde de modération, heure de fin, touche Entrée. Question de Serge Alain sur l'offre mensuelle :
+  répondue sans rien modifier. 458/458.

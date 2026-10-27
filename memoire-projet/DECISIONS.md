@@ -123,3 +123,10 @@
 - **Groupe B (27/10)** : la langue d'un nouveau compte est celle de l'interface pendant l'inscription (modifiable
   dans le profil) ; l'examen n'est plus déduit de la spécialité mais choisi (cartes), et les deux doivent concorder.
   Le profil ne montre plus les derniers résultats : ils sont sur le tableau de bord (CDC 3.1), lié depuis le profil.
+- **Écrans 7, 9, 10 (27/10, Serge Alain)** : un commit par écran ; contrôles de modération jamais par la couleur
+  seule ; une contribution d'une session non terminée ne peut qu'être refusée (aucun « Valider ») ; motifs de refus
+  prédéfinis + message ; résultat de quiz par chapitre (ambre sous 50 %) avec le plus faible « à revoir » ; examen
+  blanc une question à la fois, sans correction avant la remise, chronomètre sur l'heure du serveur.
+  Conseil du résultat : jamais d'affirmation non fondée (« revient souvent dans les sujets ») ; durée estimée
+  au rythme de l'étudiant. Marge de transmission de 90 s après l'heure de fin conservée (à confirmer par Serge Alain).
+- **GitHub (27/10)** : vérifier le résultat de la CI une seule fois après un envoi, jamais en boucle.

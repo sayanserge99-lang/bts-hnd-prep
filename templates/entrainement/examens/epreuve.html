@@ -4,59 +4,97 @@
 {% block titre %}{{ examen.titre }} — BTS-HND Prep{% endblock %}
 {% block scripts %}<script src="{% static 'js/examen.js' %}" defer></script>{% endblock %}
 
-{% block contenu %}
-{# Bandeau collé en haut : temps restant et état de la sauvegarde. #}
-<div class="sticky top-0 z-10 border-b border-bordure bg-white">
-  <div class="mx-auto flex max-w-2xl items-center justify-between gap-3 px-4 py-2">
-    <div class="text-sm">
-      <p class="font-semibold">{{ examen.titre }}</p>
-      <p id="etat-sauvegarde" class="text-xs text-gris" aria-live="polite"
+{# Mode concentré (maquette, écran 10) : bandeau de l'épreuve à la place du menu, pas de pied de page. #}
+{% block entete %}
+<header class="sticky top-0 z-10 bg-encre text-white">
+  <div class="mx-auto flex max-w-2xl items-center justify-between gap-3 px-4 py-3">
+    <div class="min-w-0">
+      <p class="text-xs uppercase tracking-wide text-white/70">{% translate "Examen blanc" %} · {{ examen.sujet.session.examen.code }} {{ examen.sujet.session.annee }}</p>
+      <p class="truncate font-semibold">{{ examen.sujet.matiere.nom }}</p>
+      <p id="etat-sauvegarde" class="text-xs text-white/70" aria-live="polite"
          data-hors-ligne="{% translate 'Hors connexion : vos réponses restent ici et partiront au retour du réseau.' %}">{% translate "Sauvegarde automatique activée" %}</p>
     </div>
-    <p class="text-right"><span class="sr-only">{% translate "Temps restant" %}</span>
+    <p class="shrink-0 rounded-xl bg-vert px-3 py-2"><span class="sr-only">{% translate "Temps restant" %}</span>
       <span id="minuteur" data-secondes="{{ secondes_restantes }}" class="font-mono text-2xl font-bold" role="timer">--:--</span></p>
   </div>
-</div>
+</header>
+{% endblock %}
 
-<div class="mx-auto max-w-2xl px-4 py-6">
+{% block contenu %}
+<div class="mx-auto max-w-2xl px-4 py-5">
   <a href="{% url 'sujets:pdf' examen.sujet.pk %}" target="_blank" rel="noopener" class="bouton-contour">{% translate "Ouvrir le sujet (PDF)" %}</a>
 
   {# Sauvegarde continue : à chaque changement, après une pause dans la frappe, et toutes les 30 s. #}
-  <form id="epreuve" method="post" action="{% url 'entrainement:rendre' tentative.pk %}" class="mt-6 space-y-6"
+  {# Sans JavaScript, toutes les questions s'affichent à la suite ; examen.js les présente une par une. #}
+  <form id="epreuve" method="post" action="{% url 'entrainement:rendre' tentative.pk %}" class="mt-5 space-y-5"
         hx-post="{% url 'entrainement:enregistrer' tentative.pk %}" hx-target="#etat-sauvegarde"
         hx-trigger="change, keyup changed delay:3s from:#copie, every 30s">
     {% csrf_token %}
+    <input type="hidden" name="marquees" id="marquees" value="{{ marquees }}">
 
-    {% if questions %}
-      <section class="space-y-5">
-        <h2 class="text-lg font-semibold">{% blocktranslate with p=examen.points_qcm %}Partie QCM (sur {{ p }} points){% endblocktranslate %}</h2>
-        {% for question in questions %}
-          <fieldset class="carte space-y-3">
-            <legend class="sr-only">{% blocktranslate with n=forloop.counter %}Question {{ n }}{% endblocktranslate %}</legend>
-            <div class="corrige font-medium"><span class="text-gris">{{ forloop.counter }}.</span> {{ question.enonce|mise_en_forme }}</div>
-            {% if question.type == "reponse_courte" %}
-              <input name="q-{{ question.pk }}" value="{{ question.deja }}" class="champ" autocomplete="off" aria-label="{% translate 'Votre réponse' %}">
-            {% else %}
-              {% for choix in question.choix.all %}
-                <label class="flex cursor-pointer items-start gap-3 rounded-lg border border-bordure p-3 has-checked:border-vert has-checked:bg-vert-clair">
-                  <input type="{% if question.type == 'choix_multiple' %}checkbox{% else %}radio{% endif %}" name="q-{{ question.pk }}" value="{{ choix.pk }}" class="mt-1 h-5 w-5 shrink-0 accent-vert" {% if choix.pk in question.deja %}checked{% endif %}>
-                  <span>{{ choix.texte|mise_en_forme_ligne }}</span>
-                </label>
-              {% endfor %}
-            {% endif %}
-          </fieldset>
-        {% endfor %}
-      </section>
-    {% endif %}
+    {% for question in questions %}
+      <fieldset class="space-y-4" data-panneau data-question="{{ question.pk }}">
+        <div class="flex items-center justify-between gap-3">
+          <legend class="text-sm text-gris" tabindex="-1" data-titre-panneau>{% blocktranslate with n=forloop.counter total=questions|length %}Partie 1 · Question {{ n }} sur {{ total }}{% endblocktranslate %}</legend>
+          <button type="button" class="bouton-contour hidden gap-2" data-marquer aria-pressed="{% if question.marquee %}true{% else %}false{% endif %}"
+                  data-texte-marquer="{% translate 'Marquer' %}" data-texte-marquee="{% translate 'Marquée' %}">
+            <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3h12v18l-6-4-6 4z"/></svg>
+            <span>{% if question.marquee %}{% translate "Marquée" %}{% else %}{% translate "Marquer" %}{% endif %}</span>
+          </button>
+        </div>
+        <div class="corrige text-xl font-semibold leading-snug">{{ question.enonce|mise_en_forme }}</div>
+        {% if question.type == "reponse_courte" %}
+          <input name="q-{{ question.pk }}" value="{{ question.deja }}" class="champ" autocomplete="off" aria-label="{% translate 'Votre réponse' %}">
+        {% else %}
+          {% for choix in question.choix.all %}
+            <label class="flex cursor-pointer items-center gap-3 rounded-xl border border-gris/50 bg-white p-4 has-checked:border-2 has-checked:border-vert has-checked:bg-vert-clair">
+              <input type="{% if question.type == 'choix_multiple' %}checkbox{% else %}radio{% endif %}" name="q-{{ question.pk }}" value="{{ choix.pk }}" class="h-5 w-5 shrink-0 accent-vert" {% if choix.pk in question.deja %}checked{% endif %}>
+              <span>{{ choix.texte|mise_en_forme_ligne }}</span>
+            </label>
+          {% endfor %}
+        {% endif %}
+      </fieldset>
+    {% endfor %}
 
-    <section class="space-y-2">
-      <h2 class="text-lg font-semibold">{% translate "Partie rédactionnelle" %}</h2>
+    <fieldset class="space-y-3" data-panneau data-redaction>
+      <legend class="text-lg font-semibold" tabindex="-1" data-titre-panneau>{% translate "Partie 2 : rédaction" %}</legend>
       <p class="text-sm text-gris">{% translate "Composez sur papier comme le jour de l'examen, ou tapez vos réponses ici : vous les comparerez au corrigé après la remise." %}</p>
       <label for="copie" class="sr-only">{% translate "Votre copie" %}</label>
       <textarea id="copie" name="copie" rows="10" class="champ">{{ copie }}</textarea>
-    </section>
+    </fieldset>
 
-    <button name="rendre" value="1" data-rendre class="bouton-plein w-full sm:w-auto">{% translate "Rendre ma copie" %}</button>
+    <p class="text-sm text-gris">{% translate "La correction s'affiche seulement quand vous rendez votre copie, comme le jour de l'examen." %}</p>
+
+    {# Grille des questions : affichée par examen.js. #}
+    <nav class="hidden space-y-2" data-grille aria-label="{% translate 'Questions' %}"
+         data-texte-repondue="{% translate 'répondue' %}" data-texte-marquee="{% translate 'marquée' %}">
+      <p class="font-semibold">{% translate "Questions" %}</p>
+      <div class="grid grid-cols-6 gap-2">
+        {% for question in questions %}
+          <button type="button" data-case data-repondue="{% if question.repondue %}1{% else %}0{% endif %}" data-marquee="{% if question.marquee %}1{% else %}0{% endif %}"
+                  data-nom="{% blocktranslate with n=forloop.counter %}Question {{ n }}{% endblocktranslate %}"
+                  class="relative h-12 rounded-xl border border-gris/50 bg-white font-semibold">{{ forloop.counter }}</button>
+        {% endfor %}
+        <button type="button" data-case data-repondue="{% if copie %}1{% else %}0{% endif %}" data-marquee="0"
+                data-nom="{% translate 'Partie 2 : rédaction' %}"
+                class="relative col-span-2 h-12 rounded-xl border border-gris/50 bg-white text-sm font-semibold">{% translate "Rédaction" %}</button>
+      </div>
+      <p class="flex flex-wrap gap-4 text-sm text-gris">
+        <span class="flex items-center gap-1"><span class="inline-block h-3 w-3 rounded bg-vert" aria-hidden="true"></span>{% translate "Répondue" %}</span>
+        <span class="flex items-center gap-1"><span class="inline-block h-3 w-3 rounded border-2 border-encre bg-vert-clair" aria-hidden="true"></span>{% translate "En cours" %}</span>
+        <span class="flex items-center gap-1"><span class="inline-block h-3 w-3 rounded-full bg-yellow-500" aria-hidden="true"></span>{% translate "Marquée" %}</span>
+      </p>
+    </nav>
+
+    <div class="sticky bottom-0 -mx-4 space-y-3 border-t border-bordure bg-creme px-4 py-3">
+      <div class="hidden grid-cols-2 gap-3" data-navigation>
+        <button type="button" class="bouton-contour py-3 text-base" data-precedente>{% translate "Précédente" %}</button>
+        <button type="button" class="bouton-plein py-3 text-base" data-suivante>{% translate "Suivante" %}</button>
+      </div>
+      <button name="rendre" value="1" data-rendre data-confirmer="{% translate 'Rendre votre copie maintenant ? Vous ne pourrez plus la modifier.' %}" class="w-full py-2 text-center text-lg font-semibold text-vert hover:underline">{% translate "Rendre ma copie" %}</button>
+    </div>
   </form>
 </div>
 {% endblock %}
+
+{% block pied %}{% endblock %}

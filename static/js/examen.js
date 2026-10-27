@@ -39,4 +39,89 @@
   document.body.addEventListener("htmx:responseError", function (evenement) {
     if (evenement.detail.xhr.status === 409) window.location.reload();
   });
+
+  // Entrée dans un champ de réponse ne doit pas rendre la copie (premier bouton d'envoi du formulaire).
+  formulaire.addEventListener("keydown", function (evenement) {
+    if (evenement.key === "Enter" && evenement.target.tagName === "INPUT") evenement.preventDefault();
+  });
+
+  // Remise volontaire : confirmée ; à zéro, le minuteur rend sans demander.
+  boutonRendre.addEventListener("click", function (evenement) {
+    if (!rendu && !window.confirm(boutonRendre.dataset.confirmer)) evenement.preventDefault();
+  });
+
+  // --- Une question à la fois (maquette) : Précédente / Suivante, grille, questions marquées ----------
+  var panneaux = Array.prototype.slice.call(formulaire.querySelectorAll("[data-panneau]"));
+  var grille = document.querySelector("[data-grille]");
+  var cases = Array.prototype.slice.call(document.querySelectorAll("[data-case]"));
+  var precedente = formulaire.querySelector("[data-precedente]");
+  var suivante = formulaire.querySelector("[data-suivante]");
+  var champMarquees = document.getElementById("marquees");
+  if (!panneaux.length || cases.length !== panneaux.length) return;
+  var marquees = champMarquees.value ? champMarquees.value.split(",") : [];
+  var courant = 0;
+
+  function estRepondu(panneau) {
+    return Array.prototype.some.call(panneau.querySelectorAll("input, textarea"), function (champ) {
+      return champ.type === "radio" || champ.type === "checkbox" ? champ.checked : champ.value.trim() !== "";
+    });
+  }
+
+  function rafraichirGrille() {
+    cases.forEach(function (bouton, index) {
+      var panneau = panneaux[index];
+      var repondue = estRepondu(panneau);
+      var marquee = marquees.indexOf(panneau.dataset.question) !== -1;
+      bouton.dataset.repondue = repondue ? "1" : "0";
+      bouton.dataset.marquee = marquee ? "1" : "0";
+      if (index === courant) bouton.setAttribute("aria-current", "step");
+      else bouton.removeAttribute("aria-current");
+      // Lecteurs d'écran : l'état est dit en mots, pas seulement en couleur.
+      var etats = [];
+      if (repondue) etats.push(grille.dataset.texteRepondue);
+      if (marquee) etats.push(grille.dataset.texteMarquee);
+      bouton.setAttribute("aria-label", bouton.dataset.nom + (etats.length ? " (" + etats.join(", ") + ")" : ""));
+    });
+  }
+
+  function afficherPanneau(index, deplacerFocus) {
+    courant = Math.max(0, Math.min(index, panneaux.length - 1));
+    panneaux.forEach(function (panneau, i) { panneau.hidden = i !== courant; });
+    precedente.disabled = courant === 0;
+    suivante.disabled = courant === panneaux.length - 1;
+    rafraichirGrille();
+    if (deplacerFocus) panneaux[courant].querySelector("[data-titre-panneau]").focus();
+  }
+
+  formulaire.querySelectorAll("[data-marquer]").forEach(function (bouton) {
+    var panneau = bouton.closest("[data-panneau]");
+    bouton.classList.remove("hidden");
+    bouton.classList.add("inline-flex");
+    bouton.addEventListener("click", function () {
+      var pk = panneau.dataset.question;
+      var position = marquees.indexOf(pk);
+      if (position === -1) marquees.push(pk);
+      else marquees.splice(position, 1);
+      var marquee = position === -1;
+      bouton.setAttribute("aria-pressed", marquee ? "true" : "false");
+      bouton.querySelector("span").textContent = marquee ? bouton.dataset.texteMarquee : bouton.dataset.texteMarquer;
+      champMarquees.value = marquees.join(",");
+      // Enregistrée avec les réponses : la marque survit à un rechargement de la page.
+      champMarquees.dispatchEvent(new Event("change", { bubbles: true }));
+      rafraichirGrille();
+    });
+  });
+
+  cases.forEach(function (bouton, index) {
+    bouton.addEventListener("click", function () { afficherPanneau(index, true); });
+  });
+  precedente.addEventListener("click", function () { afficherPanneau(courant - 1, true); });
+  suivante.addEventListener("click", function () { afficherPanneau(courant + 1, true); });
+  formulaire.addEventListener("change", rafraichirGrille);
+  formulaire.addEventListener("input", rafraichirGrille);
+
+  grille.classList.remove("hidden");
+  formulaire.querySelector("[data-navigation]").classList.remove("hidden");
+  formulaire.querySelector("[data-navigation]").classList.add("grid");
+  afficherPanneau(0, false);
 })();
