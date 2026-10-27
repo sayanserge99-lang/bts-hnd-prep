@@ -150,3 +150,7 @@
 - 27/10 : Sentry (config/suivi_erreurs.py), actif seulement avec SENTRY_DSN. Le test (vrai plantage, événement capturé)
   a trouvé une fuite : les variables locales jointes par défaut contenaient l'adresse avec ?jeton=… → désactivées
   (include_local_variables=False) ; contre-épreuve OK. send_default_pii retiré (obsolète ; défaut déjà sans données).
+- 27/10 : application lancée pour les essais de Serge Alain : .env local (PAIEMENT_ESSAI=1, non versionné), comptes
+  d'essai (etudiant.essai@, responsable.iai@, admin.essai@example.com, mot de passe Essai-BTS-2027), partenariat IAI
+  et 3 codes. Parcours HTTP complet (visiteur, quiz, épreuve, forum, paiement simulé + reçu, code, responsable,
+  admin → double authentification) : 30/30, aucune erreur 500 dans les journaux.

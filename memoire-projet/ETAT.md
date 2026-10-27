@@ -21,7 +21,7 @@
   résultats » (consentement révocable, tracé). Étudiant confirmé : page « Épreuves de mon établissement »,
   PDF servi après contrôle (404 sinon). Lien « Mon établissement » dans l'en-tête des responsables.
 - **Sentry (27/10)** `config/suivi_erreurs.py` : actif seulement si SENTRY_DSN est réglé ; ni e-mail, ni cookies, ni
-  formulaire, ni adresse, ni variables locales envoyés (vérifié par un test qui capture l''événement réel).
+  formulaire, ni adresse, ni variables locales envoyés (vérifié par un test qui capture l'événement réel).
 - **Sécurité, suite (27/10)** : double authentification de l'équipe (`accounts/double_auth.py`, TOTP écrit à la main
   et vérifié par les valeurs de la RFC 6238 ; QR code SVG avec `qrcode` ; intergiciel `config.securite.DoubleAuthEquipe`
   sur l'administration seulement ; 10 codes de secours hachés ; anti-rejeu ; 5 essais/15 min ; réinitialisation
