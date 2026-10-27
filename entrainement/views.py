@@ -7,6 +7,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
+from accounts.models import Consentement
 from catalogue.models import Chapitre, Matiere
 from sujets.models import Sujet
 from sujets.views import est_requete_htmx
@@ -203,14 +204,26 @@ def resultat(request, pk):
     tentative = tentative_de(request, pk)
     if tentative.fin is None:
         return redirect("entrainement:tentative", pk=tentative.pk)
-    reponses = tentative.reponses_donnees.select_related("question__chapitre").order_by("pk")
+    reponses = list(
+        tentative.reponses_donnees.select_related("question__chapitre").prefetch_related("question__choix").order_by("pk")
+    )
+    justes = sum(reponse.correcte for reponse in reponses)
+    chapitres = progression.bilan_par_chapitre(reponses)
+    a_revoir = progression.chapitre_a_revoir(chapitres)
+    duree = tentative.fin - tentative.debut
     return render(
         request,
         "entrainement/resultat.html",
         {
             "tentative": tentative,
             "reponses": reponses,
-            "justes": sum(reponse.correcte for reponse in reponses),
-            "a_reviser": any(not reponse.correcte for reponse in reponses),
+            "erreurs": [reponse for reponse in reponses if not reponse.correcte],
+            "justes": justes,
+            "pourcentage": round(100 * justes / len(reponses)) if reponses else 0,
+            "minutes": max(1, round(duree.total_seconds() / 60)),
+            "chapitres": chapitres,
+            "a_revoir": a_revoir,
+            "conseil": quiz.minutes_pour_un_quiz(tentative, a_revoir.objet) if a_revoir else None,
+            "partage": Consentement.partage_actif(request.user),
         },
     )

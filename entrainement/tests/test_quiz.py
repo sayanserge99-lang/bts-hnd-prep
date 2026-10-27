@@ -141,7 +141,8 @@ def test_un_quiz_complet_avec_correction_immediate(client, etudiant, chapitre, c
     tentative.refresh_from_db()
     assert tentative.fin is not None
     assert tentative.note == 10
-    assert "1 bonne(s) réponse(s) sur 2" in client.get(reverse("entrainement:resultat", args=[tentative.pk])).content.decode()
+    resultat = client.get(reverse("entrainement:resultat", args=[tentative.pk])).content.decode()
+    assert "50 % de bonnes réponses" in resultat and "Note : 10/20" in resultat
     assert {q1.pk, q2.pk} == set(tentative.ordre)
 
 
@@ -243,3 +244,48 @@ def test_l_admin_refuse_de_publier_une_question_incoherente(admin_client, chapit
     correcte.refresh_from_db()
     assert not incoherente.publiee
     assert correcte.publiee
+
+
+# --- Écran de résultat (maquette, écran 9) -------------------------------------------------------------
+
+def _quiz_termine(client, etudiant, compta_generale, reponses):
+    """reponses : [(chapitre, juste ?)] dans l'ordre du quiz."""
+    from entrainement import quiz
+
+    questions = [creer_question(chapitre) for chapitre, _ in reponses]
+    tentative = quiz.creer_tentative(etudiant, questions, "rapide", compta_generale)
+    for question, (_, juste) in zip(questions, reponses):
+        choix = bonne(question) if juste else mauvaise(question)
+        ReponseQuestion.objects.create(tentative=tentative, question=question, reponse=[choix], correcte=juste)
+    quiz.terminer(tentative)
+    client.force_login(etudiant)
+    return tentative, client.get(reverse("entrainement:resultat", args=[tentative.pk])).content.decode()
+
+
+def test_resultat_par_chapitre_et_chapitre_a_revoir(client, etudiant, chapitre, compta_generale):
+    provisions = Chapitre.objects.create(matiere=compta_generale, titre="Provisions", ordre=2)
+    tentative, page = _quiz_termine(client, etudiant, compta_generale, [
+        (chapitre, True), (chapitre, True), (provisions, True), (provisions, False), (provisions, False),
+    ])
+    assert "3<span" in page and "/ 5" in page and "60 % de bonnes réponses" in page
+    assert "2 / 2" in page
+    assert "1 / 3 · à revoir" in page  # le plus faible, signalé
+    assert "bg-yellow-500" in page  # 33 % : barre ambre
+    assert "« Provisions » est le chapitre le moins réussi de ce quiz." in page
+    assert f'name="chapitre" value="{provisions.pk}"' in page and "S'entraîner sur « Provisions »" in page
+    assert "Revoir mes 2 erreurs" in page and 'id="erreurs"' in page
+    assert "Vos résultats restent privés." in page and reverse("accounts:profil") in page
+
+
+def test_s_entrainer_sur_le_chapitre_lance_un_quiz_de_ce_chapitre(client, etudiant, chapitre, compta_generale):
+    provisions = Chapitre.objects.create(matiere=compta_generale, titre="Provisions", ordre=2)
+    _quiz_termine(client, etudiant, compta_generale, [(chapitre, True), (provisions, False)])
+    client.post(reverse("entrainement:lancer"), {"matiere": compta_generale.pk, "chapitre": provisions.pk})
+    nouveau = Tentative.objects.latest("pk")
+    assert nouveau.quiz.chapitre == provisions
+    assert all(Question.objects.get(pk=pk).chapitre == provisions for pk in nouveau.ordre)
+
+
+def test_sans_erreur_rien_a_revoir(client, etudiant, chapitre, compta_generale):
+    _, page = _quiz_termine(client, etudiant, compta_generale, [(chapitre, True), (chapitre, True)])
+    assert "à revoir" not in page and "Revoir mes" not in page and "100 % de bonnes réponses" in page

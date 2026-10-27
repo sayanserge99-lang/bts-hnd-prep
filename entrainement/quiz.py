@@ -95,6 +95,15 @@ def prochaine_question(tentative):
     return None
 
 
+def minutes_pour_un_quiz(tentative, chapitre):
+    """Durée d'un quiz sur ce chapitre au rythme de l'étudiant dans cette tentative (conseil du résultat)."""
+    if not tentative.fin or not tentative.ordre:
+        return None
+    par_question = (tentative.fin - tentative.debut).total_seconds() / len(tentative.ordre)
+    disponibles = questions_publiees().filter(chapitre=chapitre).count()
+    return max(1, round(par_question * min(QUESTIONS_PAR_QUIZ, disponibles) / 60)), min(QUESTIONS_PAR_QUIZ, disponibles)
+
+
 def terminer(tentative):
     """Note sur 20 (CDC 3.5 : note calculée immédiatement)."""
     total = len(tentative.ordre)

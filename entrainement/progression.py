@@ -58,6 +58,23 @@ def taux_par_matiere(utilisateur, jours=None):
     return sorted(taux, key=lambda t: str(t.objet.nom))
 
 
+def bilan_par_chapitre(reponses):
+    """Résultat d'une tentative chapitre par chapitre (écran de résultat), dans l'ordre du programme."""
+    par_chapitre = {}
+    for reponse in reponses:
+        chapitre = reponse.question.chapitre
+        taux = par_chapitre.setdefault(chapitre.pk, Taux(chapitre, 0, 0))
+        taux.total += 1
+        taux.justes += reponse.correcte
+    return sorted(par_chapitre.values(), key=lambda t: (t.objet.ordre, str(t.objet.titre)))
+
+
+def chapitre_a_revoir(taux_chapitres):
+    """Le chapitre le moins réussi, s'il reste des erreurs ; à taux égal, celui qui a le plus de questions."""
+    candidats = [t for t in taux_chapitres if t.justes < t.total]
+    return min(candidats, key=lambda t: (t.pourcentage, -t.total)) if candidats else None
+
+
 def bilan(utilisateur):
     """Bonnes réponses sur toutes les questions répondues : (pourcentage, nombre de réponses)."""
     compte = ReponseQuestion.objects.filter(tentative__utilisateur=utilisateur).aggregate(

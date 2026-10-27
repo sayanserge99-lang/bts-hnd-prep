@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-27 17:18+0100\n"
+"POT-Creation-Date: 2026-10-27 17:27+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1274,15 +1274,15 @@ msgstr "IDs of the ticked choices, or the short answer text."
 msgid "réponse"
 msgstr "answer"
 
-#: entrainement/progression.py:90
+#: entrainement/progression.py:107
 msgid "Aujourd'hui"
 msgstr "Today"
 
-#: entrainement/progression.py:92
+#: entrainement/progression.py:109
 msgid "Hier"
 msgstr "Yesterday"
 
-#: entrainement/progression.py:94
+#: entrainement/progression.py:111
 #, python-format
 msgid "Il y a %(n)s jour"
 msgid_plural "Il y a %(n)s jours"
@@ -1294,7 +1294,7 @@ msgstr[1] "%(n)s days ago"
 msgid "Révision : %(titre)s"
 msgstr "Review: %(titre)s"
 
-#: entrainement/views.py:67 entrainement/views.py:89
+#: entrainement/views.py:68 entrainement/views.py:90
 msgid ""
 "Vous avez fait tous vos quiz gratuits du jour. Revenez demain ou passez au "
 "Pass session."
@@ -1302,12 +1302,12 @@ msgstr ""
 "You have used all your free quizzes for today. Come back tomorrow or get the"
 " Session pass."
 
-#: entrainement/views.py:78 entrainement/views.py:93
+#: entrainement/views.py:79 entrainement/views.py:94
 #: entrainement/views_hors_ligne.py:74
 msgid "Aucune question disponible pour ce choix pour le moment."
 msgstr "No questions available for this choice yet."
 
-#: entrainement/views.py:147
+#: entrainement/views.py:148
 msgid "Choisissez une réponse avant de valider."
 msgstr "Choose an answer before submitting."
 
@@ -3535,6 +3535,7 @@ msgid "Envoyer le corrigé"
 msgstr "Send the marking guide"
 
 #: templates/entrainement/_barre_taux.html:4
+#: templates/entrainement/resultat.html:28
 #, python-format
 msgid "%(p)s %% de réussite"
 msgstr "%(p)s%% success"
@@ -3548,10 +3549,12 @@ msgid "Ce n'est pas la bonne réponse."
 msgstr "That is not the right answer."
 
 #: templates/entrainement/_correction.html:12
+#: templates/entrainement/resultat.html:69
 msgid "Votre réponse :"
 msgstr "Your answer:"
 
-#: templates/entrainement/_correction.html:13 templates/pwa/hors_ligne.html:18
+#: templates/entrainement/_correction.html:13
+#: templates/entrainement/resultat.html:70 templates/pwa/hors_ligne.html:18
 msgid "Réponse attendue :"
 msgstr "Expected answer:"
 
@@ -4043,26 +4046,94 @@ msgstr "Chapter: %(chapitre)s"
 msgid "Question %(numero)s sur %(total)s"
 msgstr "Question %(numero)s of %(total)s"
 
-#: templates/entrainement/resultat.html:11
+#: templates/entrainement/resultat.html:12
 #, python-format
-msgid "%(justes)s bonne(s) réponse(s) sur %(total)s"
-msgstr "%(justes)s correct answer(s) out of %(total)s"
+msgid "%(p)s %% de bonnes réponses"
+msgstr "%(p)s %% correct answers"
 
-#: templates/entrainement/resultat.html:17
-msgid "juste"
-msgstr "correct"
+#: templates/entrainement/resultat.html:13
+#, python-format
+msgid "%(n)s min"
+msgid_plural "%(n)s min"
+msgstr[0] "%(n)s min"
+msgstr[1] "%(n)s min"
 
-#: templates/entrainement/resultat.html:17
-msgid "faux"
-msgstr "wrong"
+#: templates/entrainement/resultat.html:14
+#, python-format
+msgid "Note : %(note)s/20"
+msgstr "Mark: %(note)s/20"
 
-#: templates/entrainement/resultat.html:29
+#: templates/entrainement/resultat.html:19
+msgid "Par chapitre"
+msgstr "By chapter"
+
+#: templates/entrainement/resultat.html:26
+msgid "à revoir"
+msgstr "to review"
+
+#: templates/entrainement/resultat.html:40
+#, python-format
+msgid "« %(chapitre)s » est le chapitre le moins réussi de ce quiz."
+msgstr "“%(chapitre)s” is your weakest chapter in this quiz."
+
+#: templates/entrainement/resultat.html:41
+#, python-format
+msgid ""
+"À votre rythme, un quiz de %(n)s questions sur ce chapitre prend environ "
+"%(minutes)s minute."
+msgid_plural ""
+"À votre rythme, un quiz de %(n)s questions sur ce chapitre prend environ "
+"%(minutes)s minutes."
+msgstr[0] ""
+"At your pace, a %(n)s-question quiz on this chapter takes about %(minutes)s "
+"minute."
+msgstr[1] ""
+"At your pace, a %(n)s-question quiz on this chapter takes about %(minutes)s "
+"minutes."
+
+#: templates/entrainement/resultat.html:47
+#, python-format
+msgid "Revoir mon erreur"
+msgid_plural "Revoir mes %(n)s erreurs"
+msgstr[0] "Review my mistake"
+msgstr[1] "Review my %(n)s mistakes"
+
+#: templates/entrainement/resultat.html:54
+#, python-format
+msgid "S'entraîner sur « %(chapitre)s »"
+msgstr "Practise “%(chapitre)s”"
+
+#: templates/entrainement/resultat.html:57
+msgid "Retour à l'entraînement"
+msgstr "Back to practice"
+
+#: templates/entrainement/resultat.html:62
+msgid "Mes erreurs"
+msgstr "My mistakes"
+
+#: templates/entrainement/resultat.html:76
+msgid "bonne réponse"
+msgstr "correct answer"
+
+#: templates/entrainement/resultat.html:76
+msgid "votre choix"
+msgstr "your choice"
+
+#: templates/entrainement/resultat.html:89
 msgid "Rejouer mes erreurs"
 msgstr "Replay my mistakes"
 
-#: templates/entrainement/resultat.html:32
-msgid "Retour à l'entraînement"
-msgstr "Back to practice"
+#: templates/entrainement/resultat.html:95
+msgid "Votre établissement voit vos résultats."
+msgstr "Your institution sees your results."
+
+#: templates/entrainement/resultat.html:95
+msgid "Vos résultats restent privés."
+msgstr "Your results stay private."
+
+#: templates/entrainement/resultat.html:96
+msgid "Gérer le partage"
+msgstr "Manage sharing"
 
 #: templates/forms/champ.html:13 templates/forms/champ.html:20
 msgid "(facultatif)"

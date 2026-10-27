@@ -1,35 +1,98 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n corriges %}
 
 {% block titre %}{% translate "Résultat" %} — {{ tentative.quiz.titre }} — BTS-HND Prep{% endblock %}
 
 {% block contenu %}
+{# Résultat du quiz (maquette, écran 9) : score, résultat par chapitre, conseil, erreurs à revoir. #}
 <div class="mx-auto max-w-2xl space-y-6 px-4 py-6">
-  <div class="carte text-center">
-    <p class="text-sm text-gris">{{ tentative.quiz.matiere.nom }} · {{ tentative.quiz.titre }}</p>
-    <p class="mt-2 text-5xl font-extrabold">{{ tentative.note|floatformat:"-1" }}<span class="text-2xl text-gris">/20</span></p>
-    <p class="mt-1">{% blocktranslate with justes=justes total=reponses|length %}{{ justes }} bonne(s) réponse(s) sur {{ total }}{% endblocktranslate %}</p>
+  <section class="carte text-center">
+    <svg aria-hidden="true" class="mx-auto text-yellow-500" width="36" height="36" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c.6 5.4 4.6 9.4 10 10-5.4.6-9.4 4.6-10 10-.6-5.4-4.6-9.4-10-10 5.4-.6 9.4-4.6 10-10z"/></svg>
+    <h1 class="mt-2 text-6xl font-extrabold">{{ justes }}<span class="text-3xl font-semibold text-gris"> / {{ reponses|length }}</span></h1>
+    <p class="mt-2 text-lg font-semibold text-vert">{% blocktranslate with p=pourcentage %}{{ p }} % de bonnes réponses{% endblocktranslate %}</p>
+    <p class="text-gris">{{ tentative.quiz.matiere.nom }} · {{ tentative.quiz.get_mode_display }} · {% blocktranslate count n=minutes %}{{ n }} min{% plural %}{{ n }} min{% endblocktranslate %}</p>
+    <p class="mt-1 text-xs text-gris">{% blocktranslate with note=tentative.note|floatformat:"-1" %}Note : {{ note }}/20{% endblocktranslate %}</p>
+  </section>
+
+  {% if chapitres %}
+    <section>
+      <h2 class="text-lg font-semibold">{% translate "Par chapitre" %}</h2>
+      <ul class="mt-3 space-y-4">
+        {% for taux in chapitres %}
+          <li>
+            <div class="flex items-baseline justify-between gap-3">
+              <span>{{ taux.objet.titre }}</span>
+              <span class="whitespace-nowrap {% if taux == a_revoir %}font-semibold text-ambre{% endif %}">
+                {% if taux == a_revoir %}<span aria-hidden="true">⚠</span> {% endif %}{{ taux.justes }} / {{ taux.total }}{% if taux == a_revoir %} · {% translate "à revoir" %}{% endif %}</span>
+            </div>
+            <div class="mt-1 h-2 overflow-hidden rounded-full bg-bordure" role="img" aria-label="{% blocktranslate with p=taux.pourcentage %}{{ p }} % de réussite{% endblocktranslate %}">
+              <div class="h-full rounded-full {% if taux.pourcentage < 50 %}bg-yellow-500{% else %}bg-vert{% endif %}" style="width: {{ taux.pourcentage }}%"></div>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+
+  {% if a_revoir %}
+    <p class="flex gap-3 rounded-2xl bg-ambre-clair p-4 text-sm">
+      <svg aria-hidden="true" class="mt-0.5 shrink-0 text-ambre" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg>
+      <span>{% blocktranslate with chapitre=a_revoir.objet.titre %}« {{ chapitre }} » est le chapitre le moins réussi de ce quiz.{% endblocktranslate %}
+        {% if conseil %}{% blocktranslate with n=conseil.1 count minutes=conseil.0 %}À votre rythme, un quiz de {{ n }} questions sur ce chapitre prend environ {{ minutes }} minute.{% plural %}À votre rythme, un quiz de {{ n }} questions sur ce chapitre prend environ {{ minutes }} minutes.{% endblocktranslate %}{% endif %}</span>
+    </p>
+  {% endif %}
+
+  <div class="space-y-3">
+    {% if erreurs %}
+      <a href="#erreurs" class="bouton-plein w-full py-3 text-base">{% blocktranslate count n=erreurs|length %}Revoir mon erreur{% plural %}Revoir mes {{ n }} erreurs{% endblocktranslate %}</a>
+    {% endif %}
+    {% if a_revoir %}
+      <form method="post" action="{% url 'entrainement:lancer' %}">
+        {% csrf_token %}
+        <input type="hidden" name="matiere" value="{{ a_revoir.objet.matiere_id }}">
+        <input type="hidden" name="chapitre" value="{{ a_revoir.objet.pk }}">
+        <button class="bouton-contour w-full py-3 text-base">{% blocktranslate with chapitre=a_revoir.objet.titre %}S'entraîner sur « {{ chapitre }} »{% endblocktranslate %}</button>
+      </form>
+    {% endif %}
+    {% if not erreurs %}<a href="{% url 'entrainement:accueil' %}" class="bouton-contour w-full py-3 text-base">{% translate "Retour à l'entraînement" %}</a>{% endif %}
   </div>
 
-  <ul class="space-y-2">
-    {% for reponse in reponses %}
-      <li class="carte flex items-start gap-3 p-4">
-        <span class="w-5 shrink-0 font-bold {% if reponse.correcte %}text-vert{% else %}text-red-700{% endif %}" aria-label="{% if reponse.correcte %}{% translate 'juste' %}{% else %}{% translate 'faux' %}{% endif %}">{% if reponse.correcte %}✓{% else %}✗{% endif %}</span>
-        <span><span class="block">{{ reponse.question.enonce|truncatechars:120 }}</span><span class="text-xs text-gris">{{ reponse.question.chapitre.titre }}</span></span>
-      </li>
-    {% endfor %}
-  </ul>
-
-  <div class="flex flex-wrap gap-3">
-    {% if a_reviser %}
+  {% if erreurs %}
+    <section id="erreurs" class="space-y-4 scroll-mt-4">
+      <h2 class="text-lg font-semibold">{% translate "Mes erreurs" %}</h2>
+      {% for reponse in erreurs %}
+        {% with question=reponse.question %}
+        <article class="carte space-y-3">
+          <p class="text-xs text-gris">{{ question.chapitre.titre }}</p>
+          <div class="corrige font-medium">{{ question.enonce|mise_en_forme }}</div>
+          {% if question.type == "reponse_courte" %}
+            <p class="text-sm">{% translate "Votre réponse :" %} <strong>{{ reponse.reponse }}</strong></p>
+            <p class="text-sm">{% translate "Réponse attendue :" %} <strong>{{ question.reponse_affichee }}</strong></p>
+          {% else %}
+            <ul class="space-y-1 text-sm">
+              {% for choix in question.choix.all %}
+                <li class="flex gap-2 {% if choix.est_correct %}font-semibold text-vert-fonce{% elif choix.pk in reponse.reponse %}text-red-800{% endif %}">
+                  <span class="w-4 shrink-0" aria-hidden="true">{% if choix.est_correct %}✓{% elif choix.pk in reponse.reponse %}✗{% endif %}</span>
+                  <span>{{ choix.texte|mise_en_forme_ligne }}{% if choix.est_correct %} <span class="sr-only">({% translate "bonne réponse" %})</span>{% elif choix.pk in reponse.reponse %} <span class="text-xs font-normal">({% translate "votre choix" %})</span>{% endif %}</span>
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+          {% if question.explication %}<div class="corrige border-t border-bordure pt-3 text-sm">{{ question.explication|mise_en_forme }}</div>{% endif %}
+        </article>
+        {% endwith %}
+      {% endfor %}
       <form method="post" action="{% url 'entrainement:lancer' %}">
         {% csrf_token %}
         <input type="hidden" name="matiere" value="{{ tentative.quiz.matiere.pk }}">
         <input type="hidden" name="mode" value="revision">
-        <button class="bouton-plein">{% translate "Rejouer mes erreurs" %}</button>
+        <button class="bouton-contour">{% translate "Rejouer mes erreurs" %}</button>
       </form>
-    {% endif %}
-    <a href="{% url 'entrainement:accueil' %}" class="bouton-contour">{% translate "Retour à l'entraînement" %}</a>
-  </div>
+    </section>
+  {% endif %}
+
+  <p class="text-center text-sm text-gris">
+    {% if partage %}{% translate "Votre établissement voit vos résultats." %}{% else %}{% translate "Vos résultats restent privés." %}{% endif %}
+    <a href="{% url 'accounts:profil' %}" class="text-vert underline">{% translate "Gérer le partage" %}</a></p>
 </div>
 {% endblock %}
