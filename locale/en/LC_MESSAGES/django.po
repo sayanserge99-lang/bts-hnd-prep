@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-27 17:42+0100\n"
+"POT-Creation-Date: 2026-10-27 21:41+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1627,34 +1627,43 @@ msgstr "free days"
 msgid "Jours offerts (contribution)"
 msgstr "Free days (contribution)"
 
-#: paiements/service.py:40
+#: paiements/service.py:42
 #, python-format
 msgid "Vous avez déjà le Pass session, valable jusqu'au %(fin)s."
 msgstr "You already have the session pass, valid until %(fin)s."
 
-#: paiements/service.py:55
+#: paiements/service.py:60
+#, python-format
+msgid ""
+"Votre accès Premium couvre déjà toute la session %(annee)s (jusqu'au "
+"%(fin)s) : le Pass ne vous apporterait rien."
+msgstr ""
+"Your Premium access already covers the whole %(annee)s session (until "
+"%(fin)s): the Pass would add nothing."
+
+#: paiements/service.py:68
 msgid "Le paiement n'est pas encore ouvert."
 msgstr "Payment is not open yet."
 
-#: paiements/service.py:78
+#: paiements/service.py:91
 #, python-format
 msgid "Montant reçu (%(recu)s FCFA) différent du prix (%(prix)s FCFA)."
 msgstr ""
 "Amount received (%(recu)s FCFA) differs from the price (%(prix)s FCFA)."
 
-#: paiements/service.py:82
+#: paiements/service.py:95
 msgid "Paiement refusé ou annulé."
 msgstr "Payment declined or cancelled."
 
-#: paiements/service.py:93
+#: paiements/service.py:106
 msgid "À régulariser : "
 msgstr "To be settled: "
 
-#: paiements/service.py:124
+#: paiements/service.py:137
 msgid "Délai dépassé : aucune confirmation reçue."
 msgstr "Time limit exceeded: no confirmation received."
 
-#: paiements/service.py:132
+#: paiements/service.py:145
 #, python-format
 msgid "Votre reçu BTS-HND Prep n° %(numero)s"
 msgstr "Your BTS-HND Prep receipt no. %(numero)s"

@@ -130,3 +130,8 @@
   Conseil du résultat : jamais d'affirmation non fondée (« revient souvent dans les sujets ») ; durée estimée
   au rythme de l'étudiant. Marge de transmission de 90 s après l'heure de fin conservée (à confirmer par Serge Alain).
 - **GitHub (27/10)** : vérifier le résultat de la CI une seule fois après un envoi, jamais en boucle.
+- **Offre mensuelle (27/10, Serge Alain)** : « Premium 30 jours » 1 500 FCFA est gardée (CDC v2 §3.8 : « mensuelle ou
+  par session »). Les deux offres de lancement sont créées par la migration `paiements/0005_offres_de_lancement`
+  (seulement si absentes, jamais supprimées en retour), plus par `donnees_demo`. Pass et mensuel se cumulent bout à
+  bout sans perte de jours (le second commence au lendemain du premier, une seule période affichée) ; un Pass qui ne
+  commencerait qu'après la fin de la session est refusé avec un message clair. Tests : un par sens + ce cas limite.

@@ -90,7 +90,7 @@
 - [ ] Remboursement : aucune procédure dans le site (à traiter à la main, à écrire dans les conditions de vente).
 - [x] V3 module 4 : Premium (règle unique, page Offres, protection des PDF de corrigés).
 - [x] Prix validés le 27/10 : Pass session 5 000, mensuel 1 500.
-- [ ] En production : créer ces deux offres dans l'admin (la commande de démo n'y tourne pas).
+- [x] Offres de lancement créées par la migration paiements 0005 (aussi en production).
 - [x] Rappel par e-mail 3 jours avant la fin d'un abonnement ; passage automatique à « expiré » (chaque matin).
 - [x] V3 module 3 : codes d'accès (génération par lot, activation, suivi par l'établissement).
 - [ ] Codes d'accès : pas de date d'expiration propre au code (il vit tant que la convention est active) ; prix et
@@ -129,6 +129,6 @@
 
 ## Questions ouvertes pour Serge Alain (27/10)
 
-- [ ] Offre mensuelle « Premium 30 jours » : garder ou retirer ? (le CDC v2, §3.8, prévoit « mensuelle ou par session »).
+- [x] Offre mensuelle gardée (27/10) ; cumul avec le Pass testé dans les deux sens.
 - [ ] Examen blanc : garder la marge de 90 s après l'heure de fin (réseau lent) ou la réduire ?
 - [ ] Quiz : « Signaler cette question » (maquette, écran 8) reste à faire.

@@ -19,6 +19,8 @@ from django.utils.translation import gettext as _
 from accounts.models import Consentement
 
 from .fournisseurs import fournisseur_actif
+from catalogue.models import Session
+
 from .models import Abonnement, Paiement
 
 NUMERO = re.compile(r"^(?:\+?237)?(6\d{8})$")
@@ -46,7 +48,18 @@ def periode(utilisateur, offre):
     refuser_second_pass(utilisateur, offre)
     debut = Abonnement.prochain_jour_libre(utilisateur)
     profil = getattr(utilisateur, "profil", None)
-    return debut, offre.calculer_fin(profil.examen if profil else None, debut)
+    examen = profil.examen if profil else None
+    try:
+        return debut, offre.calculer_fin(examen, debut)
+    except ValidationError:
+        # Pass demandé alors que l'accès en cours (un mois, par exemple) dépasse déjà la fin de la session :
+        # il ne commencerait qu'après elle. On le dit plutôt que « aucune session à venir ».
+        en_cours = Session.objects.prochaine(examen, timezone.localdate()) if examen else None
+        if offre.type == offre.Type.SESSION and en_cours and en_cours.date_fin_officielle < debut:
+            raise ValidationError(_(
+                "Votre accès Premium couvre déjà toute la session %(annee)s (jusqu'au %(fin)s) : le Pass ne vous apporterait rien."
+            ) % {"annee": en_cours.annee, "fin": f"{(debut - timedelta(days=1)):%d/%m/%Y}"})
+        raise
 
 
 def commander(utilisateur, offre, operateur, telephone, request):

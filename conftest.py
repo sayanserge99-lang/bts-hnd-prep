@@ -27,6 +27,17 @@ def paiement_ferme(settings):
 
 
 @pytest.fixture(autouse=True)
+def offres_vides(request):
+    # La migration 0005 crée les offres de lancement ; chaque test crée les siennes, sauf ceux qui vérifient
+    # ces offres-là (marque « offres_de_lancement »).
+    if "django_db" in request.keywords and "offres_de_lancement" not in request.keywords:
+        from paiements.models import Offre
+
+        request.getfixturevalue("db")
+        Offre.objects.all().delete()
+
+
+@pytest.fixture(autouse=True)
 def cache_isole(settings):
     # Cache en mémoire propre à chaque test : pas de Redis partagé avec le serveur de développement,
     # et aucun échec de connexion qui passe d'un test à l'autre.

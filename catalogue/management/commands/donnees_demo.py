@@ -15,7 +15,6 @@ from communaute.models import Contribution
 from entrainement import examen_blanc, quiz
 from entrainement.correction import est_correcte
 from entrainement.models import Choix, CritereBareme, ExamenBlanc, Question, Quiz, ReponseQuestion, Tentative
-from paiements.models import Offre
 from partenaires.models import Etablissement
 from sujets.models import Corrige, Sujet
 
@@ -324,7 +323,6 @@ class Command(BaseCommand):
             self.creer_questions()
             self.creer_examen_blanc()
             self.creer_informatique()
-            self.creer_offres()
             self.creer_activite()
             return
 
@@ -382,7 +380,6 @@ class Command(BaseCommand):
         self.creer_questions()
         self.creer_examen_blanc()
         self.creer_informatique()
-        self.creer_offres()
         self.creer_activite()
 
     def creer_activite(self):
@@ -497,11 +494,6 @@ class Command(BaseCommand):
         CritereBareme.objects.create(examen_blanc=examen, libelle="Exercice 1 : tableau d'amortissement", points=7, ordre=1)
         CritereBareme.objects.create(examen_blanc=examen, libelle="Exercice 2 : écritures de régularisation", points=7, ordre=2)
         self.stdout.write(self.style.SUCCESS("1 examen blanc de démonstration créé."))
-
-    def creer_offres(self):
-        """Offres d'exemple : prix de l'étude de faisabilité, à confirmer par l'enquête (CDC 11, question ouverte)."""
-        Offre.objects.get_or_create(nom="Pass session", defaults={"prix": 5000, "type": Offre.Type.SESSION})
-        Offre.objects.get_or_create(nom="Premium 30 jours", defaults={"prix": 1500, "type": Offre.Type.DUREE, "duree_jours": 30})
 
     def creer_informatique(self):
         """Spécialité de lancement (demande de Serge Alain) : informatique en premier, avec du contenu complet."""

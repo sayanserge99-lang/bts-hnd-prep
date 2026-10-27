@@ -121,3 +121,47 @@ def test_periodes_separees_par_un_trou(etudiant, mensuel):
                               fin=aujourd_hui + timedelta(days=20),
                               paiement=Paiement.objects.create(utilisateur=etudiant, offre=mensuel, montant=1500, operateur="mtn", reference="R2"))
     assert len(Abonnement.periodes(etudiant)) == 2
+
+
+# --- Pass et mensuel se cumulent sans perte de jours (décision du 27/10) -----------------------------------
+
+def test_un_mois_achete_pendant_un_pass_prolonge_sans_trou(client, paiement_ouvert, etudiant, pass_session, mensuel, session_en_cours):
+    acheter(client, etudiant, pass_session)
+    acheter(client, etudiant, mensuel)
+
+    (periode,) = Abonnement.periodes(etudiant)
+    fin_du_pass = session_en_cours.date_fin_officielle
+    assert periode["debut"] == timezone.localdate()
+    # Le mois commence au lendemain de la fin du Pass : 30 jours entiers, aucun jour perdu.
+    assert periode["fin"] == fin_du_pass + timedelta(days=1 + 30)
+    assert periode["origines"] == ["Pass session", "Premium 30 jours"]
+
+
+def test_un_pass_achete_pendant_un_mois_prend_la_suite_sans_trou(client, paiement_ouvert, etudiant, pass_session, mensuel, session_en_cours):
+    # Cas courant : le mois se termine avant la fin officielle de la session.
+    session_en_cours.date_fin_officielle = timezone.localdate() + timedelta(days=120)
+    session_en_cours.save()
+    acheter(client, etudiant, mensuel)
+    acheter(client, etudiant, pass_session)
+
+    mois, passe = Abonnement.objects.filter(utilisateur=etudiant).order_by("debut")
+    assert mois.fin == timezone.localdate() + timedelta(days=30)  # le mois reste entier
+    assert passe.debut == mois.fin + timedelta(days=1)  # le Pass commence le lendemain
+    assert passe.fin == session_en_cours.date_fin_officielle  # et finit à la date officielle de fin
+    (periode,) = Abonnement.periodes(etudiant)
+    assert periode["debut"] == mois.debut and periode["fin"] == passe.fin
+
+
+@pytest.mark.offres_de_lancement
+def test_les_offres_de_lancement_existent():
+    """Migration paiements 0005 : les deux offres validées le 27/10, sans passer par les données de démo."""
+    assert Offre.objects.filter(nom="Pass session", type=Offre.Type.SESSION, prix=5000, active=True).count() == 1
+    assert Offre.objects.filter(nom="Premium 30 jours", type=Offre.Type.DUREE, duree_jours=30, prix=1500, active=True).count() == 1
+
+
+def test_pass_inutile_si_le_mois_couvre_deja_toute_la_session(client, paiement_ouvert, etudiant, pass_session, mensuel, session_en_cours):
+    """Le mois dépasse la fin de la session : le Pass commencerait après elle ; refusé avec un message clair."""
+    acheter(client, etudiant, mensuel)
+    reponse = client.get(reverse("paiements:commander", args=[pass_session.pk]), follow=True)
+    assert "couvre déjà toute la session" in reponse.content.decode()
+    assert Abonnement.objects.filter(utilisateur=etudiant).count() == 1
