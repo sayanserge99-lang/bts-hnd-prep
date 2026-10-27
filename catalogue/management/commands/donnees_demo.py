@@ -1,19 +1,29 @@
 """Données fictives pour voir les pages en développement. Les dates de session sont inventées."""
 
-from datetime import date
+from datetime import date, timedelta
 
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
+from django.http import QueryDict
 
 from catalogue.models import Chapitre, Examen, Matiere, Session, Specialite, SpecialiteMatiere
-from entrainement.models import Choix, CritereBareme, ExamenBlanc, Question
+from accounts.forms import preparer_etudiant
+from accounts.models import Utilisateur
+from communaute.models import Contribution
+from entrainement import examen_blanc, quiz
+from entrainement.correction import est_correcte
+from entrainement.models import Choix, CritereBareme, ExamenBlanc, Question, Quiz, ReponseQuestion, Tentative
 from paiements.models import Offre
 from partenaires.models import Etablissement
 from sujets.models import Corrige, Sujet
 
 SOURCE_DEMO = "Démonstration (sujet fictif)"
+# Tout contenu d'activité de démonstration (quiz, examen, contributions) porte cette marque dans son titre.
+MARQUE_DEMO = "[DÉMO]"
+ETUDIANT_DEMO = "etudiant.demo@example.com"
+MOT_DE_PASSE_DEMO = "Demo-BTS-2027"
 
 SPECIALITES = {
     "BTS": [
@@ -315,6 +325,7 @@ class Command(BaseCommand):
             self.creer_examen_blanc()
             self.creer_informatique()
             self.creer_offres()
+            self.creer_activite()
             return
 
         with transaction.atomic():
@@ -372,6 +383,71 @@ class Command(BaseCommand):
         self.creer_examen_blanc()
         self.creer_informatique()
         self.creer_offres()
+        self.creer_activite()
+
+    def creer_activite(self):
+        """Écrans à vérifier (maquette) : résultat de quiz, examen blanc en cours, file de modération."""
+        if Contribution.objects.filter(commentaire__startswith=MARQUE_DEMO).exists():
+            return
+        cge = Specialite.objects.get(examen__code="BTS", code="CGE")
+        etudiant = Utilisateur.objects.filter(email=ETUDIANT_DEMO).first()
+        if etudiant is None:
+            etudiant = Utilisateur.objects.create_user(
+                email=ETUDIANT_DEMO, password=MOT_DE_PASSE_DEMO, first_name="Awa", last_name=MARQUE_DEMO
+            )
+            preparer_etudiant(etudiant, cge)
+        compta = Matiere.objects.get(examen__code="BTS", nom_fr="Comptabilité générale")
+
+        # Quiz terminé : 6 bonnes réponses sur 8, deux erreurs dans le même chapitre (point faible).
+        questions = list(Question.objects.filter(chapitre__matiere=compta, explication__startswith=MARQUE_QUESTION_DEMO)
+                         .prefetch_related("choix").order_by("chapitre__ordre", "pk"))
+        tentative = quiz.creer_tentative(etudiant, questions, Quiz.Mode.RAPIDE, compta)
+        Quiz.objects.filter(pk=tentative.quiz_id).update(titre=f"{MARQUE_DEMO} {tentative.quiz.titre}")
+        for rang, question in enumerate(questions):
+            juste = rang not in (5, 6)
+            if question.type == Question.Type.REPONSE_COURTE:
+                reponse = question.reponse_attendue.split("|")[0] if juste else "?"
+            else:
+                choix = [c.pk for c in question.choix.all() if c.est_correct == juste] or [question.choix.first().pk]
+                reponse = choix if question.type == Question.Type.CHOIX_MULTIPLE else choix[:1]
+            ReponseQuestion.objects.create(tentative=tentative, question=question, reponse=reponse,
+                                           correcte=est_correcte(question, reponse))
+        quiz.terminer(tentative)
+
+        # Examen blanc commencé il y a un quart d'heure, deux réponses enregistrées.
+        examen = ExamenBlanc.objects.filter(sujet__matiere=compta, publie=True).first()
+        if examen:
+            ExamenBlanc.objects.filter(pk=examen.pk).exclude(titre__startswith=MARQUE_DEMO).update(titre=f"{MARQUE_DEMO} {examen.titre}")
+            epreuve = examen_blanc.demarrer(etudiant, examen)
+            recul = timedelta(minutes=15)
+            Tentative.objects.filter(pk=epreuve.pk).update(debut=epreuve.debut - recul, fin_prevue=epreuve.fin_prevue - recul)
+            epreuve.refresh_from_db()
+            donnees = QueryDict(mutable=True)
+            for question in Question.objects.filter(pk__in=epreuve.ordre[:2]).prefetch_related("choix"):
+                if question.type == Question.Type.REPONSE_COURTE:
+                    donnees[f"q-{question.pk}"] = question.reponse_attendue.split("|")[0]
+                else:
+                    donnees.setlist(f"q-{question.pk}", [str(question.choix.first().pk)])
+            examen_blanc.enregistrer(epreuve, donnees)
+
+        # File de modération : une sans doublon, un doublon possible, une session pas encore terminée.
+        anglais = Matiere.objects.get(examen__code="BTS", nom_fr="Anglais")
+        envois = [
+            (anglais, 2021, "4 photos assemblées, toutes les pages."),
+            (compta, 2025, "sujet_compta.pdf"),
+            (compta, ANNEE_FUTURE, "2 photos, session pas encore terminée."),
+        ]
+        for matiere, annee, detail in envois:
+            contribution = Contribution(
+                utilisateur=etudiant, type=Contribution.Type.SUJET, annee=annee, specialite=cge, matiere=matiere,
+                commentaire=f"{MARQUE_DEMO} {detail}", certifie_droits=True,
+            )
+            contribution.fichier.save(f"demo-contribution-{annee}.pdf", ContentFile(pdf_demo(f"{MARQUE_DEMO} {matiere.nom}", annee)), save=False)
+            contribution.save()
+        self.stdout.write(self.style.SUCCESS(
+            f"Activité de démonstration : {ETUDIANT_DEMO} (mot de passe {MOT_DE_PASSE_DEMO}), "
+            "1 quiz terminé, 1 examen blanc commencé, 3 contributions en attente."
+        ))
 
     def creer_corriges(self):
         if Corrige.objects.filter(titulaire_droits=SOURCE_DEMO).exists():

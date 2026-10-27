@@ -179,3 +179,4 @@
   fusionnées). Erreurs : j'avais dit à Serge Alain que l'œil du mot de passe existait (faux, ajouté) ; variable
   `erreur` d'un except utilisée dans un on_commit (effacée par Python) → trouvée par le test. Contre-épreuves :
   solidité du mot de passe (4 échecs attendus), refus du second Pass, code non consommé. 435/435.
+- 27/10 : données de démo « [DÉMO] » (point 6) + test (refus sans DEBUG, rien en double). Captures des écrans 7, 9, 10.
