@@ -157,3 +157,7 @@
 - 27/10 : « continu » de Serge Alain ; Galaxy non branché (adb : aucun appareil) → fin des abonnements : tâche du
   matin (expiration + rappel), planificateur dans le worker, SITE_URL. 7 tests (1 échec attendu avant traduction,
   il sert à ça). Worker relancé : « beat: Starting », tâche exécutée sur la base locale. 365/365 verts.
+- 27/10 : erreur de ma part : commit envoyé alors que 19 tests échouaient en local (résultat de pytest non enchaîné au
+  commit). Cause : PAIEMENT_ESSAI=1 du .env local ouvrait le paiement dans le conteneur, les tests supposaient le
+  contraire (la CI, sans .env, était verte). Correction : conftest fixe PAIEMENT_ACTIF=False pour tous les tests.
+  Règle pour la suite : le commit ne part que si pytest réussit (&&). 365/365 verts en local avec le .env d'essai.

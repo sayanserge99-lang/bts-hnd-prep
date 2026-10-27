@@ -20,6 +20,13 @@ def sans_double_auth(settings):
 
 
 @pytest.fixture(autouse=True)
+def paiement_ferme(settings):
+    # La valeur réelle tant que la structure n'est pas déclarée ; un .env local (PAIEMENT_ESSAI=1) ne doit pas
+    # changer le résultat des tests. Les tests du paiement l'ouvrent eux-mêmes.
+    settings.PAIEMENT_ACTIF = False
+
+
+@pytest.fixture(autouse=True)
 def cache_isole(settings):
     # Cache en mémoire propre à chaque test : pas de Redis partagé avec le serveur de développement,
     # et aucun échec de connexion qui passe d'un test à l'autre.
