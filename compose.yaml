@@ -62,7 +62,7 @@ services:
     build:
       context: .
       target: dev
-    command: celery -A config worker --loglevel=info --concurrency=2
+    command: celery -A config worker -B --schedule /tmp/celerybeat-schedule --loglevel=info --concurrency=2
     environment: *django-env
     volumes:
       - .:/app

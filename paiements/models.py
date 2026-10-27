@@ -116,6 +116,9 @@ class Abonnement(models.Model):
     debut = models.DateField()
     fin = models.DateField()
     statut = models.CharField(max_length=10, choices=Statut.choices, default=Statut.ACTIF)
+    rappel_envoye_le = models.DateTimeField(
+        _("rappel envoyé le"), null=True, blank=True, help_text=_("Rappel de fin d'abonnement : un seul par abonnement.")
+    )
     # Créé à la réception du webhook de succès, ou à l'utilisation d'un code.
     paiement = models.OneToOneField(Paiement, on_delete=models.PROTECT, null=True, blank=True)
     code_acces = models.OneToOneField(CodeAcces, on_delete=models.PROTECT, null=True, blank=True)

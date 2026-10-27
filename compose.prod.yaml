@@ -47,7 +47,7 @@ services:
       context: .
       target: prod
     restart: unless-stopped
-    command: celery -A config worker --loglevel=info --concurrency=2
+    command: celery -A config worker -B --schedule /tmp/celerybeat-schedule --loglevel=info --concurrency=2
     env_file: .env.production
     environment:
       DJANGO_PRODUCTION: "1"

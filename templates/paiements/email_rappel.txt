@@ -1,0 +1,9 @@
+{% load i18n %}{% blocktranslate with nom=abonnement.utilisateur.first_name|default:abonnement.utilisateur.email %}Bonjour {{ nom }},{% endblocktranslate %}
+
+{% blocktranslate with offre=abonnement.offre.nom fin=abonnement.fin|date:"d/m/Y" %}Votre accès Premium ({{ offre }}) se termine le {{ fin }}.{% endblocktranslate %}
+{% translate "Pour continuer à lire les corrigés complets, faire des quiz illimités et passer les examens blancs :" %}
+{{ site }}{% url 'offres' %}
+
+{% translate "Sans renouvellement, votre compte repasse simplement à l'offre gratuite : vos résultats et vos favoris sont conservés." %}
+
+BTS-HND Prep

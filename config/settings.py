@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 
+from celery.schedules import crontab
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import gettext_lazy as _
 
@@ -14,6 +15,10 @@ if PRODUCTION and SECRET_KEY == "dev-uniquement-a-changer":
     raise ImproperlyConfigured("DJANGO_SECRET_KEY doit être défini en production.")
 DEBUG = os.environ.get("DJANGO_DEBUG", "0" if PRODUCTION else "1") == "1"
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
+# Adresse complète du site, pour les liens des e-mails envoyés par les tâches de fond (aucune requête sous la main).
+SITE_URL = os.environ.get("DJANGO_SITE_URL") or (
+    f"https://{ALLOWED_HOSTS[0]}" if os.environ.get("DJANGO_HTTPS") == "1" else f"http://{ALLOWED_HOSTS[0]}" + ("" if PRODUCTION else ":8000")
+)
 CSRF_TRUSTED_ORIGINS = [o for o in os.environ.get("DJANGO_CSRF_TRUSTED_ORIGINS", "").split(",") if o]
 # Adresse de l'administration : changer « admin/ » en production éloigne les robots qui la cherchent.
 ADMIN_URL = os.environ.get("DJANGO_ADMIN_URL", "admin/").strip("/") + "/"
@@ -136,6 +141,13 @@ CELERY_WORKER_PREFETCH_MULTIPLIER = 1
 # Un OCR de sujet scanné prend quelques secondes par page ; au-delà de 10 minutes, on abandonne.
 CELERY_TASK_TIME_LIMIT = 10 * 60
 CELERY_TASK_SOFT_TIME_LIMIT = 9 * 60
+# Tâches programmées, lancées par le worker (option -B, voir compose.yaml) : une seule instance, donc pas de doublon.
+CELERY_TIMEZONE = "Africa/Douala"
+CELERY_BEAT_SCHEDULE = {
+    "suivre-les-abonnements": {"task": "paiements.tasks.suivre_les_abonnements", "schedule": crontab(hour=8, minute=0)},
+}
+# Rappel envoyé ce nombre de jours avant la fin d'un abonnement (CDC 3.8).
+JOURS_AVANT_RAPPEL = 3
 
 # E-mails : affichés dans les logs en développement, envoyés par SMTP en production.
 EMAIL_BACKEND = os.environ.get(

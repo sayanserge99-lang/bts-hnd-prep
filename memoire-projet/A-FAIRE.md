@@ -87,8 +87,7 @@
 - [ ] Remboursement : aucune procédure dans le site (à traiter à la main, à écrire dans les conditions de vente).
 - [x] V3 module 4 : Premium (règle unique, page Offres, protection des PDF de corrigés).
 - [ ] Fixer les prix (Pass session, mensuel) : les offres de démo sont celles de l'étude de faisabilité.
-- [ ] Rappel par e-mail avant la fin d'un abonnement ; passage du statut à « expiré » (aujourd'hui seules les dates
-      comptent, le statut reste « actif »).
+- [x] Rappel par e-mail 3 jours avant la fin d'un abonnement ; passage automatique à « expiré » (chaque matin).
 - [x] V3 module 3 : codes d'accès (génération par lot, activation, suivi par l'établissement).
 - [ ] Codes d'accès : pas de date d'expiration propre au code (il vit tant que la convention est active) ; prix et
       facturation des lots aux IPES hors plateforme (à décider avec Serge Alain).

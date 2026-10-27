@@ -154,3 +154,6 @@
   d'essai (etudiant.essai@, responsable.iai@, admin.essai@example.com, mot de passe Essai-BTS-2027), partenariat IAI
   et 3 codes. Parcours HTTP complet (visiteur, quiz, épreuve, forum, paiement simulé + reçu, code, responsable,
   admin → double authentification) : 30/30, aucune erreur 500 dans les journaux.
+- 27/10 : « continu » de Serge Alain ; Galaxy non branché (adb : aucun appareil) → fin des abonnements : tâche du
+  matin (expiration + rappel), planificateur dans le worker, SITE_URL. 7 tests (1 échec attendu avant traduction,
+  il sert à ça). Worker relancé : « beat: Starting », tâche exécutée sur la base locale. 365/365 verts.

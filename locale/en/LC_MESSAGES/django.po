@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-27 11:19+0100\n"
+"POT-Creation-Date: 2026-10-27 12:27+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -273,7 +273,7 @@ msgstr ""
 msgid "Code incorrect."
 msgstr "Incorrect code."
 
-#: catalogue/models.py:9 config/settings.py:207
+#: catalogue/models.py:9 config/settings.py:219
 msgid "Français"
 msgstr "French"
 
@@ -738,7 +738,7 @@ msgstr ""
 "Thank you! Your marking guide will be reviewed by a moderator before it is "
 "published."
 
-#: config/settings.py:207
+#: config/settings.py:219
 msgid "English"
 msgstr "English"
 
@@ -1355,11 +1355,19 @@ msgstr "Expired"
 msgid "Annulé"
 msgstr "Cancelled"
 
-#: paiements/models.py:128
+#: paiements/models.py:120
+msgid "rappel envoyé le"
+msgstr "reminder sent on"
+
+#: paiements/models.py:120
+msgid "Rappel de fin d'abonnement : un seul par abonnement."
+msgstr "End-of-subscription reminder: only one per subscription."
+
+#: paiements/models.py:131
 msgid "abonnement"
 msgstr "subscription"
 
-#: paiements/models.py:142
+#: paiements/models.py:145
 msgid "jours offerts"
 msgstr "free days"
 
@@ -1385,6 +1393,11 @@ msgstr "Time limit exceeded: no confirmation received."
 #, python-format
 msgid "Votre reçu BTS-HND Prep n° %(numero)s"
 msgstr "Your BTS-HND Prep receipt no. %(numero)s"
+
+#: paiements/tasks.py:42
+#, python-format
+msgid "Votre accès Premium se termine le %(fin)s"
+msgstr "Your Premium access ends on %(fin)s"
 
 #: paiements/views.py:28
 msgid "Code d'accès"
@@ -3065,7 +3078,7 @@ msgstr "Back to home"
 #: templates/communaute/email_accuse_retrait.txt:1
 #: templates/communaute/email_decision_contribution.txt:1
 #: templates/forum/email_nouvelle_reponse.txt:1
-#: templates/paiements/email_recu.txt:1
+#: templates/paiements/email_rappel.txt:1 templates/paiements/email_recu.txt:1
 #, python-format
 msgid "Bonjour %(nom)s,"
 msgstr "Hello %(nom)s,"
@@ -3955,6 +3968,27 @@ msgstr "Read the terms of sale"
 #: templates/paiements/commander.html:22
 msgid "Vous confirmez ensuite le paiement sur votre téléphone."
 msgstr "You then confirm the payment on your phone."
+
+#: templates/paiements/email_rappel.txt:3
+#, python-format
+msgid "Votre accès Premium (%(offre)s) se termine le %(fin)s."
+msgstr "Your Premium access (%(offre)s) ends on %(fin)s."
+
+#: templates/paiements/email_rappel.txt:4
+msgid ""
+"Pour continuer à lire les corrigés complets, faire des quiz illimités et "
+"passer les examens blancs :"
+msgstr ""
+"To keep reading full marking guides, taking unlimited quizzes and sitting "
+"mock exams:"
+
+#: templates/paiements/email_rappel.txt:7
+msgid ""
+"Sans renouvellement, votre compte repasse simplement à l'offre gratuite : "
+"vos résultats et vos favoris sont conservés."
+msgstr ""
+"Without renewal, your account simply returns to the free plan: your results "
+"and saved papers are kept."
 
 #: templates/paiements/email_recu.txt:3
 msgid "Merci pour votre paiement. Voici votre reçu."
