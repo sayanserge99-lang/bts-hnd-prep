@@ -295,3 +295,23 @@ def test_une_reponse_envoyee_apres_l_heure_de_fin_est_refusee(client, etudiant, 
     tentative.refresh_from_db()
     assert tentative.fin is not None and tentative.reponses["justes_qcm"] == 0
     assert tentative.fin <= tentative.fin_prevue
+
+
+def test_la_marge_de_90_secondes_ne_sert_qu_au_transport(client, etudiant, examen, questions, settings):
+    """Réponse partie avant 0:00 et arrivée 30 s après (réseau lent) : acceptée et comptée à la remise."""
+    client.force_login(etudiant)
+    tentative = demarrer(client, examen)
+    Tentative.objects.filter(pk=tentative.pk).update(fin_prevue=timezone.now() - timedelta(seconds=30))
+    assert settings.EXAMEN_DELAI_GRACE_SECONDES == 90
+
+    client.post(reverse("entrainement:rendre", args=[tentative.pk]), {f"q-{questions[0].pk}": bonne(questions[0])})
+
+    tentative.refresh_from_db()
+    assert tentative.reponses["justes_qcm"] == 1
+    assert tentative.fin <= tentative.fin_prevue  # l'heure de remise reste celle de la fin du temps
+
+
+def test_les_consignes_annoncent_la_fermeture_de_la_copie(client, etudiant, examen):
+    client.force_login(etudiant)
+    page = client.get(reverse("entrainement:consignes", args=[examen.pk])).content.decode()
+    assert "La copie se ferme automatiquement à la fin du temps." in page

@@ -12,3 +12,4 @@ sauvegardes/
 
 # Réglages personnels de l'éditeur
 .vscode/
+tests_js/node_modules/

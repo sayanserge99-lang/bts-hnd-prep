@@ -130,5 +130,5 @@
 ## Questions ouvertes pour Serge Alain (27/10)
 
 - [x] Offre mensuelle gardée (27/10) ; cumul avec le Pass testé dans les deux sens.
-- [ ] Examen blanc : garder la marge de 90 s après l'heure de fin (réseau lent) ou la réduire ?
+- [x] Marge de 90 s gardée pour le transport seulement ; verrou de la page à 0:00 (27/10).
 - [ ] Quiz : « Signaler cette question » (maquette, écran 8) reste à faire.

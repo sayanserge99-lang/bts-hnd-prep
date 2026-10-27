@@ -9,3 +9,4 @@ db.sqlite3
 media
 staticfiles
 .env.production
+tests_js/node_modules

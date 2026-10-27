@@ -12,7 +12,8 @@
       <p class="text-xs uppercase tracking-wide text-white/70">{% translate "Examen blanc" %} · {{ examen.sujet.session.examen.code }} {{ examen.sujet.session.annee }}</p>
       <p class="truncate font-semibold">{{ examen.sujet.matiere.nom }}</p>
       <p id="etat-sauvegarde" class="text-xs text-white/70" aria-live="polite"
-         data-hors-ligne="{% translate 'Hors connexion : vos réponses restent ici et partiront au retour du réseau.' %}">{% translate "Sauvegarde automatique activée" %}</p>
+         data-hors-ligne="{% translate 'Hors connexion : vos réponses restent ici et partiront au retour du réseau.' %}"
+         data-temps-ecoule="{% translate 'Temps écoulé : copie fermée, envoi de vos réponses…' %}">{% translate "Sauvegarde automatique activée" %}</p>
     </div>
     <p class="shrink-0 rounded-xl bg-vert px-3 py-2"><span class="sr-only">{% translate "Temps restant" %}</span>
       <span id="minuteur" data-secondes="{{ secondes_restantes }}" class="font-mono text-2xl font-bold" role="timer">--:--</span></p>

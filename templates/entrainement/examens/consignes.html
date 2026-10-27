@@ -16,7 +16,8 @@
   <ul class="list-disc space-y-1 pl-5 text-sm text-gris">
     <li>{% translate "Le minuteur démarre dès que vous commencez et ne s'arrête plus, même si vous fermez la page." %}</li>
     <li>{% translate "Vos réponses sont enregistrées au fur et à mesure. Après une coupure, rouvrez l'épreuve : tout est conservé." %}</li>
-    <li>{% translate "À la fin du temps, la copie est rendue automatiquement. Vous comparerez ensuite votre copie au corrigé." %}</li>
+    <li class="font-semibold text-encre">{% translate "La copie se ferme automatiquement à la fin du temps." %}</li>
+    <li>{% translate "Elle est alors rendue avec vos dernières réponses ; vous la comparerez ensuite au corrigé." %}</li>
   </ul>
   <form method="post" action="{% url 'entrainement:demarrer_examen' examen.pk %}">
     {% csrf_token %}

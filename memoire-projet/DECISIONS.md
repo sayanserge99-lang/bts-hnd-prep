@@ -135,3 +135,6 @@
   (seulement si absentes, jamais supprimées en retour), plus par `donnees_demo`. Pass et mensuel se cumulent bout à
   bout sans perte de jours (le second commence au lendemain du premier, une seule période affichée) ; un Pass qui ne
   commencerait qu'après la fin de la session est refusé avec un message clair. Tests : un par sens + ce cas limite.
+- **Fin de l'examen blanc (27/10, Serge Alain)** : à 0:00 la copie se ferme dans la page (réponses figées, panneaux
+  inertes, toute modification annulée, sauvegarde automatique coupée) et part tout de suite (au retour du réseau si
+  hors connexion) ; la marge serveur de 90 s ne sert qu'au transport, puis tout est refusé. Annoncé dans les consignes.

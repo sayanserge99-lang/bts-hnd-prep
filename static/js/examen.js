@@ -9,6 +9,55 @@
   var etat = document.getElementById("etat-sauvegarde");
   var fin = Date.now() + Number(minuteur.dataset.secondes) * 1000;
   var rendu = false;
+  var verrouille = false;
+
+  // À 0:00, la copie se ferme : plus rien ne se modifie dans la page (la marge du serveur, 90 s, ne sert
+  // qu'au transport des réponses déjà données). « inert » d'abord ; lecture seule et blocage des clics et
+  // des touches en plus, pour les navigateurs qui ignorent « inert ».
+  // Ce qui est envoyé est figé à 0:00 : toute modification ensuite est annulée (réponses de 0:00 rétablies).
+  var reponsesFigees = null;
+
+  function champsDeReponse() {
+    return formulaire.querySelectorAll("[data-panneau] input, [data-panneau] textarea");
+  }
+
+  function retablir() {
+    champsDeReponse().forEach(function (champ) {
+      var valeurs = reponsesFigees.getAll(champ.name);
+      if (champ.type === "radio" || champ.type === "checkbox") champ.checked = valeurs.indexOf(champ.value) !== -1;
+      else champ.value = valeurs.length ? valeurs[0] : "";
+    });
+  }
+
+  function verrouiller() {
+    verrouille = true;
+    reponsesFigees = new FormData(formulaire);
+    formulaire.querySelectorAll("[data-panneau], [data-grille]").forEach(function (zone) { zone.setAttribute("inert", ""); });
+    formulaire.querySelectorAll("input[type=text], input:not([type]), textarea").forEach(function (champ) { champ.readOnly = true; });
+    if (etat) etat.textContent = etat.dataset.tempsEcoule;
+  }
+  ["click", "keydown", "beforeinput", "paste", "drop", "input", "change"].forEach(function (type) {
+    formulaire.addEventListener(type, function (evenement) {
+      if (verrouille && evenement.target.closest("[data-panneau]")) {
+        retablir();
+        evenement.preventDefault();
+        evenement.stopImmediatePropagation();  // ni grille ni sauvegarde automatique
+      }
+    }, true);
+  });
+  // Plus aucune sauvegarde automatique après 0:00 (y compris celle des 30 s) : seule la copie figée part.
+  formulaire.addEventListener("htmx:beforeRequest", function (evenement) {
+    if (verrouille) evenement.preventDefault();
+  });
+
+  function envoyerLaCopie() {
+    // Hors connexion à 0:00 : la copie part au retour du réseau (le serveur l'accepte encore 90 s).
+    if (navigator.onLine === false) {
+      window.addEventListener("online", envoyerLaCopie, { once: true });
+      return;
+    }
+    formulaire.requestSubmit(boutonRendre);
+  }
 
   function deuxChiffres(n) {
     return (n < 10 ? "0" : "") + n;
@@ -22,7 +71,8 @@
     if (reste <= 300) minuteur.classList.add("text-red-700");
     if (reste === 0 && !rendu) {
       rendu = true;
-      formulaire.requestSubmit(boutonRendre);
+      verrouiller();
+      envoyerLaCopie();
     }
   }
 

@@ -91,6 +91,13 @@ jobs:
           # Un .po mal formé ne se compile pas (et l'anglais ne s'affiche plus) : on le refuse ici.
           msgfmt --check-format -o /dev/null locale/en/LC_MESSAGES/django.po
 
-      # -rs affiche les tests sautés : les tests d'OCR ne doivent pas l'être ici.
+      # jsdom pour les essais du JavaScript de l'examen blanc (entrainement/tests/test_examen_js.py).
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Installer jsdom
+        run: npm ci --prefix tests_js
+
+      # -rs affiche les tests sautés : les tests d'OCR et du JavaScript ne doivent pas l'être ici.
       - name: Lancer les tests
         run: pytest -v -rs

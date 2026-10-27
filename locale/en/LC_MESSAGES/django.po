@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-27 21:41+0100\n"
+"POT-Creation-Date: 2026-10-27 21:52+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1390,7 +1390,7 @@ msgstr ""
 "depreciation charge?”"
 
 #: forum/forms.py:25 templates/entrainement/_formulaire_question.html:12
-#: templates/entrainement/examens/epreuve.html:47
+#: templates/entrainement/examens/epreuve.html:48
 msgid "Votre réponse"
 msgstr "Your answer"
 
@@ -3775,18 +3775,22 @@ msgstr ""
 "everything is kept."
 
 #: templates/entrainement/examens/consignes.html:19
-msgid ""
-"À la fin du temps, la copie est rendue automatiquement. Vous comparerez "
-"ensuite votre copie au corrigé."
-msgstr ""
-"When time is up, your paper is handed in automatically. You will then "
-"compare your answers with the marking guide."
+msgid "La copie se ferme automatiquement à la fin du temps."
+msgstr "Your paper closes automatically when time runs out."
 
-#: templates/entrainement/examens/consignes.html:23
+#: templates/entrainement/examens/consignes.html:20
+msgid ""
+"Elle est alors rendue avec vos dernières réponses ; vous la comparerez "
+"ensuite au corrigé."
+msgstr ""
+"It is then handed in with your latest answers; you will compare it with the "
+"answer key afterwards."
+
+#: templates/entrainement/examens/consignes.html:24
 msgid "Reprendre l'épreuve"
 msgstr "Resume the exam"
 
-#: templates/entrainement/examens/consignes.html:23
+#: templates/entrainement/examens/consignes.html:24
 msgid "Commencer l'épreuve"
 msgstr "Start the exam"
 
@@ -3802,40 +3806,44 @@ msgstr ""
 "Offline: your answers stay here and will be sent when the connection "
 "returns."
 
-#: templates/entrainement/examens/epreuve.html:15
+#: templates/entrainement/examens/epreuve.html:16
+msgid "Temps écoulé : copie fermée, envoi de vos réponses…"
+msgstr "Time is up: paper closed, sending your answers…"
+
+#: templates/entrainement/examens/epreuve.html:16
 msgid "Sauvegarde automatique activée"
 msgstr "Automatic saving on"
 
-#: templates/entrainement/examens/epreuve.html:17
+#: templates/entrainement/examens/epreuve.html:18
 msgid "Temps restant"
 msgstr "Time left"
 
-#: templates/entrainement/examens/epreuve.html:25
+#: templates/entrainement/examens/epreuve.html:26
 msgid "Ouvrir le sujet (PDF)"
 msgstr "Open the paper (PDF)"
 
-#: templates/entrainement/examens/epreuve.html:38
+#: templates/entrainement/examens/epreuve.html:39
 #, python-format
 msgid "Partie 1 · Question %(n)s sur %(total)s"
 msgstr "Part 1 · Question %(n)s of %(total)s"
 
-#: templates/entrainement/examens/epreuve.html:40
-#: templates/entrainement/examens/epreuve.html:42
+#: templates/entrainement/examens/epreuve.html:41
+#: templates/entrainement/examens/epreuve.html:43
 msgid "Marquer"
 msgstr "Flag"
 
-#: templates/entrainement/examens/epreuve.html:40
-#: templates/entrainement/examens/epreuve.html:42
-#: templates/entrainement/examens/epreuve.html:85
+#: templates/entrainement/examens/epreuve.html:41
+#: templates/entrainement/examens/epreuve.html:43
+#: templates/entrainement/examens/epreuve.html:86
 msgid "Marquée"
 msgstr "Flagged"
 
-#: templates/entrainement/examens/epreuve.html:60
-#: templates/entrainement/examens/epreuve.html:79
+#: templates/entrainement/examens/epreuve.html:61
+#: templates/entrainement/examens/epreuve.html:80
 msgid "Partie 2 : rédaction"
 msgstr "Part 2: written answers"
 
-#: templates/entrainement/examens/epreuve.html:61
+#: templates/entrainement/examens/epreuve.html:62
 msgid ""
 "Composez sur papier comme le jour de l'examen, ou tapez vos réponses ici : "
 "vous les comparerez au corrigé après la remise."
@@ -3843,59 +3851,59 @@ msgstr ""
 "Write on paper as on exam day, or type your answers here: you will compare "
 "them with the marking guide after handing in."
 
-#: templates/entrainement/examens/epreuve.html:62
+#: templates/entrainement/examens/epreuve.html:63
 msgid "Votre copie"
 msgstr "Your answers"
 
-#: templates/entrainement/examens/epreuve.html:66
+#: templates/entrainement/examens/epreuve.html:67
 msgid ""
 "La correction s'affiche seulement quand vous rendez votre copie, comme le "
 "jour de l'examen."
 msgstr "Answers are shown only when you hand in your paper, as on exam day."
 
-#: templates/entrainement/examens/epreuve.html:69
-#: templates/entrainement/examens/epreuve.html:71
+#: templates/entrainement/examens/epreuve.html:70
+#: templates/entrainement/examens/epreuve.html:72
 msgid "Questions"
 msgstr "Questions"
 
-#: templates/entrainement/examens/epreuve.html:70
+#: templates/entrainement/examens/epreuve.html:71
 msgid "répondue"
 msgstr "answered"
 
-#: templates/entrainement/examens/epreuve.html:70
+#: templates/entrainement/examens/epreuve.html:71
 msgid "marquée"
 msgstr "flagged"
 
-#: templates/entrainement/examens/epreuve.html:75
+#: templates/entrainement/examens/epreuve.html:76
 #, python-format
 msgid "Question %(n)s"
 msgstr "Question %(n)s"
 
-#: templates/entrainement/examens/epreuve.html:80
+#: templates/entrainement/examens/epreuve.html:81
 msgid "Rédaction"
 msgstr "Writing"
 
-#: templates/entrainement/examens/epreuve.html:83
+#: templates/entrainement/examens/epreuve.html:84
 msgid "Répondue"
 msgstr "Answered"
 
-#: templates/entrainement/examens/epreuve.html:84
+#: templates/entrainement/examens/epreuve.html:85
 msgid "En cours"
 msgstr "Current"
 
-#: templates/entrainement/examens/epreuve.html:91
+#: templates/entrainement/examens/epreuve.html:92
 msgid "Précédente"
 msgstr "Previous"
 
-#: templates/entrainement/examens/epreuve.html:92
+#: templates/entrainement/examens/epreuve.html:93
 msgid "Suivante"
 msgstr "Next"
 
-#: templates/entrainement/examens/epreuve.html:94
+#: templates/entrainement/examens/epreuve.html:95
 msgid "Rendre votre copie maintenant ? Vous ne pourrez plus la modifier."
 msgstr "Hand in your paper now? You will not be able to change it."
 
-#: templates/entrainement/examens/epreuve.html:94
+#: templates/entrainement/examens/epreuve.html:95
 msgid "Rendre ma copie"
 msgstr "Hand in my paper"
 

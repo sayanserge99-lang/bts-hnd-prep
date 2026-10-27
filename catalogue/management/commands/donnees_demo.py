@@ -382,9 +382,37 @@ class Command(BaseCommand):
         self.creer_informatique()
         self.creer_activite()
 
+    def creer_examen_en_cours(self):
+        """Examen blanc commencé il y a un quart d'heure, deux réponses enregistrées. Le minuteur est réel :
+        après la durée de l'épreuve, il est clos ; relancer la commande en recommence un."""
+        etudiant = Utilisateur.objects.filter(email=ETUDIANT_DEMO).first()
+        compta = Matiere.objects.filter(examen__code="BTS", nom_fr="Comptabilité générale").first()
+        examen = ExamenBlanc.objects.filter(sujet__matiere=compta, publie=True).first() if compta else None
+        if not etudiant or not examen:
+            return
+        en_cours = Tentative.objects.filter(utilisateur=etudiant, examen_blanc=examen, fin__isnull=True).first()
+        if en_cours and not examen_blanc.est_expiree(en_cours):
+            return
+        if en_cours:
+            examen_blanc.cloturer_si_expiree(en_cours)
+        ExamenBlanc.objects.filter(pk=examen.pk).exclude(titre__startswith=MARQUE_DEMO).update(titre=f"{MARQUE_DEMO} {examen.titre}")
+        epreuve = examen_blanc.demarrer(etudiant, examen)
+        recul = timedelta(minutes=15)
+        Tentative.objects.filter(pk=epreuve.pk).update(debut=epreuve.debut - recul, fin_prevue=epreuve.fin_prevue - recul)
+        epreuve.refresh_from_db()
+        donnees = QueryDict(mutable=True)
+        for question in Question.objects.filter(pk__in=epreuve.ordre[:2]).prefetch_related("choix"):
+            if question.type == Question.Type.REPONSE_COURTE:
+                donnees[f"q-{question.pk}"] = question.reponse_attendue.split("|")[0]
+            else:
+                donnees.setlist(f"q-{question.pk}", [str(question.choix.first().pk)])
+        examen_blanc.enregistrer(epreuve, donnees)
+        self.stdout.write(self.style.SUCCESS(f"Examen blanc de démonstration commencé pour {ETUDIANT_DEMO}."))
+
     def creer_activite(self):
         """Écrans à vérifier (maquette) : résultat de quiz, examen blanc en cours, file de modération."""
         if Contribution.objects.filter(commentaire__startswith=MARQUE_DEMO).exists():
+            self.creer_examen_en_cours()
             return
         cge = Specialite.objects.get(examen__code="BTS", code="CGE")
         etudiant = Utilisateur.objects.filter(email=ETUDIANT_DEMO).first()
@@ -411,22 +439,6 @@ class Command(BaseCommand):
                                            correcte=est_correcte(question, reponse))
         quiz.terminer(tentative)
 
-        # Examen blanc commencé il y a un quart d'heure, deux réponses enregistrées.
-        examen = ExamenBlanc.objects.filter(sujet__matiere=compta, publie=True).first()
-        if examen:
-            ExamenBlanc.objects.filter(pk=examen.pk).exclude(titre__startswith=MARQUE_DEMO).update(titre=f"{MARQUE_DEMO} {examen.titre}")
-            epreuve = examen_blanc.demarrer(etudiant, examen)
-            recul = timedelta(minutes=15)
-            Tentative.objects.filter(pk=epreuve.pk).update(debut=epreuve.debut - recul, fin_prevue=epreuve.fin_prevue - recul)
-            epreuve.refresh_from_db()
-            donnees = QueryDict(mutable=True)
-            for question in Question.objects.filter(pk__in=epreuve.ordre[:2]).prefetch_related("choix"):
-                if question.type == Question.Type.REPONSE_COURTE:
-                    donnees[f"q-{question.pk}"] = question.reponse_attendue.split("|")[0]
-                else:
-                    donnees.setlist(f"q-{question.pk}", [str(question.choix.first().pk)])
-            examen_blanc.enregistrer(epreuve, donnees)
-
         # File de modération : une sans doublon, un doublon possible, une session pas encore terminée.
         anglais = Matiere.objects.get(examen__code="BTS", nom_fr="Anglais")
         envois = [
@@ -441,9 +453,10 @@ class Command(BaseCommand):
             )
             contribution.fichier.save(f"demo-contribution-{annee}.pdf", ContentFile(pdf_demo(f"{MARQUE_DEMO} {matiere.nom}", annee)), save=False)
             contribution.save()
+        self.creer_examen_en_cours()
         self.stdout.write(self.style.SUCCESS(
             f"Activité de démonstration : {ETUDIANT_DEMO} (mot de passe {MOT_DE_PASSE_DEMO}), "
-            "1 quiz terminé, 1 examen blanc commencé, 3 contributions en attente."
+            "1 quiz terminé, 3 contributions en attente."
         ))
 
     def creer_corriges(self):
