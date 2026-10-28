@@ -1,5 +1,6 @@
 """Données fictives pour voir les pages en développement. Les dates de session sont inventées."""
 
+import re
 from datetime import date, timedelta
 
 from django.conf import settings
@@ -18,7 +19,17 @@ from entrainement.models import Choix, CritereBareme, ExamenBlanc, Question, Qui
 from partenaires.models import Etablissement
 from sujets.models import Corrige, Sujet
 
-SOURCE_DEMO = "Démonstration (sujet fictif)"
+from ._epreuves_bts_gestion import EPREUVES_BTS_GESTION
+from ._epreuves_informatique_hnd import EPREUVES_BTS_INFORMATIQUE, EPREUVES_HND
+from ._pdf_epreuve import pdf_epreuve
+
+EPREUVES = {"BTS": {**EPREUVES_BTS_GESTION, **EPREUVES_BTS_INFORMATIQUE}, "HND": EPREUVES_HND}
+
+# Les sujets de démonstration portent des épreuves provisoires d'entraînement (rédigées par l'équipe au format de
+# l'examen), à remplacer par les vrais sujets : la source et chaque PDF disent que ce ne sont pas des sujets officiels.
+SOURCE_DEMO = "Épreuve provisoire BTS-HND Prep (pas le sujet officiel)"
+TITULAIRE_DEMO = "BTS-HND Prep (corrigé de démonstration)"
+ANCIENNE_SOURCE_DEMO = "Démonstration (sujet fictif)"
 # Tout contenu d'activité de démonstration (quiz, examen, contributions) porte cette marque dans son titre.
 MARQUE_DEMO = "[DÉMO]"
 ETUDIANT_DEMO = "etudiant.demo@example.com"
@@ -317,6 +328,8 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         if not settings.DEBUG:
             raise CommandError("Refusé : DEBUG est désactivé (base de production ?).")
+        Sujet.objects.filter(source=ANCIENNE_SOURCE_DEMO).update(source=SOURCE_DEMO)
+        Corrige.objects.filter(titulaire_droits=ANCIENNE_SOURCE_DEMO).update(titulaire_droits=TITULAIRE_DEMO)
         if Sujet.objects.filter(source=SOURCE_DEMO).exists():
             self.stdout.write("Les sujets de démonstration sont déjà présents.")
             self.creer_corriges()
@@ -324,6 +337,7 @@ class Command(BaseCommand):
             self.creer_examen_blanc()
             self.creer_examen_court()
             self.creer_informatique()
+            self.remplir_epreuves()
             self.creer_activite()
             return
 
@@ -382,6 +396,7 @@ class Command(BaseCommand):
         self.creer_examen_blanc()
         self.creer_examen_court()
         self.creer_informatique()
+        self.remplir_epreuves()
         self.creer_activite()
 
     def creer_examen_en_cours(self):
@@ -463,12 +478,12 @@ class Command(BaseCommand):
         ))
 
     def creer_corriges(self):
-        if Corrige.objects.filter(titulaire_droits=SOURCE_DEMO).exists():
+        if Corrige.objects.filter(titulaire_droits=TITULAIRE_DEMO).exists():
             return
         for examen, matiere, annee, statut, auteur, debut, suite in CORRIGES:
             sujet = Sujet.objects.get(source=SOURCE_DEMO, session__examen__code=examen, session__annee=annee, titre=matiere)
             Corrige.objects.create(
-                sujet=sujet, statut=statut, auteur=auteur, titulaire_droits=SOURCE_DEMO,
+                sujet=sujet, statut=statut, auteur=auteur, titulaire_droits=TITULAIRE_DEMO,
                 regime_propriete=Corrige.RegimePropriete.PLATEFORME, partie_gratuite=debut, contenu=suite,
                 publication=Corrige.Publication.PUBLIE if statut != Corrige.Statut.EN_PREPARATION else Corrige.Publication.BROUILLON,
             )
@@ -510,6 +525,39 @@ class Command(BaseCommand):
         CritereBareme.objects.create(examen_blanc=examen, libelle="Exercice 1 : tableau d'amortissement", points=7, ordre=1)
         CritereBareme.objects.create(examen_blanc=examen, libelle="Exercice 2 : écritures de régularisation", points=7, ordre=2)
         self.stdout.write(self.style.SUCCESS("1 examen blanc de démonstration créé."))
+
+    def remplir_epreuves(self):
+        """Épreuve provisoire complète dans chaque sujet publié de démonstration (sinon un PDF d'une ligne).
+        Rejouable : un sujet déjà rempli n'est pas réécrit ; les sujets de la session à venir restent vides."""
+        nombre = 0
+        sujets = Sujet.objects.filter(source=SOURCE_DEMO, session__annee__in=ANNEES_PUBLIEES).select_related("session__examen")
+        for sujet in sujets:
+            examen, annee = sujet.session.examen.code, sujet.session.annee
+            texte = EPREUVES.get(examen, {}).get(sujet.titre, {}).get(annee)
+            if not texte or re.search(r"provisoire|provisional", sujet.texte_extrait or "", re.IGNORECASE):
+                continue
+            heures = f"{sujet.duree // 60}" if sujet.duree else "3"
+            if examen == "HND":
+                entete = [
+                    f"HND - {annee} session - {sujet.titre}",
+                    f"Time allowed: {heures} hours",
+                    f"PROVISIONAL PRACTICE PAPER written by BTS-HND Prep in the exam format. This is not the official {annee} "
+                    "paper; it will be replaced by the real paper as soon as it is available.",
+                ]
+            else:
+                entete = [
+                    f"BTS - Session {annee} - {sujet.titre}",
+                    f"Durée : {heures} heures",
+                    f"ÉPREUVE PROVISOIRE D'ENTRAÎNEMENT rédigée par BTS-HND Prep au format de l'examen. Ce n'est pas le sujet "
+                    f"officiel de la session {annee} : il sera remplacé par le vrai sujet dès qu'il sera disponible.",
+                ]
+            contenu, pages, texte_brut = pdf_epreuve(entete, texte)
+            sujet.fichier.save(f"epreuve-provisoire-{examen}-{annee}.pdf", ContentFile(contenu), save=False)
+            sujet.texte_extrait, sujet.nb_pages = texte_brut, pages
+            sujet.save()
+            nombre += 1
+        if nombre:
+            self.stdout.write(self.style.SUCCESS(f"{nombre} épreuves provisoires d'entraînement écrites dans les sujets de démonstration."))
 
     def creer_examen_court(self):
         """Essai sur téléphone de la fin du temps et de la copie locale (coupure, fermeture, réouverture) : 5 minutes."""
@@ -578,7 +626,7 @@ class Command(BaseCommand):
             sujet = Sujet.objects.get(source=SOURCE_DEMO, session__examen__code="BTS", session__annee=2025, titre=matiere_nom)
             Corrige.objects.create(
                 sujet=sujet, statut=Corrige.Statut.VERIFIE, publication=Corrige.Publication.PUBLIE,
-                auteur="Mme Exemple, enseignante d'informatique (fictif)", titulaire_droits=SOURCE_DEMO,
+                auteur="Mme Exemple, enseignante d'informatique (fictif)", titulaire_droits=TITULAIRE_DEMO,
                 regime_propriete=Corrige.RegimePropriete.PLATEFORME, partie_gratuite=debut, contenu=suite,
             )
 

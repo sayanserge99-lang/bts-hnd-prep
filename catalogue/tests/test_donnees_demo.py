@@ -34,3 +34,26 @@ def test_activite_de_demonstration(settings):
     call_command("donnees_demo", stdout=open("/dev/null", "w"))
     assert Contribution.objects.count() == 3 and Tentative.objects.count() == 2
     assert ExamenBlanc.objects.filter(titre="[DÉMO] Examen court").count() == 1
+
+
+def test_les_sujets_de_demo_contiennent_une_epreuve_provisoire_lisible(settings):
+    """Chaque sujet publié de démonstration a une vraie épreuve d'entraînement, annoncée comme provisoire."""
+    from pypdf import PdfReader
+    from sujets.models import Sujet
+
+    settings.DEBUG = True
+    call_command("donnees_demo", stdout=open("/dev/null", "w"))
+    publies = Sujet.objects.filter(statut=Sujet.Statut.PUBLIE).select_related("session__examen")
+    assert publies.count() == 70
+    for sujet in publies:
+        assert sujet.source.startswith("Épreuve provisoire")
+        texte = PdfReader(sujet.fichier.path).pages[0].extract_text()
+        mention = "PROVISIONAL PRACTICE PAPER" if sujet.session.examen.code == "HND" else "ÉPREUVE PROVISOIRE D'ENTRAÎNEMENT"
+        assert mention in texte and f"{sujet.session.annee}" in texte, sujet
+        assert len(sujet.texte_extrait) > 400  # une épreuve complète, pas une ligne
+    # La session à venir reste sans épreuve (et en brouillon : règle de publication).
+    assert not Sujet.objects.filter(session__annee=2027, texte_extrait__icontains="provisoire").exists()
+
+    fichiers = dict(publies.values_list("pk", "fichier"))
+    call_command("donnees_demo", stdout=open("/dev/null", "w"))
+    assert dict(Sujet.objects.filter(pk__in=fichiers).values_list("pk", "fichier")) == fichiers  # rien de réécrit
