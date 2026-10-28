@@ -62,6 +62,20 @@ def periode(utilisateur, offre):
         raise
 
 
+def avertissement(utilisateur, offre, debut):
+    """Un mois acheté pendant un Pass actif ne commencerait qu'au lendemain du Pass, donc après la session :
+    on le dit avec les vraies dates, et l'étudiant confirme avant de payer. (L'autre sens est déjà couvert :
+    un Pass qui ne commencerait qu'après la session est refusé dans `periode`.)"""
+    if offre.type != offre.Type.DUREE:
+        return None
+    en_cours = Abonnement.pass_en_cours(utilisateur)
+    if en_cours is None or debut <= en_cours.fin:
+        return None
+    return _("Votre Pass couvre déjà jusqu'au %(fin)s. Ce mois commencerait le %(debut)s, après la session.") % {
+        "fin": f"{en_cours.fin:%d/%m/%Y}", "debut": f"{debut:%d/%m/%Y}",
+    }
+
+
 def commander(utilisateur, offre, operateur, telephone, request):
     """Crée le paiement en attente et le lance chez l'agrégateur ; renvoie (paiement, adresse ou None)."""
     if not settings.PAIEMENT_ACTIF:

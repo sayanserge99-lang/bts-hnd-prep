@@ -102,6 +102,14 @@ def commander(request, pk):
         # Pass session sans session à venir : rien à vendre, on le dit avant tout paiement.
         messages.error(request, erreur.messages[0])
         return redirect("offres")
+    profil = getattr(request.user, "profil", None)
+    session = Session.objects.prochaine(profil.examen, debut) if offre.type == Offre.Type.SESSION and profil else None
+    contexte = {"offre": offre, "debut": debut, "fin": fin, "session": session, "agregateur": fournisseur_actif().nom}
+    # Mois acheté pendant un Pass : rien ne part (ni formulaire, ni débit) sans « Acheter quand même ».
+    avertissement = service.avertissement(request.user, offre, debut)
+    confirme = "1" in (request.GET.get("confirme"), request.POST.get("confirme"))
+    if avertissement and not confirme:
+        return render(request, "paiements/commander.html", {**contexte, "avertissement": avertissement})
     form = CommandeForm(request.POST or None)
     if form.is_valid():
         paiement, adresse = service.commander(
@@ -111,11 +119,7 @@ def commander(request, pk):
         if adresse:
             return redirect(adresse)
         return redirect("paiements:suivi", reference=paiement.reference)
-    profil = getattr(request.user, "profil", None)
-    session = Session.objects.prochaine(profil.examen, debut) if offre.type == Offre.Type.SESSION and profil else None
-    return render(request, "paiements/commander.html", {
-        "offre": offre, "debut": debut, "fin": fin, "form": form, "session": session, "agregateur": fournisseur_actif().nom,
-    })
+    return render(request, "paiements/commander.html", {**contexte, "form": form, "confirme": confirme})
 
 
 def paiement_de(request, reference):

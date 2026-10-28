@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-27 21:58+0100\n"
+"POT-Creation-Date: 2026-10-28 07:46+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1676,29 +1676,38 @@ msgstr ""
 "Your Premium access already covers the whole %(annee)s session (until "
 "%(fin)s): the Pass would add nothing."
 
-#: paiements/service.py:68
+#: paiements/service.py:74
+#, python-format
+msgid ""
+"Votre Pass couvre déjà jusqu'au %(fin)s. Ce mois commencerait le %(debut)s, "
+"après la session."
+msgstr ""
+"Your Session Pass already covers you until %(fin)s. This month would start "
+"on %(debut)s, after the exam session."
+
+#: paiements/service.py:82
 msgid "Le paiement n'est pas encore ouvert."
 msgstr "Payment is not open yet."
 
-#: paiements/service.py:91
+#: paiements/service.py:105
 #, python-format
 msgid "Montant reçu (%(recu)s FCFA) différent du prix (%(prix)s FCFA)."
 msgstr ""
 "Amount received (%(recu)s FCFA) differs from the price (%(prix)s FCFA)."
 
-#: paiements/service.py:95
+#: paiements/service.py:109
 msgid "Paiement refusé ou annulé."
 msgstr "Payment declined or cancelled."
 
-#: paiements/service.py:106
+#: paiements/service.py:120
 msgid "À régulariser : "
 msgstr "To be settled: "
 
-#: paiements/service.py:137
+#: paiements/service.py:151
 msgid "Délai dépassé : aucune confirmation reçue."
 msgstr "Time limit exceeded: no confirmation received."
 
-#: paiements/service.py:145
+#: paiements/service.py:159
 #, python-format
 msgid "Votre reçu BTS-HND Prep n° %(numero)s"
 msgstr "Your BTS-HND Prep receipt no. %(numero)s"
@@ -2649,7 +2658,7 @@ msgstr ""
 msgid "Supprimer définitivement"
 msgstr "Delete permanently"
 
-#: templates/accounts/supprimer.html:15
+#: templates/accounts/supprimer.html:15 templates/paiements/commander.html:42
 msgid "Annuler"
 msgstr "Cancel"
 
@@ -4594,30 +4603,34 @@ msgstr "All taxes included, no added fees"
 msgid "Corrigés complets de toutes les matières"
 msgstr "Full answer keys for every subject"
 
-#: templates/paiements/commander.html:32
+#: templates/paiements/commander.html:40
+msgid "Acheter quand même"
+msgstr "Buy anyway"
+
+#: templates/paiements/commander.html:49
 #, python-format
 msgid "Payer %(prix)s"
 msgstr "Pay %(prix)s"
 
-#: templates/paiements/commander.html:38
+#: templates/paiements/commander.html:56
 #, python-format
 msgid "Paiement traité par %(agregateur)s."
 msgstr "Payment processed by %(agregateur)s."
 
-#: templates/paiements/commander.html:38
+#: templates/paiements/commander.html:56
 msgid ""
 "Nous ne voyons jamais votre code secret. Un reçu vous est envoyé par e-mail."
 msgstr "We never see your secret code. A receipt is sent to you by email."
 
-#: templates/paiements/commander.html:39
+#: templates/paiements/commander.html:57
 msgid "Lire les conditions de vente"
 msgstr "Read the terms of sale"
 
-#: templates/paiements/commander.html:42
+#: templates/paiements/commander.html:60
 msgid "Votre établissement vous a remis un code ?"
 msgstr "Did your institution give you a code?"
 
-#: templates/paiements/commander.html:43
+#: templates/paiements/commander.html:61
 msgid "Utiliser un code d'accès"
 msgstr "Use an access code"
 

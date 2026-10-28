@@ -34,9 +34,9 @@ def etudiant(comptabilite, session_en_cours):
     return utilisateur
 
 
-def acheter(client, etudiant, offre):
+def acheter(client, etudiant, offre, **autres):
     client.force_login(etudiant)
-    commander(client, offre)
+    commander(client, offre, **autres)
     paiement = Paiement.objects.filter(utilisateur=etudiant).latest("cree_le")
     notifier(client, paiement)
     paiement.refresh_from_db()
@@ -127,7 +127,7 @@ def test_periodes_separees_par_un_trou(etudiant, mensuel):
 
 def test_un_mois_achete_pendant_un_pass_prolonge_sans_trou(client, paiement_ouvert, etudiant, pass_session, mensuel, session_en_cours):
     acheter(client, etudiant, pass_session)
-    acheter(client, etudiant, mensuel)
+    acheter(client, etudiant, mensuel, confirme="1")  # « Acheter quand même » (voir le test suivant)
 
     (periode,) = Abonnement.periodes(etudiant)
     fin_du_pass = session_en_cours.date_fin_officielle
@@ -135,6 +135,37 @@ def test_un_mois_achete_pendant_un_pass_prolonge_sans_trou(client, paiement_ouve
     # Le mois commence au lendemain de la fin du Pass : 30 jours entiers, aucun jour perdu.
     assert periode["fin"] == fin_du_pass + timedelta(days=1 + 30)
     assert periode["origines"] == ["Pass session", "Premium 30 jours"]
+
+
+def test_un_mois_pendant_un_pass_demande_confirmation_avant_tout_debit(client, paiement_ouvert, etudiant, pass_session, mensuel, session_en_cours):
+    acheter(client, etudiant, pass_session)
+    fin_du_pass = session_en_cours.date_fin_officielle
+    adresse = reverse("paiements:commander", args=[mensuel.pk])
+    attendu = (f"Votre Pass couvre déjà jusqu'au {fin_du_pass:%d/%m/%Y}. "
+               f"Ce mois commencerait le {fin_du_pass + timedelta(days=1):%d/%m/%Y}, après la session.")
+
+    page = client.get(adresse).content.decode()
+    assert attendu in page.replace("&#x27;", "'")
+    assert "Acheter quand même" in page and "Annuler" in page
+    assert 'name="telephone"' not in page  # pas de formulaire de paiement avant la confirmation
+
+    # Paiement envoyé sans la confirmation (formulaire forgé, ancien onglet) : rien n'est débité.
+    reponse = commander(client, mensuel)
+    assert "Acheter quand même" in reponse.content.decode()
+    assert Paiement.objects.filter(utilisateur=etudiant, offre=mensuel).count() == 0
+
+    # « Acheter quand même » : le formulaire apparaît, garde la confirmation, et le paiement part.
+    page = client.get(adresse, {"confirme": "1"}).content.decode()
+    assert 'name="telephone"' in page and 'name="confirme" value="1"' in page
+    commander(client, mensuel, confirme="1")
+    assert Paiement.objects.filter(utilisateur=etudiant, offre=mensuel).count() == 1
+
+
+def test_sans_pass_le_mois_s_achete_sans_avertissement(client, paiement_ouvert, etudiant, mensuel):
+    client.force_login(etudiant)
+    assert "Acheter quand même" not in client.get(reverse("paiements:commander", args=[mensuel.pk])).content.decode()
+    commander(client, mensuel)
+    assert Paiement.objects.filter(utilisateur=etudiant).count() == 1
 
 
 def test_un_pass_achete_pendant_un_mois_prend_la_suite_sans_trou(client, paiement_ouvert, etudiant, pass_session, mensuel, session_en_cours):
