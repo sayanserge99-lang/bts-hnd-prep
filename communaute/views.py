@@ -10,10 +10,10 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.template.loader import render_to_string
 from django.utils.translation import gettext as _
 
-from config.securite import CONTACTS_PAR_IP, adresse_ip
+from config.securite import AVIS_BETA_PAR_IP, CONTACTS_PAR_IP, adresse_ip
 from sujets.models import Corrige, Sujet
 
-from .forms import ContactForm, DemandeRetraitForm, EnvoiSujetForm, PropositionCorrigeForm
+from .forms import AvisBetaForm, ContactForm, DemandeRetraitForm, EnvoiSujetForm, PropositionCorrigeForm
 
 
 def document_vise(request):
@@ -127,3 +127,23 @@ def contact(request):
             )
             return redirect("contact_envoye")
     return render(request, "communaute/contact.html", {"form": form})
+
+
+def avis_beta(request):
+    """Bêta : « Donner mon avis », depuis la bannière de chaque page ; l'étudiant revient ensuite à sa page."""
+    form = AvisBetaForm(request.POST or None, initial={"page": request.GET.get("page", "")})
+    if form.is_valid():
+        suite = form.cleaned_data["page"] or "/"
+        if form.cleaned_data["site_web"]:
+            return redirect(suite)  # robot : rien d'enregistré
+        ip = adresse_ip(request)
+        if AVIS_BETA_PAR_IP.atteinte(ip):
+            form.add_error(None, _("Vous avez déjà donné beaucoup d'avis aujourd'hui. Merci, revenez demain !"))
+        else:
+            AVIS_BETA_PAR_IP.compter(ip)
+            avis = form.save(commit=False)
+            avis.utilisateur = request.user if request.user.is_authenticated else None
+            avis.save()
+            messages.success(request, _("Merci pour votre avis ! L'équipe le lira."))
+            return redirect(suite)
+    return render(request, "communaute/avis_beta.html", {"form": form})

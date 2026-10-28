@@ -15,7 +15,7 @@ from sujets.views import envoyer_pdf
 
 from . import contributions
 from .forms import RejetForm, ValidationCorrigeForm, ValidationSujetForm
-from .models import Contribution, DemandeRetrait, MessageContact, Signalement
+from .models import AvisBeta, Contribution, DemandeRetrait, MessageContact, Signalement
 
 # Un signalement ou une demande de retrait vise un sujet ou un corrigé.
 CIBLES = ("sujet__matiere", "corrige__sujet__matiere")
@@ -241,3 +241,24 @@ class MessageContactAdmin(admin.ModelAdmin):
     def marquer_traites(self, request, queryset):
         nombre = queryset.update(traite=True)
         self.message_user(request, ngettext("%d message traité.", "%d messages traités.", nombre) % nombre)
+
+
+@admin.register(AvisBeta)
+class AvisBetaAdmin(admin.ModelAdmin):
+    list_display = ("type", "message_court", "page", "utilisateur", "cree_le", "traite")
+    list_filter = ("traite", "type")
+    search_fields = ("message", "page")
+    readonly_fields = ("type", "message", "page", "utilisateur", "cree_le")
+    actions = ["marquer_traites"]
+
+    def has_add_permission(self, request):
+        return False
+
+    @admin.display(description=_("avis"))
+    def message_court(self, avis):
+        return avis.message[:100]
+
+    @admin.action(description=_("Marquer comme traités"))
+    def marquer_traites(self, request, queryset):
+        nombre = queryset.update(traite=True)
+        self.message_user(request, ngettext("%d avis traité.", "%d avis traités.", nombre) % nombre)

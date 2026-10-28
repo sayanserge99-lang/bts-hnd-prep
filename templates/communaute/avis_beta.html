@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titre %}{% translate "Donner mon avis" %} — BTS-HND Prep{% endblock %}
+
+{% block contenu %}
+<div class="mx-auto max-w-xl px-4 py-8">
+  <h1 class="text-2xl font-bold">{% translate "Donner mon avis" %}</h1>
+  <p class="mt-1 text-sm text-gris">{% translate "BTS-HND Prep est en bêta. Un bouton qui ne marche pas, une page lente, une idée : dites-le-nous, chaque avis est lu." %}</p>
+  <form method="post" class="formulaire carte mt-6 space-y-4" novalidate>
+    {% csrf_token %}
+    {% translate "Envoyer mon avis" as bouton %}
+    {% include "accounts/_formulaire.html" %}
+  </form>
+  <p class="mt-4 text-sm text-gris">{% translate "Besoin d'une réponse ?" %} <a href="{% url 'contact' %}" class="underline">{% translate "Écrivez-nous depuis la page Contact" %}</a>.</p>
+</div>
+{% endblock %}

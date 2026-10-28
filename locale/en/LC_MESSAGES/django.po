@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-28 12:15+0100\n"
+"POT-Creation-Date: 2026-10-28 12:39+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -183,7 +183,7 @@ msgstr "Privacy policy"
 msgid "Partage des résultats avec l'établissement"
 msgstr "Sharing results with the institution"
 
-#: accounts/models.py:99 templates/base.html:94
+#: accounts/models.py:99 templates/base.html:103
 msgid "Conditions de vente"
 msgstr "Terms of sale"
 
@@ -304,7 +304,7 @@ msgstr "Incorrect code."
 msgid "Catalogue"
 msgstr "Catalogue"
 
-#: catalogue/models.py:9 config/settings.py:223
+#: catalogue/models.py:9 config/settings.py:225
 msgid "Français"
 msgstr "French"
 
@@ -572,7 +572,7 @@ msgid_plural "%d demandes refusées."
 msgstr[0] "%d request refused."
 msgstr[1] "%d requests refused."
 
-#: communaute/admin.py:240
+#: communaute/admin.py:240 communaute/admin.py:261
 msgid "Marquer comme traités"
 msgstr "Mark as handled"
 
@@ -582,6 +582,17 @@ msgid "%d message traité."
 msgid_plural "%d messages traités."
 msgstr[0] "%d message handled."
 msgstr[1] "%d messages handled."
+
+#: communaute/admin.py:257
+msgid "avis"
+msgstr "feedback"
+
+#: communaute/admin.py:264
+#, python-format
+msgid "%d avis traité."
+msgid_plural "%d avis traités."
+msgstr[0] "%d feedback item handled."
+msgstr[1] "%d feedback items handled."
 
 #: communaute/apps.py:8
 msgid "Communauté"
@@ -831,6 +842,24 @@ msgstr "So that we can reply; it is never shown or passed on."
 msgid "Écrivez quelques mots de plus (10 caractères au moins)."
 msgstr "Write a few more words (at least 10 characters)."
 
+#: communaute/forms.py:301
+msgid "De quoi s'agit-il ?"
+msgstr "What is it about?"
+
+#: communaute/forms.py:301
+msgid "Votre avis"
+msgstr "Your feedback"
+
+#: communaute/forms.py:302
+msgid ""
+"Ce qui s'est passé, ou ce qui vous aiderait. Pas besoin de donner votre "
+"e-mail."
+msgstr "What happened, or what would help you. No need to give your email."
+
+#: communaute/forms.py:308
+msgid "Écrivez quelques mots (5 caractères au moins)."
+msgstr "Write a few words (at least 5 characters)."
+
 #: communaute/models.py:29 paiements/models.py:54
 msgid "En attente"
 msgstr "Pending"
@@ -951,7 +980,7 @@ msgstr "Payment or subscription"
 msgid "e-mail"
 msgstr "email"
 
-#: communaute/models.py:226 forum/models.py:75
+#: communaute/models.py:226 communaute/models.py:253 forum/models.py:75
 msgid "traité"
 msgstr "handled"
 
@@ -962,6 +991,38 @@ msgstr "contact message"
 #: communaute/models.py:231
 msgid "messages de contact"
 msgstr "contact messages"
+
+#: communaute/models.py:243
+msgid "Quelque chose ne marche pas"
+msgstr "Something does not work"
+
+#: communaute/models.py:244
+msgid "Une idée ou une demande"
+msgstr "An idea or a request"
+
+#: communaute/models.py:245
+msgid "Autre remarque"
+msgstr "Other comment"
+
+#: communaute/models.py:247
+msgid "type"
+msgstr "type"
+
+#: communaute/models.py:248
+msgid "message"
+msgstr "message"
+
+#: communaute/models.py:249
+msgid "page"
+msgstr "page"
+
+#: communaute/models.py:249
+msgid "Adresse de la page d'où l'avis a été donné."
+msgstr "Address of the page the feedback was sent from."
+
+#: communaute/models.py:257 communaute/models.py:258
+msgid "avis de la bêta"
+msgstr "beta feedback"
 
 #: communaute/views.py:41
 msgid ""
@@ -987,7 +1048,18 @@ msgid ""
 "Vous avez déjà envoyé plusieurs messages aujourd'hui. Nous vous répondrons."
 msgstr "You have already sent several messages today. We will reply to you."
 
-#: config/settings.py:223
+#: communaute/views.py:141
+msgid ""
+"Vous avez déjà donné beaucoup d'avis aujourd'hui. Merci, revenez demain !"
+msgstr ""
+"You have already sent a lot of feedback today. Thank you, come back "
+"tomorrow!"
+
+#: communaute/views.py:147
+msgid "Merci pour votre avis ! L'équipe le lira."
+msgstr "Thank you for your feedback! The team will read it."
+
+#: config/settings.py:225
 msgid "English"
 msgstr "English"
 
@@ -1055,8 +1127,8 @@ msgid_plural "%d questions retirées."
 msgstr[0] "%d question removed."
 msgstr[1] "%d questions removed."
 
-#: entrainement/apps.py:8 templates/base.html:39 templates/base.html:41
-#: templates/base.html:115 templates/base.html:120
+#: entrainement/apps.py:8 templates/base.html:48 templates/base.html:50
+#: templates/base.html:124 templates/base.html:129
 #: templates/entrainement/accueil.html:4 templates/entrainement/accueil.html:9
 #: templates/entrainement/examens/liste.html:9
 msgid "Entraînement"
@@ -1418,7 +1490,7 @@ msgid_plural "%d signalements rejetés."
 msgstr[0] "%d report rejected."
 msgstr[1] "%d reports rejected."
 
-#: forum/apps.py:8 templates/base.html:43
+#: forum/apps.py:8 templates/base.html:52
 #: templates/entrainement/accueil.html:23 templates/forum/accueil.html:4
 #: templates/forum/accueil.html:9 templates/forum/discussion.html:4
 #: templates/forum/matiere.html:4 templates/forum/matiere.html:9
@@ -2030,7 +2102,7 @@ msgstr[0] ""
 msgstr[1] ""
 "%d marking guides refused: their paper's session has not officially ended."
 
-#: sujets/apps.py:8 templates/base.html:37 templates/base.html:110
+#: sujets/apps.py:8 templates/base.html:46 templates/base.html:119
 #: templates/sujets/liste.html:4 templates/sujets/liste.html:9
 msgid "Sujets"
 msgstr "Past papers"
@@ -2359,7 +2431,7 @@ msgstr "Continue with Google"
 
 #: templates/accounts/connexion.html:4 templates/accounts/connexion.html:8
 #: templates/accounts/connexion.html:12 templates/accounts/inscription.html:21
-#: templates/base.html:60
+#: templates/base.html:69
 msgid "Se connecter"
 msgstr "Log in"
 
@@ -2373,7 +2445,7 @@ msgstr "No account yet?"
 
 #: templates/accounts/connexion.html:17 templates/accounts/google_finir.html:4
 #: templates/accounts/inscription.html:4 templates/accounts/inscription.html:8
-#: templates/base.html:61
+#: templates/base.html:70
 msgid "Créer un compte"
 msgstr "Create an account"
 
@@ -2498,7 +2570,7 @@ msgid "Créer mon compte"
 msgstr "Create my account"
 
 #: templates/accounts/google_finir.html:16
-#: templates/accounts/inscription.html:18 templates/base.html:93
+#: templates/accounts/inscription.html:18 templates/base.html:102
 #: templates/pages/conditions_utilisation.html:4
 #: templates/pages/conditions_utilisation.html:5
 msgid "Conditions d'utilisation"
@@ -2520,7 +2592,7 @@ msgstr "Edit my profile"
 
 #: templates/accounts/modifier_profil.html:8
 #: templates/accounts/mot_de_passe.html:8 templates/accounts/profil.html:4
-#: templates/base.html:57 templates/communaute/mes_contributions.html:9
+#: templates/base.html:66 templates/communaute/mes_contributions.html:9
 #: templates/paiements/activer_code.html:8 templates/paiements/recu.html:8
 #: templates/partenaires/mes_epreuves.html:9
 msgid "Mon espace"
@@ -2656,7 +2728,7 @@ msgstr "Receipt"
 msgid "J'ai un code d'accès"
 msgstr "I have an access code"
 
-#: templates/accounts/profil.html:63 templates/base.html:92
+#: templates/accounts/profil.html:63 templates/base.html:101
 msgid "Confidentialité"
 msgstr "Privacy"
 
@@ -2794,7 +2866,7 @@ msgstr ""
 #: templates/admin/communaute/contribution/valider.html:6
 #: templates/admin/entrainement/question/importer.html:6
 #: templates/admin/paiements/codeacces/generer.html:6
-#: templates/admin/sujets/sujet/importer.html:6 templates/base.html:106
+#: templates/admin/sujets/sujet/importer.html:6 templates/base.html:115
 msgid "Accueil"
 msgstr "Home"
 
@@ -3280,54 +3352,67 @@ msgstr "Past BTS and HND papers, sorted by specialty, subject and year."
 msgid "Aller au contenu"
 msgstr "Skip to content"
 
-#: templates/base.html:36
+#: templates/base.html:29 templates/base.html:31
+msgid "Bêta"
+msgstr "Beta"
+
+#: templates/base.html:31
+msgid "Le site est en test : il peut changer ou contenir des erreurs."
+msgstr "The site is being tested: it may change or contain errors."
+
+#: templates/base.html:32 templates/communaute/avis_beta.html:4
+#: templates/communaute/avis_beta.html:8
+msgid "Donner mon avis"
+msgstr "Give feedback"
+
+#: templates/base.html:45
 msgid "Navigation principale"
 msgstr "Main navigation"
 
-#: templates/base.html:41 templates/base.html:120
+#: templates/base.html:50 templates/base.html:129
 #: templates/sujets/detail.html:19
 msgid "Bientôt"
 msgstr "Soon"
 
-#: templates/base.html:44 templates/paiements/commander.html:8
+#: templates/base.html:53 templates/paiements/commander.html:8
 #: templates/paiements/offres.html:4 templates/paiements/offres.html:9
 msgid "Offres"
 msgstr "Plans"
 
-#: templates/base.html:56
+#: templates/base.html:65
 msgid "Mon établissement"
 msgstr "My institution"
 
-#: templates/base.html:58
+#: templates/base.html:67
 msgid "Déconnexion"
 msgstr "Log out"
 
-#: templates/base.html:90
+#: templates/base.html:99
 msgid "Informations légales"
 msgstr "Legal information"
 
-#: templates/base.html:91 templates/pages/mentions_legales.html:4
+#: templates/base.html:100 templates/pages/mentions_legales.html:4
 #: templates/pages/mentions_legales.html:5
 msgid "Mentions légales"
 msgstr "Legal notice"
 
-#: templates/base.html:95 templates/communaute/demande_retrait.html:4
+#: templates/base.html:104 templates/communaute/demande_retrait.html:4
 #: templates/communaute/demande_retrait.html:8
 #: templates/communaute/demande_retrait_recue.html:4
 msgid "Demande de retrait"
 msgstr "Takedown request"
 
-#: templates/base.html:96 templates/communaute/contact.html:4
+#: templates/base.html:105 templates/communaute/contact.html:4
 #: templates/communaute/contact.html:8
 #: templates/communaute/demande_retrait.html:22
 msgid "Contact"
 msgstr "Contact"
 
-#: templates/base.html:102
+#: templates/base.html:111
 msgid "Navigation mobile"
 msgstr "Mobile navigation"
 
-#: templates/base.html:126
+#: templates/base.html:135
 msgid "Profil"
 msgstr "Profile"
 
@@ -3438,6 +3523,26 @@ msgstr "Choose your plan"
 #: templates/catalogue/accueil.html:97
 msgid "Comparer les offres en détail"
 msgstr "Compare the offers in detail"
+
+#: templates/communaute/avis_beta.html:9
+msgid ""
+"BTS-HND Prep est en bêta. Un bouton qui ne marche pas, une page lente, une "
+"idée : dites-le-nous, chaque avis est lu."
+msgstr ""
+"BTS-HND Prep is in beta. A button that does not work, a slow page, an idea: "
+"tell us, every message is read."
+
+#: templates/communaute/avis_beta.html:12
+msgid "Envoyer mon avis"
+msgstr "Send my feedback"
+
+#: templates/communaute/avis_beta.html:15
+msgid "Besoin d'une réponse ?"
+msgstr "Need an answer?"
+
+#: templates/communaute/avis_beta.html:15
+msgid "Écrivez-nous depuis la page Contact"
+msgstr "Write to us from the Contact page"
 
 #: templates/communaute/contact.html:9
 msgid ""

@@ -233,3 +233,30 @@ class MessageContact(models.Model):
 
     def __str__(self):
         return f"{self.get_objet_display()} · {self.nom}"
+
+
+class AvisBeta(models.Model):
+    """Bêta : « Donner mon avis » (bannière en haut des pages). Gardé en base, lu dans l'administration.
+    Rien d'autre que le message, la page et le compte s'il y en a un (pas d'e-mail : pour une réponse, page Contact)."""
+
+    class Type(models.TextChoices):
+        PROBLEME = "probleme", _("Quelque chose ne marche pas")
+        IDEE = "idee", _("Une idée ou une demande")
+        AUTRE = "autre", _("Autre remarque")
+
+    type = models.CharField(_("type"), max_length=10, choices=Type.choices, default=Type.PROBLEME)
+    message = models.TextField(_("message"), max_length=2000)
+    page = models.CharField(_("page"), max_length=300, blank=True, help_text=_("Adresse de la page d'où l'avis a été donné."))
+    utilisateur = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name="avis_beta"
+    )
+    traite = models.BooleanField(_("traité"), default=False)
+    cree_le = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _("avis de la bêta")
+        verbose_name_plural = _("avis de la bêta")
+        ordering = ["traite", "-cree_le"]
+
+    def __str__(self):
+        return f"{self.get_type_display()} · {self.message[:60]}"

@@ -9,7 +9,7 @@ from accounts.views import changer_langue
 from catalogue.views import (
     accueil, hors_ligne, manifeste, options_specialites, service_worker, statistiques, sujets_retires,
 )
-from communaute.views import contact, demande_retrait
+from communaute.views import avis_beta, contact, demande_retrait
 from config import plan_du_site
 from paiements.views import offres
 
@@ -53,6 +53,7 @@ urlpatterns = [
         name="demande_retrait_recue",
     ),
     path("contact/", contact, name="contact"),
+    path("avis/", avis_beta, name="avis_beta"),
     path("contact/envoye/", TemplateView.as_view(template_name="communaute/contact_envoye.html"), name="contact_envoye"),
     path("langue/", changer_langue, name="set_language"),
     # Avant admin.site.urls : sinon l'admin prendrait « statistiques » pour une application.

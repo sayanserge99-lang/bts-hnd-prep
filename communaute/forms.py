@@ -9,7 +9,7 @@ from catalogue.models import Matiere, Session, Specialite
 from sujets.models import Corrige, Sujet
 
 from . import contributions
-from .models import Contribution, DemandeRetrait, MessageContact
+from .models import AvisBeta, Contribution, DemandeRetrait, MessageContact
 
 
 class PlusieursFichiers(forms.ClearableFileInput):
@@ -290,3 +290,25 @@ class ContactForm(forms.ModelForm):
         if len(message) < 10:
             raise ValidationError(_("Écrivez quelques mots de plus (10 caractères au moins)."))
         return message
+
+
+class AvisBetaForm(forms.ModelForm):
+    site_web = forms.CharField(required=False, widget=forms.HiddenInput)  # piège à robots, comme le contact
+
+    class Meta:
+        model = AvisBeta
+        fields = ("type", "message", "page")
+        labels = {"type": _("De quoi s'agit-il ?"), "message": _("Votre avis")}
+        help_texts = {"message": _("Ce qui s'est passé, ou ce qui vous aiderait. Pas besoin de donner votre e-mail.")}
+        widgets = {"type": forms.RadioSelect, "message": forms.Textarea(attrs={"rows": 5}), "page": forms.HiddenInput}
+
+    def clean_message(self):
+        message = self.cleaned_data["message"].strip()
+        if len(message) < 5:
+            raise ValidationError(_("Écrivez quelques mots (5 caractères au moins)."))
+        return message
+
+    def clean_page(self):
+        # Seulement un chemin du site : jamais une adresse extérieure (on y renvoie l'étudiant après l'envoi).
+        page = self.cleaned_data["page"].strip()
+        return page if page.startswith("/") and not page.startswith("//") else ""

@@ -256,6 +256,9 @@ FONCTIONNALITES = {
     "forum": True,
 }
 
+# Bêta : bannière « Bêta » et bouton « Donner mon avis » en haut des pages (DJANGO_BETA=0 pour la retirer).
+BETA = os.environ.get("DJANGO_BETA", "1") == "1"
+
 # CDC 10.4 : aucun paiement sans structure déclarée ni NIU.
 EXPLOITANT = {
     "structure": os.environ.get("EXPLOITANT_STRUCTURE", ""),

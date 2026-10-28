@@ -373,3 +373,12 @@ def test_la_deconnexion_efface_la_copie_locale(client, etudiant):
     assert "js/copie-locale.js" in page
     assert re.search(r'action="/[^"]*deconnexion/"[^>]*data-efface-copie-locale', page)
     assert "data-efface-copie-locale" in client.get(reverse("accounts:supprimer")).content.decode()
+
+
+def test_pas_de_banniere_beta_pendant_l_epreuve(client, etudiant, examen, settings):
+    """Mode concentré : la bannière « Bêta » et son lien ne distraient pas pendant l'examen blanc."""
+    settings.BETA = True
+    client.force_login(etudiant)
+    tentative = demarrer(client, examen)
+    assert "Donner mon avis" not in client.get(reverse("entrainement:epreuve", args=[tentative.pk])).content.decode()
+    assert "Donner mon avis" in client.get(reverse("entrainement:consignes", args=[examen.pk])).content.decode()

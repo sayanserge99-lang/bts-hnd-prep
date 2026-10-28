@@ -56,6 +56,7 @@ REINITIALISATIONS_PAR_EMAIL = Limite("reinitialisation-email", 3, 60 * 60)
 SIGNALEMENTS_CORRIGE_PAR_COMPTE = Limite("signalement-corrige", 10, 24 * 60 * 60)
 SIGNALEMENTS_QUESTION_PAR_COMPTE = Limite("signalement-question", 10, 24 * 60 * 60)
 CONTACTS_PAR_IP = Limite("contact-ip", 5, 24 * 60 * 60)
+AVIS_BETA_PAR_IP = Limite("avis-beta-ip", 10, 24 * 60 * 60)
 # Sujets ouverts sans compte (sujets/quota.py) : 3 par visiteur, 30 par adresse pour qu'un campus derrière
 # une seule adresse ne soit pas bloqué dès le quatrième étudiant.
 PDF_VISITEURS_PAR_IP = Limite("pdf-visiteurs-ip", 30, 24 * 60 * 60)
