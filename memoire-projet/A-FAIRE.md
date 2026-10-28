@@ -142,3 +142,6 @@
 - [x] Examen blanc court de démo (5 min) et accès depuis un téléphone du Wi-Fi (28/10).
 - [x] Interface anglaise complète, langue de l'examen par défaut, test des chaînes sans traduction (28/10).
 - [ ] Relecture de l'anglais par un anglophone (vocabulaire HND), avant la mise en ligne.
+- [x] Épreuves provisoires d'entraînement dans les 70 sujets de démonstration (28/10).
+- [ ] Remplacer les épreuves provisoires par les vrais sujets (IAI, HINTEL, contributions), matière par matière.
+- [ ] Faire relire les épreuves provisoires par un enseignant de chaque matière (cohérence des données chiffrées).

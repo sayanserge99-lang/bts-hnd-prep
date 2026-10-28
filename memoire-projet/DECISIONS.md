@@ -161,5 +161,9 @@
   marking guide, mock exam, session, specialty, subject = matière). Les contenus (sujets, corrigés, questions) ne se
   traduisent pas. Les e-mails partent dans la langue du destinataire. L'outil d'import Excel du référentiel et le
   simulateur de paiement (équipe, développement) restent en français.
+- **Épreuves provisoires (28/10, Serge Alain)** : en attendant les vrais sujets, les sujets de démonstration portent des
+  épreuves d'entraînement rédigées par l'équipe. Jamais présentées comme officielles : source et en-tête du PDF le
+  disent. Aucun sujet copié d'un site tiers (recherche du 28/10 : le MINESUP ne publie pas les sujets ; les recueils
+  en ligne sont payants et d'origine inconnue). Les vrais sujets viendront des IPES partenaires et des contributions.
 - **Signaler une question (27/10)** : entité Signalement (troisième cible, exactement une par signalement), dans la
   file du modérateur de la matière du chapitre ; motif de 10 caractères au moins, 10 par jour et par compte.

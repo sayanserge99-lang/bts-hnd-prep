@@ -210,3 +210,8 @@
   et la langue par défaut selon l'examen. Contre-épreuves : reçu en français, middleware retiré → échecs attendus.
   Erreur : `git checkout` pour annuler une contre-épreuve a effacé mes changements non commités de deux fichiers ;
   rétablis et vérifiés par la suite complète. 483 verts.
+- 28/10 : épreuves provisoires (demande de Serge Alain). Recherche : aucun sujet officiel BTS/HND en accès libre (le
+  MINESUP publie communiqués et résultats, pas les sujets) ; refus d'inventer de « vrais » sujets, puis accord pour
+  des épreuves d'entraînement clairement marquées. 70 épreuves rédigées (format de l'examen, contexte camerounais),
+  PDF multipages sans dépendance ; deux défauts vus au rendu (marge du gras, nombres coupés) corrigés. Test : chaque
+  sujet publié de démo a son épreuve lisible et sa mention. 483 verts + 5 essais JavaScript.

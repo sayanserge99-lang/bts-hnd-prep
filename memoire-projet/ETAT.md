@@ -42,6 +42,10 @@
   dans la langue du destinataire. Test `test_chaque_chaine_marquee_a_sa_traduction_anglaise` (makemessages sur une
   copie du projet). Exploration de 262 pages en anglais avec un compte HND : il ne reste en français que les contenus
   BTS (noms de matières, sujets) et des mentions bilingues voulues (500, accueil, MINESUP).
+- **Épreuves provisoires (28/10)** — les 70 sujets publiés de démonstration (14 matières, 2022-2026) contiennent une
+  épreuve d'entraînement complète rédigée par l'équipe (`catalogue/management/commands/_epreuves_*.py`, PDF par
+  `_pdf_epreuve.py`) ; source « Épreuve provisoire BTS-HND Prep (pas le sujet officiel) » et mention en tête de PDF.
+  À remplacer par les vrais sujets (import en lot). La session 2027 reste vide.
 - **Essai sur téléphone (28/10)** — « [DÉMO] Examen court » (5 min) ; `ADRESSE_LOCALE` dans `.env` ajoutée aux hôtes
   permis par compose.yaml (développement seulement). Adresse du PC : 192.168.100.238 (Ethernet).
 - **Maquettes, écrans 7, 9, 10 (27/10)** — Modération : colonnes Document / Envoyé par / Contrôles / Décision ;
