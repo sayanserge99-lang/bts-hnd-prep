@@ -74,7 +74,7 @@ class InscriptionForm(UserCreationForm):
     marquer_facultatifs = True
     # CDC 10.2 : case non précochée, consentement enregistré avec sa version.
     accepte_conditions = forms.BooleanField(
-        label=_("J'accepte les conditions générales et la politique de confidentialité."),
+        label=_("J'accepte les conditions d'utilisation et la politique de confidentialité."),
         required=True,
     )
 
@@ -144,7 +144,7 @@ class FinInscriptionGoogleForm(forms.Form):
     specialite = champ_specialite()
     etablissement = champ_etablissement()
     accepte_conditions = forms.BooleanField(
-        label=_("J'accepte les conditions générales et la politique de confidentialité."), required=True
+        label=_("J'accepte les conditions d'utilisation et la politique de confidentialité."), required=True
     )
 
     def __init__(self, *args, **kwargs):

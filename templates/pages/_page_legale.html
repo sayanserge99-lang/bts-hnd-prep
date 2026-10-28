@@ -4,8 +4,18 @@
 {% block contenu %}
 <article class="mx-auto max-w-3xl px-4 py-8">
   <h1 class="text-2xl font-bold">{% block titre_page %}{% endblock %}</h1>
-  <div class="carte mt-6 space-y-3 text-gris">
-    {% block texte %}{% endblock %}
+  {% if texte %}
+    {# Brouillons rédigés en attendant la relecture du juriste (avant l'ouverture au public). #}
+    <p class="mt-4 rounded-lg border border-dashed border-ambre bg-ambre-clair p-3 text-sm" role="note">
+      {% translate "Version provisoire, en cours de relecture juridique. Les passages surlignés seront complétés avant l'ouverture." %}
+    </p>
+  {% endif %}
+  <div class="carte texte-legal mt-6">
+    {% block texte %}
+      {# Un fichier par langue (texte long, relu d'un bloc par le juriste) : pages/textes/<page>_<fr|en>.html #}
+      {% get_current_language as LANGUE %}
+      {% with fichier="pages/textes/"|add:texte|add:"_"|add:LANGUE|add:".html" %}{% include fichier %}{% endwith %}
+    {% endblock %}
   </div>
 </article>
 {% endblock %}

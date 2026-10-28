@@ -15,7 +15,7 @@
   </form>
   {% include "accounts/_bouton_google.html" %}
   <p class="mt-3 text-xs text-gris">
-    <a class="underline" href="{% url 'conditions_de_vente' %}">{% translate "Conditions générales" %}</a> ·
+    <a class="underline" href="{% url 'conditions_utilisation' %}">{% translate "Conditions d'utilisation" %}</a> ·
     <a class="underline" href="{% url 'confidentialite' %}">{% translate "Politique de confidentialité" %}</a>
   </p>
   <p class="mt-4 text-sm">{% translate "Déjà inscrit ?" %} <a class="font-semibold text-vert underline" href="{% url 'accounts:connexion' %}{% if next %}?next={{ next|urlencode }}{% endif %}">{% translate "Se connecter" %}</a></p>

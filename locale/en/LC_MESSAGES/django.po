@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-28 09:52+0100\n"
+"POT-Creation-Date: 2026-10-28 12:15+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -71,8 +71,9 @@ msgid "Examen préparé"
 msgstr "Exam"
 
 #: accounts/forms.py:77 accounts/forms.py:147
-msgid "J'accepte les conditions générales et la politique de confidentialité."
-msgstr "I accept the terms and conditions and the privacy policy."
+msgid ""
+"J'accepte les conditions d'utilisation et la politique de confidentialité."
+msgstr "I accept the terms of use and the privacy policy."
 
 #: accounts/forms.py:84 accounts/forms.py:142 accounts/forms.py:213
 msgid "Prénom"
@@ -167,8 +168,7 @@ msgstr "study profile"
 msgid "Cette spécialité n'appartient pas à l'examen choisi."
 msgstr "This specialty does not belong to the chosen exam."
 
-#: accounts/models.py:96 templates/accounts/google_finir.html:16
-#: templates/accounts/inscription.html:18
+#: accounts/models.py:96
 msgid "Conditions générales"
 msgstr "Terms and conditions"
 
@@ -183,7 +183,7 @@ msgstr "Privacy policy"
 msgid "Partage des résultats avec l'établissement"
 msgstr "Sharing results with the institution"
 
-#: accounts/models.py:99 templates/base.html:93
+#: accounts/models.py:99 templates/base.html:94
 msgid "Conditions de vente"
 msgstr "Terms of sale"
 
@@ -1056,7 +1056,7 @@ msgstr[0] "%d question removed."
 msgstr[1] "%d questions removed."
 
 #: entrainement/apps.py:8 templates/base.html:39 templates/base.html:41
-#: templates/base.html:114 templates/base.html:119
+#: templates/base.html:115 templates/base.html:120
 #: templates/entrainement/accueil.html:4 templates/entrainement/accueil.html:9
 #: templates/entrainement/examens/liste.html:9
 msgid "Entraînement"
@@ -2030,7 +2030,7 @@ msgstr[0] ""
 msgstr[1] ""
 "%d marking guides refused: their paper's session has not officially ended."
 
-#: sujets/apps.py:8 templates/base.html:37 templates/base.html:109
+#: sujets/apps.py:8 templates/base.html:37 templates/base.html:110
 #: templates/sujets/liste.html:4 templates/sujets/liste.html:9
 msgid "Sujets"
 msgstr "Past papers"
@@ -2497,6 +2497,13 @@ msgstr ""
 msgid "Créer mon compte"
 msgstr "Create my account"
 
+#: templates/accounts/google_finir.html:16
+#: templates/accounts/inscription.html:18 templates/base.html:93
+#: templates/pages/conditions_utilisation.html:4
+#: templates/pages/conditions_utilisation.html:5
+msgid "Conditions d'utilisation"
+msgstr "Terms of use"
+
 #: templates/accounts/inscription.html:9
 msgid "Gratuit. Nous ne demandons que le nécessaire."
 msgstr "Free. We only ask for what we need."
@@ -2517,7 +2524,7 @@ msgstr "Edit my profile"
 #: templates/paiements/activer_code.html:8 templates/paiements/recu.html:8
 #: templates/partenaires/mes_epreuves.html:9
 msgid "Mon espace"
-msgstr "My space"
+msgstr "My account"
 
 #: templates/accounts/modifier_profil.html:12 templates/forum/modifier.html:12
 msgid "Enregistrer"
@@ -2787,7 +2794,7 @@ msgstr ""
 #: templates/admin/communaute/contribution/valider.html:6
 #: templates/admin/entrainement/question/importer.html:6
 #: templates/admin/paiements/codeacces/generer.html:6
-#: templates/admin/sujets/sujet/importer.html:6 templates/base.html:105
+#: templates/admin/sujets/sujet/importer.html:6 templates/base.html:106
 msgid "Accueil"
 msgstr "Home"
 
@@ -3277,7 +3284,7 @@ msgstr "Skip to content"
 msgid "Navigation principale"
 msgstr "Main navigation"
 
-#: templates/base.html:41 templates/base.html:119
+#: templates/base.html:41 templates/base.html:120
 #: templates/sujets/detail.html:19
 msgid "Bientôt"
 msgstr "Soon"
@@ -3304,23 +3311,23 @@ msgstr "Legal information"
 msgid "Mentions légales"
 msgstr "Legal notice"
 
-#: templates/base.html:94 templates/communaute/demande_retrait.html:4
+#: templates/base.html:95 templates/communaute/demande_retrait.html:4
 #: templates/communaute/demande_retrait.html:8
 #: templates/communaute/demande_retrait_recue.html:4
 msgid "Demande de retrait"
 msgstr "Takedown request"
 
-#: templates/base.html:95 templates/communaute/contact.html:4
+#: templates/base.html:96 templates/communaute/contact.html:4
 #: templates/communaute/contact.html:8
 #: templates/communaute/demande_retrait.html:22
 msgid "Contact"
 msgstr "Contact"
 
-#: templates/base.html:101
+#: templates/base.html:102
 msgid "Navigation mobile"
 msgstr "Mobile navigation"
 
-#: templates/base.html:125
+#: templates/base.html:126
 msgid "Profil"
 msgstr "Profile"
 
@@ -4502,14 +4509,20 @@ msgstr ""
 msgid "Publier la question"
 msgstr "Post the question"
 
+#: templates/pages/_page_legale.html:10
+msgid ""
+"Version provisoire, en cours de relecture juridique. Les passages surlignés "
+"seront complétés avant l'ouverture."
+msgstr ""
+"Draft version, under legal review. Highlighted passages will be completed "
+"before launch."
+
 #: templates/pages/conditions_de_vente.html:4
 #: templates/pages/conditions_de_vente.html:5
 msgid "Conditions générales de vente"
 msgstr "Terms of sale"
 
 #: templates/pages/conditions_de_vente.html:8
-#: templates/pages/confidentialite.html:8
-#: templates/pages/mentions_legales.html:8
 msgid "Contenu en cours de rédaction."
 msgstr "Content being written."
 

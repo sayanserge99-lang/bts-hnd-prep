@@ -18,8 +18,10 @@ admin.site.site_title = _("BTS-HND Prep")
 admin.site.index_title = _("Tableau de bord")
 
 
-def page(nom):
-    return TemplateView.as_view(template_name=f"pages/{nom}.html")
+def page(nom, texte=None):
+    """Page fixe ; `texte` : page légale dont le contenu est dans pages/textes/<texte>_<langue>.html."""
+    contexte = {"texte": texte, "version": settings.VERSION_POLITIQUES} if texte else None
+    return TemplateView.as_view(template_name=f"pages/{nom}.html", extra_context=contexte)
 
 
 urlpatterns = [
@@ -39,9 +41,10 @@ urlpatterns = [
     path("forum/", include("forum.urls")),
     path("offres/", offres, name="offres"),
     path("paiement/", include("paiements.urls")),
-    # CDC 10 : pages légales accessibles depuis toutes les pages (contenu à rédiger).
-    path("mentions-legales/", page("mentions_legales"), name="mentions_legales"),
-    path("confidentialite/", page("confidentialite"), name="confidentialite"),
+    # CDC 10 : pages légales accessibles depuis toutes les pages (brouillons FR/EN, à relire par un juriste).
+    path("mentions-legales/", page("mentions_legales", "mentions_legales"), name="mentions_legales"),
+    path("confidentialite/", page("confidentialite", "confidentialite"), name="confidentialite"),
+    path("conditions-d-utilisation/", page("conditions_utilisation", "conditions_utilisation"), name="conditions_utilisation"),
     path("conditions-de-vente/", page("conditions_de_vente"), name="conditions_de_vente"),
     path("demande-de-retrait/", demande_retrait, name="demande_de_retrait"),
     path(

@@ -76,6 +76,20 @@
     @apply mt-1 text-sm text-red-700;
   }
 
+  /* Pages légales (templates/pages/textes/) : titres, listes, et champs [À COMPLÉTER] bien visibles. */
+  .texte-legal {
+    @apply space-y-3 leading-relaxed text-encre;
+  }
+  .texte-legal h2 {
+    @apply mt-6 text-lg font-bold;
+  }
+  .texte-legal ul {
+    @apply list-disc space-y-1 pl-6;
+  }
+  .texte-legal mark {
+    @apply rounded bg-ambre-clair px-1 text-encre;
+  }
+
   /* Corrigés : HTML produit par sujets/rendu.py (Markdown + MathML). */
   .corrige {
     @apply space-y-3 leading-relaxed;
