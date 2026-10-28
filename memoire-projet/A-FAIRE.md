@@ -139,3 +139,6 @@
       durée : jusqu'à réception par le serveur, remise ou déconnexion).
 - [ ] Essai réel de la copie locale sur téléphone (mode avion pendant l'épreuve, navigateur fermé, réouverture).
 - [ ] Questions ouvertes du CDC v3 : enquête auprès d'au moins 50 étudiants pour confirmer le prix du Pass (5 000).
+- [x] Examen blanc court de démo (5 min) et accès depuis un téléphone du Wi-Fi (28/10).
+- [x] Interface anglaise complète, langue de l'examen par défaut, test des chaînes sans traduction (28/10).
+- [ ] Relecture de l'anglais par un anglophone (vocabulaire HND), avant la mise en ligne.

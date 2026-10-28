@@ -204,3 +204,9 @@
   plutôt que l'heure pour savoir ce que le serveur a reçu (une erreur d'horloge aurait pu effacer une réponse non
   arrivée). Contre-épreuves : sans restauration, sans effacement à la déconnexion, sans message tardif → échecs
   attendus. Copie v3 du CDC : §6 aligné. 476 verts + 5 essais JavaScript (tous OK dans node:20).
+- 28/10 : examen court de démo + accès téléphone (un commit) ; interface anglaise (un commit). Exploration en anglais
+  avec un compte HND (262 pages) puis analyse des gabarits et du code : catalogue déjà complet (1 082 chaînes) ;
+  manquaient les régions, les noms d'applications, la langue des e-mails envoyés hors de la requête du destinataire
+  et la langue par défaut selon l'examen. Contre-épreuves : reçu en français, middleware retiré → échecs attendus.
+  Erreur : `git checkout` pour annuler une contre-épreuve a effacé mes changements non commités de deux fichiers ;
+  rétablis et vérifiés par la suite complète. 483 verts.

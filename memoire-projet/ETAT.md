@@ -8,7 +8,7 @@
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **476 tests verts + 5 essais JavaScript** (sautés sans Node, lancés par la CI) (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
+- `pytest` : **483 tests verts + 5 essais JavaScript** (sautés sans Node, lancés par la CI) (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
   10 statistiques, 16 Google).
 - **Connexion Google (V2)** `accounts/google.py` : OpenID Connect sans dépendance (state, PKCE, nonce ; vérifie iss,
   aud, exp, email_verified). Compte existant → connecté ; sinon page « Dernière étape » (spécialité + consentement
@@ -36,6 +36,14 @@
   effacement sur les formulaires `data-efface-copie-locale`, renvoi tardif sur `[data-copie-tardive]` des pages
   auto-évaluation et résultat) ; `examen.js` restaure puis démarre (minuteur et navigation après la lecture de la
   copie). Essais `examen-copie-locale.js` (fake-indexeddb) et `copie-deconnexion.js`.
+- **Interface anglaise (28/10)** — langue du compte = langue de l'examen à l'inscription (e-mail et Google ; plus de
+  champ « langue » dans la fin d'inscription Google) ; `accounts/langue.py` (middleware `LangueDuCompte`) applique la
+  langue du compte quand le navigateur n'a pas de cookie ; reçu, décision de contribution et réponse du forum partent
+  dans la langue du destinataire. Test `test_chaque_chaine_marquee_a_sa_traduction_anglaise` (makemessages sur une
+  copie du projet). Exploration de 262 pages en anglais avec un compte HND : il ne reste en français que les contenus
+  BTS (noms de matières, sujets) et des mentions bilingues voulues (500, accueil, MINESUP).
+- **Essai sur téléphone (28/10)** — « [DÉMO] Examen court » (5 min) ; `ADRESSE_LOCALE` dans `.env` ajoutée aux hôtes
+  permis par compose.yaml (développement seulement). Adresse du PC : 192.168.100.238 (Ethernet).
 - **Maquettes, écrans 7, 9, 10 (27/10)** — Modération : colonnes Document / Envoyé par / Contrôles / Décision ;
   contrôles en clair (`ContributionAdmin.controles`, icône + texte) ; `Contribution.session_terminee` ; session non
   terminée : seul « Refuser et supprimer », validation refusée par la vue (redirection vers le refus) et par

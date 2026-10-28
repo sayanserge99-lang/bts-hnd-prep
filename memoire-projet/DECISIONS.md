@@ -156,5 +156,10 @@
   Le serveur juge toujours à la réception : après fin + 90 s, refus (409), message « Ces réponses sont arrivées après
   la fin de l'épreuve et n'ont pas été comptées. » sur la page de l'épreuve terminée, puis effacement. Effacée aussi
   après la remise (la page suivante voit la version reçue) et à la déconnexion / suppression du compte.
+- **Langue de l'interface (28/10, Serge Alain)** : étudiant HND en anglais par défaut, BTS en français ; la bascule
+  reste disponible et prioritaire. Traductions écrites pour des étudiants anglophones camerounais (paper, past papers,
+  marking guide, mock exam, session, specialty, subject = matière). Les contenus (sujets, corrigés, questions) ne se
+  traduisent pas. Les e-mails partent dans la langue du destinataire. L'outil d'import Excel du référentiel et le
+  simulateur de paiement (équipe, développement) restent en français.
 - **Signaler une question (27/10)** : entité Signalement (troisième cible, exactement une par signalement), dans la
   file du modérateur de la matière du chapitre ; motif de 10 caractères au moins, 10 par jour et par compte.
