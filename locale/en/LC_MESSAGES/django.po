@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-28 07:46+0100\n"
+"POT-Creation-Date: 2026-10-28 07:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1425,7 +1425,7 @@ msgstr ""
 "depreciation charge?”"
 
 #: forum/forms.py:25 templates/entrainement/_formulaire_question.html:12
-#: templates/entrainement/examens/epreuve.html:48
+#: templates/entrainement/examens/epreuve.html:53
 msgid "Votre réponse"
 msgstr "Your answer"
 
@@ -3852,11 +3852,8 @@ msgid "Examen blanc"
 msgstr "Mock exam"
 
 #: templates/entrainement/examens/epreuve.html:15
-msgid ""
-"Hors connexion : vos réponses restent ici et partiront au retour du réseau."
-msgstr ""
-"Offline: your answers stay here and will be sent when the connection "
-"returns."
+msgid "Connexion perdue"
+msgstr "Connection lost"
 
 #: templates/entrainement/examens/epreuve.html:16
 msgid "Temps écoulé : copie fermée, envoi de vos réponses…"
@@ -3870,32 +3867,42 @@ msgstr "Automatic saving on"
 msgid "Temps restant"
 msgstr "Time left"
 
-#: templates/entrainement/examens/epreuve.html:26
+#: templates/entrainement/examens/epreuve.html:23
+msgid ""
+"Connexion perdue. Vos réponses sont gardées sur le téléphone et envoyées dès"
+" le retour du réseau. Attention : après la fin du temps, les réponses qui ne"
+" sont pas arrivées dans les 90 secondes ne sont pas comptées."
+msgstr ""
+"Connection lost. Your answers are kept on your phone and sent as soon as the"
+" network is back. Note: after time is up, answers that have not arrived "
+"within 90 seconds are not counted."
+
+#: templates/entrainement/examens/epreuve.html:30
 msgid "Ouvrir le sujet (PDF)"
 msgstr "Open the paper (PDF)"
 
-#: templates/entrainement/examens/epreuve.html:39
+#: templates/entrainement/examens/epreuve.html:44
 #, python-format
 msgid "Partie 1 · Question %(n)s sur %(total)s"
 msgstr "Part 1 · Question %(n)s of %(total)s"
 
-#: templates/entrainement/examens/epreuve.html:41
-#: templates/entrainement/examens/epreuve.html:43
+#: templates/entrainement/examens/epreuve.html:46
+#: templates/entrainement/examens/epreuve.html:48
 msgid "Marquer"
 msgstr "Flag"
 
-#: templates/entrainement/examens/epreuve.html:41
-#: templates/entrainement/examens/epreuve.html:43
-#: templates/entrainement/examens/epreuve.html:86
+#: templates/entrainement/examens/epreuve.html:46
+#: templates/entrainement/examens/epreuve.html:48
+#: templates/entrainement/examens/epreuve.html:91
 msgid "Marquée"
 msgstr "Flagged"
 
-#: templates/entrainement/examens/epreuve.html:61
-#: templates/entrainement/examens/epreuve.html:80
+#: templates/entrainement/examens/epreuve.html:66
+#: templates/entrainement/examens/epreuve.html:85
 msgid "Partie 2 : rédaction"
 msgstr "Part 2: written answers"
 
-#: templates/entrainement/examens/epreuve.html:62
+#: templates/entrainement/examens/epreuve.html:67
 msgid ""
 "Composez sur papier comme le jour de l'examen, ou tapez vos réponses ici : "
 "vous les comparerez au corrigé après la remise."
@@ -3903,59 +3910,59 @@ msgstr ""
 "Write on paper as on exam day, or type your answers here: you will compare "
 "them with the marking guide after handing in."
 
-#: templates/entrainement/examens/epreuve.html:63
+#: templates/entrainement/examens/epreuve.html:68
 msgid "Votre copie"
 msgstr "Your answers"
 
-#: templates/entrainement/examens/epreuve.html:67
+#: templates/entrainement/examens/epreuve.html:72
 msgid ""
 "La correction s'affiche seulement quand vous rendez votre copie, comme le "
 "jour de l'examen."
 msgstr "Answers are shown only when you hand in your paper, as on exam day."
 
-#: templates/entrainement/examens/epreuve.html:70
-#: templates/entrainement/examens/epreuve.html:72
+#: templates/entrainement/examens/epreuve.html:75
+#: templates/entrainement/examens/epreuve.html:77
 msgid "Questions"
 msgstr "Questions"
 
-#: templates/entrainement/examens/epreuve.html:71
+#: templates/entrainement/examens/epreuve.html:76
 msgid "répondue"
 msgstr "answered"
 
-#: templates/entrainement/examens/epreuve.html:71
+#: templates/entrainement/examens/epreuve.html:76
 msgid "marquée"
 msgstr "flagged"
 
-#: templates/entrainement/examens/epreuve.html:76
+#: templates/entrainement/examens/epreuve.html:81
 #, python-format
 msgid "Question %(n)s"
 msgstr "Question %(n)s"
 
-#: templates/entrainement/examens/epreuve.html:81
+#: templates/entrainement/examens/epreuve.html:86
 msgid "Rédaction"
 msgstr "Writing"
 
-#: templates/entrainement/examens/epreuve.html:84
+#: templates/entrainement/examens/epreuve.html:89
 msgid "Répondue"
 msgstr "Answered"
 
-#: templates/entrainement/examens/epreuve.html:85
+#: templates/entrainement/examens/epreuve.html:90
 msgid "En cours"
 msgstr "Current"
 
-#: templates/entrainement/examens/epreuve.html:92
+#: templates/entrainement/examens/epreuve.html:97
 msgid "Précédente"
 msgstr "Previous"
 
-#: templates/entrainement/examens/epreuve.html:93
+#: templates/entrainement/examens/epreuve.html:98
 msgid "Suivante"
 msgstr "Next"
 
-#: templates/entrainement/examens/epreuve.html:95
+#: templates/entrainement/examens/epreuve.html:100
 msgid "Rendre votre copie maintenant ? Vous ne pourrez plus la modifier."
 msgstr "Hand in your paper now? You will not be able to change it."
 
-#: templates/entrainement/examens/epreuve.html:95
+#: templates/entrainement/examens/epreuve.html:100
 msgid "Rendre ma copie"
 msgstr "Hand in my paper"
 
@@ -5213,3 +5220,9 @@ msgstr "A paper is missing?"
 #: templates/sujets/liste.html:103
 msgid "Envoyez-le, il vous offre des jours d'abonnement"
 msgstr "Send it and earn free subscription days"
+
+#~ msgid ""
+#~ "Hors connexion : vos réponses restent ici et partiront au retour du réseau."
+#~ msgstr ""
+#~ "Offline: your answers stay here and will be sent when the connection "
+#~ "returns."

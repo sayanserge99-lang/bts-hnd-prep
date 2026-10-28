@@ -12,11 +12,15 @@
       <p class="text-xs uppercase tracking-wide text-white/70">{% translate "Examen blanc" %} · {{ examen.sujet.session.examen.code }} {{ examen.sujet.session.annee }}</p>
       <p class="truncate font-semibold">{{ examen.sujet.matiere.nom }}</p>
       <p id="etat-sauvegarde" class="text-xs text-white/70" aria-live="polite"
-         data-hors-ligne="{% translate 'Hors connexion : vos réponses restent ici et partiront au retour du réseau.' %}"
+         data-hors-ligne="{% translate 'Connexion perdue' %}"
          data-temps-ecoule="{% translate 'Temps écoulé : copie fermée, envoi de vos réponses…' %}">{% translate "Sauvegarde automatique activée" %}</p>
     </div>
     <p class="shrink-0 rounded-xl bg-vert px-3 py-2"><span class="sr-only">{% translate "Temps restant" %}</span>
       <span id="minuteur" data-secondes="{{ secondes_restantes }}" class="font-mono text-2xl font-bold" role="timer">--:--</span></p>
+  </div>
+  {# Affiché par examen.js quand une sauvegarde n'arrive pas ; dit honnêtement ce qui se passe après la fin du temps. #}
+  <div id="bandeau-hors-ligne" class="border-b-2 border-amber-500 bg-amber-50 text-encre" role="alert" hidden>
+    <p class="mx-auto max-w-2xl px-4 py-2 text-sm">{% translate "Connexion perdue. Vos réponses sont gardées sur le téléphone et envoyées dès le retour du réseau. Attention : après la fin du temps, les réponses qui ne sont pas arrivées dans les 90 secondes ne sont pas comptées." %}</p>
   </div>
 </header>
 {% endblock %}
@@ -25,11 +29,12 @@
 <div class="mx-auto max-w-2xl px-4 py-5">
   <a href="{% url 'sujets:pdf' examen.sujet.pk %}" target="_blank" rel="noopener" class="bouton-contour">{% translate "Ouvrir le sujet (PDF)" %}</a>
 
-  {# Sauvegarde continue : à chaque changement, après une pause dans la frappe, et toutes les 30 s. #}
+  {# Sauvegarde continue : à chaque changement, après une pause d'une seconde dans la frappe, toutes les 30 s,
+     et (« sauvegarder », examen.js) dès le retour du réseau après un échec. #}
   {# Sans JavaScript, toutes les questions s'affichent à la suite ; examen.js les présente une par une. #}
   <form id="epreuve" method="post" action="{% url 'entrainement:rendre' tentative.pk %}" class="mt-5 space-y-5"
         hx-post="{% url 'entrainement:enregistrer' tentative.pk %}" hx-target="#etat-sauvegarde"
-        hx-trigger="change, keyup changed delay:3s from:#copie, every 30s">
+        hx-trigger="change, keyup changed delay:1s from:#copie, every 30s, sauvegarder">
     {% csrf_token %}
     <input type="hidden" name="marquees" id="marquees" value="{{ marquees }}">
 

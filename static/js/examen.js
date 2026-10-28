@@ -79,11 +79,26 @@
   afficher();
   setInterval(afficher, 1000);
 
-  // HTMX n'a pas pu joindre le serveur : les réponses restent dans la page et repartent
-  // à la prochaine sauvegarde (toutes les 30 s ou au prochain changement).
+  // HTMX n'a pas pu joindre le serveur : les réponses restent dans la page, le bandeau le dit, et elles
+  // repartent dès que le réseau revient (événement « online », ou nouvel essai toutes les 5 s) ; seules les
+  // toutes dernières réponses restent alors en jeu si la coupure dure au-delà de la fin du temps.
+  var bandeau = document.getElementById("bandeau-hors-ligne");
+  var nouvelEssai = null;
+
+  function sauvegarderMaintenant() {
+    if (nouvelEssai) { clearTimeout(nouvelEssai); nouvelEssai = null; }
+    if (!verrouille) formulaire.dispatchEvent(new Event("sauvegarder"));
+  }
+
   document.body.addEventListener("htmx:sendError", function () {
-    if (etat) etat.textContent = etat.dataset.horsLigne;
+    if (etat && !verrouille) etat.textContent = etat.dataset.horsLigne;
+    if (bandeau) bandeau.hidden = false;
+    if (!nouvelEssai) nouvelEssai = setTimeout(function () { nouvelEssai = null; sauvegarderMaintenant(); }, 5000);
   });
+  document.body.addEventListener("htmx:afterRequest", function (evenement) {
+    if (evenement.detail && evenement.detail.successful && bandeau) bandeau.hidden = true;
+  });
+  window.addEventListener("online", sauvegarderMaintenant);
 
   // 409 : l'épreuve est close côté serveur (temps écoulé) ; la page suivante montre la correction.
   document.body.addEventListener("htmx:responseError", function (evenement) {

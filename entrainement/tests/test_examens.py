@@ -315,3 +315,14 @@ def test_les_consignes_annoncent_la_fermeture_de_la_copie(client, etudiant, exam
     client.force_login(etudiant)
     page = client.get(reverse("entrainement:consignes", args=[examen.pk])).content.decode()
     assert "La copie se ferme automatiquement à la fin du temps." in page
+
+
+def test_le_bandeau_de_connexion_perdue_dit_la_regle_des_90_secondes(client, etudiant, examen, questions):
+    client.force_login(etudiant)
+    tentative = demarrer(client, examen)
+    page = client.get(reverse("entrainement:epreuve", args=[tentative.pk])).content.decode().replace("&#x27;", "'")
+    assert ('id="bandeau-hors-ligne"' in page and "Connexion perdue. Vos réponses sont gardées sur le téléphone et envoyées "
+            "dès le retour du réseau. Attention : après la fin du temps, les réponses qui ne sont pas arrivées dans "
+            "les 90 secondes ne sont pas comptées." in page)
+    # Sauvegarde au fil de l'eau : HTMX écoute aussi « sauvegarder », lancé par examen.js au retour du réseau.
+    assert "every 30s, sauvegarder" in page
