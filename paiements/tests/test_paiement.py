@@ -184,3 +184,12 @@ def test_le_simulateur_n_existe_pas_en_production(client, en_attente, etudiant, 
     assert client.get(reverse("paiements:simulateur", args=[en_attente.reference])).status_code == 404
     # Et le site refuse de démarrer avec le paiement ouvert sur l'agrégateur simulé.
     assert "paiements.E001" in [erreur.id for erreur in run_checks()]
+
+
+def test_le_champ_telephone_affiche_l_indicatif_237(client, paiement_ouvert, etudiant, mensuel):
+    """Maquette : « +237 » devant le champ ; le numéro saisi sans indicatif (ou avec) est accepté."""
+    client.force_login(etudiant)
+    page = client.get(reverse("paiements:commander", args=[mensuel.pk])).content.decode()
+    assert 'class="avec-prefixe flex"' in page and ">+237</span>" in page
+    commander(client, mensuel, telephone="677 12 34 56")
+    assert Paiement.objects.get().telephone == "237677123456"

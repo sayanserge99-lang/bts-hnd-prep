@@ -30,6 +30,12 @@
           <svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
         </button>
       </div>
+    {% elif field.field.prefixe %}
+      {# Préfixe affiché devant la saisie (indicatif +237 du paiement), lu avec le champ. #}
+      <div class="avec-prefixe flex">
+        <span class="mt-1 inline-flex items-center rounded-l-lg border border-r-0 border-bordure bg-creme px-3 text-gris">{{ field.field.prefixe }}</span>
+        {{ field }}
+      </div>
     {% else %}
       {{ field }}
     {% endif %}

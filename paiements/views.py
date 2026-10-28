@@ -67,9 +67,14 @@ class CommandeForm(forms.Form):
     telephone = forms.CharField(
         label=gettext_lazy("Numéro de téléphone"), max_length=20,
         help_text=gettext_lazy("Vous recevrez une demande sur ce téléphone : validez-la avec votre code secret."),
-        widget=forms.TextInput(attrs={"inputmode": "tel", "autocomplete": "tel", "placeholder": "6XX XX XX XX"}),
+        # « tel-national » : le téléphone propose le numéro sans +237, déjà affiché devant le champ.
+        widget=forms.TextInput(attrs={"inputmode": "tel", "autocomplete": "tel-national", "placeholder": "6XX XX XX XX"}),
     )
     accepte = forms.BooleanField(label=gettext_lazy("J'ai lu et j'accepte les conditions générales de vente."))
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["telephone"].prefixe = "+237"  # maquette (templates/forms/champ.html) ; +237 saisi aussi accepté
 
     def clean_telephone(self):
         numero = service.normaliser_telephone(self.cleaned_data["telephone"])

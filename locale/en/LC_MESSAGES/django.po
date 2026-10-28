@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-28 12:39+0100\n"
+"POT-Creation-Date: 2026-10-28 12:49+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -183,7 +183,7 @@ msgstr "Privacy policy"
 msgid "Partage des résultats avec l'établissement"
 msgstr "Sharing results with the institution"
 
-#: accounts/models.py:99 templates/base.html:103
+#: accounts/models.py:99 templates/base.html:112
 msgid "Conditions de vente"
 msgstr "Terms of sale"
 
@@ -1071,7 +1071,7 @@ msgstr "BTS-HND Prep — Administration"
 msgid "BTS-HND Prep"
 msgstr "BTS-HND Prep"
 
-#: config/urls.py:18 templates/accounts/profil.html:91
+#: config/urls.py:18 templates/accounts/profil.html:91 templates/base.html:49
 #: templates/entrainement/progression.html:4
 msgid "Tableau de bord"
 msgstr "Dashboard"
@@ -1127,8 +1127,8 @@ msgid_plural "%d questions retirées."
 msgstr[0] "%d question removed."
 msgstr[1] "%d questions removed."
 
-#: entrainement/apps.py:8 templates/base.html:48 templates/base.html:50
-#: templates/base.html:124 templates/base.html:129
+#: entrainement/apps.py:8 templates/base.html:53 templates/base.html:55
+#: templates/base.html:133 templates/base.html:138
 #: templates/entrainement/accueil.html:4 templates/entrainement/accueil.html:9
 #: templates/entrainement/examens/liste.html:9
 msgid "Entraînement"
@@ -1490,7 +1490,7 @@ msgid_plural "%d signalements rejetés."
 msgstr[0] "%d report rejected."
 msgstr[1] "%d reports rejected."
 
-#: forum/apps.py:8 templates/base.html:52
+#: forum/apps.py:8 templates/base.html:60
 #: templates/entrainement/accueil.html:23 templates/forum/accueil.html:4
 #: templates/forum/accueil.html:9 templates/forum/discussion.html:4
 #: templates/forum/matiere.html:4 templates/forum/matiere.html:9
@@ -1674,7 +1674,7 @@ msgid ""
 "fin."
 msgstr "This code is no longer valid: your institution's agreement has ended."
 
-#: paiements/codes.py:93 paiements/views.py:97
+#: paiements/codes.py:93 paiements/views.py:102
 msgid "Complétez d'abord votre profil (examen et spécialité)."
 msgstr "First complete your profile (exam and specialty)."
 
@@ -1843,11 +1843,11 @@ msgid ""
 msgstr ""
 "You will receive a request on this phone: confirm it with your secret code."
 
-#: paiements/views.py:72
+#: paiements/views.py:73
 msgid "J'ai lu et j'accepte les conditions générales de vente."
 msgstr "I have read and accept the terms of sale."
 
-#: paiements/views.py:77
+#: paiements/views.py:82
 msgid "Numéro de mobile camerounais attendu (9 chiffres, commençant par 6)."
 msgstr "A Cameroonian mobile number is expected (9 digits, starting with 6)."
 
@@ -2102,7 +2102,7 @@ msgstr[0] ""
 msgstr[1] ""
 "%d marking guides refused: their paper's session has not officially ended."
 
-#: sujets/apps.py:8 templates/base.html:46 templates/base.html:119
+#: sujets/apps.py:8 templates/base.html:51 templates/base.html:128
 #: templates/sujets/liste.html:4 templates/sujets/liste.html:9
 msgid "Sujets"
 msgstr "Past papers"
@@ -2431,7 +2431,7 @@ msgstr "Continue with Google"
 
 #: templates/accounts/connexion.html:4 templates/accounts/connexion.html:8
 #: templates/accounts/connexion.html:12 templates/accounts/inscription.html:21
-#: templates/base.html:69
+#: templates/base.html:78
 msgid "Se connecter"
 msgstr "Log in"
 
@@ -2445,7 +2445,7 @@ msgstr "No account yet?"
 
 #: templates/accounts/connexion.html:17 templates/accounts/google_finir.html:4
 #: templates/accounts/inscription.html:4 templates/accounts/inscription.html:8
-#: templates/base.html:70
+#: templates/base.html:79
 msgid "Créer un compte"
 msgstr "Create an account"
 
@@ -2570,7 +2570,7 @@ msgid "Créer mon compte"
 msgstr "Create my account"
 
 #: templates/accounts/google_finir.html:16
-#: templates/accounts/inscription.html:18 templates/base.html:102
+#: templates/accounts/inscription.html:18 templates/base.html:111
 #: templates/pages/conditions_utilisation.html:4
 #: templates/pages/conditions_utilisation.html:5
 msgid "Conditions d'utilisation"
@@ -2592,7 +2592,7 @@ msgstr "Edit my profile"
 
 #: templates/accounts/modifier_profil.html:8
 #: templates/accounts/mot_de_passe.html:8 templates/accounts/profil.html:4
-#: templates/base.html:66 templates/communaute/mes_contributions.html:9
+#: templates/base.html:75 templates/communaute/mes_contributions.html:9
 #: templates/paiements/activer_code.html:8 templates/paiements/recu.html:8
 #: templates/partenaires/mes_epreuves.html:9
 msgid "Mon espace"
@@ -2728,7 +2728,7 @@ msgstr "Receipt"
 msgid "J'ai un code d'accès"
 msgstr "I have an access code"
 
-#: templates/accounts/profil.html:63 templates/base.html:101
+#: templates/accounts/profil.html:63 templates/base.html:110
 msgid "Confidentialité"
 msgstr "Privacy"
 
@@ -2866,7 +2866,7 @@ msgstr ""
 #: templates/admin/communaute/contribution/valider.html:6
 #: templates/admin/entrainement/question/importer.html:6
 #: templates/admin/paiements/codeacces/generer.html:6
-#: templates/admin/sujets/sujet/importer.html:6 templates/base.html:115
+#: templates/admin/sujets/sujet/importer.html:6 templates/base.html:124
 msgid "Accueil"
 msgstr "Home"
 
@@ -3365,54 +3365,62 @@ msgstr "The site is being tested: it may change or contain errors."
 msgid "Donner mon avis"
 msgstr "Give feedback"
 
-#: templates/base.html:45
+#: templates/base.html:47
 msgid "Navigation principale"
 msgstr "Main navigation"
 
-#: templates/base.html:50 templates/base.html:129
+#: templates/base.html:55 templates/base.html:138
 #: templates/sujets/detail.html:19
 msgid "Bientôt"
 msgstr "Soon"
 
-#: templates/base.html:53 templates/paiements/commander.html:8
+#: templates/base.html:58 templates/entrainement/accueil.html:29
+#: templates/entrainement/examens/consignes.html:8
+#: templates/entrainement/examens/liste.html:4
+#: templates/entrainement/examens/liste.html:10
+#: templates/partenaires/espace.html:77
+msgid "Examens blancs"
+msgstr "Mock exams"
+
+#: templates/base.html:61 templates/paiements/commander.html:8
 #: templates/paiements/offres.html:4 templates/paiements/offres.html:9
 msgid "Offres"
 msgstr "Plans"
 
-#: templates/base.html:65
+#: templates/base.html:74
 msgid "Mon établissement"
 msgstr "My institution"
 
-#: templates/base.html:67
+#: templates/base.html:76
 msgid "Déconnexion"
 msgstr "Log out"
 
-#: templates/base.html:99
+#: templates/base.html:108
 msgid "Informations légales"
 msgstr "Legal information"
 
-#: templates/base.html:100 templates/pages/mentions_legales.html:4
+#: templates/base.html:109 templates/pages/mentions_legales.html:4
 #: templates/pages/mentions_legales.html:5
 msgid "Mentions légales"
 msgstr "Legal notice"
 
-#: templates/base.html:104 templates/communaute/demande_retrait.html:4
+#: templates/base.html:113 templates/communaute/demande_retrait.html:4
 #: templates/communaute/demande_retrait.html:8
 #: templates/communaute/demande_retrait_recue.html:4
 msgid "Demande de retrait"
 msgstr "Takedown request"
 
-#: templates/base.html:105 templates/communaute/contact.html:4
+#: templates/base.html:114 templates/communaute/contact.html:4
 #: templates/communaute/contact.html:8
 #: templates/communaute/demande_retrait.html:22
 msgid "Contact"
 msgstr "Contact"
 
-#: templates/base.html:111
+#: templates/base.html:120
 msgid "Navigation mobile"
 msgstr "Mobile navigation"
 
-#: templates/base.html:135
+#: templates/base.html:144
 msgid "Profil"
 msgstr "Profile"
 
@@ -3434,9 +3442,11 @@ msgstr "Prepare for the BTS and HND with past papers"
 
 #: templates/catalogue/accueil.html:16
 msgid ""
-"Tous les sujets classés par spécialité, matière et année, à consulter "
-"gratuitement."
-msgstr "All papers sorted by specialty, subject and year, free to read."
+"Tous les sujets classés par spécialité, matière et année : quelques-uns par "
+"jour sans compte, tous avec un compte gratuit."
+msgstr ""
+"All past papers sorted by specialty, subject and year: a few a day without "
+"an account, all of them with a free account."
 
 #: templates/catalogue/accueil.html:17
 msgid "Corrigés et entraînement arrivent bientôt."
@@ -3835,14 +3845,6 @@ msgstr "Success by chapter, weak points, days before the session"
 #: templates/entrainement/accueil.html:23
 msgid "Une question ? Les autres étudiants et les enseignants répondent"
 msgstr "A question? Other students and teachers answer"
-
-#: templates/entrainement/accueil.html:29
-#: templates/entrainement/examens/consignes.html:8
-#: templates/entrainement/examens/liste.html:4
-#: templates/entrainement/examens/liste.html:10
-#: templates/partenaires/espace.html:77
-msgid "Examens blancs"
-msgstr "Mock exams"
 
 #: templates/entrainement/accueil.html:29
 msgid "Un vrai sujet, dans la durée réelle de l'épreuve"
@@ -4712,8 +4714,8 @@ msgstr[1] "for %(n)s days"
 
 #: templates/paiements/_formules.html:21
 #, python-format
-msgid "%(examen)s : jusqu'à la fin de la session %(annee)s (%(fin)s)"
-msgstr "%(examen)s: until the end of the %(annee)s session (%(fin)s)"
+msgid "%(examen)s : valable jusqu'à la fin de la session %(annee)s (%(fin)s)"
+msgstr "%(examen)s: valid until the end of the %(annee)s session (%(fin)s)"
 
 #: templates/paiements/_formules.html:22
 msgid "jusqu'à la fin de la prochaine session"

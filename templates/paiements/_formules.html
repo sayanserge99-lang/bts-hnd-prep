@@ -18,7 +18,7 @@
       <p class="mt-1 text-3xl font-extrabold">{{ offre.prix|fcfa }} <span class="text-sm font-normal text-gris">{% translate "TTC" %}</span></p>
       <p class="text-sm text-gris">
         {% if offre.type == "duree" %}{% blocktranslate count n=offre.duree_jours %}pendant {{ n }} jour{% plural %}pendant {{ n }} jours{% endblocktranslate %}
-        {% else %}{% for session in offre.fins %}{% blocktranslate with examen=session.examen.code annee=session.annee fin=session.date_fin_officielle|date:"d/m/Y" %}{{ examen }} : jusqu'à la fin de la session {{ annee }} ({{ fin }}){% endblocktranslate %}{% if not forloop.last %}<br>{% endif %}
+        {% else %}{% for session in offre.fins %}{% blocktranslate with examen=session.examen.code annee=session.annee fin=session.date_fin_officielle|date:"d/m/Y" %}{{ examen }} : valable jusqu'à la fin de la session {{ annee }} ({{ fin }}){% endblocktranslate %}{% if not forloop.last %}<br>{% endif %}
           {% empty %}{% translate "jusqu'à la fin de la prochaine session" %}{% endfor %}{% endif %}
       </p>
       <ul class="mt-4 list-disc space-y-1 pl-5 text-sm text-gris">

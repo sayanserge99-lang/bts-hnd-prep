@@ -57,6 +57,9 @@
   .formulaire textarea {
     @apply champ mt-1;
   }
+  .formulaire .avec-prefixe input {
+    @apply rounded-l-none;
+  }
   .formulaire input[type="checkbox"],
   .formulaire input[type="radio"] {
     @apply mt-0.5 h-5 w-5 shrink-0 accent-vert;
