@@ -322,6 +322,7 @@ class Command(BaseCommand):
             self.creer_corriges()
             self.creer_questions()
             self.creer_examen_blanc()
+            self.creer_examen_court()
             self.creer_informatique()
             self.creer_activite()
             return
@@ -379,6 +380,7 @@ class Command(BaseCommand):
         self.creer_corriges()
         self.creer_questions()
         self.creer_examen_blanc()
+        self.creer_examen_court()
         self.creer_informatique()
         self.creer_activite()
 
@@ -387,7 +389,8 @@ class Command(BaseCommand):
         après la durée de l'épreuve, il est clos ; relancer la commande en recommence un."""
         etudiant = Utilisateur.objects.filter(email=ETUDIANT_DEMO).first()
         compta = Matiere.objects.filter(examen__code="BTS", nom_fr="Comptabilité générale").first()
-        examen = ExamenBlanc.objects.filter(sujet__matiere=compta, publie=True).first() if compta else None
+        # L'examen en cours de démo reste celui de 2025, pas l'examen court.
+        examen = ExamenBlanc.objects.filter(sujet__matiere=compta, sujet__session__annee=2025, publie=True).order_by("pk").first() if compta else None
         if not etudiant or not examen:
             return
         en_cours = Tentative.objects.filter(utilisateur=etudiant, examen_blanc=examen, fin__isnull=True).first()
@@ -507,6 +510,22 @@ class Command(BaseCommand):
         CritereBareme.objects.create(examen_blanc=examen, libelle="Exercice 1 : tableau d'amortissement", points=7, ordre=1)
         CritereBareme.objects.create(examen_blanc=examen, libelle="Exercice 2 : écritures de régularisation", points=7, ordre=2)
         self.stdout.write(self.style.SUCCESS("1 examen blanc de démonstration créé."))
+
+    def creer_examen_court(self):
+        """Essai sur téléphone de la fin du temps et de la copie locale (coupure, fermeture, réouverture) : 5 minutes."""
+        titre = f"{MARQUE_DEMO} Examen court"
+        sujet = Sujet.objects.get(source=SOURCE_DEMO, session__examen__code="BTS", session__annee=2024, titre="Comptabilité générale")
+        if ExamenBlanc.objects.filter(titre=titre).exists():
+            return
+        examen = ExamenBlanc.objects.create(
+            titre=titre, sujet=sujet, duree=5, points_qcm=6, publie=True,
+            bareme="Partie 1 : QCM (6 points).\nPartie 2 : une ligne de rédaction pour essayer la copie (14 points).",
+        )
+        examen.questions.set(
+            Question.objects.filter(chapitre__matiere=sujet.matiere, explication__startswith=MARQUE_QUESTION_DEMO).order_by("pk")[:3]
+        )
+        CritereBareme.objects.create(examen_blanc=examen, libelle="Rédaction", points=14, ordre=1)
+        self.stdout.write(self.style.SUCCESS(f"Examen blanc de 5 minutes créé : {titre}."))
 
     def creer_informatique(self):
         """Spécialité de lancement (demande de Serge Alain) : informatique en premier, avec du contenu complet."""

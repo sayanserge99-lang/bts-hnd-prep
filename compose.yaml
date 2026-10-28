@@ -4,7 +4,9 @@
 # Réglages communs au serveur web et au worker Celery.
 x-django-env: &django-env
   DJANGO_DEBUG: "1"
-  DJANGO_ALLOWED_HOSTS: localhost,127.0.0.1
+  # Essai depuis un téléphone sur le même Wi-Fi : ADRESSE_LOCALE=192.168.x.y dans .env, puis
+  # http://192.168.x.y:8000/ (runserver écoute déjà sur 0.0.0.0). Ce fichier ne sert qu'au développement.
+  DJANGO_ALLOWED_HOSTS: localhost,127.0.0.1${ADRESSE_LOCALE:+,${ADRESSE_LOCALE}}
   POSTGRES_DB: btshnd
   POSTGRES_USER: btshnd
   POSTGRES_PASSWORD: btshnd

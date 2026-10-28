@@ -4,7 +4,7 @@ import pytest
 from django.core.management import CommandError, call_command
 
 from communaute.models import Contribution
-from entrainement.models import Tentative
+from entrainement.models import ExamenBlanc, Tentative
 
 pytestmark = pytest.mark.django_db
 
@@ -27,7 +27,10 @@ def test_activite_de_demonstration(settings):
     contributions = Contribution.objects.filter(statut=Contribution.Statut.EN_ATTENTE)
     assert contributions.count() == 3 and all(c.commentaire.startswith("[DÉMO]") for c in contributions)
     assert contributions.filter(annee=2027).exists()  # session pas encore terminée
+    court = ExamenBlanc.objects.get(titre="[DÉMO] Examen court")
+    assert court.duree == 5 and court.publie and court.questions.count() == 3
 
     # Relancer ne double rien.
     call_command("donnees_demo", stdout=open("/dev/null", "w"))
     assert Contribution.objects.count() == 3 and Tentative.objects.count() == 2
+    assert ExamenBlanc.objects.filter(titre="[DÉMO] Examen court").count() == 1
