@@ -37,13 +37,24 @@ nano .env.production
 | `DJANGO_ALLOWED_HOSTS` | le nom de domaine, par exemple `bts-hnd-prep.cm` |
 | `DJANGO_CSRF_TRUSTED_ORIGINS` | `https://` suivi du nom de domaine |
 | `POSTGRES_PASSWORD` | un mot de passe long et aléatoire |
-| `EMAIL_*` | les accès SMTP du fournisseur d'e-mails |
+| `EMAIL_*` | les accès SMTP du fournisseur d'e-mails (voir ci-dessous) |
 | `DJANGO_ADMINS` | l'adresse qui reçoit les alertes (demandes de retrait, erreurs) |
 | `DJANGO_ADMIN_URL` | une adresse d'administration difficile à deviner, avec la barre finale, par exemple `gestion-7f3k/` (par défaut `admin/`, que les robots essaient en premier) |
 | `SENTRY_DSN` | facultatif : l'adresse donnée par sentry.io (projet Django) pour être prévenu des erreurs ; aucune donnée personnelle n'est envoyée |
 | `CSP_FORM_ACTION_EN_PLUS` | l'adresse de la page de paiement de l'agrégateur, par exemple `https://checkout.agregateur.cm` (le navigateur refuse sinon d'y aller après le formulaire) |
 
 Le fichier `.env.production` ne doit jamais être envoyé sur GitHub (il est dans `.gitignore`).
+
+**E-mails.** Choisissez un fournisseur SMTP (par exemple Brevo, Mailjet ou Amazon SES, qui ont des offres
+gratuites ou très bon marché pour quelques centaines d'e-mails par jour) et déclarez-y le domaine d'envoi (SPF,
+DKIM) pour ne pas tomber dans les indésirables. Port 587 : `EMAIL_USE_TLS=1` ; port 465 : `EMAIL_USE_SSL=1` et
+`EMAIL_USE_TLS=0`. À **chaque démarrage**, le site se connecte au fournisseur et envoie un e-mail de test aux
+adresses de `DJANGO_ADMINS` ; un échec s'écrit dans les journaux (`docker compose ... logs web`, ligne « ÉCHEC de
+l'envoi des e-mails ») sans empêcher le site de démarrer. Pour vérifier à la main :
+
+```sh
+docker compose -f compose.prod.yaml --env-file .env.production exec web python manage.py verifier_email --strict
+```
 
 ## 3. Démarrer
 

@@ -51,7 +51,8 @@ RUN tailwindcss -i assets/css/app.css -o static/css/app.css --minify \
 USER app
 EXPOSE 8000
 # 3 processus pour un VPS de 2 vCPU (CDC 5).
-CMD ["sh", "-c", "python manage.py migrate --noinput && gunicorn config.wsgi --bind 0.0.0.0:8000 --workers 3 --timeout 120 --access-logfile -"]
+# Test d'envoi des e-mails à chaque démarrage : un échec s'écrit dans les journaux sans empêcher le site de démarrer.
+CMD ["sh", "-c", "python manage.py migrate --noinput && (python manage.py verifier_email || true) && gunicorn config.wsgi --bind 0.0.0.0:8000 --workers 3 --timeout 120 --access-logfile -"]
 
 
 FROM nginx:1.27-alpine AS nginx
