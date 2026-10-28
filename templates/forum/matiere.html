@@ -10,6 +10,7 @@
     <h1 class="mt-2 text-2xl font-bold">{{ matiere.nom }}</h1>
     <p class="text-gris">{{ matiere.examen.code }}{% if sujet %} · {% blocktranslate with titre=sujet.titre annee=sujet.session.annee %}questions sur le sujet {{ titre }} {{ annee }}{% endblocktranslate %}{% endif %}</p>
   </div>
+  {% include "forum/_recherche.html" %}
   <div class="flex flex-wrap items-center gap-3">
     <a href="{% url 'forum:nouvelle' matiere.pk %}{% if sujet %}?sujet={{ sujet.pk }}{% endif %}" class="bouton-plein">{% translate "Poser une question" %}</a>
     {% if request.GET.sans_reponse %}

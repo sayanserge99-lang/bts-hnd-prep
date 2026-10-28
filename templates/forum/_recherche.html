@@ -1,0 +1,9 @@
+{% load i18n %}
+{# Champ de recherche du forum (accueil, page d'une matière, résultats). #}
+<form method="get" action="{% url 'forum:recherche' %}" role="search" class="flex gap-2">
+  {% if matiere %}<input type="hidden" name="matiere" value="{{ matiere.pk }}">{% endif %}
+  <label for="recherche-forum" class="sr-only">{% translate "Rechercher dans le forum" %}</label>
+  <input id="recherche-forum" type="search" name="q" value="{{ texte|default:'' }}" maxlength="200" class="champ"
+         placeholder="{% if matiere %}{% blocktranslate with nom=matiere.nom %}Rechercher dans {{ nom }}{% endblocktranslate %}{% else %}{% translate "Rechercher une question (mots du titre ou des réponses)" %}{% endif %}">
+  <button class="bouton-contour shrink-0">{% translate "Rechercher" %}</button>
+</form>

@@ -5,6 +5,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.views import redirect_to_login
 from django.core.paginator import Paginator
+from django.contrib.postgres.search import SearchVector
 from django.db.models import Count, Max, Q
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
@@ -14,7 +15,7 @@ from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
 from catalogue.models import Matiere
-from sujets.models import Sujet
+from sujets.models import CONFIG_RECHERCHE, Sujet, requete_plein_texte
 
 from . import services
 from .forms import DiscussionForm, ReponseForm, SignalementForm
@@ -199,3 +200,38 @@ def supprimer(request, type_cible, pk):
     message.delete()
     messages.success(request, _("Votre question est supprimée."))
     return redirect("forum:matiere", pk=matiere)
+
+
+def discussions_trouvees(texte, matiere=None):
+    """Discussions visibles dont le titre, les détails ou une réponse visible contiennent tous les mots.
+    Chaque discussion est analysée dans la langue de son examen (BTS : français, HND : anglais)."""
+    trouvees = Q(pk__in=[])
+    for langue in CONFIG_RECHERCHE:
+        requete = requete_plein_texte(texte, langue)
+        if requete is None:
+            return Discussion.objects.none()
+        config = CONFIG_RECHERCHE[langue]
+        de_la_langue = Discussion.objects.filter(matiere__examen__langue=langue)
+        par_question = de_la_langue.annotate(
+            v=SearchVector("titre", weight="A", config=config) + SearchVector("texte", weight="B", config=config)
+        ).filter(v=requete)
+        par_reponse = Reponse.objects.filter(masquee=False, discussion__matiere__examen__langue=langue).annotate(
+            v=SearchVector("texte", config=config)
+        ).filter(v=requete)
+        trouvees |= Q(pk__in=par_question.values("pk")) | Q(pk__in=par_reponse.values("discussion"))
+    discussions = discussions_visibles().filter(trouvees)
+    if matiere is not None:
+        discussions = discussions.filter(matiere=matiere)
+    return discussions.annotate(nb_reponses=Count("reponses", filter=Q(reponses__masquee=False))).order_by("-derniere_activite")
+
+
+@forum_ouvert
+def recherche(request):
+    """Recherche dans le forum (titres, détails et réponses), dans tout le forum ou une matière."""
+    texte = request.GET.get("q", "").strip()[:200]
+    matiere = None
+    if request.GET.get("matiere", "").isdigit():
+        matiere = get_object_or_404(Matiere, pk=request.GET["matiere"])
+    discussions = discussions_trouvees(texte, matiere) if texte else Discussion.objects.none()
+    page = Paginator(discussions, 20).get_page(request.GET.get("page"))
+    return render(request, "forum/recherche.html", {"texte": texte, "matiere": matiere, "page": page})

@@ -15,6 +15,15 @@ CONFIG_RECHERCHE = {"fr": "fr_unaccent", "en": "english"}
 FICHIER_NON_CHARGE = object()
 
 
+def requete_plein_texte(texte, langue):
+    """Tous les mots, chacun valant aussi comme début de mot (« amortis » trouve « amortissement ») ; accents
+    ignorés en français. None si le texte ne contient aucun mot. Sert aux sujets et au forum."""
+    mots = re.findall(r"[^\W_]+", texte)
+    if not mots:
+        return None
+    return SearchQuery(" & ".join(f"{mot}:*" for mot in mots), config=CONFIG_RECHERCHE[langue], search_type="raw")
+
+
 class PublicationInterdite(ValidationError):
     """Tentative de publier un sujet d'une session qui n'est pas officiellement terminée (CDC 4.2)."""
 
@@ -37,17 +46,10 @@ class SujetQuerySet(models.QuerySet):
         return self.filter(session__date_fin_officielle__lt=aujourd_hui or timezone.localdate())
 
     def rechercher(self, texte, langue):
-        """Sujets contenant tous les mots, triés par pertinence.
-
-        Chaque mot vaut aussi comme début de mot (« amortis » trouve « amortissement »),
-        et les accents sont ignorés en français.
-        """
-        mots = re.findall(r"[^\W_]+", texte)
-        if not mots:
+        """Sujets contenant tous les mots, triés par pertinence (voir requete_plein_texte)."""
+        requete = requete_plein_texte(texte, langue)
+        if requete is None:
             return self.none()
-        requete = SearchQuery(
-            " & ".join(f"{mot}:*" for mot in mots), config=CONFIG_RECHERCHE[langue], search_type="raw"
-        )
         return (
             self.filter(recherche=requete)
             # F() et non "recherche" : un simple nom ferait recalculer le vecteur et perdre les poids.

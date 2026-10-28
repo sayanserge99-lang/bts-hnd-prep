@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-28 12:57+0100\n"
+"POT-Creation-Date: 2026-10-28 13:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -535,7 +535,7 @@ msgstr "target"
 msgid "Question (%(chapitre)s)"
 msgstr "Question (%(chapitre)s)"
 
-#: communaute/admin.py:183 communaute/models.py:26 sujets/models.py:271
+#: communaute/admin.py:183 communaute/models.py:26 sujets/models.py:273
 #: templates/communaute/mes_contributions.html:21
 #: templates/sujets/detail.html:17 templates/sujets/detail.html:19
 #: templates/sujets/liste.html:87
@@ -762,7 +762,7 @@ msgstr "Paper type"
 msgid "Durée (minutes)"
 msgstr "Duration (minutes)"
 
-#: communaute/forms.py:201 sujets/models.py:103
+#: communaute/forms.py:201 sujets/models.py:105
 msgid "Exemple : MINESUP, BTS session 2025."
 msgstr "Example: MINESUP, HND 2025 session."
 
@@ -1323,7 +1323,7 @@ msgstr "number of questions"
 msgid "quiz"
 msgstr "quiz"
 
-#: entrainement/models.py:145 sujets/models.py:97
+#: entrainement/models.py:145 sujets/models.py:99
 msgid "durée (minutes)"
 msgstr "duration (minutes)"
 
@@ -1506,6 +1506,7 @@ msgstr[1] "%d reports rejected."
 #: templates/entrainement/accueil.html:23 templates/forum/accueil.html:4
 #: templates/forum/accueil.html:9 templates/forum/discussion.html:4
 #: templates/forum/matiere.html:4 templates/forum/matiere.html:9
+#: templates/forum/recherche.html:4 templates/forum/recherche.html:9
 msgid "Forum"
 msgstr "Forum"
 
@@ -1575,27 +1576,27 @@ msgstr "forum reports"
 msgid "Nouvelle réponse à votre question"
 msgstr "New answer to your question"
 
-#: forum/views.py:88 forum/views.py:106
+#: forum/views.py:89 forum/views.py:107
 msgid "Vous avez beaucoup écrit aujourd'hui : revenez demain."
 msgstr "You have written a lot today: come back tomorrow."
 
-#: forum/views.py:146
+#: forum/views.py:147
 msgid "Indiquez en quelques mots pourquoi vous signalez ce message."
 msgstr "Say in a few words why you are reporting this message."
 
-#: forum/views.py:148
+#: forum/views.py:149
 msgid "Merci, un modérateur va regarder ce message."
 msgstr "Thank you, a moderator will look at this message."
 
-#: forum/views.py:150
+#: forum/views.py:151
 msgid "Vous avez déjà signalé ce message."
 msgstr "You have already reported this message."
 
-#: forum/views.py:192
+#: forum/views.py:193
 msgid "Votre réponse est supprimée."
 msgstr "Your answer has been deleted."
 
-#: forum/views.py:196
+#: forum/views.py:197
 msgid ""
 "D'autres personnes ont répondu : la question reste. Modifiez-la, ou demandez"
 " au modérateur."
@@ -1603,7 +1604,7 @@ msgstr ""
 "Other people have answered: the question stays. Edit it, or ask the "
 "moderator."
 
-#: forum/views.py:200
+#: forum/views.py:201
 msgid "Votre question est supprimée."
 msgstr "Your question has been deleted."
 
@@ -1975,7 +1976,7 @@ msgstr "Internal mock exam"
 msgid "Rattrapage"
 msgstr "Resit"
 
-#: partenaires/models.py:107 sujets/models.py:96
+#: partenaires/models.py:107 sujets/models.py:98
 msgid "type d'épreuve"
 msgstr "paper type"
 
@@ -1987,7 +1988,7 @@ msgstr "academic year"
 msgid "Par exemple 2025-2026."
 msgstr "For example 2025-2026."
 
-#: partenaires/models.py:109 sujets/models.py:99 sujets/models.py:239
+#: partenaires/models.py:109 sujets/models.py:101 sujets/models.py:241
 msgid "fichier PDF"
 msgstr "PDF file"
 
@@ -2208,7 +2209,7 @@ msgstr "empty “fichier” column"
 msgid "Le ZIP doit contenir un (et un seul) fichier %(nom)s."
 msgstr "The ZIP must contain one (and only one) %(nom)s file."
 
-#: sujets/models.py:24
+#: sujets/models.py:33
 #, python-format
 msgid ""
 "La session %(session)s se termine officiellement le %(date)s : ses sujets ne"
@@ -2217,87 +2218,87 @@ msgstr ""
 "The %(session)s session officially ends on %(date)s: its papers cannot be "
 "published before then."
 
-#: sujets/models.py:80 sujets/models.py:216
+#: sujets/models.py:82 sujets/models.py:218
 msgid "Brouillon"
 msgstr "Draft"
 
-#: sujets/models.py:81 sujets/models.py:217
+#: sujets/models.py:83 sujets/models.py:219
 msgid "Publié"
 msgstr "Published"
 
-#: sujets/models.py:82 sujets/models.py:218
+#: sujets/models.py:84 sujets/models.py:220
 msgid "Masqué (demande de retrait en cours)"
 msgstr "Hidden (takedown request pending)"
 
-#: sujets/models.py:85
+#: sujets/models.py:87
 msgid "Écrite"
 msgstr "Written"
 
-#: sujets/models.py:86
+#: sujets/models.py:88
 msgid "Pratique"
 msgstr "Practical"
 
-#: sujets/models.py:94
+#: sujets/models.py:96
 msgid "Uniquement des spécialités auxquelles la matière est rattachée."
 msgstr "Only specialties the subject is linked to."
 
-#: sujets/models.py:98
+#: sujets/models.py:100
 msgid "barème"
 msgstr "marking scheme"
 
-#: sujets/models.py:100
+#: sujets/models.py:102
 msgid "nombre de pages"
 msgstr "number of pages"
 
-#: sujets/models.py:101
+#: sujets/models.py:103
 msgid "Rempli par la tâche d'extraction, sert à la recherche."
 msgstr "Filled in by the extraction task, used for search."
 
-#: sujets/models.py:106
+#: sujets/models.py:108
 msgid "fourni par"
 msgstr "provided by"
 
-#: sujets/models.py:106
+#: sujets/models.py:108
 msgid "Établissement qui a transmis le sujet (filtre du catalogue)."
 msgstr "Institution that provided the paper (catalogue filter)."
 
-#: sujets/models.py:116
+#: sujets/models.py:118
 msgid "sujet"
 msgstr "paper"
 
-#: sujets/models.py:138
+#: sujets/models.py:140
 msgid "La matière n'appartient pas à l'examen de la session."
 msgstr "The subject does not belong to the session's exam."
 
-#: sujets/models.py:211
+#: sujets/models.py:213
 msgid "En préparation"
 msgstr "In preparation"
 
-#: sujets/models.py:212 templates/entrainement/examens/auto_evaluation.html:38
+#: sujets/models.py:214 templates/entrainement/examens/auto_evaluation.html:38
 #: templates/sujets/_corrige.html:10 templates/sujets/_resultats.html:20
 #: templates/sujets/liste.html:91
 msgid "Proposé par la communauté"
 msgstr "Community answer"
 
-#: sujets/models.py:213 templates/entrainement/examens/auto_evaluation.html:38
+#: sujets/models.py:215 templates/entrainement/examens/auto_evaluation.html:38
 #: templates/sujets/_corrige.html:8 templates/sujets/_resultats.html:18
 #: templates/sujets/liste.html:90
 msgid "Vérifié par un enseignant"
 msgstr "Verified by a teacher"
 
-#: sujets/models.py:221
+#: sujets/models.py:223
 msgid "Plateforme"
 msgstr "Platform"
 
-#: sujets/models.py:222
+#: sujets/models.py:224
 msgid "Enseignant"
 msgstr "Teacher"
 
-#: sujets/models.py:223
+#: sujets/models.py:225
 msgid "Partagé"
 msgstr "Shared"
 
-#: sujets/models.py:226
+#: sujets/models.py:228
 #, python-brace-format
 msgid ""
 "Markdown : **gras**, listes, tableaux (| a | b |), code entre ```. Formules "
@@ -2306,50 +2307,50 @@ msgstr ""
 "Markdown: **bold**, lists, tables (| a | b |), code between ```. Formulas: "
 "$x^2$ inline, $$\\frac{a}{b}$$ on its own line."
 
-#: sujets/models.py:232
+#: sujets/models.py:234
 msgid "début du corrigé"
 msgstr "start of the marking guide"
 
-#: sujets/models.py:233
+#: sujets/models.py:235
 msgid "Visible par tous (par exemple l'exercice 1). "
 msgstr "Visible to everyone (for example question 1). "
 
-#: sujets/models.py:236
+#: sujets/models.py:238
 msgid "suite du corrigé"
 msgstr "rest of the marking guide"
 
-#: sujets/models.py:237
+#: sujets/models.py:239
 msgid ""
 "Réservée aux abonnés une fois le paiement ouvert (CDC 3.3) ; visible par "
 "tous d'ici là."
 msgstr ""
 "Reserved for subscribers once payment opens; visible to everyone until then."
 
-#: sujets/models.py:243
+#: sujets/models.py:245
 msgid "titulaire des droits"
 msgstr "rights holder"
 
-#: sujets/models.py:245
+#: sujets/models.py:247
 msgid "régime de propriété"
 msgstr "ownership"
 
-#: sujets/models.py:256
+#: sujets/models.py:258
 msgid "corrigé"
 msgstr "marking guide"
 
-#: sujets/models.py:299
+#: sujets/models.py:301
 msgid "PDF ouverts ou téléchargés"
 msgstr "PDFs opened or downloaded"
 
-#: sujets/models.py:302
+#: sujets/models.py:304
 msgid "consultations du jour"
 msgstr "daily views"
 
-#: sujets/models.py:303
+#: sujets/models.py:305
 msgid "consultations par jour"
 msgstr "views per day"
 
-#: sujets/models.py:328
+#: sujets/models.py:330
 msgid "favori"
 msgstr "favourite"
 
@@ -4139,10 +4140,12 @@ msgid "En cours"
 msgstr "Current"
 
 #: templates/entrainement/examens/epreuve.html:98
+#: templates/forum/recherche.html:21
 msgid "Précédente"
 msgstr "Previous"
 
 #: templates/entrainement/examens/epreuve.html:99
+#: templates/forum/recherche.html:22
 msgid "Suivante"
 msgstr "Next"
 
@@ -4321,8 +4324,9 @@ msgstr "Activity"
 msgid "Date"
 msgstr "Date"
 
-#: templates/entrainement/progression.html:135 templates/forum/matiere.html:26
-#: templates/sujets/_resultats.html:34 templates/sujets/detail.html:82
+#: templates/entrainement/progression.html:135 templates/forum/matiere.html:27
+#: templates/forum/recherche.html:20 templates/sujets/_resultats.html:34
+#: templates/sujets/detail.html:82
 msgid "Pages"
 msgstr "Pages"
 
@@ -4500,6 +4504,23 @@ msgid_plural "%(n)s réponses"
 msgstr[0] "%(n)s answer"
 msgstr[1] "%(n)s answers"
 
+#: templates/forum/_recherche.html:5 templates/forum/recherche.html:10
+msgid "Rechercher dans le forum"
+msgstr "Search the forum"
+
+#: templates/forum/_recherche.html:7
+#, python-format
+msgid "Rechercher dans %(nom)s"
+msgstr "Search in %(nom)s"
+
+#: templates/forum/_recherche.html:7
+msgid "Rechercher une question (mots du titre ou des réponses)"
+msgstr "Search for a question (words from the title or answers)"
+
+#: templates/forum/_recherche.html:8
+msgid "Rechercher"
+msgstr "Search"
+
 #: templates/forum/_signaler.html:4
 msgid "Signaler"
 msgstr "Report"
@@ -4520,15 +4541,15 @@ msgstr ""
 "Ask your questions about a subject or a paper; other students and teachers "
 "answer."
 
-#: templates/forum/accueil.html:15
+#: templates/forum/accueil.html:16
 msgid "Dernières discussions"
 msgstr "Latest discussions"
 
-#: templates/forum/accueil.html:23
+#: templates/forum/accueil.html:24
 msgid "Matières"
 msgstr "Subjects"
 
-#: templates/forum/accueil.html:28
+#: templates/forum/accueil.html:29
 #, python-format
 msgid "%(n)s discussion"
 msgid_plural "%(n)s discussions"
@@ -4582,28 +4603,28 @@ msgstr "Read the answer on BTS-HND Prep, in the Forum section."
 msgid "questions sur le sujet %(titre)s %(annee)s"
 msgstr "questions about the %(titre)s %(annee)s paper"
 
-#: templates/forum/matiere.html:14 templates/forum/nouvelle.html:4
+#: templates/forum/matiere.html:15 templates/forum/nouvelle.html:4
 #: templates/forum/nouvelle.html:9
 msgid "Poser une question"
 msgstr "Ask a question"
 
-#: templates/forum/matiere.html:16
+#: templates/forum/matiere.html:17
 msgid "Toutes les discussions"
 msgstr "All discussions"
 
-#: templates/forum/matiere.html:18
+#: templates/forum/matiere.html:19
 msgid "Sans réponse"
 msgstr "Unanswered"
 
-#: templates/forum/matiere.html:23
+#: templates/forum/matiere.html:24
 msgid "Pas encore de discussion. Posez la première question !"
 msgstr "No discussion yet. Ask the first question!"
 
-#: templates/forum/matiere.html:27
+#: templates/forum/matiere.html:28
 msgid "Précédentes"
 msgstr "Previous"
 
-#: templates/forum/matiere.html:28
+#: templates/forum/matiere.html:29
 msgid "Suivantes"
 msgstr "Next"
 
@@ -4627,6 +4648,25 @@ msgstr ""
 #: templates/forum/nouvelle.html:15
 msgid "Publier la question"
 msgstr "Post the question"
+
+#: templates/forum/recherche.html:4
+msgid "Recherche"
+msgstr "Search"
+
+#: templates/forum/recherche.html:14
+#, python-format
+msgid "%(n)s discussion trouvée"
+msgid_plural "%(n)s discussions trouvées"
+msgstr[0] "%(n)s discussion found"
+msgstr[1] "%(n)s discussions found"
+
+#: templates/forum/recherche.html:17
+msgid ""
+"Aucune discussion ne contient tous ces mots. Essayez d'autres mots, ou posez"
+" la question."
+msgstr ""
+"No discussion contains all these words. Try other words, or ask the "
+"question."
 
 #: templates/pages/_page_legale.html:10
 msgid ""

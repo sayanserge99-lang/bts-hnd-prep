@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titre %}{% translate "Recherche" %} — {% translate "Forum" %} — BTS-HND Prep{% endblock %}
+
+{% block contenu %}
+<div class="mx-auto max-w-3xl space-y-5 px-4 py-6">
+  <div>
+    <a href="{% if matiere %}{% url 'forum:matiere' matiere.pk %}{% else %}{% url 'forum:accueil' %}{% endif %}" class="text-sm text-vert hover:underline">← {% if matiere %}{{ matiere.nom }}{% else %}{% translate "Forum" %}{% endif %}</a>
+    <h1 class="mt-2 text-2xl font-bold">{% translate "Rechercher dans le forum" %}</h1>
+  </div>
+  {% include "forum/_recherche.html" %}
+  {% if texte %}
+    <p class="text-sm text-gris" role="status">{% blocktranslate count n=page.paginator.count %}{{ n }} discussion trouvée{% plural %}{{ n }} discussions trouvées{% endblocktranslate %}</p>
+    <ul class="space-y-2">
+      {% for discussion in page %}{% include "forum/_ligne_discussion.html" with avec_matiere=True %}
+      {% empty %}<li class="carte text-gris">{% translate "Aucune discussion ne contient tous ces mots. Essayez d'autres mots, ou posez la question." %}</li>{% endfor %}
+    </ul>
+    {% if page.has_other_pages %}
+      <nav class="flex justify-between text-sm" aria-label="{% translate 'Pages' %}">
+        {% if page.has_previous %}<a class="text-vert underline" href="?q={{ texte|urlencode }}{% if matiere %}&amp;matiere={{ matiere.pk }}{% endif %}&amp;page={{ page.previous_page_number }}">← {% translate "Précédente" %}</a>{% else %}<span></span>{% endif %}
+        {% if page.has_next %}<a class="text-vert underline" href="?q={{ texte|urlencode }}{% if matiere %}&amp;matiere={{ matiere.pk }}{% endif %}&amp;page={{ page.next_page_number }}">{% translate "Suivante" %} →</a>{% endif %}
+      </nav>
+    {% endif %}
+  {% endif %}
+</div>
+{% endblock %}
