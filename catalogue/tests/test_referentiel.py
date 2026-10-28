@@ -173,3 +173,50 @@ def test_la_commande(remplir, capsys):
 def test_la_commande_refuse_un_fichier_faux(remplir):
     with pytest.raises(CommandError, match="1 erreur"):
         call_command("importer_referentiel", str(remplir(Matières=[["BAC", "Anglais", ""]])), "--appliquer")
+
+
+# --- Équivalences BTS ↔ HND (CDC 3.10), colonne facultative ---------------------------------------------------
+
+def test_le_modele_propose_la_colonne_equivalent(tmp_path):
+    modele(tmp_path / "m.xlsx")
+    assert [c.value for c in load_workbook(tmp_path / "m.xlsx")["Spécialités"][1]][-1] == "Équivalent (code dans l'autre examen)"
+
+
+def test_l_equivalent_se_saisit_dans_le_classeur(remplir):
+    chemin = remplir(specialites=[
+        ["BTS", "CGE", "Comptabilité et gestion des entreprises", "", "Commerciale", 1, "acc"],
+        ["HND", "ACC", "Accountancy", "", "Commerciale", 1, ""],  # une seule des deux lignes suffit
+    ])
+    rapport = importer(chemin, appliquer=True)
+    assert rapport.erreurs == [] and rapport.comptes["Équivalences BTS ↔ HND"]["créées"] == 1
+    cge, acc = Specialite.objects.get(code="CGE"), Specialite.objects.get(code="ACC")
+    assert cge.equivalent == acc and acc.equivalent == cge
+    assert importer(chemin, appliquer=True).comptes["Équivalences BTS ↔ HND"]["inchangées"] == 1
+
+
+def test_un_classeur_sans_la_colonne_reste_valable(tmp_path):
+    """Classeur commencé avant l'ajout de la colonne : rien n'est exigé."""
+    from openpyxl import Workbook
+
+    from catalogue.referentiel import FEUILLES
+
+    classeur = Workbook()
+    classeur.remove(classeur.active)
+    for nom, colonnes in FEUILLES.items():
+        classeur.create_sheet(nom).append(colonnes)
+    classeur["Spécialités"].append(["BTS", "CGE", "Comptabilité et gestion des entreprises", "", "Commerciale", 1])
+    classeur.save(tmp_path / "ancien.xlsx")
+    assert importer(tmp_path / "ancien.xlsx", appliquer=True).erreurs == []
+
+
+@pytest.mark.parametrize("lignes, attendu", [
+    ([["BTS", "CGE", "Compta", "", "Commerciale", 1, "XYZ"]], "équivalent XYZ introuvable"),
+    ([["BTS", "CGE", "Compta", "", "Commerciale", 1, "ACC"], ["BTS", "BF", "Banque", "", "Commerciale", 2, "ACC"],
+      ["HND", "ACC", "Accountancy", "", "Commerciale", 1, ""]], "une spécialité n'a qu'une équivalente"),
+    ([["BTS", "CGE", "Compta", "", "Commerciale", 1, "BF"], ["BTS", "BF", "Banque", "", "Commerciale", 2, ""]],
+     "équivalent BF introuvable dans l'autre examen"),
+])
+def test_equivalent_refuse(remplir, lignes, attendu):
+    rapport = importer(remplir(specialites=lignes), appliquer=True)
+    assert any(attendu in erreur for erreur in rapport.erreurs), rapport.erreurs
+    assert not Specialite.objects.exists()  # une erreur : rien n'est enregistré

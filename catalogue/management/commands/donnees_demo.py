@@ -50,6 +50,9 @@ SPECIALITES = {
     ],
 }
 
+# CDC 3.10 : spécialités équivalentes BTS ↔ HND (comme la migration catalogue 0004 pour une base existante).
+PAIRES = [("CGE", "ACC"), ("BF", "BAF"), ("MCV", "MKT"), ("IG", "SWE")]
+
 # (nom, {code spécialité: coefficient}, texte du sujet pour la recherche)
 MATIERES = {
     "BTS": [
@@ -332,6 +335,7 @@ class Command(BaseCommand):
         Corrige.objects.filter(titulaire_droits=ANCIENNE_SOURCE_DEMO).update(titulaire_droits=TITULAIRE_DEMO)
         if Sujet.objects.filter(source=SOURCE_DEMO).exists():
             self.stdout.write("Les sujets de démonstration sont déjà présents.")
+            self.apparier_specialites()
             self.creer_corriges()
             self.creer_questions()
             self.creer_examen_blanc()
@@ -391,6 +395,7 @@ class Command(BaseCommand):
                         nombre += 1
 
         self.stdout.write(self.style.SUCCESS(f"{nombre} sujets de démonstration créés (session {ANNEE_FUTURE} en brouillon)."))
+        self.apparier_specialites()
         self.creer_corriges()
         self.creer_questions()
         self.creer_examen_blanc()
@@ -525,6 +530,13 @@ class Command(BaseCommand):
         CritereBareme.objects.create(examen_blanc=examen, libelle="Exercice 1 : tableau d'amortissement", points=7, ordre=1)
         CritereBareme.objects.create(examen_blanc=examen, libelle="Exercice 2 : écritures de régularisation", points=7, ordre=2)
         self.stdout.write(self.style.SUCCESS("1 examen blanc de démonstration créé."))
+
+    def apparier_specialites(self):
+        for code_bts, code_hnd in PAIRES:
+            bts = Specialite.objects.filter(examen__code="BTS", code=code_bts, equivalent__isnull=True).first()
+            hnd = Specialite.objects.filter(examen__code="HND", code=code_hnd).first()
+            if bts and hnd:
+                bts.apparier(hnd)
 
     def remplir_epreuves(self):
         """Épreuve provisoire complète dans chaque sujet publié de démonstration (sinon un PDF d'une ligne).

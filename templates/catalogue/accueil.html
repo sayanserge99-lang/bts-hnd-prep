@@ -81,11 +81,16 @@
     <p class="text-sm text-gris">{% translate "D'autres spécialités arrivent au fil des sessions." %}</p>
   </div>
   <div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-    {% for specialite in specialites %}
-      <a href="{% url 'sujets:liste' %}?examen={{ specialite.examen.code }}&specialite={{ specialite.code }}" class="carte block hover:border-vert">
-        <p class="font-semibold">{{ specialite.nom }}</p>
-        <p class="mt-1 text-sm text-gris">{{ specialite.examen.code }}</p>
-      </a>
+    {# Maquette : la spécialité, puis son équivalente de l'autre examen (« HND · Accountancy »), chacune vers ses sujets. #}
+    {% for specialite, equivalent in specialites %}
+      <div class="carte hover:border-vert">
+        <a href="{% url 'sujets:liste' %}?examen={{ specialite.examen.code }}&specialite={{ specialite.code }}" class="block font-semibold hover:text-vert">{{ specialite.nom }}</a>
+        {% if equivalent %}
+          <a href="{% url 'sujets:liste' %}?examen={{ equivalent.examen.code }}&specialite={{ equivalent.code }}" class="mt-1 block text-sm text-gris hover:text-vert">{{ equivalent.examen.code }} · {{ equivalent.nom }}</a>
+        {% else %}
+          <p class="mt-1 text-sm text-gris">{{ specialite.examen.code }}</p>
+        {% endif %}
+      </div>
     {% endfor %}
   </div>
 </section>

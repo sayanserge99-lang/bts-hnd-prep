@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-28 12:49+0100\n"
+"POT-Creation-Date: 2026-10-28 12:57+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -312,7 +312,7 @@ msgstr "French"
 msgid "Anglais"
 msgstr "English"
 
-#: catalogue/models.py:19 catalogue/models.py:117 catalogue/models.py:138
+#: catalogue/models.py:19 catalogue/models.py:117 catalogue/models.py:161
 msgid "nom"
 msgstr "name"
 
@@ -378,35 +378,47 @@ msgstr "display order"
 msgid "Plus petit = affiché en premier."
 msgstr "Smaller = shown first."
 
-#: catalogue/models.py:124
+#: catalogue/models.py:126
+msgid "spécialité équivalente"
+msgstr "equivalent specialty"
+
+#: catalogue/models.py:126
+msgid "La spécialité correspondante de l'autre examen (BTS ↔ HND)."
+msgstr "The matching specialty in the other exam (BTS ↔ HND)."
+
+#: catalogue/models.py:130
 msgid "spécialité"
 msgstr "specialty"
 
-#: catalogue/models.py:141
+#: catalogue/models.py:141 catalogue/models.py:147
+msgid "La spécialité équivalente doit appartenir à l'autre examen."
+msgstr "The equivalent specialty must belong to the other exam."
+
+#: catalogue/models.py:164
 msgid "matière"
 msgstr "subject"
 
-#: catalogue/models.py:153
+#: catalogue/models.py:176
 msgid "matière d'une spécialité"
 msgstr "subject of a specialty"
 
-#: catalogue/models.py:154
+#: catalogue/models.py:177
 msgid "matières des spécialités"
 msgstr "subjects of specialties"
 
-#: catalogue/models.py:164
+#: catalogue/models.py:187
 msgid "La spécialité et la matière doivent appartenir au même examen."
 msgstr "The specialty and the subject must belong to the same exam."
 
-#: catalogue/models.py:170
+#: catalogue/models.py:193
 msgid "titre"
 msgstr "title"
 
-#: catalogue/models.py:174
+#: catalogue/models.py:197
 msgid "chapitre"
 msgstr "chapter"
 
-#: catalogue/views.py:78 templates/admin/base_site.html:16
+#: catalogue/views.py:87 templates/admin/base_site.html:16
 #: templates/paiements/offres.html:31
 msgid "Statistiques"
 msgstr "Statistics"
@@ -3526,11 +3538,11 @@ msgstr "Available specialties"
 msgid "D'autres spécialités arrivent au fil des sessions."
 msgstr "More specialties are added session by session."
 
-#: templates/catalogue/accueil.html:95
+#: templates/catalogue/accueil.html:100
 msgid "Choisissez votre formule"
 msgstr "Choose your plan"
 
-#: templates/catalogue/accueil.html:97
+#: templates/catalogue/accueil.html:102
 msgid "Comparer les offres en détail"
 msgstr "Compare the offers in detail"
 

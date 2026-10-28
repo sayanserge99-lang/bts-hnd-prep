@@ -119,6 +119,12 @@ class Specialite(models.Model):
     # Les spécialités prioritaires (lancement) s'affichent en premier partout sur le site.
     ordre = models.PositiveSmallIntegerField(_("ordre d'affichage"), default=100, help_text=_("Plus petit = affiché en premier."))
     matieres = models.ManyToManyField("Matiere", through="SpecialiteMatiere", related_name="specialites")
+    # CDC 3.10 : « Comptabilité et gestion des entreprises » (BTS) ↔ « Accountancy » (HND). Lien symétrique, posé
+    # par apparier() (admin, classeur du référentiel) : chaque côté pointe vers l'autre.
+    equivalent = models.OneToOneField(
+        "self", on_delete=models.SET_NULL, null=True, blank=True, related_name="+",
+        verbose_name=_("spécialité équivalente"), help_text=_("La spécialité correspondante de l'autre examen (BTS ↔ HND)."),
+    )
 
     class Meta:
         verbose_name = _("spécialité")
@@ -129,6 +135,23 @@ class Specialite(models.Model):
 
     def __str__(self):
         return self.nom
+
+    def clean(self):
+        if self.equivalent_id and self.equivalent.examen_id == self.examen_id:
+            raise ValidationError({"equivalent": _("La spécialité équivalente doit appartenir à l'autre examen.")})
+
+    def apparier(self, autre):
+        """Lie (ou délie avec None) cette spécialité à son équivalente de l'autre examen, des deux côtés.
+        Les anciens partenaires sont déliés : une spécialité n'a qu'une équivalente."""
+        if autre is not None and autre.examen_id == self.examen_id:
+            raise ValidationError(_("La spécialité équivalente doit appartenir à l'autre examen."))
+        anciens = [pk for pk in (self.equivalent_id, autre.equivalent_id if autre else None) if pk]
+        Specialite.objects.filter(Q(pk__in=anciens) | Q(equivalent__in=[self] + ([autre] if autre else []))).update(equivalent=None)
+        self.equivalent = autre
+        Specialite.objects.filter(pk=self.pk).update(equivalent=autre)
+        if autre is not None:
+            autre.equivalent = self
+            Specialite.objects.filter(pk=autre.pk).update(equivalent=self)
 
 
 class Matiere(models.Model):

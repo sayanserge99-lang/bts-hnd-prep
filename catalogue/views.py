@@ -18,6 +18,15 @@ from .models import Examen, Specialite
 from .statistiques import tableau_de_bord
 
 
+def cartes_de_specialites(code_examen):
+    """Maquette de l'accueil : une carte par spécialité de l'examen affiché, avec son équivalente de l'autre examen
+    (CDC 3.10) ; les spécialités de l'autre examen sans équivalente ont leur propre carte."""
+    specialites = list(Specialite.objects.select_related("examen", "equivalent__examen").order_by("ordre", "nom"))
+    premieres = [(s, s.equivalent) for s in specialites if s.examen.code == code_examen]
+    seules = [(s, None) for s in specialites if s.examen.code != code_examen and s.equivalent_id is None]
+    return premieres + seules
+
+
 def accueil(request):
     publies = Sujet.objects.publies()
     code_examen = examen_par_defaut(request)
@@ -30,7 +39,7 @@ def accueil(request):
             "examens": Examen.objects.order_by("code"),
             "code_examen": code_examen,
             "specialites_examen": Specialite.objects.filter(examen__code=code_examen),
-            "specialites": Specialite.objects.select_related("examen").order_by("examen__code", "ordre", "nom"),
+            "specialites": cartes_de_specialites(code_examen),
             "offres": offres_affichees(request.user),
         },
     )

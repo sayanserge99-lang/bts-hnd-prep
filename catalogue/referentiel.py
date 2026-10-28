@@ -36,6 +36,11 @@ FEUILLES = {
     "Chapitres": ["Examen", "Matière", "Ordre", "Titre", "Titre dans l'autre langue"],
 }
 
+# Colonnes ajoutées après la diffusion du modèle : lues si elles sont là, jamais exigées (un classeur déjà commencé
+# reste valable).
+EQUIVALENT = "Équivalent (code dans l'autre examen)"
+FACULTATIVES = {"Spécialités": [EQUIVALENT]}
+
 FILIERES = {"commerciale": "commerciale", "industrielle": "industrielle", "sante": "sante", "santé": "sante"}
 
 
@@ -97,9 +102,10 @@ def lignes(classeur, nom):
     manquantes = [colonne for colonne in FEUILLES[nom] if colonne not in entete]
     if manquantes:
         raise ErreurClasseur(f"Feuille « {nom} » : colonne(s) manquante(s) : {', '.join(manquantes)}.")
+    colonnes = FEUILLES[nom] + [colonne for colonne in FACULTATIVES.get(nom, []) if colonne in entete]
     for numero, valeurs in enumerate(feuille.iter_rows(min_row=2, values_only=True), start=2):
         ligne = {colonne: valeurs[entete.index(colonne)] if entete.index(colonne) < len(valeurs) else None
-                 for colonne in FEUILLES[nom]}
+                 for colonne in colonnes}
         if any(texte(valeur) for valeur in ligne.values()):
             yield numero, ligne
 
@@ -188,6 +194,7 @@ class Import:
 
     def specialites(self, classeur):
         vues = set()
+        paires = []  # (ligne, spécialité, code de l'équivalente) : résolues une fois toute la feuille lue
         for numero, ligne in lignes(classeur, "Spécialités"):
             examen = self.examen("Spécialités", numero, ligne["Examen"])
             code = texte(ligne["Code"]).upper()
@@ -212,6 +219,31 @@ class Import:
             valeurs = {f"nom_{principale}": nom, **traduction("nom", seconde, autre), "filiere": filiere, "ordre": ordre}
             objet, cree = Specialite.objects.get_or_create(examen=examen, code=code, defaults=valeurs)
             self.enregistrer("Spécialités", objet, valeurs, cree)
+            if texte(ligne.get(EQUIVALENT)):
+                paires.append((numero, objet, texte(ligne[EQUIVALENT]).upper()))
+        self.apparier(paires)
+
+    def apparier(self, paires):
+        """CDC 3.10 : spécialité équivalente de l'autre examen (BTS ↔ HND), dans la colonne facultative."""
+        voulues = {}
+        for numero, specialite, code in paires:
+            autre = Specialite.objects.exclude(examen=specialite.examen).filter(code=code).first()
+            if autre is None:
+                self.erreur("Spécialités", numero, f"équivalent {code} introuvable dans l'autre examen (feuille Spécialités).")
+                continue
+            for un, deux in ((specialite.pk, autre.pk), (autre.pk, specialite.pk)):
+                if voulues.setdefault(un, deux) != deux:
+                    self.erreur("Spécialités", numero, f"{specialite.code} et {code} : une spécialité n'a qu'une équivalente.")
+        if self.rapport.erreurs:
+            return
+        for numero, specialite, code in paires:
+            specialite.refresh_from_db()
+            autre = Specialite.objects.get(pk=voulues[specialite.pk])
+            if specialite.equivalent_id == autre.pk and autre.equivalent_id == specialite.pk:
+                self.rapport.compter("Équivalences BTS ↔ HND", "inchangées")
+            else:
+                specialite.apparier(autre)
+                self.rapport.compter("Équivalences BTS ↔ HND", "créées")
 
     def trouver_matiere(self, examen, nom):
         principale, _ = self.langues(examen)
@@ -316,6 +348,8 @@ LISEZ_MOI = [
     "avant le lendemain de cette date. Recopiez-la du communiqué officiel. Format JJ/MM/AAAA.",
     "Spécialités — le code est court et unique par examen (CGE, IG, SWE…). Filière : Commerciale, Industrielle",
     "ou Santé. Ordre d'affichage : plus petit = affiché en premier (les spécialités du lancement d'abord).",
+    "Équivalent (facultatif) : le code de la spécialité correspondante de l'autre examen (CGE ↔ ACC) ; une seule",
+    "des deux lignes suffit.",
     "Matières — une matière appartient à un seul examen (Comptabilité générale au BTS, Financial Accounting au HND).",
     "Coefficients — une ligne par couple spécialité / matière ; la matière est écrite comme dans la feuille Matières.",
     "Chapitres — facultatif ; sert aux quiz par chapitre.",
@@ -327,7 +361,7 @@ LISEZ_MOI = [
 EXEMPLES = {
     "Sessions": ["BTS", 2025, "14/04/2025", "27/06/2025"],
     "Spécialités": ["BTS", "CGE", "Comptabilité et gestion des entreprises", "Accounting and Business Management",
-                    "Commerciale", 1],
+                    "Commerciale", 1, "ACC"],
     "Matières": ["BTS", "Comptabilité générale", "Financial Accounting"],
     "Coefficients": ["BTS", "CGE", "Comptabilité générale", 4],
     "Chapitres": ["BTS", "Comptabilité générale", 1, "Les amortissements", "Depreciation"],
@@ -351,6 +385,7 @@ def modele(chemin):
 
     entete = PatternFill("solid", fgColor="DDEBDD")
     for nom, colonnes in FEUILLES.items():
+        colonnes = colonnes + FACULTATIVES.get(nom, [])
         feuille = classeur.create_sheet(nom)
         feuille.append(colonnes)
         feuille.freeze_panes = "A2"
