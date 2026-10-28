@@ -36,7 +36,7 @@ def avec_langue(reponse, utilisateur):
 def inscription(request):
     if request.user.is_authenticated:
         return redirect("accounts:profil")
-    form = InscriptionForm(request.POST or None, initial={"langue": request.LANGUAGE_CODE})
+    form = InscriptionForm(request.POST or None)
     ip = adresse_ip(request)
     if request.method == "POST" and INSCRIPTIONS_PAR_IP.atteinte(ip):
         # Robots qui créent des comptes en série : 5 comptes par heure depuis une même adresse.
@@ -222,7 +222,7 @@ def google_finir(request):
         return redirect("accounts:connexion")
     form = FinInscriptionGoogleForm(
         request.POST or None,
-        initial={"first_name": identite["prenom"], "last_name": identite["nom"], "langue": request.LANGUAGE_CODE},
+        initial={"first_name": identite["prenom"], "last_name": identite["nom"]},
     )
     if form.is_valid():
         utilisateur = form.creer(identite["email"])

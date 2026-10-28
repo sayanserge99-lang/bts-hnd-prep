@@ -268,7 +268,7 @@ class Corrige(models.Model):
         ]
 
     def __str__(self):
-        return f"Corrigé · {self.sujet}"
+        return f"{_('Corrigé')} · {self.sujet}"
 
     def verifier_publication(self):
         # Même règle que le sujet : un corrigé publié pendant la session dévoilerait l'épreuve.

@@ -43,10 +43,11 @@ def test_un_mot_de_passe_faible_reste_refuse(client, comptabilite, faible):
     assert reponse.status_code == 200 and not Utilisateur.objects.exists()
 
 
-def test_la_langue_est_celle_de_l_interface(client, comptabilite):
+def test_un_etudiant_bts_est_en_francais_meme_inscrit_depuis_l_interface_anglaise(client, comptabilite):
     client.cookies["django_language"] = "en"
     inscrire(client, comptabilite)
-    assert Utilisateur.objects.get().langue == "en"
+    assert Utilisateur.objects.get().langue == "fr"
+    assert '<html lang="fr">' in client.get(reverse("accounts:profil")).content.decode()
 
 
 def test_reinitialisation_de_bout_en_bout(client, comptabilite):
@@ -99,3 +100,15 @@ def test_une_specialite_d_un_autre_examen_est_refusee(client, comptabilite, soft
 def test_la_liste_suit_l_examen_et_garde_le_choix(client, comptabilite, software):
     fragment = client.get(reverse("options_specialites"), {"examen": "HND", "valeur": "pk", "specialite": software.pk}).content.decode()
     assert f'value="{software.pk}" selected' in fragment and "Comptabilité" not in fragment
+
+
+def test_un_etudiant_hnd_voit_l_anglais_par_defaut_et_garde_la_bascule(client, comptabilite, software):
+    reponse = inscrire(client, comptabilite, specialite=software.pk, examen="HND")
+    assert reponse.status_code == 302 and Utilisateur.objects.get().langue == "en"
+    page = client.get(reverse("accounts:profil")).content.decode()
+    assert '<html lang="en">' in page
+
+    # La bascule reste disponible : un clic, et le français est gardé (cookie et compte).
+    client.post(reverse("set_language"), {"language": "fr", "next": "/"})
+    assert '<html lang="fr">' in client.get(reverse("accounts:profil")).content.decode()
+    assert Utilisateur.objects.get().langue == "fr"

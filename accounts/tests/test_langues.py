@@ -1,10 +1,12 @@
 """Bilinguisme (CDC 4) : interface entièrement traduite, changement de langue en un clic."""
 
 import re
+import shutil
 from pathlib import Path
 
 import pytest
 from django.conf import settings
+from django.core.management import call_command
 from django.urls import reverse
 
 from accounts.models import Utilisateur
@@ -12,17 +14,40 @@ from accounts.models import Utilisateur
 FICHIER_PO = Path(settings.BASE_DIR) / "locale" / "en" / "LC_MESSAGES" / "django.po"
 
 
-def test_tous_les_textes_ont_une_traduction_anglaise():
-    """Échoue si un texte a été ajouté sans être traduit (relancer makemessages puis compléter le .po)."""
+def sans_traduction(fichier_po):
+    """Entrées du catalogue sans traduction anglaise (vides ou « fuzzy »), hors entrées obsolètes (#~)."""
     manquants = []
-    for bloc in FICHIER_PO.read_text(encoding="utf-8").split("\n\n")[1:]:
+    for bloc in fichier_po.read_text(encoding="utf-8").split("\n\n")[1:]:
+        if bloc.lstrip().startswith("#~"):
+            continue
         if "#, fuzzy" in bloc:
             manquants.append(bloc)
         msgid = re.search(r'^msgid "(.*)"', bloc, re.MULTILINE)
         traductions = re.findall(r'^msgstr(?:\[\d\])? "(.*)"((?:\n".*")*)', bloc, re.MULTILINE)
         if msgid and any(not (debut or suite.strip()) for debut, suite in traductions):
             manquants.append(msgid.group(1))
-    assert manquants == []
+    return manquants
+
+
+def test_tous_les_textes_ont_une_traduction_anglaise():
+    """Échoue si un texte a été ajouté sans être traduit (relancer makemessages puis compléter le .po)."""
+    assert sans_traduction(FICHIER_PO) == []
+
+
+@pytest.mark.skipif(not shutil.which("msgmerge"), reason="gettext absent (apt install gettext)")
+def test_chaque_chaine_marquee_a_sa_traduction_anglaise(tmp_path, settings, monkeypatch):
+    """Extrait les chaînes marquées du code actuel (makemessages, sur une copie du projet) et vérifie que chacune
+    a sa traduction anglaise : une chaîne marquée mais absente du .po, ou ajoutée sans traduction, fait échouer."""
+    copie = tmp_path / "projet"
+    shutil.copytree(
+        settings.BASE_DIR, copie,
+        ignore=shutil.ignore_patterns(".git", ".venv", "node_modules", "media", "static", "staticfiles", "tests_js",
+                                      "assets", "__pycache__", "*.mo", "*.pdf", "*.png", "*.jpg", "*.webp"),
+    )
+    settings.LOCALE_PATHS = [copie / "locale"]
+    monkeypatch.chdir(copie)
+    call_command("makemessages", locale=["en"], verbosity=0)
+    assert sans_traduction(copie / "locale" / "en" / "LC_MESSAGES" / "django.po") == []
 
 
 @pytest.mark.django_db

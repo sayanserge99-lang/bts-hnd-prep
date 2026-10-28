@@ -1,11 +1,12 @@
 from django.apps import AppConfig
+from django.utils.translation import gettext_lazy as _
 from django.db.models.signals import m2m_changed, post_migrate
 
 
 class AccountsConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "accounts"
-    verbose_name = "Comptes"
+    verbose_name = _("Comptes")
 
     def ready(self):
         from . import checks  # noqa: F401  (enregistre les vérifications)

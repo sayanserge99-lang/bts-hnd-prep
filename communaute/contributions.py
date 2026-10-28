@@ -14,6 +14,7 @@ from django.db import transaction
 from django.template.loader import render_to_string
 from django.utils import timezone
 from django.utils.translation import gettext as _
+from django.utils.translation import override
 
 from catalogue.models import Session
 from paiements.models import Abonnement
@@ -123,11 +124,13 @@ def _clore(contribution, moderateur, statut, **champs):
 
 
 def notifier(contribution):
-    send_mail(
-        _("Votre contribution a été validée") if contribution.statut == Contribution.Statut.VALIDEE
-        else _("Votre contribution n'a pas été retenue"),
-        render_to_string("communaute/email_decision_contribution.txt", {"contribution": contribution}),
-        None,
-        [contribution.utilisateur.email],
-        fail_silently=True,
-    )
+    # Dans la langue de l'étudiant, pas dans celle du modérateur qui décide.
+    with override(contribution.utilisateur.langue):
+        send_mail(
+            _("Votre contribution a été validée") if contribution.statut == Contribution.Statut.VALIDEE
+            else _("Votre contribution n'a pas été retenue"),
+            render_to_string("communaute/email_decision_contribution.txt", {"contribution": contribution}),
+            None,
+            [contribution.utilisateur.email],
+            fail_silently=True,
+        )

@@ -176,7 +176,7 @@ class DemandeRetrait(models.Model):
             if self.corrige.fichier:
                 self.corrige.fichier.delete(save=False)
             Corrige.objects.filter(pk=self.corrige_id).update(
-                fichier="", partie_gratuite="", contenu="[Retiré à la demande du titulaire des droits]"
+                fichier="", partie_gratuite="", contenu="[Retiré à la demande du titulaire des droits · Removed at the request of the rights holder]"
             )
         self._clore(self.Statut.ACCEPTEE)
 

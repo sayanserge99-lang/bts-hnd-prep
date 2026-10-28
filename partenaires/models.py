@@ -7,16 +7,16 @@ from django.utils.translation import gettext_lazy as _
 
 class Etablissement(models.Model):
     class Region(models.TextChoices):
-        ADAMAOUA = "adamaoua", "Adamaoua"
-        CENTRE = "centre", "Centre"
-        EST = "est", "Est"
-        EXTREME_NORD = "extreme_nord", "Extrême-Nord"
-        LITTORAL = "littoral", "Littoral"
-        NORD = "nord", "Nord"
-        NORD_OUEST = "nord_ouest", "Nord-Ouest"
-        OUEST = "ouest", "Ouest"
-        SUD = "sud", "Sud"
-        SUD_OUEST = "sud_ouest", "Sud-Ouest"
+        ADAMAOUA = "adamaoua", _("Adamaoua")
+        CENTRE = "centre", _("Centre")
+        EST = "est", _("Est")
+        EXTREME_NORD = "extreme_nord", _("Extrême-Nord")
+        LITTORAL = "littoral", _("Littoral")
+        NORD = "nord", _("Nord")
+        NORD_OUEST = "nord_ouest", _("Nord-Ouest")
+        OUEST = "ouest", _("Ouest")
+        SUD = "sud", _("Sud")
+        SUD_OUEST = "sud_ouest", _("Sud-Ouest")
 
     nom = models.CharField(max_length=200, unique=True)
     # Facultatives : un établissement cité par les étudiants peut être ajouté avant de connaître son adresse.

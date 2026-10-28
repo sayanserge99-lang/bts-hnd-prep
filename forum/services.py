@@ -6,6 +6,7 @@ from django.db import IntegrityError, transaction
 from django.template.loader import render_to_string
 from django.utils import timezone
 from django.utils.translation import gettext as _
+from django.utils.translation import override
 
 from .models import Discussion, Reponse, SignalementForum
 
@@ -44,11 +45,12 @@ def repondre(discussion, auteur, texte):
     reponse = Reponse.objects.create(discussion=discussion, auteur=auteur, texte=texte)
     Discussion.objects.filter(pk=discussion.pk).update(derniere_activite=reponse.cree_le)
     if discussion.auteur_id != auteur.pk:
-        send_mail(
-            _("Nouvelle réponse à votre question"),
-            render_to_string("forum/email_nouvelle_reponse.txt", {"discussion": discussion, "reponse": reponse}),
-            None,
-            [discussion.auteur.email],
-            fail_silently=True,
-        )
+        with override(discussion.auteur.langue):  # langue de celui qui a posé la question
+            send_mail(
+                _("Nouvelle réponse à votre question"),
+                render_to_string("forum/email_nouvelle_reponse.txt", {"discussion": discussion, "reponse": reponse}),
+                None,
+                [discussion.auteur.email],
+                fail_silently=True,
+            )
     return reponse

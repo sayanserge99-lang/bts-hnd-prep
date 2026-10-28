@@ -10,7 +10,6 @@ from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.utils import timezone
 from django.utils.html import format_html
-from django.utils.translation import get_language
 from django.utils.translation import gettext_lazy as _
 
 from catalogue.models import Session, Specialite
@@ -118,8 +117,8 @@ class InscriptionForm(UserCreationForm):
 
     @transaction.atomic
     def save(self, commit=True):
-        # Langue : celle de l'interface lue pendant l'inscription (modifiable dans le profil).
-        self.instance.langue = "en" if get_language().startswith("en") else "fr"
+        # Langue : celle de l'examen (HND : anglais, BTS : français), modifiable d'un clic ou dans le profil.
+        self.instance.langue = self.cleaned_data["specialite"].examen.langue
         utilisateur = super().save(commit=True)
         preparer_etudiant(utilisateur, self.cleaned_data["specialite"], self.cleaned_data["etablissement"])
         return utilisateur
@@ -142,7 +141,6 @@ class FinInscriptionGoogleForm(forms.Form):
 
     first_name = forms.CharField(label=_("Prénom"), max_length=150)
     last_name = forms.CharField(label=_("Nom"), max_length=150)
-    langue = forms.ChoiceField(label=_("Langue"), choices=Utilisateur._meta.get_field("langue").choices)
     specialite = champ_specialite()
     etablissement = champ_etablissement()
     accepte_conditions = forms.BooleanField(
@@ -157,7 +155,8 @@ class FinInscriptionGoogleForm(forms.Form):
     def creer(self, email):
         donnees = self.cleaned_data
         utilisateur = Utilisateur(
-            email=email, first_name=donnees["first_name"], last_name=donnees["last_name"], langue=donnees["langue"]
+            email=email, first_name=donnees["first_name"], last_name=donnees["last_name"],
+            langue=donnees["specialite"].examen.langue,  # comme l'inscription par e-mail
         )
         # Pas de mot de passe : ce compte se connecte avec Google.
         utilisateur.set_unusable_password()

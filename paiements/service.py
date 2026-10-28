@@ -15,6 +15,7 @@ from django.db import transaction
 from django.template.loader import render_to_string
 from django.utils import timezone
 from django.utils.translation import gettext as _
+from django.utils.translation import override
 
 from accounts.models import Consentement
 
@@ -154,11 +155,13 @@ def rafraichir(paiement):
 
 
 def envoyer_recu(paiement):
-    """CDC 10.7 : reçu envoyé après chaque paiement (et consultable dans le profil)."""
-    send_mail(
-        _("Votre reçu BTS-HND Prep n° %(numero)s") % {"numero": paiement.numero_recu},
-        render_to_string("paiements/email_recu.txt", {"paiement": paiement, "abonnement": paiement.abonnement, "exploitant": settings.EXPLOITANT}),
-        None,
-        [paiement.utilisateur.email],
-        fail_silently=True,
-    )
+    """CDC 10.7 : reçu envoyé après chaque paiement (et consultable dans le profil).
+    Déclenché par la notification de l'agrégateur : la langue est celle de l'étudiant, pas celle de la requête."""
+    with override(paiement.utilisateur.langue):
+        send_mail(
+            _("Votre reçu BTS-HND Prep n° %(numero)s") % {"numero": paiement.numero_recu},
+            render_to_string("paiements/email_recu.txt", {"paiement": paiement, "abonnement": paiement.abonnement, "exploitant": settings.EXPLOITANT}),
+            None,
+            [paiement.utilisateur.email],
+            fail_silently=True,
+        )

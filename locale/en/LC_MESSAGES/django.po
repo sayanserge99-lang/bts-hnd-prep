@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-28 09:00+0100\n"
+"POT-Creation-Date: 2026-10-28 09:52+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,60 +38,64 @@ msgstr "Dates"
 msgid "codes de secours restants"
 msgstr "backup codes left"
 
-#: accounts/forms.py:23
+#: accounts/apps.py:9
+msgid "Comptes"
+msgstr "Accounts"
+
+#: accounts/forms.py:22
 msgid ""
 "Trop de tentatives. Réessayez dans 15 minutes ou réinitialisez votre mot de "
 "passe."
 msgstr "Too many attempts. Try again in 15 minutes or reset your password."
 
-#: accounts/forms.py:41 communaute/forms.py:93
+#: accounts/forms.py:40 communaute/forms.py:93
 #: templates/catalogue/accueil.html:31 templates/sujets/liste.html:52
 msgid "Spécialité"
 msgstr "Specialty"
 
-#: accounts/forms.py:50 templates/accounts/profil.html:24
+#: accounts/forms.py:49 templates/accounts/profil.html:24
 #: templates/admin/statistiques.html:39
 msgid "Établissement"
 msgstr "Institution"
 
-#: accounts/forms.py:51
+#: accounts/forms.py:50
 msgid "Choisir dans la liste"
 msgstr "Choose from the list"
 
-#: accounts/forms.py:63 templates/catalogue/_options_specialites_pk.html:2
+#: accounts/forms.py:62 templates/catalogue/_options_specialites_pk.html:2
 msgid "Choisir votre spécialité"
 msgstr "Choose your specialty"
 
-#: accounts/forms.py:71
+#: accounts/forms.py:70
 msgid "Examen préparé"
 msgstr "Exam"
 
-#: accounts/forms.py:78 accounts/forms.py:149
+#: accounts/forms.py:77 accounts/forms.py:147
 msgid "J'accepte les conditions générales et la politique de confidentialité."
 msgstr "I accept the terms and conditions and the privacy policy."
 
-#: accounts/forms.py:85 accounts/forms.py:143 accounts/forms.py:214
+#: accounts/forms.py:84 accounts/forms.py:142 accounts/forms.py:213
 msgid "Prénom"
 msgstr "First name"
 
-#: accounts/forms.py:85 accounts/forms.py:144 accounts/forms.py:214
+#: accounts/forms.py:84 accounts/forms.py:143 accounts/forms.py:213
 msgid "Nom"
 msgstr "Last name"
 
-#: accounts/forms.py:91 accounts/forms.py:247
+#: accounts/forms.py:90 accounts/forms.py:246
 #: templates/accounts/mot_de_passe.html:4
 msgid "Mot de passe"
 msgstr "Password"
 
-#: accounts/forms.py:92
+#: accounts/forms.py:91
 msgid "8 caractères au minimum."
 msgstr "At least 8 characters."
 
-#: accounts/forms.py:94
+#: accounts/forms.py:93
 msgid "En français"
 msgstr "En français"
 
-#: accounts/forms.py:105
+#: accounts/forms.py:104
 #, python-format
 msgid ""
 "Cette spécialité n'appartient pas au %(examen)s : choisissez-en une dans la "
@@ -99,35 +103,31 @@ msgid ""
 msgstr ""
 "This specialty is not part of the %(examen)s: choose one from the list."
 
-#: accounts/forms.py:116
+#: accounts/forms.py:115
 msgid "Un compte existe déjà avec cette adresse e-mail."
 msgstr "An account already exists with this email address."
 
-#: accounts/forms.py:145
-msgid "Langue"
-msgstr "Language"
-
-#: accounts/forms.py:194
+#: accounts/forms.py:193
 msgid "Adresse e-mail"
 msgstr "Email address"
 
-#: accounts/forms.py:208
+#: accounts/forms.py:207
 msgid "Session prévue"
 msgstr "Planned session"
 
-#: accounts/forms.py:231
+#: accounts/forms.py:230
 msgid "Cette session n'appartient pas à l'examen de votre spécialité."
 msgstr "This session does not belong to your specialty's exam."
 
-#: accounts/forms.py:255
+#: accounts/forms.py:254
 msgid "Pour confirmer, tapez votre adresse e-mail"
 msgstr "To confirm, type your email address"
 
-#: accounts/forms.py:263
+#: accounts/forms.py:262
 msgid "Ce n'est pas l'adresse e-mail de ce compte."
 msgstr "This is not the email address of this account."
 
-#: accounts/forms.py:266
+#: accounts/forms.py:265
 msgid "Mot de passe incorrect."
 msgstr "Incorrect password."
 
@@ -300,7 +300,11 @@ msgstr ""
 msgid "Code incorrect."
 msgstr "Incorrect code."
 
-#: catalogue/models.py:9 config/settings.py:222
+#: catalogue/apps.py:8
+msgid "Catalogue"
+msgstr "Catalogue"
+
+#: catalogue/models.py:9 config/settings.py:223
 msgid "Français"
 msgstr "French"
 
@@ -477,7 +481,7 @@ msgstr "file"
 msgid "Ouvrir le PDF"
 msgstr "Open the PDF"
 
-#: communaute/admin.py:142 communaute/contributions.py:76
+#: communaute/admin.py:142 communaute/contributions.py:77
 msgid ""
 "Session pas encore terminée : cette contribution ne peut être que refusée."
 msgstr "Session not over yet: this contribution can only be refused."
@@ -519,7 +523,7 @@ msgstr "target"
 msgid "Question (%(chapitre)s)"
 msgstr "Question (%(chapitre)s)"
 
-#: communaute/admin.py:183 communaute/models.py:26
+#: communaute/admin.py:183 communaute/models.py:26 sujets/models.py:271
 #: templates/communaute/mes_contributions.html:21
 #: templates/sujets/detail.html:17 templates/sujets/detail.html:19
 #: templates/sujets/liste.html:87
@@ -579,38 +583,42 @@ msgid_plural "%d messages traités."
 msgstr[0] "%d message handled."
 msgstr[1] "%d messages handled."
 
-#: communaute/contributions.py:33
+#: communaute/apps.py:8
+msgid "Communauté"
+msgstr "Community"
+
+#: communaute/contributions.py:34
 msgid "Ajoutez le document (PDF ou photos)."
 msgstr "Add the document (PDF or photos)."
 
-#: communaute/contributions.py:36
+#: communaute/contributions.py:37
 #, python-format
 msgid "« %(nom)s » dépasse 10 Mo."
 msgstr "“%(nom)s” is larger than 10 MB."
 
-#: communaute/contributions.py:40 partenaires/forms.py:30
+#: communaute/contributions.py:41 partenaires/forms.py:30
 msgid "Le fichier doit être un PDF."
 msgstr "The file must be a PDF."
 
-#: communaute/contributions.py:43
+#: communaute/contributions.py:44
 #, python-format
 msgid "%(n)s photos au plus."
 msgstr "%(n)s photos at most."
 
-#: communaute/contributions.py:45
+#: communaute/contributions.py:46
 msgid "Envoyez un seul PDF, ou des photos JPG ou PNG (une par page)."
 msgstr "Send a single PDF, or JPG or PNG photos (one per page)."
 
-#: communaute/contributions.py:51
+#: communaute/contributions.py:52
 #, python-format
 msgid "Photo illisible : %(erreur)s"
 msgstr "Unreadable photo: %(erreur)s"
 
-#: communaute/contributions.py:127
+#: communaute/contributions.py:130
 msgid "Votre contribution a été validée"
 msgstr "Your contribution has been approved"
 
-#: communaute/contributions.py:128
+#: communaute/contributions.py:131
 msgid "Votre contribution n'a pas été retenue"
 msgstr "Your contribution was not accepted"
 
@@ -979,7 +987,7 @@ msgid ""
 "Vous avez déjà envoyé plusieurs messages aujourd'hui. Nous vous répondrons."
 msgstr "You have already sent several messages today. We will reply to you."
 
-#: config/settings.py:222
+#: config/settings.py:223
 msgid "English"
 msgstr "English"
 
@@ -1046,6 +1054,13 @@ msgid "%d question retirée."
 msgid_plural "%d questions retirées."
 msgstr[0] "%d question removed."
 msgstr[1] "%d questions removed."
+
+#: entrainement/apps.py:8 templates/base.html:39 templates/base.html:41
+#: templates/base.html:114 templates/base.html:119
+#: templates/entrainement/accueil.html:4 templates/entrainement/accueil.html:9
+#: templates/entrainement/examens/liste.html:9
+msgid "Entraînement"
+msgstr "Practice"
 
 #: entrainement/importation.py:84
 msgid "colonne bonnes : « vrai » ou « faux » pour une question vrai/faux"
@@ -1403,6 +1418,13 @@ msgid_plural "%d signalements rejetés."
 msgstr[0] "%d report rejected."
 msgstr[1] "%d reports rejected."
 
+#: forum/apps.py:8 templates/base.html:43
+#: templates/entrainement/accueil.html:23 templates/forum/accueil.html:4
+#: templates/forum/accueil.html:9 templates/forum/discussion.html:4
+#: templates/forum/matiere.html:4 templates/forum/matiere.html:9
+msgid "Forum"
+msgstr "Forum"
+
 #: forum/forms.py:6
 msgid ""
 "Formules entre $ … $ comme dans les corrigés. Pas d'images ni de fichiers."
@@ -1465,7 +1487,7 @@ msgstr "forum report"
 msgid "signalements du forum"
 msgstr "forum reports"
 
-#: forum/services.py:48
+#: forum/services.py:50
 msgid "Nouvelle réponse à votre question"
 msgstr "New answer to your question"
 
@@ -1532,6 +1554,10 @@ msgstr "payment"
 #: paiements/admin.py:105 paiements/models.py:95
 msgid "code d'accès"
 msgstr "access code"
+
+#: paiements/apps.py:8
+msgid "Paiements"
+msgstr "Payments"
 
 #: paiements/codes.py:42 paiements/models.py:103
 msgid "Un établissement sans convention active ne peut pas recevoir de codes."
@@ -1662,12 +1688,12 @@ msgstr "free days"
 msgid "Jours offerts (contribution)"
 msgstr "Free days (contribution)"
 
-#: paiements/service.py:42
+#: paiements/service.py:43
 #, python-format
 msgid "Vous avez déjà le Pass session, valable jusqu'au %(fin)s."
 msgstr "You already have the session pass, valid until %(fin)s."
 
-#: paiements/service.py:60
+#: paiements/service.py:61
 #, python-format
 msgid ""
 "Votre accès Premium couvre déjà toute la session %(annee)s (jusqu'au "
@@ -1676,7 +1702,7 @@ msgstr ""
 "Your Premium access already covers the whole %(annee)s session (until "
 "%(fin)s): the Pass would add nothing."
 
-#: paiements/service.py:74
+#: paiements/service.py:75
 #, python-format
 msgid ""
 "Votre Pass couvre déjà jusqu'au %(fin)s. Ce mois commencerait le %(debut)s, "
@@ -1685,29 +1711,29 @@ msgstr ""
 "Your Session Pass already covers you until %(fin)s. This month would start "
 "on %(debut)s, after the exam session."
 
-#: paiements/service.py:82
+#: paiements/service.py:83
 msgid "Le paiement n'est pas encore ouvert."
 msgstr "Payment is not open yet."
 
-#: paiements/service.py:105
+#: paiements/service.py:106
 #, python-format
 msgid "Montant reçu (%(recu)s FCFA) différent du prix (%(prix)s FCFA)."
 msgstr ""
 "Amount received (%(recu)s FCFA) differs from the price (%(prix)s FCFA)."
 
-#: paiements/service.py:109
+#: paiements/service.py:110
 msgid "Paiement refusé ou annulé."
 msgstr "Payment declined or cancelled."
 
-#: paiements/service.py:120
+#: paiements/service.py:121
 msgid "À régulariser : "
 msgstr "To be settled: "
 
-#: paiements/service.py:151
+#: paiements/service.py:152
 msgid "Délai dépassé : aucune confirmation reçue."
 msgstr "Time limit exceeded: no confirmation received."
 
-#: paiements/service.py:159
+#: paiements/service.py:162
 #, python-format
 msgid "Votre reçu BTS-HND Prep n° %(numero)s"
 msgstr "Your BTS-HND Prep receipt no. %(numero)s"
@@ -1753,6 +1779,10 @@ msgstr "I have read and accept the terms of sale."
 msgid "Numéro de mobile camerounais attendu (9 chiffres, commençant par 6)."
 msgstr "A Cameroonian mobile number is expected (9 digits, starting with 6)."
 
+#: partenaires/apps.py:8
+msgid "Partenaires"
+msgstr "Partners"
+
 #: partenaires/forms.py:16
 msgid ""
 "Visible par vos étudiants validés (convention de partenariat active "
@@ -1768,6 +1798,46 @@ msgstr "The file is larger than 20 MB."
 #: partenaires/forms.py:36 partenaires/views.py:141
 msgid "Publication impossible sans convention de partenariat active."
 msgstr "Publishing is not possible without an active partnership agreement."
+
+#: partenaires/models.py:10
+msgid "Adamaoua"
+msgstr "Adamawa"
+
+#: partenaires/models.py:11
+msgid "Centre"
+msgstr "Centre"
+
+#: partenaires/models.py:12
+msgid "Est"
+msgstr "East"
+
+#: partenaires/models.py:13
+msgid "Extrême-Nord"
+msgstr "Far North"
+
+#: partenaires/models.py:14
+msgid "Littoral"
+msgstr "Littoral"
+
+#: partenaires/models.py:15
+msgid "Nord"
+msgstr "North"
+
+#: partenaires/models.py:16
+msgid "Nord-Ouest"
+msgstr "North-West"
+
+#: partenaires/models.py:17
+msgid "Ouest"
+msgstr "West"
+
+#: partenaires/models.py:18
+msgid "Sud"
+msgstr "South"
+
+#: partenaires/models.py:19
+msgid "Sud-Ouest"
+msgstr "South-West"
 
 #: partenaires/models.py:24
 msgid "région"
@@ -1959,6 +2029,11 @@ msgstr[0] ""
 "%d marking guide refused: its paper's session has not officially ended."
 msgstr[1] ""
 "%d marking guides refused: their paper's session has not officially ended."
+
+#: sujets/apps.py:8 templates/base.html:37 templates/base.html:109
+#: templates/sujets/liste.html:4 templates/sujets/liste.html:9
+msgid "Sujets"
+msgstr "Past papers"
 
 #: sujets/importation.py:84
 msgid "Le tableau n'est ni en UTF-8 ni en Windows-1252."
@@ -3202,29 +3277,10 @@ msgstr "Skip to content"
 msgid "Navigation principale"
 msgstr "Main navigation"
 
-#: templates/base.html:37 templates/base.html:109
-#: templates/sujets/liste.html:4 templates/sujets/liste.html:9
-msgid "Sujets"
-msgstr "Past papers"
-
-#: templates/base.html:39 templates/base.html:41 templates/base.html:114
-#: templates/base.html:119 templates/entrainement/accueil.html:4
-#: templates/entrainement/accueil.html:9
-#: templates/entrainement/examens/liste.html:9
-msgid "Entraînement"
-msgstr "Practice"
-
 #: templates/base.html:41 templates/base.html:119
 #: templates/sujets/detail.html:19
 msgid "Bientôt"
 msgstr "Soon"
-
-#: templates/base.html:43 templates/entrainement/accueil.html:23
-#: templates/forum/accueil.html:4 templates/forum/accueil.html:9
-#: templates/forum/discussion.html:4 templates/forum/matiere.html:4
-#: templates/forum/matiere.html:9
-msgid "Forum"
-msgstr "Forum"
 
 #: templates/base.html:44 templates/paiements/commander.html:8
 #: templates/paiements/offres.html:4 templates/paiements/offres.html:9
@@ -5226,6 +5282,9 @@ msgstr "A paper is missing?"
 #: templates/sujets/liste.html:103
 msgid "Envoyez-le, il vous offre des jours d'abonnement"
 msgstr "Send it and earn free subscription days"
+
+#~ msgid "Langue"
+#~ msgstr "Language"
 
 #~ msgid ""
 #~ "Hors connexion : vos réponses restent ici et partiront au retour du réseau."
