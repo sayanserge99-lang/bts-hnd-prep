@@ -52,3 +52,15 @@ def test_le_recu_part_dans_la_langue_de_l_etudiant(client, paiement_ouvert, etud
     with django_capture_on_commit_callbacks(execute=True):
         notifier(client, Paiement.objects.get())
     assert mail.outbox[0].subject.startswith("Your BTS-HND Prep receipt no.")
+
+
+def test_le_menu_du_haut_connecte_comme_la_maquette(client):
+    """Connecté : « Tableau de bord » en premier et « Examens blancs » ; la page en cours est signalée."""
+    menu = lambda page: page.split('aria-label="Navigation principale"')[1].split("</nav>")[0]  # noqa: E731
+    visiteur = menu(client.get(reverse("sujets:liste")).content.decode())
+    assert "Tableau de bord" not in visiteur and "Examens blancs" not in visiteur
+
+    client.force_login(Utilisateur.objects.create_user(email="awa@example.com", password="x", langue="fr"))
+    connecte = menu(client.get(reverse("entrainement:progression")).content.decode())
+    assert connecte.index("Tableau de bord") < connecte.index("Sujets") < connecte.index("Examens blancs")
+    assert f'href="{reverse("entrainement:progression")}" class="hover:text-vert aria-[current=page]:text-vert" aria-current="page"' in connecte

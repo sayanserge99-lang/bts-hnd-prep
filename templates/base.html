@@ -42,16 +42,25 @@
         BTS-HND <span class="text-vert">Prep</span>
       </a>
 
-      <nav class="hidden items-center gap-6 text-sm font-medium md:flex" aria-label="{% translate 'Navigation principale' %}">
-        <a href="{% url 'sujets:liste' %}" class="hover:text-vert">{% translate "Sujets" %}</a>
+      {# Maquette : connecté, « Tableau de bord » en premier et « Examens blancs » ; dès 1 024 px, sinon barre du bas. #}
+      {% with vue=request.resolver_match.view_name %}
+      <nav class="hidden items-center gap-5 text-sm font-medium lg:flex" aria-label="{% translate 'Navigation principale' %}">
+        {% if user.is_authenticated and fonctionnalites.entrainement %}
+          <a href="{% url 'entrainement:progression' %}" class="hover:text-vert aria-[current=page]:text-vert" {% if vue == "entrainement:progression" %}aria-current="page"{% endif %}>{% translate "Tableau de bord" %}</a>
+        {% endif %}
+        <a href="{% url 'sujets:liste' %}" class="hover:text-vert aria-[current=page]:text-vert" {% if vue == "sujets:liste" %}aria-current="page"{% endif %}>{% translate "Sujets" %}</a>
         {% if fonctionnalites.entrainement %}
-          <a href="{% url 'entrainement:accueil' %}" class="hover:text-vert">{% translate "Entraînement" %}</a>
+          <a href="{% url 'entrainement:accueil' %}" class="hover:text-vert aria-[current=page]:text-vert" {% if vue == "entrainement:accueil" %}aria-current="page"{% endif %}>{% translate "Entraînement" %}</a>
         {% else %}
           <span class="text-gris">{% translate "Entraînement" %} <span class="badge-bientot">{% translate "Bientôt" %}</span></span>
         {% endif %}
-        {% if fonctionnalites.forum %}<a href="{% url 'forum:accueil' %}" class="hover:text-vert">{% translate "Forum" %}</a>{% endif %}
-        <a href="{% url 'offres' %}" class="hover:text-vert">{% translate "Offres" %}</a>
+        {% if user.is_authenticated and fonctionnalites.examens_blancs %}
+          <a href="{% url 'entrainement:examens' %}" class="hover:text-vert aria-[current=page]:text-vert" {% if vue == "entrainement:examens" %}aria-current="page"{% endif %}>{% translate "Examens blancs" %}</a>
+        {% endif %}
+        {% if fonctionnalites.forum %}<a href="{% url 'forum:accueil' %}" class="hover:text-vert aria-[current=page]:text-vert" {% if vue == "forum:accueil" %}aria-current="page"{% endif %}>{% translate "Forum" %}</a>{% endif %}
+        <a href="{% url 'offres' %}" class="hover:text-vert aria-[current=page]:text-vert" {% if vue == "offres" %}aria-current="page"{% endif %}>{% translate "Offres" %}</a>
       </nav>
+      {% endwith %}
 
       <div class="flex items-center gap-3">
         <form action="{% url 'set_language' %}" method="post" class="flex items-center rounded-lg border border-gris/50 text-sm">
@@ -60,7 +69,7 @@
           <button name="language" value="fr" class="rounded-l-lg px-2.5 py-1.5 {% if LANGUE == 'fr' %}bg-vert-clair font-bold text-vert{% endif %}" {% if LANGUE == 'fr' %}aria-current="true"{% endif %}>FR</button>
           <button name="language" value="en" class="rounded-r-lg px-2.5 py-1.5 {% if LANGUE == 'en' %}bg-vert-clair font-bold text-vert{% endif %}" {% if LANGUE == 'en' %}aria-current="true"{% endif %}>EN</button>
         </form>
-        <div class="hidden items-center gap-3 text-sm font-semibold md:flex">
+        <div class="hidden items-center gap-3 text-sm font-semibold lg:flex">
           {% if user.is_authenticated %}
             {% if etablissement_gere %}<a href="{% url 'partenaires:espace' %}" class="text-vert hover:underline">{% translate "Mon établissement" %}</a>{% endif %}
             <a href="{% url 'accounts:profil' %}" class="text-vert hover:underline">{% translate "Mon espace" %}</a>
@@ -83,14 +92,14 @@
     </div>
   {% endif %}
 
-  <main id="contenu" class="flex-1 pb-20 md:pb-0">
+  <main id="contenu" class="flex-1 pb-20 lg:pb-0">
     {% block contenu %}{% endblock %}
   </main>
 
   {# Pied de page et barre du téléphone : une page en mode concentré (quiz) les remplace par rien. #}
   {% block pied %}
   <footer class="bg-encre text-white/80">
-    <div class="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-8 pb-24 md:flex-row md:justify-between md:pb-8">
+    <div class="mx-auto flex max-w-6xl flex-col gap-6 px-4 py-8 pb-24 md:flex-row md:justify-between lg:pb-8">
       <div>
         <p class="font-bold text-white">BTS-HND <span class="text-[#7fd6b2]">Prep</span></p>
         {# CDC 4.2 : mention d'indépendance visible, dans les deux langues. #}
@@ -108,7 +117,7 @@
   </footer>
 
   {# Barre de navigation du téléphone (maquette mobile). #}
-  <nav class="fixed inset-x-0 bottom-0 z-10 grid grid-cols-4 border-t border-bordure bg-white text-xs md:hidden" aria-label="{% translate 'Navigation mobile' %}">
+  <nav class="fixed inset-x-0 bottom-0 z-10 grid grid-cols-4 border-t border-bordure bg-white text-xs lg:hidden" aria-label="{% translate 'Navigation mobile' %}">
     {% url 'accueil' as url_accueil %}{% url 'sujets:liste' as url_sujets %}
     <a href="{{ url_accueil }}" class="flex flex-col items-center gap-1 py-2 {% if request.path == url_accueil %}text-vert font-semibold{% endif %}">
       <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 11 12 4l9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1v-9Z"/></svg>
