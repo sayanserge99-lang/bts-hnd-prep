@@ -82,6 +82,7 @@ def epreuve(request, pk):
             "secondes_restantes": examen_blanc.secondes_restantes(tentative),
             "copie": tentative.reponses.get(examen_blanc.CHAMP_COPIE, ""),
             "marquees": ",".join(str(pk) for pk in marquees),
+            "version_recue": examen_blanc.version_recue(tentative),
         },
     )
 
@@ -93,7 +94,10 @@ def enregistrer(request, pk):
     tentative = tentative_de(request, pk)
     if not examen_blanc.enregistrer(tentative, request.POST):
         return HttpResponse(_("Épreuve terminée : réponses non enregistrées."), status=409)
-    return render(request, "entrainement/examens/_etat_sauvegarde.html", {"heure": timezone.localtime()})
+    reponse = render(request, "entrainement/examens/_etat_sauvegarde.html", {"heure": timezone.localtime()})
+    # Le navigateur efface sa copie locale jusqu'à cette version : elle est arrivée.
+    reponse["X-Version-Recue"] = examen_blanc.version_recue(tentative)
+    return reponse
 
 
 @login_required

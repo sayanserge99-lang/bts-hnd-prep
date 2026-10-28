@@ -3,6 +3,7 @@
   "private": true,
   "description": "Essais du JavaScript de l'examen blanc dans jsdom, lancés par entrainement/tests/test_examen_js.py.",
   "dependencies": {
+    "fake-indexeddb": "6.0.0",
     "jsdom": "24.1.3"
   }
 }

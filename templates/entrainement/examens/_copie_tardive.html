@@ -1,0 +1,7 @@
+{% load i18n %}
+{# Épreuve terminée : copie-locale.js renvoie ici les réponses restées sur le téléphone ; refusées, le message s'affiche. #}
+<div data-copie-tardive data-tentative="{{ tentative.pk }}" data-version-recue="{{ tentative.reponses.version_recue|default:0 }}"
+     data-adresse="{% url 'entrainement:enregistrer' tentative.pk %}" class="carte border-2 border-amber-500" role="alert" hidden>
+  {% csrf_token %}
+  <p class="font-semibold">{% translate "Ces réponses sont arrivées après la fin de l'épreuve et n'ont pas été comptées." %}</p>
+</div>

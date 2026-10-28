@@ -51,7 +51,7 @@ def page_d_epreuve(client, creer_sujet, session_terminee, comptabilite, compta_g
     return page
 
 
-@pytest.mark.parametrize("essai", ["examen-navigation.js", "examen-verrou.js", "examen-connexion.js"])
+@pytest.mark.parametrize("essai", ["examen-navigation.js", "examen-verrou.js", "examen-connexion.js", "examen-copie-locale.js", "copie-deconnexion.js"])
 def test_le_javascript_de_l_examen(page_d_epreuve, essai):
     script = Path(settings.BASE_DIR) / "static" / "js" / "examen.js"
     resultat = subprocess.run([NODE, essai, str(page_d_epreuve), str(script)], cwd=DOSSIER, capture_output=True, text=True, timeout=60)

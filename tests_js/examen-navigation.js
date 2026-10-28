@@ -16,6 +16,9 @@ let reponseConfirm = false;
 w.confirm = () => reponseConfirm;
 w.eval(code);
 
+(async () => {
+await new Promise((r) => setTimeout(r, 20));  // démarrage asynchrone : la copie locale est lue d'abord
+
 const panneaux = [...d.querySelectorAll("[data-panneau]")];
 const cases = [...d.querySelectorAll("[data-case]")];
 const visibles = () => panneaux.filter((p) => !p.hidden);
@@ -78,3 +81,4 @@ assert.ok(!clic2.defaultPrevented, "remise confirmée");
 
 console.log("examen.js : 18 vérifications OK");
 process.exit(0);  // le minuteur de la page garderait Node en vie
+})();

@@ -9,6 +9,7 @@
     <h1 class="text-2xl font-bold">{% translate "Copie rendue" %}</h1>
     <p class="mt-1 text-gris">{{ examen.titre }}</p>
   </div>
+  {% include "entrainement/examens/_copie_tardive.html" %}
 
   {% if reponses %}
     <section class="carte space-y-3">

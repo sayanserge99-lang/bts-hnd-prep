@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="{% static 'css/app.css' %}{% if mode_developpement %}?v={% now 'U' %}{% endif %}">
   <script src="{% static 'js/htmx.min.js' %}" defer></script>
   <script src="{% static 'js/site.js' %}" defer></script>
+  {# Partout : la déconnexion efface la copie locale des réponses d'examen blanc (téléphones partagés). #}
+  <script src="{% static 'js/copie-locale.js' %}" defer></script>
   {% if fonctionnalites.hors_ligne %}
     {# CDC 4 : installable sur l'écran d'accueil, sujets et quiz consultables sans connexion. #}
     <link rel="manifest" href="{% url 'manifeste' %}">
@@ -53,7 +55,7 @@
           {% if user.is_authenticated %}
             {% if etablissement_gere %}<a href="{% url 'partenaires:espace' %}" class="text-vert hover:underline">{% translate "Mon établissement" %}</a>{% endif %}
             <a href="{% url 'accounts:profil' %}" class="text-vert hover:underline">{% translate "Mon espace" %}</a>
-            <form method="post" action="{% url 'accounts:deconnexion' %}">{% csrf_token %}<button class="bouton-contour">{% translate "Déconnexion" %}</button></form>
+            <form method="post" action="{% url 'accounts:deconnexion' %}" data-efface-copie-locale>{% csrf_token %}<button class="bouton-contour">{% translate "Déconnexion" %}</button></form>
           {% else %}
             <a href="{% url 'accounts:connexion' %}" class="text-vert hover:underline">{% translate "Se connecter" %}</a>
             <a href="{% url 'accounts:inscription' %}" class="bouton-plein">{% translate "Créer un compte" %}</a>

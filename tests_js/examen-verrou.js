@@ -8,7 +8,7 @@ const assert = require("assert");
 const html = fs.readFileSync(process.argv[2], "utf8").replace(/data-secondes="\d+"/, 'data-secondes="0"');
 const code = fs.readFileSync(process.argv[3], "utf8");
 
-function lancer(enLigne) {
+async function lancer(enLigne) {
   const dom = new JSDOM(html, { url: "http://localhost:8000/entrainement/epreuve/1/", runScripts: "outside-only" });
   const w = dom.window;
   Object.defineProperty(w.navigator, "onLine", { value: enLigne, configurable: true });
@@ -18,11 +18,13 @@ function lancer(enLigne) {
   };
   w.confirm = () => true;
   w.eval(code);
+  await new Promise((r) => setTimeout(r, 20));  // démarrage asynchrone : la copie locale est lue d'abord
   return { w, d: w.document, envois };
 }
 
+(async () => {
 // En ligne : la copie part tout de suite, avec les réponses d'avant 0:00.
-const { w, d, envois } = lancer(true);
+const { w, d, envois } = await lancer(true);
 assert.strictEqual(envois.length, 1, "envoi immédiat à 0:00");
 const avant = envois[0];
 assert.ok(/temps écoulé/i.test(d.getElementById("etat-sauvegarde").textContent));
@@ -45,7 +47,7 @@ if (apres !== avant) console.log("AVANT", avant, "\nAPRES", apres);
 assert.strictEqual(apres, avant, "une réponse modifiée après 0:00 n'est pas envoyée");
 
 // Hors connexion à 0:00 : verrouillé tout de suite, envoyé au retour du réseau (une seule fois).
-const horsLigne = lancer(false);
+const horsLigne = await lancer(false);
 assert.strictEqual(horsLigne.envois.length, 0);
 assert.ok(horsLigne.d.getElementById("copie").readOnly);
 Object.defineProperty(horsLigne.w.navigator, "onLine", { value: true, configurable: true });  // comme un vrai navigateur
@@ -55,3 +57,4 @@ assert.strictEqual(horsLigne.envois.length, 1, "envoi au retour du réseau");
 
 console.log("verrou à 0:00 : 11 vérifications OK");
 process.exit(0);  // le minuteur de la page garderait Node en vie
+})();

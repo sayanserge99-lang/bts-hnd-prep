@@ -326,3 +326,50 @@ def test_le_bandeau_de_connexion_perdue_dit_la_regle_des_90_secondes(client, etu
             "les 90 secondes ne sont pas comptées." in page)
     # Sauvegarde au fil de l'eau : HTMX écoute aussi « sauvegarder », lancé par examen.js au retour du réseau.
     assert "every 30s, sauvegarder" in page
+
+
+# --- Copie locale des réponses (static/js/copie-locale.js) -------------------------------------------------
+
+def test_le_serveur_confirme_la_version_recue_de_la_copie_locale(client, etudiant, examen, questions):
+    client.force_login(etudiant)
+    tentative = demarrer(client, examen)
+    adresse = reverse("entrainement:enregistrer", args=[tentative.pk])
+    assert client.post(adresse, {f"q-{questions[0].pk}": bonne(questions[0]), "version": "3"})["X-Version-Recue"] == "3"
+    # Un envoi plus ancien arrivé en retard ne fait pas reculer la version : la copie plus récente reste à envoyer.
+    assert client.post(adresse, {f"q-{questions[0].pk}": bonne(questions[0]), "version": "2"})["X-Version-Recue"] == "3"
+    page = client.get(reverse("entrainement:epreuve", args=[tentative.pk])).content.decode()
+    assert 'data-version-recue="3"' in page and 'name="version" id="version-copie" value="3"' in page
+
+    client.post(reverse("entrainement:rendre", args=[tentative.pk]), {f"q-{questions[0].pk}": bonne(questions[0]), "version": "4"})
+    tentative.refresh_from_db()
+    assert examen_blanc.version_recue(tentative) == 4  # la remise compte : la page suivante efface la copie
+
+
+def test_un_renvoi_de_la_copie_locale_apres_fin_plus_90_s_est_refuse(client, etudiant, examen, questions, settings):
+    """Le serveur juge à l'heure de réception, même pour des réponses gardées sur le téléphone."""
+    client.force_login(etudiant)
+    tentative = demarrer(client, examen)
+    adresse = reverse("entrainement:enregistrer", args=[tentative.pk])
+    client.post(adresse, {f"q-{questions[0].pk}": mauvaise(questions[0]), "version": "1"})
+    Tentative.objects.filter(pk=tentative.pk).update(
+        fin_prevue=timezone.now() - timedelta(seconds=settings.EXAMEN_DELAI_GRACE_SECONDES + 1)
+    )
+
+    reponse = client.post(adresse, {f"q-{questions[0].pk}": bonne(questions[0]), "version": "5"})
+
+    assert reponse.status_code == 409
+    tentative.refresh_from_db()
+    assert tentative.reponses["brouillon"] == {str(questions[0].pk): [mauvaise(questions[0])]}
+    assert examen_blanc.version_recue(tentative) == 1
+    # La page de l'épreuve terminée porte la version reçue et le message montré si la copie locale est refusée.
+    page = client.get(reverse("entrainement:epreuve", args=[tentative.pk]), follow=True).content.decode().replace("&#x27;", "'")
+    assert "data-copie-tardive" in page and 'data-version-recue="1"' in page
+    assert "Ces réponses sont arrivées après la fin de l'épreuve et n'ont pas été comptées." in page
+
+
+def test_la_deconnexion_efface_la_copie_locale(client, etudiant):
+    client.force_login(etudiant)
+    page = client.get(reverse("accounts:profil")).content.decode()
+    assert "js/copie-locale.js" in page
+    assert re.search(r'action="/[^"]*deconnexion/"[^>]*data-efface-copie-locale', page)
+    assert "data-efface-copie-locale" in client.get(reverse("accounts:supprimer")).content.decode()

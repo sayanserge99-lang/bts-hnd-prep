@@ -17,6 +17,9 @@ const setTimeoutReel = w.setTimeout.bind(w);
 w.setTimeout = (fn, delai) => (delai === 5000 ? minuteries.push(fn) : setTimeoutReel(fn, delai));
 w.eval(code);
 
+(async () => {
+await new Promise((r) => setTimeout(r, 20));  // démarrage asynchrone : la copie locale est lue d'abord
+
 const formulaire = d.getElementById("epreuve");
 const bandeau = d.getElementById("bandeau-hors-ligne");
 const etat = d.getElementById("etat-sauvegarde");
@@ -52,3 +55,4 @@ assert.ok(bandeau.hidden, "bandeau caché après une sauvegarde réussie");
 
 console.log("connexion perdue : 11 vérifications OK");
 process.exit(0);  // le minuteur de la page garderait Node en vie
+})();

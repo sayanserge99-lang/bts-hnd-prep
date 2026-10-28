@@ -14,6 +14,9 @@ from .models import ExamenBlanc, Question, ReponseQuestion, Tentative
 
 CHAMP_COPIE = "copie"
 CHAMP_MARQUEES = "marquees"
+# Dernière version reçue de la copie locale du navigateur (static/js/copie-locale.js) : ce qui est au-dessus
+# n'est pas encore arrivé. Le serveur juge toujours à l'heure de réception (est_expiree).
+CHAMP_VERSION = "version_recue"
 
 
 def peut_passer_un_examen(utilisateur):
@@ -86,12 +89,18 @@ def enregistrer(tentative, donnees):
     if tentative.fin is not None or est_expiree(tentative):
         return False
     brouillon, copie = lire_formulaire(tentative, donnees)
+    version = donnees.get("version", "")
     tentative.reponses.update({
         "brouillon": brouillon, CHAMP_COPIE: copie, CHAMP_MARQUEES: lire_marquees(tentative, donnees),
+        CHAMP_VERSION: max(version_recue(tentative), int(version) if version.isdigit() else 0),
         "enregistre_le": timezone.now().isoformat(),
     })
     tentative.save(update_fields=["reponses"])
     return True
+
+
+def version_recue(tentative):
+    return tentative.reponses.get(CHAMP_VERSION, 0)
 
 
 @transaction.atomic

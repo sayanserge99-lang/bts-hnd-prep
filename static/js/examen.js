@@ -11,6 +11,21 @@
   var rendu = false;
   var verrouille = false;
 
+  // Copie locale (copie-locale.js) : chaque saisie reçoit un numéro de version, envoyé avec les réponses ;
+  // le serveur renvoie la dernière version reçue, et la copie locale s'efface jusqu'à elle.
+  var copieLocale = window.copieLocale;
+  var tentative = formulaire.dataset.tentative;
+  var champVersion = document.getElementById("version-copie");
+  var version = Number(formulaire.dataset.versionRecue) || 0;
+
+  function paires() {
+    var liste = [];
+    new FormData(formulaire).forEach(function (valeur, nom) {
+      if (nom !== "csrfmiddlewaretoken" && nom !== "version") liste.push([nom, valeur]);
+    });
+    return liste;
+  }
+
   // À 0:00, la copie se ferme : plus rien ne se modifie dans la page (la marge du serveur, 90 s, ne sert
   // qu'au transport des réponses déjà données). « inert » d'abord ; lecture seule et blocage des clics et
   // des touches en plus, pour les navigateurs qui ignorent « inert ».
@@ -21,13 +36,40 @@
     return formulaire.querySelectorAll("[data-panneau] input, [data-panneau] textarea");
   }
 
-  function retablir() {
-    champsDeReponse().forEach(function (champ) {
-      var valeurs = reponsesFigees.getAll(champ.name);
+  function remplir(champs, valeursDe) {
+    champs.forEach(function (champ) {
+      var valeurs = valeursDe(champ.name);
       if (champ.type === "radio" || champ.type === "checkbox") champ.checked = valeurs.indexOf(champ.value) !== -1;
       else champ.value = valeurs.length ? valeurs[0] : "";
     });
   }
+
+  function retablir() {
+    remplir(champsDeReponse(), function (nom) { return reponsesFigees.getAll(nom); });
+  }
+
+  // Réponses gardées sur le téléphone et pas encore reçues (page rouverte après une coupure) : remises dans la
+  // page, puis envoyées tout de suite.
+  function restaurer(entree) {
+    var champs = Array.prototype.filter.call(formulaire.querySelectorAll("input[name], textarea[name]"), function (champ) {
+      return champ.name !== "csrfmiddlewaretoken" && champ.name !== "version";
+    });
+    remplir(champs, function (nom) {
+      return entree.reponses.filter(function (paire) { return paire[0] === nom; }).map(function (paire) { return paire[1]; });
+    });
+    version = entree.version;
+    champVersion.value = version;
+  }
+
+  // Avant HTMX (phase de capture) : la requête de sauvegarde part avec la version de cette saisie.
+  function memoriser() {
+    if (verrouille || !copieLocale) return;
+    version += 1;
+    champVersion.value = version;
+    copieLocale.ecrire(tentative, version, paires());
+  }
+  formulaire.addEventListener("input", memoriser, true);
+  formulaire.addEventListener("change", memoriser, true);
 
   function verrouiller() {
     verrouille = true;
@@ -76,8 +118,6 @@
     }
   }
 
-  afficher();
-  setInterval(afficher, 1000);
 
   // HTMX n'a pas pu joindre le serveur : les réponses restent dans la page, le bandeau le dit, et elles
   // repartent dès que le réseau revient (événement « online », ou nouvel essai toutes les 5 s) ; seules les
@@ -96,7 +136,10 @@
     if (!nouvelEssai) nouvelEssai = setTimeout(function () { nouvelEssai = null; sauvegarderMaintenant(); }, 5000);
   });
   document.body.addEventListener("htmx:afterRequest", function (evenement) {
-    if (evenement.detail && evenement.detail.successful && bandeau) bandeau.hidden = true;
+    if (!evenement.detail || !evenement.detail.successful) return;
+    if (bandeau) bandeau.hidden = true;
+    var recue = Number(evenement.detail.xhr && evenement.detail.xhr.getResponseHeader("X-Version-Recue"));
+    if (copieLocale && recue) copieLocale.effacerJusqua(tentative, recue);
   });
   window.addEventListener("online", sauvegarderMaintenant);
 
@@ -115,7 +158,31 @@
     if (!rendu && !window.confirm(boutonRendre.dataset.confirmer)) evenement.preventDefault();
   });
 
+  // --- Démarrage : copie locale d'abord (elle peut changer les réponses affichées), puis minuteur et navigation.
+  function quandHtmxEstPret(fonction) {
+    // HTMX branche ses déclencheurs au chargement complet du document : « sauvegarder » attend jusque-là.
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", function () { setTimeout(fonction, 0); });
+    else setTimeout(fonction, 0);
+  }
+
+  var lecture = copieLocale ? copieLocale.lire(tentative) : Promise.resolve(null);
+  lecture.then(function (entree) {
+    if (!entree) return false;
+    if (entree.version <= version) {
+      copieLocale.effacerJusqua(tentative, entree.version);  // déjà reçue par le serveur
+      return false;
+    }
+    restaurer(entree);
+    return true;
+  }).catch(function () { return false; }).then(function (restauree) {
+    navigation();
+    afficher();
+    setInterval(afficher, 1000);
+    if (restauree) quandHtmxEstPret(sauvegarderMaintenant);
+  });
+
   // --- Une question à la fois (maquette) : Précédente / Suivante, grille, questions marquées ----------
+  function navigation() {
   var panneaux = Array.prototype.slice.call(formulaire.querySelectorAll("[data-panneau]"));
   var grille = document.querySelector("[data-grille]");
   var cases = Array.prototype.slice.call(document.querySelectorAll("[data-case]"));
@@ -189,4 +256,5 @@
   formulaire.querySelector("[data-navigation]").classList.remove("hidden");
   formulaire.querySelector("[data-navigation]").classList.add("grid");
   afficherPanneau(0, false);
+  }
 })();

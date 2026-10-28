@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-28 07:55+0100\n"
+"POT-Creation-Date: 2026-10-28 09:00+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -183,7 +183,7 @@ msgstr "Privacy policy"
 msgid "Partage des résultats avec l'établissement"
 msgstr "Sharing results with the institution"
 
-#: accounts/models.py:99 templates/base.html:91
+#: accounts/models.py:99 templates/base.html:93
 msgid "Conditions de vente"
 msgstr "Terms of sale"
 
@@ -1351,7 +1351,7 @@ msgstr "Thank you! The subject moderator will review this question."
 msgid "Les examens blancs sont réservés aux abonnés du Pass session."
 msgstr "Mock exams are reserved for Session pass subscribers."
 
-#: entrainement/views_examens.py:95
+#: entrainement/views_examens.py:96
 msgid "Épreuve terminée : réponses non enregistrées."
 msgstr "Exam over: answers not saved."
 
@@ -1425,7 +1425,7 @@ msgstr ""
 "depreciation charge?”"
 
 #: forum/forms.py:25 templates/entrainement/_formulaire_question.html:12
-#: templates/entrainement/examens/epreuve.html:53
+#: templates/entrainement/examens/epreuve.html:54
 msgid "Votre réponse"
 msgstr "Your answer"
 
@@ -2114,13 +2114,13 @@ msgstr "The subject does not belong to the session's exam."
 msgid "En préparation"
 msgstr "In preparation"
 
-#: sujets/models.py:212 templates/entrainement/examens/auto_evaluation.html:37
+#: sujets/models.py:212 templates/entrainement/examens/auto_evaluation.html:38
 #: templates/sujets/_corrige.html:10 templates/sujets/_resultats.html:20
 #: templates/sujets/liste.html:91
 msgid "Proposé par la communauté"
 msgstr "Community answer"
 
-#: sujets/models.py:213 templates/entrainement/examens/auto_evaluation.html:37
+#: sujets/models.py:213 templates/entrainement/examens/auto_evaluation.html:38
 #: templates/sujets/_corrige.html:8 templates/sujets/_resultats.html:18
 #: templates/sujets/liste.html:90
 msgid "Vérifié par un enseignant"
@@ -2284,7 +2284,7 @@ msgstr "Continue with Google"
 
 #: templates/accounts/connexion.html:4 templates/accounts/connexion.html:8
 #: templates/accounts/connexion.html:12 templates/accounts/inscription.html:21
-#: templates/base.html:58
+#: templates/base.html:60
 msgid "Se connecter"
 msgstr "Log in"
 
@@ -2298,7 +2298,7 @@ msgstr "No account yet?"
 
 #: templates/accounts/connexion.html:17 templates/accounts/google_finir.html:4
 #: templates/accounts/inscription.html:4 templates/accounts/inscription.html:8
-#: templates/base.html:59
+#: templates/base.html:61
 msgid "Créer un compte"
 msgstr "Create an account"
 
@@ -2438,7 +2438,7 @@ msgstr "Edit my profile"
 
 #: templates/accounts/modifier_profil.html:8
 #: templates/accounts/mot_de_passe.html:8 templates/accounts/profil.html:4
-#: templates/base.html:55 templates/communaute/mes_contributions.html:9
+#: templates/base.html:57 templates/communaute/mes_contributions.html:9
 #: templates/paiements/activer_code.html:8 templates/paiements/recu.html:8
 #: templates/partenaires/mes_epreuves.html:9
 msgid "Mon espace"
@@ -2574,7 +2574,7 @@ msgstr "Receipt"
 msgid "J'ai un code d'accès"
 msgstr "I have an access code"
 
-#: templates/accounts/profil.html:63 templates/base.html:90
+#: templates/accounts/profil.html:63 templates/base.html:92
 msgid "Confidentialité"
 msgstr "Privacy"
 
@@ -2712,7 +2712,7 @@ msgstr ""
 #: templates/admin/communaute/contribution/valider.html:6
 #: templates/admin/entrainement/question/importer.html:6
 #: templates/admin/paiements/codeacces/generer.html:6
-#: templates/admin/sujets/sujet/importer.html:6 templates/base.html:103
+#: templates/admin/sujets/sujet/importer.html:6 templates/base.html:105
 msgid "Accueil"
 msgstr "Home"
 
@@ -3194,77 +3194,77 @@ msgid ""
 "année."
 msgstr "Past BTS and HND papers, sorted by specialty, subject and year."
 
-#: templates/base.html:22
+#: templates/base.html:24
 msgid "Aller au contenu"
 msgstr "Skip to content"
 
-#: templates/base.html:34
+#: templates/base.html:36
 msgid "Navigation principale"
 msgstr "Main navigation"
 
-#: templates/base.html:35 templates/base.html:107
+#: templates/base.html:37 templates/base.html:109
 #: templates/sujets/liste.html:4 templates/sujets/liste.html:9
 msgid "Sujets"
 msgstr "Past papers"
 
-#: templates/base.html:37 templates/base.html:39 templates/base.html:112
-#: templates/base.html:117 templates/entrainement/accueil.html:4
+#: templates/base.html:39 templates/base.html:41 templates/base.html:114
+#: templates/base.html:119 templates/entrainement/accueil.html:4
 #: templates/entrainement/accueil.html:9
 #: templates/entrainement/examens/liste.html:9
 msgid "Entraînement"
 msgstr "Practice"
 
-#: templates/base.html:39 templates/base.html:117
+#: templates/base.html:41 templates/base.html:119
 #: templates/sujets/detail.html:19
 msgid "Bientôt"
 msgstr "Soon"
 
-#: templates/base.html:41 templates/entrainement/accueil.html:23
+#: templates/base.html:43 templates/entrainement/accueil.html:23
 #: templates/forum/accueil.html:4 templates/forum/accueil.html:9
 #: templates/forum/discussion.html:4 templates/forum/matiere.html:4
 #: templates/forum/matiere.html:9
 msgid "Forum"
 msgstr "Forum"
 
-#: templates/base.html:42 templates/paiements/commander.html:8
+#: templates/base.html:44 templates/paiements/commander.html:8
 #: templates/paiements/offres.html:4 templates/paiements/offres.html:9
 msgid "Offres"
 msgstr "Plans"
 
-#: templates/base.html:54
+#: templates/base.html:56
 msgid "Mon établissement"
 msgstr "My institution"
 
-#: templates/base.html:56
+#: templates/base.html:58
 msgid "Déconnexion"
 msgstr "Log out"
 
-#: templates/base.html:88
+#: templates/base.html:90
 msgid "Informations légales"
 msgstr "Legal information"
 
-#: templates/base.html:89 templates/pages/mentions_legales.html:4
+#: templates/base.html:91 templates/pages/mentions_legales.html:4
 #: templates/pages/mentions_legales.html:5
 msgid "Mentions légales"
 msgstr "Legal notice"
 
-#: templates/base.html:92 templates/communaute/demande_retrait.html:4
+#: templates/base.html:94 templates/communaute/demande_retrait.html:4
 #: templates/communaute/demande_retrait.html:8
 #: templates/communaute/demande_retrait_recue.html:4
 msgid "Demande de retrait"
 msgstr "Takedown request"
 
-#: templates/base.html:93 templates/communaute/contact.html:4
+#: templates/base.html:95 templates/communaute/contact.html:4
 #: templates/communaute/contact.html:8
 #: templates/communaute/demande_retrait.html:22
 msgid "Contact"
 msgstr "Contact"
 
-#: templates/base.html:99
+#: templates/base.html:101
 msgid "Navigation mobile"
 msgstr "Mobile navigation"
 
-#: templates/base.html:123
+#: templates/base.html:125
 msgid "Profil"
 msgstr "Profile"
 
@@ -3739,6 +3739,12 @@ msgstr "No subjects are recorded for your specialty yet."
 msgid "Mes derniers quiz"
 msgstr "My latest quizzes"
 
+#: templates/entrainement/examens/_copie_tardive.html:6
+msgid ""
+"Ces réponses sont arrivées après la fin de l'épreuve et n'ont pas été "
+"comptées."
+msgstr "These answers arrived after the end of the exam and were not counted."
+
 #: templates/entrainement/examens/_etat_sauvegarde.html:1
 #, python-format
 msgid "Enregistré à %(heure)s"
@@ -3752,39 +3758,39 @@ msgstr "Self-assessment"
 msgid "Copie rendue"
 msgstr "Paper handed in"
 
-#: templates/entrainement/examens/auto_evaluation.html:15
+#: templates/entrainement/examens/auto_evaluation.html:16
 #, python-format
 msgid "Partie QCM : %(j)s/%(n)s justes, soit %(p)s sur %(total)s points"
 msgstr "MCQ part: %(j)s/%(n)s correct, i.e. %(p)s out of %(total)s points"
 
-#: templates/entrainement/examens/auto_evaluation.html:21
+#: templates/entrainement/examens/auto_evaluation.html:22
 msgid "Bonne réponse :"
 msgstr "Right answer:"
 
-#: templates/entrainement/examens/auto_evaluation.html:33
+#: templates/entrainement/examens/auto_evaluation.html:34
 msgid "Partie rédactionnelle : comparez avec le corrigé"
 msgstr "Written part: compare with the marking guide"
 
-#: templates/entrainement/examens/auto_evaluation.html:34
+#: templates/entrainement/examens/auto_evaluation.html:35
 msgid "Ma copie"
 msgstr "My answers"
 
-#: templates/entrainement/examens/auto_evaluation.html:42
+#: templates/entrainement/examens/auto_evaluation.html:43
 msgid ""
 "Ce sujet n'a pas encore de corrigé : évaluez-vous avec le barème ci-dessous."
 msgstr ""
 "This paper has no marking guide yet: assess yourself with the criteria "
 "below."
 
-#: templates/entrainement/examens/auto_evaluation.html:49
+#: templates/entrainement/examens/auto_evaluation.html:50
 msgid "Notez-vous honnêtement"
 msgstr "Mark yourself honestly"
 
-#: templates/entrainement/examens/auto_evaluation.html:60
+#: templates/entrainement/examens/auto_evaluation.html:61
 msgid "Calculer ma note"
 msgstr "Calculate my mark"
 
-#: templates/entrainement/examens/auto_evaluation.html:63
+#: templates/entrainement/examens/auto_evaluation.html:64
 msgid "Voir ma note"
 msgstr "See my mark"
 
@@ -3801,7 +3807,7 @@ msgid "%(h)s minutes"
 msgstr "%(h)s minutes"
 
 #: templates/entrainement/examens/consignes.html:13
-#: templates/entrainement/examens/resultat.html:17
+#: templates/entrainement/examens/resultat.html:18
 msgid "Partie QCM"
 msgstr "MCQ part"
 
@@ -3881,28 +3887,28 @@ msgstr ""
 msgid "Ouvrir le sujet (PDF)"
 msgstr "Open the paper (PDF)"
 
-#: templates/entrainement/examens/epreuve.html:44
+#: templates/entrainement/examens/epreuve.html:45
 #, python-format
 msgid "Partie 1 · Question %(n)s sur %(total)s"
 msgstr "Part 1 · Question %(n)s of %(total)s"
 
-#: templates/entrainement/examens/epreuve.html:46
-#: templates/entrainement/examens/epreuve.html:48
+#: templates/entrainement/examens/epreuve.html:47
+#: templates/entrainement/examens/epreuve.html:49
 msgid "Marquer"
 msgstr "Flag"
 
-#: templates/entrainement/examens/epreuve.html:46
-#: templates/entrainement/examens/epreuve.html:48
-#: templates/entrainement/examens/epreuve.html:91
+#: templates/entrainement/examens/epreuve.html:47
+#: templates/entrainement/examens/epreuve.html:49
+#: templates/entrainement/examens/epreuve.html:92
 msgid "Marquée"
 msgstr "Flagged"
 
-#: templates/entrainement/examens/epreuve.html:66
-#: templates/entrainement/examens/epreuve.html:85
+#: templates/entrainement/examens/epreuve.html:67
+#: templates/entrainement/examens/epreuve.html:86
 msgid "Partie 2 : rédaction"
 msgstr "Part 2: written answers"
 
-#: templates/entrainement/examens/epreuve.html:67
+#: templates/entrainement/examens/epreuve.html:68
 msgid ""
 "Composez sur papier comme le jour de l'examen, ou tapez vos réponses ici : "
 "vous les comparerez au corrigé après la remise."
@@ -3910,59 +3916,59 @@ msgstr ""
 "Write on paper as on exam day, or type your answers here: you will compare "
 "them with the marking guide after handing in."
 
-#: templates/entrainement/examens/epreuve.html:68
+#: templates/entrainement/examens/epreuve.html:69
 msgid "Votre copie"
 msgstr "Your answers"
 
-#: templates/entrainement/examens/epreuve.html:72
+#: templates/entrainement/examens/epreuve.html:73
 msgid ""
 "La correction s'affiche seulement quand vous rendez votre copie, comme le "
 "jour de l'examen."
 msgstr "Answers are shown only when you hand in your paper, as on exam day."
 
-#: templates/entrainement/examens/epreuve.html:75
-#: templates/entrainement/examens/epreuve.html:77
+#: templates/entrainement/examens/epreuve.html:76
+#: templates/entrainement/examens/epreuve.html:78
 msgid "Questions"
 msgstr "Questions"
 
-#: templates/entrainement/examens/epreuve.html:76
+#: templates/entrainement/examens/epreuve.html:77
 msgid "répondue"
 msgstr "answered"
 
-#: templates/entrainement/examens/epreuve.html:76
+#: templates/entrainement/examens/epreuve.html:77
 msgid "marquée"
 msgstr "flagged"
 
-#: templates/entrainement/examens/epreuve.html:81
+#: templates/entrainement/examens/epreuve.html:82
 #, python-format
 msgid "Question %(n)s"
 msgstr "Question %(n)s"
 
-#: templates/entrainement/examens/epreuve.html:86
+#: templates/entrainement/examens/epreuve.html:87
 msgid "Rédaction"
 msgstr "Writing"
 
-#: templates/entrainement/examens/epreuve.html:89
+#: templates/entrainement/examens/epreuve.html:90
 msgid "Répondue"
 msgstr "Answered"
 
-#: templates/entrainement/examens/epreuve.html:90
+#: templates/entrainement/examens/epreuve.html:91
 msgid "En cours"
 msgstr "Current"
 
-#: templates/entrainement/examens/epreuve.html:97
+#: templates/entrainement/examens/epreuve.html:98
 msgid "Précédente"
 msgstr "Previous"
 
-#: templates/entrainement/examens/epreuve.html:98
+#: templates/entrainement/examens/epreuve.html:99
 msgid "Suivante"
 msgstr "Next"
 
-#: templates/entrainement/examens/epreuve.html:100
+#: templates/entrainement/examens/epreuve.html:101
 msgid "Rendre votre copie maintenant ? Vous ne pourrez plus la modifier."
 msgstr "Hand in your paper now? You will not be able to change it."
 
-#: templates/entrainement/examens/epreuve.html:100
+#: templates/entrainement/examens/epreuve.html:101
 msgid "Rendre ma copie"
 msgstr "Hand in my paper"
 
@@ -4007,15 +4013,15 @@ msgstr "Self-assessment to do"
 msgid "En cours : reprendre"
 msgstr "In progress: resume"
 
-#: templates/entrainement/examens/resultat.html:11
+#: templates/entrainement/examens/resultat.html:12
 msgid "Note indicative : la partie rédactionnelle est auto-évaluée."
 msgstr "Indicative mark: the written part is self-assessed."
 
-#: templates/entrainement/examens/resultat.html:26
+#: templates/entrainement/examens/resultat.html:27
 msgid "Revoir la correction"
 msgstr "Review the corrections"
 
-#: templates/entrainement/examens/resultat.html:27
+#: templates/entrainement/examens/resultat.html:28
 msgid "Autres examens blancs"
 msgstr "Other mock exams"
 

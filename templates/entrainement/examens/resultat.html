@@ -5,6 +5,7 @@
 
 {% block contenu %}
 <div class="mx-auto max-w-2xl space-y-6 px-4 py-6">
+  {% include "entrainement/examens/_copie_tardive.html" %}
   <div class="carte text-center">
     <p class="text-sm text-gris">{{ examen.titre }}</p>
     <p class="mt-2 text-5xl font-extrabold">{{ tentative.note|floatformat:"-1" }}<span class="text-2xl text-gris">/20</span></p>

@@ -32,11 +32,12 @@
   {# Sauvegarde continue : à chaque changement, après une pause d'une seconde dans la frappe, toutes les 30 s,
      et (« sauvegarder », examen.js) dès le retour du réseau après un échec. #}
   {# Sans JavaScript, toutes les questions s'affichent à la suite ; examen.js les présente une par une. #}
-  <form id="epreuve" method="post" action="{% url 'entrainement:rendre' tentative.pk %}" class="mt-5 space-y-5"
+  <form id="epreuve" data-tentative="{{ tentative.pk }}" data-version-recue="{{ version_recue }}" method="post" action="{% url 'entrainement:rendre' tentative.pk %}" class="mt-5 space-y-5"
         hx-post="{% url 'entrainement:enregistrer' tentative.pk %}" hx-target="#etat-sauvegarde"
         hx-trigger="change, keyup changed delay:1s from:#copie, every 30s, sauvegarder">
     {% csrf_token %}
     <input type="hidden" name="marquees" id="marquees" value="{{ marquees }}">
+    <input type="hidden" name="version" id="version-copie" value="{{ version_recue }}">
 
     {% for question in questions %}
       <fieldset class="space-y-4" data-panneau data-question="{{ question.pk }}">
