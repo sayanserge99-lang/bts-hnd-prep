@@ -14,12 +14,11 @@ Mis à jour le 28/10/2026. Ouvert d'abord, dans l'ordre de travail validé par S
 
 ## 2. Après les préalables (Claude)
 
-- [ ] Menu : « Tableau de bord » et « Examens blancs » dans la barre du haut (connecté), comme la maquette.
-- [ ] Paiement : préfixe « +237 » affiché devant le champ téléphone.
-- [ ] Textes : accueil « télécharger gratuitement » → « avec un compte » ; Pass « valable jusqu'à la fin de la
-      session 2027 ».
-- [ ] Accueil : paires de spécialités BTS ↔ HND (« spécialité équivalente » ; aucun lien en base aujourd'hui).
-- [ ] Forum : recherche dans les discussions (puis, plus tard, abonnement à une discussion).
+- [x] Menu : « Tableau de bord » et « Examens blancs » dans la barre du haut (dès 1 024 px) (28/10).
+- [x] Paiement : « +237 » devant le champ téléphone ; textes de l'accueil et du Pass (28/10).
+- [x] Accueil : paires BTS ↔ HND (Specialite.equivalent, colonne facultative du classeur) (28/10).
+- [x] Forum : recherche (titres, détails, réponses ; langue de chaque examen) (28/10).
+- [ ] Forum : abonnement à une discussion (plus tard) ; la recherche ne tolère pas les fautes d'orthographe.
 
 ## 3. Pour Serge Alain
 

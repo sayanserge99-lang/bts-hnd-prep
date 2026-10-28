@@ -224,3 +224,8 @@
   signalé à Serge Alain. E-mails : la CI a échoué sur les nouveaux avertissements (simulation de production sans
   EMAIL_HOST ni DJANGO_ADMINS) → corrigé. Contre-épreuve de la règle du paiement (« ou » au lieu de « et ») : échecs
   attendus. 515 verts.
+- 28/10 (soir) : point 4 de Serge Alain, un commit chacun. Menu de la maquette : à 820 px les six liens débordaient →
+  barre du haut dès 1 024 px. Les captures ont montré un commentaire de gabarit affiché en clair (`{# #}` sur deux
+  lignes) ; la recherche du même défaut en a trouvé un second, écrit le matin sur la page d'épreuve de l'examen blanc,
+  visible des étudiants → corrigé + test. +237, textes, paires BTS ↔ HND (le classeur garde ses anciens fichiers
+  valables), recherche du forum. 536 verts.

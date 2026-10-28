@@ -8,7 +8,7 @@
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **515 tests verts + 5 essais JavaScript** (sautés sans Node, lancés par la CI) (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
+- `pytest` : **536 tests verts + 5 essais JavaScript** (sautés sans Node, lancés par la CI) (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
   10 statistiques, 16 Google).
 - **Connexion Google (V2)** `accounts/google.py` : OpenID Connect sans dépendance (state, PKCE, nonce ; vérifie iss,
   aud, exp, email_verified). Compte existant → connecté ; sinon page « Dernière étape » (spécialité + consentement
@@ -51,6 +51,11 @@
   (stack de production) et `nginx.conf` avec `resolve` ; `manage.py verifier_email` au démarrage (Dockerfile),
   avertissements accounts.W002/W003 (la CI simule EMAIL_HOST et DJANGO_ADMINS) ; bannière bêta (`BETA`,
   `DJANGO_BETA`) et `communaute.AvisBeta` (page `/avis/`) ; test de la règle de fermeture du paiement.
+- **Maquette et forum (28/10, fin de journée)** — menu du haut connecté (Tableau de bord, Examens blancs ;
+  barres : haut dès `lg`, bas en dessous) ; préfixe de champ générique (`field.prefixe`, champ.html) pour +237 ;
+  `Specialite.equivalent` + `apparier()` (migrations catalogue 0003-0004, colonne facultative du classeur,
+  accueil en cartes appariées) ; `forum:recherche` avec `sujets.models.requete_plein_texte`. Garde-fou : aucun
+  commentaire `{#` sur plusieurs lignes dans les gabarits (deux s'affichaient, dont un sur la page d'épreuve).
 - **Essai sur téléphone (28/10)** — « [DÉMO] Examen court » (5 min) ; `ADRESSE_LOCALE` dans `.env` ajoutée aux hôtes
   permis par compose.yaml (développement seulement). Adresse du PC : 192.168.100.238 (Ethernet).
 - **Maquettes, écrans 7, 9, 10 (27/10)** — Modération : colonnes Document / Envoyé par / Contrôles / Décision ;
