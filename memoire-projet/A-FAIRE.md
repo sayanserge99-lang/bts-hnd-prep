@@ -4,13 +4,13 @@ Mis à jour le 28/10/2026. Ouvert d'abord, dans l'ordre de travail validé par S
 
 ## 1. Préalables à la bêta (Claude, un commit chacun)
 
-- [ ] Brouillons des pages légales FR/EN (confidentialité avec la copie locale des réponses d'examen, conditions
-      d'utilisation, mentions légales), champs [À COMPLÉTER] : structure, NIU, adresse, contact, hébergeur.
-      Relecture par un juriste avant ouverture.
-- [ ] Restauration des sauvegardes : procédure écrite (deploy/DEPLOIEMENT.md §5) à essayer une fois en local.
-- [ ] E-mails en production : test d'envoi au démarrage (le fournisseur SMTP reste à choisir, réglages EMAIL_*).
-- [ ] Bannière « Bêta » + bouton « Donner mon avis » (formulaire court, enregistré en base, visible de l'admin).
-- [ ] Vérifier le suivi des erreurs (Sentry, déjà en place) et la fermeture du paiement (déjà en place) : tests à jour.
+- [x] Brouillons des pages légales FR/EN (confidentialité, conditions d'utilisation, mentions légales), champs
+      [À COMPLÉTER] surlignés (28/10). Relecture par un juriste avant ouverture : voir section 3.
+- [x] Restauration : deploy/restaurer.sh, essayée en local sur le stack de production (28/10) ; Nginx suit
+      l'adresse du conteneur web recréé (défaut trouvé par l'essai).
+- [x] E-mails : `manage.py verifier_email` à chaque démarrage de production, alertes check --deploy (28/10).
+- [x] Bannière « Bêta » + « Donner mon avis » (AvisBeta, administration) (28/10).
+- [x] Sentry sans données personnelles (déjà testé) ; règle de fermeture du paiement testée depuis l'environnement.
 
 ## 2. Après les préalables (Claude)
 
@@ -33,6 +33,9 @@ Mis à jour le 28/10/2026. Ouvert d'abord, dans l'ordre de travail validé par S
 - [ ] IPES : ville et région de HINTEL, autres IPES, comptes responsables d'IAI-Cameroun et HINTEL, conventions.
 - [ ] Faire relire l'anglais par un anglophone (vocabulaire HND), et les épreuves provisoires par un enseignant
       de chaque matière.
+- [ ] Faire relire les pages légales par un juriste et remplir les [À COMPLÉTER] (structure, NIU, RCCM, adresse,
+      contact, hébergeur, durées de conservation, autorité de protection des données, âge minimum, licence des
+      contributions) ; puis rédiger les conditions de vente (avant l'ouverture du paiement).
 - [ ] Remplacer les épreuves provisoires par les vrais sujets (IAI, HINTEL, contributions), matière par matière.
 - [ ] Paiement réel : choisir l'agrégateur (puis Claude écrit sa classe dans paiements/fournisseurs/), structure
       au CFCE et NIU, EXPLOITANT_* et PAIEMENT_* dans .env.production ; enquête auprès de 50 étudiants sur le prix

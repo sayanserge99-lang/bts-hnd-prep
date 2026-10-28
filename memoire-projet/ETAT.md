@@ -8,7 +8,7 @@
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **483 tests verts + 5 essais JavaScript** (sautés sans Node, lancés par la CI) (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
+- `pytest` : **515 tests verts + 5 essais JavaScript** (sautés sans Node, lancés par la CI) (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
   10 statistiques, 16 Google).
 - **Connexion Google (V2)** `accounts/google.py` : OpenID Connect sans dépendance (state, PKCE, nonce ; vérifie iss,
   aud, exp, email_verified). Compte existant → connecté ; sinon page « Dernière étape » (spécialité + consentement
@@ -46,6 +46,11 @@
   épreuve d'entraînement complète rédigée par l'équipe (`catalogue/management/commands/_epreuves_*.py`, PDF par
   `_pdf_epreuve.py`) ; source « Épreuve provisoire BTS-HND Prep (pas le sujet officiel) » et mention en tête de PDF.
   À remplacer par les vrais sujets (import en lot). La session 2027 reste vide.
+- **Préalables à la bêta (28/10, après-midi)** — pages légales en brouillon (`templates/pages/textes/<page>_<fr|en>.html`,
+  bandeau « version provisoire », nouvelle page `conditions_utilisation`) ; `deploy/restaurer.sh` essayé en local
+  (stack de production) et `nginx.conf` avec `resolve` ; `manage.py verifier_email` au démarrage (Dockerfile),
+  avertissements accounts.W002/W003 (la CI simule EMAIL_HOST et DJANGO_ADMINS) ; bannière bêta (`BETA`,
+  `DJANGO_BETA`) et `communaute.AvisBeta` (page `/avis/`) ; test de la règle de fermeture du paiement.
 - **Essai sur téléphone (28/10)** — « [DÉMO] Examen court » (5 min) ; `ADRESSE_LOCALE` dans `.env` ajoutée aux hôtes
   permis par compose.yaml (développement seulement). Adresse du PC : 192.168.100.238 (Ethernet).
 - **Maquettes, écrans 7, 9, 10 (27/10)** — Modération : colonnes Document / Envoyé par / Contrôles / Décision ;

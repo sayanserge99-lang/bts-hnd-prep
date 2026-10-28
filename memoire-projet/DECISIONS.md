@@ -165,5 +165,9 @@
   épreuves d'entraînement rédigées par l'équipe. Jamais présentées comme officielles : source et en-tête du PDF le
   disent. Aucun sujet copié d'un site tiers (recherche du 28/10 : le MINESUP ne publie pas les sujets ; les recueils
   en ligne sont payants et d'origine inconnue). Les vrais sujets viendront des IPES partenaires et des contributions.
+- **Bêta (28/10, Serge Alain)** : préalables avant ouverture : pages légales en brouillon relues par un juriste,
+  sauvegarde quotidienne 30 jours avec restauration essayée, e-mails par un fournisseur SMTP à choisir (test
+  d'envoi au démarrage), Sentry sans données personnelles, bannière « Bêta » + « Donner mon avis » (sans e-mail
+  demandé), paiement fermé sans structure et NIU. HTTPS fait avec Serge Alain une fois l'hébergeur choisi.
 - **Signaler une question (27/10)** : entité Signalement (troisième cible, exactement une par signalement), dans la
   file du modérateur de la matière du chapitre ; motif de 10 caractères au moins, 10 par jour et par compte.

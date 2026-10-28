@@ -215,3 +215,12 @@
   des épreuves d'entraînement clairement marquées. 70 épreuves rédigées (format de l'examen, contexte camerounais),
   PDF multipages sans dépendance ; deux défauts vus au rendu (marge du gras, nombres coupés) corrigés. Test : chaque
   sujet publié de démo a son épreuve lisible et sa mention. 483 verts + 5 essais JavaScript.
+- 28/10 (après-midi) : A-FAIRE réorganisé ; préalables à la bêta, un commit chacun. Pages légales rédigées d'après le
+  code (corrigé au passage : l'inscription menait aux conditions de vente ; libellés cités vérifiés). Restauration
+  essayée sur le stack de production local : données revenues, mais 502 ensuite (Nginx gardait l'ancienne adresse
+  de web, aussi après chaque mise à jour) → `resolve`, vérifié en forçant un changement d'adresse. La vérification
+  de sécurité de Claude Code a bloqué un `rm` dans le conteneur : perte simulée autrement. Erreur : un
+  `docker container prune` trop large a pu supprimer d'autres conteneurs arrêtés de la machine (volumes intacts),
+  signalé à Serge Alain. E-mails : la CI a échoué sur les nouveaux avertissements (simulation de production sans
+  EMAIL_HOST ni DJANGO_ADMINS) → corrigé. Contre-épreuve de la règle du paiement (« ou » au lieu de « et ») : échecs
+  attendus. 515 verts.
