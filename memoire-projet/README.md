@@ -11,6 +11,6 @@ chaque session pour savoir où le travail s'est arrêté, et le met à jour à l
 | [JOURNAL.md](JOURNAL.md) | Ce qui a été fait, session par session |
 
 Documents de référence (fournis par Serge Alain, non stockés ici) :
-- Cahier des charges, version 2 (18 pages, 19 oct. 2026)
+- Cahier des charges, version 3 (18 pages, daté du 19 oct. 2026, reçu le 28/10 : §3.8 avec les deux offres et leurs prix)
 - Maquettes d'écrans (accueil, liste des sujets mobile, corrigé mobile)
 - Étude de faisabilité (22 oct. 2026)

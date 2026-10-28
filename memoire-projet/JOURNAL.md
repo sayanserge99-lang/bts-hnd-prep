@@ -196,3 +196,7 @@
   message clair. Verrou à 0:00 : jsdom a montré qu'un clic annulé décochait quand même la réponse → réponses figées
   rétablies à chaque tentative, sauvegarde automatique coupée ; essais jsdom versés au dépôt (tests_js/). Examen de
   démo expiré (minuteur réel) → recommencé par donnees_demo. Signalement de question + contre-épreuve du filtrage.
+- 28/10 : deux ajustements de Serge Alain, un commit chacun. Mois pendant un Pass : avertissement avec les vraies
+  dates et confirmation, test « rien n'est débité sans confirmation » (POST forgé compris). Bandeau « Connexion
+  perdue » + sauvegarde au retour du réseau, essai jsdom (11 vérifications) et test du texte. Copie du cahier des
+  charges passée en v3 (§3.8). 473 verts + 3 essais JavaScript (lancés dans un conteneur node:20 : tous OK).

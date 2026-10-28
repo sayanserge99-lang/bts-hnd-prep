@@ -138,5 +138,15 @@
 - **Fin de l'examen blanc (27/10, Serge Alain)** : à 0:00 la copie se ferme dans la page (réponses figées, panneaux
   inertes, toute modification annulée, sauvegarde automatique coupée) et part tout de suite (au retour du réseau si
   hors connexion) ; la marge serveur de 90 s ne sert qu'au transport, puis tout est refusé. Annoncé dans les consignes.
+- **Mois pendant un Pass (28/10, Serge Alain)** : avant le paiement, « Votre Pass couvre déjà jusqu'au … Ce mois
+  commencerait le …, après la session. » + « Acheter quand même » / « Annuler » ; rien n'est débité sans la
+  confirmation. Sens inverse : le seul cas semblable (Pass qui ne commencerait qu'après la session) reste refusé.
+- **Connexion perdue à l'examen blanc (28/10, Serge Alain)** : bandeau « Connexion perdue. Vos réponses sont gardées
+  sur le téléphone et envoyées dès le retour du réseau. Attention : après la fin du temps, les réponses qui ne sont
+  pas arrivées dans les 90 secondes ne sont pas comptées. » ; réponses renvoyées dès le retour du réseau.
+- **Cahier des charges v3 (reçu le 28/10)** : §3.8 fixe les deux offres (Pass session 5 000 FCFA jusqu'à la date de
+  fin officielle de la session suivante ; « Premium 30 jours » 1 500 FCFA ; périodes bout à bout). Écarts gardés
+  volontairement : §6 met une « date de fin de validité » sur l'Offre de session, on la calcule depuis la Session
+  (point 6 du 22/10) ; §6 Signalement vise Corrigé ou Sujet, on y a ajouté la Question (27/10).
 - **Signaler une question (27/10)** : entité Signalement (troisième cible, exactement une par signalement), dans la
   file du modérateur de la matière du chapitre ; motif de 10 caractères au moins, 10 par jour et par compte.

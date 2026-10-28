@@ -1,6 +1,6 @@
 # État du projet
 
-**Dernière mise à jour : 27/10/2026**
+**Dernière mise à jour : 28/10/2026**
 
 ## Où on en est
 
@@ -8,7 +8,7 @@
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **470 tests verts + 2 essais JavaScript** (sautés sans Node, lancés par la CI) (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
+- `pytest` : **473 tests verts + 3 essais JavaScript** (sautés sans Node, lancés par la CI) (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
   10 statistiques, 16 Google).
 - **Connexion Google (V2)** `accounts/google.py` : OpenID Connect sans dépendance (state, PKCE, nonce ; vérifie iss,
   aud, exp, email_verified). Compte existant → connecté ; sinon page « Dernière étape » (spécialité + consentement
@@ -27,6 +27,11 @@
   `entrainement/tests/test_examen_js.py` (sautés sans Node ; la CI installe jsdom) ; « Signaler cette question »
   (`Signalement.question`, contrainte à trois cibles, vue `entrainement:signaler_question`, limite 10/jour, file
   du modérateur de la matière via `question__chapitre__matiere`).
+- **Ajustements du 28/10** — mois acheté pendant un Pass actif : avertissement avec les vraies dates
+  (`service.avertissement`), « Acheter quand même » / « Annuler », aucun formulaire ni débit sans `confirme=1`.
+  Examen blanc : bandeau `#bandeau-hors-ligne` (texte de Serge Alain, règle des 90 s), sauvegarde relancée au
+  retour du réseau (événement `sauvegarder` dans le hx-trigger, nouvel essai 5 s après un échec, frappe 1 s) ;
+  essai jsdom `tests_js/examen-connexion.js`.
 - **Maquettes, écrans 7, 9, 10 (27/10)** — Modération : colonnes Document / Envoyé par / Contrôles / Décision ;
   contrôles en clair (`ContributionAdmin.controles`, icône + texte) ; `Contribution.session_terminee` ; session non
   terminée : seul « Refuser et supprimer », validation refusée par la vue (redirection vers le refus) et par

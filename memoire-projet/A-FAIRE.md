@@ -132,3 +132,9 @@
 - [x] Offre mensuelle gardée (27/10) ; cumul avec le Pass testé dans les deux sens.
 - [x] Marge de 90 s gardée pour le transport seulement ; verrou de la page à 0:00 (27/10).
 - [x] Quiz : « Signaler cette question » (27/10), dans la file du modérateur de la matière.
+- [x] Mois acheté pendant un Pass : avertissement daté + confirmation avant tout débit (28/10).
+- [x] Bandeau « Connexion perdue » de l'examen blanc + sauvegarde au retour du réseau (28/10).
+- [ ] À trancher (Serge Alain) : « gardées sur le téléphone » n'est vrai que tant que la page reste ouverte ; si le
+      navigateur est fermé hors connexion, les réponses non envoyées sont perdues. Garder aussi une copie dans le
+      navigateur (localStorage) et la renvoyer à la réouverture ?
+- [ ] Questions ouvertes du CDC v3 : enquête auprès d'au moins 50 étudiants pour confirmer le prix du Pass (5 000).
