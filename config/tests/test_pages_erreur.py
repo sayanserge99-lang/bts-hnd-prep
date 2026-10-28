@@ -51,3 +51,19 @@ def test_formulaire_expire():
     client = Client(enforce_csrf_checks=True)
     reponse = client.post("/compte/connexion/", {"username": "a@example.com", "password": "x"})
     assert reponse.status_code == 403 and "La page a expiré" in reponse.content.decode()
+
+
+def test_aucun_commentaire_de_gabarit_sur_plusieurs_lignes():
+    """{# … #} ne vaut que sur une ligne : sur deux, Django l'affiche dans la page (vu le 28/10 sur l'examen blanc).
+    Pour un long commentaire : {% comment %} … {% endcomment %}."""
+    import re
+    from pathlib import Path
+
+    from django.conf import settings
+
+    fautifs = []
+    for gabarit in [*(Path(settings.BASE_DIR) / "templates").rglob("*.html"), *(Path(settings.BASE_DIR) / "templates").rglob("*.txt")]:
+        for numero, ligne in enumerate(gabarit.read_text(encoding="utf-8").splitlines(), start=1):
+            if re.search(r"\{#(?!.*#\})", ligne):
+                fautifs.append(f"{gabarit.relative_to(settings.BASE_DIR)}:{numero}")
+    assert fautifs == []
