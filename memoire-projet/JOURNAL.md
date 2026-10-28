@@ -200,3 +200,7 @@
   dates et confirmation, test « rien n'est débité sans confirmation » (POST forgé compris). Bandeau « Connexion
   perdue » + sauvegarde au retour du réseau, essai jsdom (11 vérifications) et test du texte. Copie du cahier des
   charges passée en v3 (§3.8). 473 verts + 3 essais JavaScript (lancés dans un conteneur node:20 : tous OK).
+- 28/10 : copie locale des réponses d'examen blanc (décision de Serge Alain), un commit. Choix d'un numéro de version
+  plutôt que l'heure pour savoir ce que le serveur a reçu (une erreur d'horloge aurait pu effacer une réponse non
+  arrivée). Contre-épreuves : sans restauration, sans effacement à la déconnexion, sans message tardif → échecs
+  attendus. Copie v3 du CDC : §6 aligné. 476 verts + 5 essais JavaScript (tous OK dans node:20).

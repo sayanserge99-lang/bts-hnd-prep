@@ -8,7 +8,7 @@
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **473 tests verts + 3 essais JavaScript** (sautés sans Node, lancés par la CI) (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
+- `pytest` : **476 tests verts + 5 essais JavaScript** (sautés sans Node, lancés par la CI) (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
   10 statistiques, 16 Google).
 - **Connexion Google (V2)** `accounts/google.py` : OpenID Connect sans dépendance (state, PKCE, nonce ; vérifie iss,
   aud, exp, email_verified). Compte existant → connecté ; sinon page « Dernière étape » (spécialité + consentement
@@ -32,6 +32,10 @@
   Examen blanc : bandeau `#bandeau-hors-ligne` (texte de Serge Alain, règle des 90 s), sauvegarde relancée au
   retour du réseau (événement `sauvegarder` dans le hx-trigger, nouvel essai 5 s après un échec, frappe 1 s) ;
   essai jsdom `tests_js/examen-connexion.js`.
+- **Copie locale (28/10)** — `static/js/copie-locale.js` (chargé partout par base.html : `window.copieLocale`,
+  effacement sur les formulaires `data-efface-copie-locale`, renvoi tardif sur `[data-copie-tardive]` des pages
+  auto-évaluation et résultat) ; `examen.js` restaure puis démarre (minuteur et navigation après la lecture de la
+  copie). Essais `examen-copie-locale.js` (fake-indexeddb) et `copie-deconnexion.js`.
 - **Maquettes, écrans 7, 9, 10 (27/10)** — Modération : colonnes Document / Envoyé par / Contrôles / Décision ;
   contrôles en clair (`ContributionAdmin.controles`, icône + texte) ; `Contribution.session_terminee` ; session non
   terminée : seul « Refuser et supprimer », validation refusée par la vue (redirection vers le refus) et par

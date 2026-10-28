@@ -145,8 +145,16 @@
   sur le téléphone et envoyées dès le retour du réseau. Attention : après la fin du temps, les réponses qui ne sont
   pas arrivées dans les 90 secondes ne sont pas comptées. » ; réponses renvoyées dès le retour du réseau.
 - **Cahier des charges v3 (reçu le 28/10)** : §3.8 fixe les deux offres (Pass session 5 000 FCFA jusqu'à la date de
-  fin officielle de la session suivante ; « Premium 30 jours » 1 500 FCFA ; périodes bout à bout). Écarts gardés
-  volontairement : §6 met une « date de fin de validité » sur l'Offre de session, on la calcule depuis la Session
-  (point 6 du 22/10) ; §6 Signalement vise Corrigé ou Sujet, on y a ajouté la Question (27/10).
+  fin officielle de la session suivante ; « Premium 30 jours » 1 500 FCFA ; périodes bout à bout). Le §6 en ligne
+  reprend nos deux choix (28/10) : date de fin du Pass calculée depuis la Session, cible « question » dans
+  Signalement. Plus d'écart entre le cahier des charges et le code sur ces points.
+- **Copie locale des réponses d'examen blanc (28/10, Serge Alain)** : la phrase du bandeau est rendue vraie.
+  IndexedDB, sinon localStorage, une entrée par tentative (identifiant, version, heure de saisie, réponses ; rien
+  d'autre), tout sous try/catch (sans stockage, l'examen marche comme avant). Chaque envoi porte un numéro de version ;
+  le serveur garde la plus haute reçue (`reponses["version_recue"]`, en-tête `X-Version-Recue`) et la copie s'efface
+  jusqu'à elle (pas de comparaison d'horloges). Réouverture : copie plus récente remise dans la page et envoyée.
+  Le serveur juge toujours à la réception : après fin + 90 s, refus (409), message « Ces réponses sont arrivées après
+  la fin de l'épreuve et n'ont pas été comptées. » sur la page de l'épreuve terminée, puis effacement. Effacée aussi
+  après la remise (la page suivante voit la version reçue) et à la déconnexion / suppression du compte.
 - **Signaler une question (27/10)** : entité Signalement (troisième cible, exactement une par signalement), dans la
   file du modérateur de la matière du chapitre ; motif de 10 caractères au moins, 10 par jour et par compte.

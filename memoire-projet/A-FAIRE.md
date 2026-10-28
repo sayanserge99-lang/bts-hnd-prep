@@ -134,7 +134,8 @@
 - [x] Quiz : « Signaler cette question » (27/10), dans la file du modérateur de la matière.
 - [x] Mois acheté pendant un Pass : avertissement daté + confirmation avant tout débit (28/10).
 - [x] Bandeau « Connexion perdue » de l'examen blanc + sauvegarde au retour du réseau (28/10).
-- [ ] À trancher (Serge Alain) : « gardées sur le téléphone » n'est vrai que tant que la page reste ouverte ; si le
-      navigateur est fermé hors connexion, les réponses non envoyées sont perdues. Garder aussi une copie dans le
-      navigateur (localStorage) et la renvoyer à la réouverture ?
+- [x] Copie locale des réponses non envoyées (28/10) : la phrase du bandeau est vraie.
+- [ ] Politique de confidentialité (à rédiger) : mentionner la copie locale des réponses d'examen blanc (contenu,
+      durée : jusqu'à réception par le serveur, remise ou déconnexion).
+- [ ] Essai réel de la copie locale sur téléphone (mode avion pendant l'épreuve, navigateur fermé, réouverture).
 - [ ] Questions ouvertes du CDC v3 : enquête auprès d'au moins 50 étudiants pour confirmer le prix du Pass (5 000).
