@@ -91,15 +91,22 @@ même machine disparaît avec elle, et une sauvegarde en clair chez un hébergeu
    0 3 * * * cd /srv/bts-hnd-prep && DESTINATION_DISTANTE=b2:btshnd-sauvegardes sh deploy/sauvegarde.sh >> /var/log/btshnd-sauvegarde.log 2>&1
    ```
 
-Restaurer la base (déchiffrer, puis `pg_restore`) :
+Restaurer (la base **et** les fichiers, à la même date) : `deploy/restaurer.sh` déchiffre d'abord les deux
+archives (une phrase fausse ou une archive abîmée arrête tout avant de toucher au site), arrête le site et le
+worker, remplace la base (`pg_restore --clean`) puis le dossier des fichiers, et redémarre. Il demande de taper
+« oui » avant de remplacer quoi que ce soit.
 
 ```sh
-sudo gpg --batch --pinentry-mode loopback --passphrase-file /root/.btshnd-sauvegarde-phrase \
-    -d sauvegardes/base_AAAA-MM-JJ_HHMM.dump.gpg > /tmp/base.dump
-docker compose -f compose.prod.yaml --env-file .env.production exec -T db \
-    sh -c 'pg_restore -U "$POSTGRES_USER" -d "$POSTGRES_DB" --clean' < /tmp/base.dump
-rm /tmp/base.dump
+ls sauvegardes/                                   # dates disponibles
+# Depuis la copie hors du serveur, si le serveur a été perdu :
+sudo rclone copy b2:btshnd-sauvegardes sauvegardes --include "*_2026-10-28_0300.*"
+sudo sh deploy/restaurer.sh 2026-10-28_0300
 ```
+
+Essai fait en local le 28/10/2026 (stack de production) : compte témoin supprimé et fichier témoin altéré après
+une sauvegarde, puis restauration ; les deux sont revenus, ainsi que les 67 fichiers, et le site répond. L'essai a
+montré que Nginx gardait l'ancienne adresse du conteneur web recréé (erreur 502) : `deploy/nginx.conf` relit
+maintenant cette adresse toutes les 10 s (`resolve`), ce qui vaut aussi pour les mises à jour (section 8).
 
 Essayez une restauration une fois par trimestre : une sauvegarde jamais restaurée n'est qu'un espoir.
 
