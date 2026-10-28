@@ -81,6 +81,8 @@ jobs:
         run: |
           export DJANGO_PRODUCTION=1 DJANGO_HTTPS=1 DJANGO_ALLOWED_HOSTS=bts-hnd-prep.example.com DJANGO_ADMIN_URL=gestion-ci/
           export DJANGO_SECRET_KEY="$(python -c 'import secrets; print(secrets.token_urlsafe(50))')"
+          # Une production réglée a un fournisseur d'e-mails et un destinataire des alertes (accounts.W002, W003).
+          export EMAIL_HOST=smtp.example.com DJANGO_ADMINS="Equipe <equipe@example.com>"
           python manage.py check --deploy --fail-level WARNING
 
       # Extrait les textes avant les tests : un texte affiché sans traduction anglaise
