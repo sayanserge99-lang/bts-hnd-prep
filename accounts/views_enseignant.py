@@ -16,6 +16,8 @@ from django.utils.translation import gettext as _, gettext_lazy
 from django.views.decorators.http import require_POST
 from PIL import Image, ImageOps, UnidentifiedImageError
 
+from sujets.models import Corrige
+
 from .models import Consentement, ProfilEnseignant
 
 PHOTO_MAX_OCTETS = 2 * 1024 * 1024
@@ -104,6 +106,21 @@ def profil_enseignant(request):
     nombre = profil.utilisateur.corriges_verifies.visibles().count()
     return render(request, "accounts/profil_enseignant.html",
                   {"form": form, "profil": profil, "nombre": nombre, "matieres": profil.matieres.order_by("nom")})
+
+
+@login_required
+def mes_corriges(request):
+    """Les corrigés de ses matières qui attendent une vérification, et ceux qu'il a déjà vérifiés."""
+    profil = profil_de(request)
+    a_verifier = (
+        Corrige.objects.filter(sujet__matiere__in=profil.matieres.all())
+        .exclude(statut=Corrige.Statut.VERIFIE)
+        .exclude(publication=Corrige.Publication.MASQUE)
+        .select_related("sujet__session", "sujet__matiere")
+        .order_by("-modifie_le")
+    )
+    verifies = request.user.corriges_verifies.select_related("sujet__session", "sujet__matiere").order_by("-verifie_le")
+    return render(request, "accounts/mes_corriges.html", {"a_verifier": a_verifier, "verifies": verifies})
 
 
 @login_required

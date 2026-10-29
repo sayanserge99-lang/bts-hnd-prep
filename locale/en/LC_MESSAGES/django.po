@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-29 11:56+0100\n"
+"POT-Creation-Date: 2026-10-29 12:26+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,8 +57,8 @@ msgstr "Too many attempts. Try again in 15 minutes or reset your password."
 msgid "Spécialité"
 msgstr "Specialty"
 
-#: accounts/forms.py:49 templates/accounts/profil.html:24
-#: templates/admin/statistiques.html:39
+#: accounts/forms.py:49 templates/accounts/profil.html:45
+#: templates/admin/statistiques.html:39 templates/base.html:146
 msgid "Établissement"
 msgstr "Institution"
 
@@ -177,7 +177,7 @@ msgid "Conditions générales"
 msgstr "Terms and conditions"
 
 #: accounts/models.py:100 templates/accounts/google_finir.html:17
-#: templates/accounts/inscription.html:19 templates/accounts/profil.html:84
+#: templates/accounts/inscription.html:19 templates/accounts/profil.html:108
 #: templates/pages/confidentialite.html:4
 #: templates/pages/confidentialite.html:5
 msgid "Politique de confidentialité"
@@ -187,7 +187,7 @@ msgstr "Privacy policy"
 msgid "Partage des résultats avec l'établissement"
 msgstr "Sharing results with the institution"
 
-#: accounts/models.py:102 templates/base.html:112
+#: accounts/models.py:102 templates/base.html:126
 msgid "Conditions de vente"
 msgstr "Terms of sale"
 
@@ -336,15 +336,15 @@ msgstr ""
 msgid "Code incorrect."
 msgstr "Incorrect code."
 
-#: accounts/views_enseignant.py:32
+#: accounts/views_enseignant.py:34
 msgid "Ce fichier n'est pas une image (JPEG, PNG ou WebP)."
 msgstr "This file is not an image (JPEG, PNG or WebP)."
 
-#: accounts/views_enseignant.py:43
+#: accounts/views_enseignant.py:45
 msgid "Afficher ma carte sous les corrigés que j'ai vérifiés"
 msgstr "Show my card under the marking guides I have verified"
 
-#: accounts/views_enseignant.py:45
+#: accounts/views_enseignant.py:47
 msgid ""
 "Nom ou initiales, établissement, matières enseignées, nombre de corrigés "
 "vérifiés et photo si vous en ajoutez une. Vous pouvez la retirer à tout "
@@ -353,11 +353,11 @@ msgstr ""
 "Name or initials, institution, subjects taught, number of verified marking "
 "guides and your photo if you add one. You can remove it at any time."
 
-#: accounts/views_enseignant.py:50
+#: accounts/views_enseignant.py:52
 msgid "Photo (facultative)"
 msgstr "Photo (optional)"
 
-#: accounts/views_enseignant.py:56
+#: accounts/views_enseignant.py:58
 msgid ""
 "2 Mo au plus. Elle est recadrée en carré ; sa localisation et ses autres "
 "données cachées sont supprimées."
@@ -365,19 +365,19 @@ msgstr ""
 "2 MB at most. It is cropped to a square; its location and other hidden data "
 "are removed."
 
-#: accounts/views_enseignant.py:58
+#: accounts/views_enseignant.py:60
 msgid "Supprimer ma photo"
 msgstr "Delete my photo"
 
-#: accounts/views_enseignant.py:68
+#: accounts/views_enseignant.py:70
 msgid "La photo dépasse 2 Mo."
 msgstr "The photo is larger than 2 MB."
 
-#: accounts/views_enseignant.py:102
+#: accounts/views_enseignant.py:104
 msgid "Votre carte d'enseignant est enregistrée."
 msgstr "Your teacher card has been saved."
 
-#: accounts/views_enseignant.py:117
+#: accounts/views_enseignant.py:134
 msgid ""
 "Votre carte est retirée : les corrigés affichent seulement « Vérifié par un "
 "enseignant »."
@@ -503,7 +503,8 @@ msgstr "title"
 msgid "chapitre"
 msgstr "chapter"
 
-#: catalogue/views.py:87 templates/admin/base_site.html:16
+#: catalogue/views.py:87 templates/accounts/profil.html:23
+#: templates/admin/base_site.html:16 templates/base.html:56
 #: templates/paiements/offres.html:31
 msgid "Statistiques"
 msgstr "Statistics"
@@ -1168,7 +1169,7 @@ msgstr "BTS-HND Prep — Administration"
 msgid "BTS-HND Prep"
 msgstr "BTS-HND Prep"
 
-#: config/urls.py:18 templates/accounts/profil.html:92 templates/base.html:49
+#: config/urls.py:18 templates/accounts/profil.html:117 templates/base.html:62
 #: templates/entrainement/progression.html:4
 msgid "Tableau de bord"
 msgstr "Dashboard"
@@ -1224,8 +1225,8 @@ msgid_plural "%d questions retirées."
 msgstr[0] "%d question removed."
 msgstr[1] "%d questions removed."
 
-#: entrainement/apps.py:8 templates/base.html:53 templates/base.html:55
-#: templates/base.html:133 templates/base.html:138
+#: entrainement/apps.py:8 templates/base.html:66 templates/base.html:68
+#: templates/base.html:156 templates/base.html:161
 #: templates/entrainement/accueil.html:4 templates/entrainement/accueil.html:9
 #: templates/entrainement/examens/liste.html:9
 msgid "Entraînement"
@@ -1587,7 +1588,7 @@ msgid_plural "%d signalements rejetés."
 msgstr[0] "%d report rejected."
 msgstr[1] "%d reports rejected."
 
-#: forum/apps.py:8 templates/base.html:60
+#: forum/apps.py:8 templates/base.html:51 templates/base.html:73
 #: templates/entrainement/accueil.html:23 templates/forum/accueil.html:4
 #: templates/forum/accueil.html:9 templates/forum/discussion.html:4
 #: templates/forum/matiere.html:4 templates/forum/matiere.html:9
@@ -2323,8 +2324,9 @@ msgstr[0] ""
 msgstr[1] ""
 "%d marking guides refused: their paper's session has not officially ended."
 
-#: sujets/apps.py:8 templates/base.html:51 templates/base.html:128
-#: templates/sujets/liste.html:4 templates/sujets/liste.html:9
+#: sujets/apps.py:8 templates/base.html:50 templates/base.html:64
+#: templates/base.html:142 templates/sujets/liste.html:4
+#: templates/sujets/liste.html:9
 msgid "Sujets"
 msgstr "Past papers"
 
@@ -2656,7 +2658,7 @@ msgstr "Continue with Google"
 
 #: templates/accounts/connexion.html:4 templates/accounts/connexion.html:8
 #: templates/accounts/connexion.html:12 templates/accounts/inscription.html:21
-#: templates/base.html:78
+#: templates/base.html:92
 msgid "Se connecter"
 msgstr "Log in"
 
@@ -2670,7 +2672,7 @@ msgstr "No account yet?"
 
 #: templates/accounts/connexion.html:17 templates/accounts/google_finir.html:4
 #: templates/accounts/inscription.html:4 templates/accounts/inscription.html:8
-#: templates/base.html:79
+#: templates/base.html:93
 msgid "Créer un compte"
 msgstr "Create an account"
 
@@ -2795,7 +2797,7 @@ msgid "Créer mon compte"
 msgstr "Create my account"
 
 #: templates/accounts/google_finir.html:16
-#: templates/accounts/inscription.html:18 templates/base.html:111
+#: templates/accounts/inscription.html:18 templates/base.html:125
 #: templates/pages/conditions_utilisation.html:4
 #: templates/pages/conditions_utilisation.html:5
 msgid "Conditions d'utilisation"
@@ -2809,6 +2811,58 @@ msgstr "Free. We only ask for what we need."
 msgid "Déjà inscrit ?"
 msgstr "Already registered?"
 
+#: templates/accounts/mes_corriges.html:4
+#: templates/accounts/mes_corriges.html:9 templates/accounts/profil.html:29
+#: templates/base.html:53 templates/base.html:147
+msgid "Mes corrigés"
+msgstr "My marking guides"
+
+#: templates/accounts/mes_corriges.html:10
+msgid ""
+"Les corrigés de vos matières qui attendent votre vérification, puis ceux que"
+" vous avez vérifiés."
+msgstr ""
+"Marking guides in your subjects waiting for your check, then the ones you "
+"have verified."
+
+#: templates/accounts/mes_corriges.html:14
+msgid "À vérifier"
+msgstr "To verify"
+
+#: templates/accounts/mes_corriges.html:20
+msgid "Relire et vérifier"
+msgstr "Review and verify"
+
+#: templates/accounts/mes_corriges.html:23
+msgid "Aucun corrigé de vos matières n'attend de vérification."
+msgstr "No marking guide in your subjects is waiting to be verified."
+
+#: templates/accounts/mes_corriges.html:26
+msgid ""
+"Pour les vérifier, demandez à l'équipe l'accès à la modération de vos "
+"matières."
+msgstr "To verify them, ask the team for moderation access to your subjects."
+
+#: templates/accounts/mes_corriges.html:30
+msgid "Vérifiés par vous"
+msgstr "Verified by you"
+
+#: templates/accounts/mes_corriges.html:35
+#, python-format
+msgid "Vérifié le %(date)s"
+msgstr "Verified on %(date)s"
+
+#: templates/accounts/mes_corriges.html:37
+msgid "Vous n'avez encore vérifié aucun corrigé."
+msgstr "You have not verified any marking guide yet."
+
+#: templates/accounts/mes_corriges.html:42 templates/accounts/profil.html:30
+#: templates/accounts/profil.html:105
+#: templates/accounts/profil_enseignant.html:4
+#: templates/accounts/profil_enseignant.html:10
+msgid "Ma carte d'enseignant"
+msgstr "My teacher card"
+
 #: templates/accounts/modifier_profil.html:4
 #: templates/accounts/modifier_profil.html:9
 #: templates/partenaires/mes_epreuves.html:28
@@ -2817,7 +2871,7 @@ msgstr "Edit my profile"
 
 #: templates/accounts/modifier_profil.html:8
 #: templates/accounts/mot_de_passe.html:8 templates/accounts/profil.html:4
-#: templates/base.html:75 templates/communaute/mes_contributions.html:9
+#: templates/base.html:89 templates/communaute/mes_contributions.html:9
 #: templates/paiements/activer_code.html:8 templates/paiements/recu.html:8
 #: templates/partenaires/mes_epreuves.html:9
 msgid "Mon espace"
@@ -2829,7 +2883,7 @@ msgstr "My account"
 msgid "Enregistrer"
 msgstr "Save"
 
-#: templates/accounts/mot_de_passe.html:10 templates/accounts/profil.html:83
+#: templates/accounts/mot_de_passe.html:10 templates/accounts/profil.html:107
 msgid "Définir un mot de passe"
 msgstr "Set a password"
 
@@ -2841,7 +2895,7 @@ msgstr ""
 "Your account was created with Google. With a password, you can also log in "
 "with your email and use “Forgot password”."
 
-#: templates/accounts/mot_de_passe.html:13 templates/accounts/profil.html:83
+#: templates/accounts/mot_de_passe.html:13 templates/accounts/profil.html:107
 msgid "Changer mon mot de passe"
 msgstr "Change my password"
 
@@ -2890,80 +2944,111 @@ msgstr "This link is no longer valid. Request a new one."
 msgid "Nouveau lien"
 msgstr "New link"
 
-#: templates/accounts/profil.html:18
+#: templates/accounts/profil.html:4 templates/base.html:89
+msgid "Mon compte"
+msgstr "My account"
+
+#: templates/accounts/profil.html:20
+msgid "Mon rôle"
+msgstr "My role"
+
+#: templates/accounts/profil.html:22 templates/base.html:55
+#: templates/base.html:145
+msgid "Administration"
+msgstr "Admin"
+
+#: templates/accounts/profil.html:25 templates/base.html:58
+#: templates/base.html:148
+msgid "Modération"
+msgstr "Moderation"
+
+#: templates/accounts/profil.html:27 templates/base.html:52
+#: templates/base.html:88
+msgid "Mon établissement"
+msgstr "My institution"
+
+#: templates/accounts/profil.html:33
+msgid "Pour essayer les quiz et les examens blancs :"
+msgstr "To try the quizzes and mock exams:"
+
+#: templates/accounts/profil.html:34
+msgid "Voir comme un étudiant"
+msgstr "View as a student"
+
+#: templates/accounts/profil.html:39
 msgid "Mes études"
 msgstr "My studies"
 
-#: templates/accounts/profil.html:20
+#: templates/accounts/profil.html:41
 #, python-format
 msgid "session %(annee)s"
 msgstr "%(annee)s session"
 
-#: templates/accounts/profil.html:20
+#: templates/accounts/profil.html:41
 msgid "Examen et spécialité à compléter"
 msgstr "Exam and specialty to fill in"
 
-#: templates/accounts/profil.html:21 templates/forum/_actions_auteur.html:4
+#: templates/accounts/profil.html:42 templates/forum/_actions_auteur.html:4
 msgid "Modifier"
 msgstr "Edit"
 
-#: templates/accounts/profil.html:26
+#: templates/accounts/profil.html:47
 msgid "validé"
 msgstr "confirmed"
 
-#: templates/accounts/profil.html:27
+#: templates/accounts/profil.html:48
 msgid "en attente de validation par l'établissement"
 msgstr "awaiting confirmation by the institution"
 
-#: templates/accounts/profil.html:28 templates/admin/statistiques.html:43
+#: templates/accounts/profil.html:49 templates/admin/statistiques.html:43
 msgid "Non renseigné"
 msgstr "Not given"
 
-#: templates/accounts/profil.html:31 templates/partenaires/mes_epreuves.html:4
+#: templates/accounts/profil.html:52 templates/partenaires/mes_epreuves.html:4
 #: templates/partenaires/mes_epreuves.html:10
 msgid "Épreuves de mon établissement"
 msgstr "My institution's papers"
 
-#: templates/accounts/profil.html:34
+#: templates/accounts/profil.html:55
 msgid "Langue de l'interface"
 msgstr "Interface language"
 
-#: templates/accounts/profil.html:43
+#: templates/accounts/profil.html:64
 msgid "Abonnement"
 msgstr "Subscription"
 
-#: templates/accounts/profil.html:45
+#: templates/accounts/profil.html:66
 #, python-format
 msgid "Premium du %(debut)s au %(fin)s"
 msgstr "Premium from %(debut)s to %(fin)s"
 
-#: templates/accounts/profil.html:48 templates/paiements/_formules.html:6
+#: templates/accounts/profil.html:69 templates/paiements/_formules.html:6
 #: templates/paiements/offres.html:25
 msgid "Gratuit"
 msgstr "Free"
 
-#: templates/accounts/profil.html:51
+#: templates/accounts/profil.html:72
 msgid "Passer au Pass"
 msgstr "Get the Pass"
 
-#: templates/accounts/profil.html:55 templates/paiements/email_recu.txt:5
+#: templates/accounts/profil.html:76 templates/paiements/email_recu.txt:5
 #: templates/paiements/recu.html:4 templates/paiements/recu.html:19
 msgid "Reçu"
 msgstr "Receipt"
 
-#: templates/accounts/profil.html:58 templates/paiements/offres.html:40
+#: templates/accounts/profil.html:79 templates/paiements/offres.html:40
 msgid "J'ai un code d'accès"
 msgstr "I have an access code"
 
-#: templates/accounts/profil.html:63 templates/base.html:110
+#: templates/accounts/profil.html:85 templates/base.html:124
 msgid "Confidentialité"
 msgstr "Privacy"
 
-#: templates/accounts/profil.html:66 templates/accounts/profil.html:73
+#: templates/accounts/profil.html:89 templates/accounts/profil.html:96
 msgid "Partager mes résultats avec mon établissement"
 msgstr "Share my results with my institution"
 
-#: templates/accounts/profil.html:67
+#: templates/accounts/profil.html:90
 msgid ""
 "Votre établissement verra vos scores aux quiz et examens blancs. Vous pouvez"
 " arrêter à tout moment."
@@ -2971,65 +3056,59 @@ msgstr ""
 "Your institution will see your quiz and mock exam scores. You can stop at "
 "any time."
 
-#: templates/accounts/profil.html:67
+#: templates/accounts/profil.html:90
 msgid "Possible quand votre établissement a validé votre inscription."
 msgstr "Available once your institution has confirmed your enrolment."
 
-#: templates/accounts/profil.html:81
-#: templates/accounts/profil_enseignant.html:4
-#: templates/accounts/profil_enseignant.html:10
-msgid "Ma carte d'enseignant"
-msgstr "My teacher card"
-
-#: templates/accounts/profil.html:82
+#: templates/accounts/profil.html:106
 msgid "Télécharger mes données"
 msgstr "Download my data"
 
-#: templates/accounts/profil.html:85 templates/accounts/supprimer.html:4
+#: templates/accounts/profil.html:109 templates/accounts/supprimer.html:4
 #: templates/accounts/supprimer.html:8
 msgid "Supprimer mon compte"
 msgstr "Delete my account"
 
-#: templates/accounts/profil.html:93
+#: templates/accounts/profil.html:118
 #, python-format
 msgid "%(n)s jour avant la session %(nom)s"
 msgid_plural "%(n)s jours avant la session %(nom)s"
 msgstr[0] "%(n)s day before the %(nom)s session"
 msgstr[1] "%(n)s days before the %(nom)s session"
 
-#: templates/accounts/profil.html:93
+#: templates/accounts/profil.html:118
 msgid "Résultats, points faibles et dernières activités"
 msgstr "Results, weak points and recent activity"
 
-#: templates/accounts/profil.html:99
+#: templates/accounts/profil.html:124
 msgid "Mes favoris"
 msgstr "My favourites"
 
-#: templates/accounts/profil.html:104
+#: templates/accounts/profil.html:129
 msgid ""
 "Ajoutez des sujets à vos favoris depuis leur fiche pour les retrouver ici."
 msgstr "Add papers to your favourites from their page to find them here."
 
-#: templates/accounts/profil.html:111
+#: templates/accounts/profil.html:136
 msgid "Sujets récents de votre spécialité"
 msgstr "Recent papers for your specialty"
 
-#: templates/accounts/profil.html:116
+#: templates/accounts/profil.html:141
 msgid "Aucun sujet publié pour le moment."
 msgstr "No papers published yet."
 
-#: templates/accounts/profil.html:119
+#: templates/accounts/profil.html:144
 msgid "Tous les sujets de ma spécialité"
 msgstr "All papers for my specialty"
 
-#: templates/accounts/profil.html:125
+#: templates/accounts/profil.html:151
 #: templates/communaute/envoyer_sujet.html:8
 #: templates/communaute/mes_contributions.html:4
 #: templates/communaute/mes_contributions.html:10
 msgid "Mes contributions"
 msgstr "My contributions"
 
-#: templates/accounts/profil.html:126
+#: templates/accounts/profil.html:152
 msgid "Envoyez des sujets de sessions passées ou proposez des corrigés."
 msgstr "Send papers from past sessions or propose marking guides."
 
@@ -3146,7 +3225,7 @@ msgstr ""
 #: templates/admin/communaute/contribution/valider.html:6
 #: templates/admin/entrainement/question/importer.html:6
 #: templates/admin/paiements/codeacces/generer.html:6
-#: templates/admin/sujets/sujet/importer.html:6 templates/base.html:124
+#: templates/admin/sujets/sujet/importer.html:6 templates/base.html:138
 msgid "Accueil"
 msgstr "Home"
 
@@ -3649,12 +3728,12 @@ msgstr "Give feedback"
 msgid "Navigation principale"
 msgstr "Main navigation"
 
-#: templates/base.html:55 templates/base.html:138
+#: templates/base.html:68 templates/base.html:161
 #: templates/sujets/detail.html:19
 msgid "Bientôt"
 msgstr "Soon"
 
-#: templates/base.html:58 templates/entrainement/accueil.html:29
+#: templates/base.html:71 templates/entrainement/accueil.html:29
 #: templates/entrainement/examens/consignes.html:8
 #: templates/entrainement/examens/liste.html:4
 #: templates/entrainement/examens/liste.html:10
@@ -3662,45 +3741,45 @@ msgstr "Soon"
 msgid "Examens blancs"
 msgstr "Mock exams"
 
-#: templates/base.html:61 templates/paiements/commander.html:8
+#: templates/base.html:74 templates/paiements/commander.html:8
 #: templates/paiements/offres.html:4 templates/paiements/offres.html:9
 msgid "Offres"
 msgstr "Plans"
 
-#: templates/base.html:74
-msgid "Mon établissement"
-msgstr "My institution"
-
-#: templates/base.html:76
+#: templates/base.html:90
 msgid "Déconnexion"
 msgstr "Log out"
 
-#: templates/base.html:108
+#: templates/base.html:122
 msgid "Informations légales"
 msgstr "Legal information"
 
-#: templates/base.html:109 templates/pages/mentions_legales.html:4
+#: templates/base.html:123 templates/pages/mentions_legales.html:4
 #: templates/pages/mentions_legales.html:5
 msgid "Mentions légales"
 msgstr "Legal notice"
 
-#: templates/base.html:113 templates/communaute/demande_retrait.html:4
+#: templates/base.html:127 templates/communaute/demande_retrait.html:4
 #: templates/communaute/demande_retrait.html:8
 #: templates/communaute/demande_retrait_recue.html:4
 msgid "Demande de retrait"
 msgstr "Takedown request"
 
-#: templates/base.html:114 templates/communaute/contact.html:4
+#: templates/base.html:128 templates/communaute/contact.html:4
 #: templates/communaute/contact.html:8
 #: templates/communaute/demande_retrait.html:22
 msgid "Contact"
 msgstr "Contact"
 
-#: templates/base.html:120
+#: templates/base.html:134
 msgid "Navigation mobile"
 msgstr "Mobile navigation"
 
-#: templates/base.html:144
+#: templates/base.html:167
+msgid "Compte"
+msgstr "Account"
+
+#: templates/base.html:167
 msgid "Profil"
 msgstr "Profile"
 

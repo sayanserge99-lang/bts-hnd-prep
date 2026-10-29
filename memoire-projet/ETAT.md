@@ -8,7 +8,7 @@
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **567 tests verts + 5 essais JavaScript** (sautés sans Node, lancés par la CI) (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
+- `pytest` : **574 tests verts + 5 essais JavaScript** (sautés sans Node, lancés par la CI) (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
   10 statistiques, 16 Google).
 - **Connexion Google (V2)** `accounts/google.py` : OpenID Connect sans dépendance (state, PKCE, nonce ; vérifie iss,
   aud, exp, email_verified). Compte existant → connecté ; sinon page « Dernière étape » (spécialité + consentement
@@ -51,6 +51,9 @@
   sur la page de paiement (prix barré), remise sur le reçu et l'e-mail. Administration réservée à l'administrateur
   (utilisations confirmées / maximum, chiffre d'affaires). Démo : DEMO20 (20 %, 50 utilisations), à essayer avec
   PAIEMENT_ESSAI=1.
+- **Menu selon le rôle (29/10)** — `config/context_processors.roles` (compte_equipe, est_moderateur, est_enseignant) ;
+  menus du haut et du bas de `base.html`, « Mon compte » (`accounts/profil.html`), page « Mes corrigés »
+  (`accounts:mes_corriges` : à vérifier dans ses matières, vérifiés par lui). Test `test_menu_roles.py`.
 - **Ajustements du 28/10** — mois acheté pendant un Pass actif : avertissement avec les vraies dates
   (`service.avertissement`), « Acheter quand même » / « Annuler », aucun formulaire ni débit sans `confirme=1`.
   Examen blanc : bandeau `#bandeau-hors-ligne` (texte de Serge Alain, règle des 90 s), sauvegarde relancée au

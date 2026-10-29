@@ -45,6 +45,19 @@
       {# Maquette : connecté, « Tableau de bord » en premier et « Examens blancs » ; dès 1 024 px, sinon barre du bas. #}
       {% with vue=request.resolver_match.view_name %}
       <nav class="hidden items-center gap-5 text-sm font-medium lg:flex" aria-label="{% translate 'Navigation principale' %}">
+        {% if compte_equipe %}
+          {# Équipe : pas de menu d'étudiant ; les quiz restent ouverts par « Voir comme un étudiant » (Mon compte). #}
+          <a href="{% url 'sujets:liste' %}" class="hover:text-vert aria-[current=page]:text-vert" {% if vue == "sujets:liste" %}aria-current="page"{% endif %}>{% translate "Sujets" %}</a>
+          {% if fonctionnalites.forum and not etablissement_gere %}<a href="{% url 'forum:accueil' %}" class="hover:text-vert aria-[current=page]:text-vert" {% if vue == "forum:accueil" %}aria-current="page"{% endif %}>{% translate "Forum" %}</a>{% endif %}
+          {% if etablissement_gere %}<a href="{% url 'partenaires:espace' %}" class="hover:text-vert">{% translate "Mon établissement" %}</a>{% endif %}
+          {% if est_enseignant %}<a href="{% url 'accounts:mes_corriges' %}" class="hover:text-vert aria-[current=page]:text-vert" {% if vue == "accounts:mes_corriges" %}aria-current="page"{% endif %}>{% translate "Mes corrigés" %}</a>{% endif %}
+          {% if est_administrateur %}
+            <a href="{% url 'admin:index' %}" class="hover:text-vert">{% translate "Administration" %}</a>
+            <a href="{% url 'statistiques' %}" class="hover:text-vert">{% translate "Statistiques" %}</a>
+          {% elif est_moderateur %}
+            <a href="{% url 'admin:index' %}" class="hover:text-vert">{% translate "Modération" %}</a>
+          {% endif %}
+        {% else %}
         {% if user.is_authenticated and fonctionnalites.entrainement %}
           <a href="{% url 'entrainement:progression' %}" class="hover:text-vert aria-[current=page]:text-vert" {% if vue == "entrainement:progression" %}aria-current="page"{% endif %}>{% translate "Tableau de bord" %}</a>
         {% endif %}
@@ -59,6 +72,7 @@
         {% endif %}
         {% if fonctionnalites.forum %}<a href="{% url 'forum:accueil' %}" class="hover:text-vert aria-[current=page]:text-vert" {% if vue == "forum:accueil" %}aria-current="page"{% endif %}>{% translate "Forum" %}</a>{% endif %}
         <a href="{% url 'offres' %}" class="hover:text-vert aria-[current=page]:text-vert" {% if vue == "offres" %}aria-current="page"{% endif %}>{% translate "Offres" %}</a>
+        {% endif %}
       </nav>
       {% endwith %}
 
@@ -71,8 +85,8 @@
         </form>
         <div class="hidden items-center gap-3 text-sm font-semibold lg:flex">
           {% if user.is_authenticated %}
-            {% if etablissement_gere %}<a href="{% url 'partenaires:espace' %}" class="text-vert hover:underline">{% translate "Mon établissement" %}</a>{% endif %}
-            <a href="{% url 'accounts:profil' %}" class="text-vert hover:underline">{% translate "Mon espace" %}</a>
+            {% if etablissement_gere and not compte_equipe %}<a href="{% url 'partenaires:espace' %}" class="text-vert hover:underline">{% translate "Mon établissement" %}</a>{% endif %}
+            <a href="{% url 'accounts:profil' %}" class="text-vert hover:underline">{% if compte_equipe %}{% translate "Mon compte" %}{% else %}{% translate "Mon espace" %}{% endif %}</a>
             <form method="post" action="{% url 'accounts:deconnexion' %}" data-efface-copie-locale>{% csrf_token %}<button class="bouton-contour">{% translate "Déconnexion" %}</button></form>
           {% else %}
             <a href="{% url 'accounts:connexion' %}" class="text-vert hover:underline">{% translate "Se connecter" %}</a>
@@ -127,7 +141,16 @@
       <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 6.5C10.5 5 8 4.5 3.5 4.5v14c4.5 0 7 .5 8.5 2 1.5-1.5 4-2 8.5-2v-14C16 4.5 13.5 5 12 6.5Zm0 0v14"/></svg>
       {% translate "Sujets" %}
     </a>
-    {% if fonctionnalites.entrainement %}
+    {% if compte_equipe %}
+      {% if est_administrateur %}{% url 'admin:index' as url_role %}{% translate "Administration" as nom_role %}
+      {% elif etablissement_gere %}{% url 'partenaires:espace' as url_role %}{% translate "Établissement" as nom_role %}
+      {% elif est_enseignant %}{% url 'accounts:mes_corriges' as url_role %}{% translate "Mes corrigés" as nom_role %}
+      {% else %}{% url 'admin:index' as url_role %}{% translate "Modération" as nom_role %}{% endif %}
+      <a href="{{ url_role }}" class="flex flex-col items-center gap-1 py-2 {% if request.path == url_role %}text-vert font-semibold{% endif %}">
+        <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
+        {{ nom_role }}
+      </a>
+    {% elif fonctionnalites.entrainement %}
       <a href="{% url 'entrainement:accueil' %}" class="flex flex-col items-center gap-1 py-2 {% if '/entrainement/' in request.path %}text-vert font-semibold{% endif %}">
         <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg>
         {% translate "Entraînement" %}
@@ -141,7 +164,7 @@
     {% url 'accounts:profil' as url_profil %}
     <a href="{% if user.is_authenticated %}{{ url_profil }}{% else %}{% url 'accounts:connexion' %}{% endif %}" class="flex flex-col items-center gap-1 py-2 {% if '/compte/' in request.path %}text-vert font-semibold{% endif %}">
       <svg viewBox="0 0 24 24" class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-      {% translate "Profil" %}
+      {% if compte_equipe %}{% translate "Compte" %}{% else %}{% translate "Profil" %}{% endif %}
     </a>
   </nav>
   {% endblock %}

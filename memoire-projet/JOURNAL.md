@@ -251,3 +251,5 @@
 - Codes de réduction (choix de réservation validés par Serge Alain). Contre-épreuves : sans verrou, le test des deux
   paiements simultanés (deux fils, comptage ralenti) échoue ; sans plancher, le test du plancher ; sans effacement à
   l'échec, les deux tests « rien n'est consommé ». Capture de la page de paiement avec DEMO20. 567 verts.
+- Menu selon le rôle (Serge Alain : « ils ne sont pas des étudiants »). Contre-épreuve (équipe qui étudie) : échec
+  attendu. Captures « Mon compte » (administrateur) et « Mes corrigés ». 574 verts.

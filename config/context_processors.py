@@ -5,6 +5,22 @@ from accounts.moderation import est_administrateur
 from partenaires.acces import etablissement_gere_par
 
 
+def roles(utilisateur):
+    """Le menu suit le rôle : un compte sans profil d'étude qui a un rôle d'équipe (administration, modération,
+    établissement, enseignant) n'a pas le menu de l'étudiant (tableau de bord, entraînement, offres)."""
+    if not utilisateur.is_authenticated:
+        return {"compte_equipe": False, "est_moderateur": False, "est_enseignant": False}
+    administrateur = utilisateur.is_staff and est_administrateur(utilisateur)
+    enseignant = hasattr(utilisateur, "profil_enseignant")
+    etablissement = etablissement_gere_par(utilisateur)
+    equipe = utilisateur.is_staff or enseignant or etablissement is not None
+    return {
+        "compte_equipe": equipe and not hasattr(utilisateur, "profil"),
+        "est_moderateur": utilisateur.is_staff and not administrateur,
+        "est_enseignant": enseignant,
+    }
+
+
 def fonctionnalites(request):
     """Rend les drapeaux V2/V3 et l'état du paiement disponibles dans tous les templates."""
     return {
@@ -20,4 +36,5 @@ def fonctionnalites(request):
         "connexion_google": google.est_active(),
         # Lien « Mon établissement » du bandeau, pour les responsables d'établissement.
         "etablissement_gere": etablissement_gere_par(request.user) if hasattr(request, "user") else None,
+        **(roles(request.user) if hasattr(request, "user") else {}),
     }

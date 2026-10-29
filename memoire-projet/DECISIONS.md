@@ -187,3 +187,8 @@
   deux paiements simultanés de dépasser la limite ; « établissement facultatif » = étudiants confirmés par
   l'établissement. Plancher PAIEMENT_PRIX_MINIMUM = 500 FCFA par défaut (à ajuster aux frais de l'agrégateur choisi) ;
   offres concernées obligatoires ; limite totale facultative ; un code sans remise réelle (plancher) est refusé.
+- **Menu selon le rôle (29/10, Serge Alain)** : un compte sans profil d'étude qui a un rôle d'équipe (staff,
+  responsable d'établissement, profil enseignant) n'a pas le menu de l'étudiant (tableau de bord, entraînement,
+  examens blancs, offres) : Administration + Statistiques, Modération, Mon établissement, Mes corrigés. « Mon compte »
+  au lieu de « Mon espace », sans études, abonnement ni favoris. Rien n'est bloqué : « Voir comme un étudiant » ouvre
+  les quiz. Un compte d'équipe qui a aussi un profil d'étude garde le menu de l'étudiant.

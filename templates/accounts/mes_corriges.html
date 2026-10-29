@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titre %}{% translate "Mes corrigés" %} — BTS-HND Prep{% endblock %}
+
+{% block contenu %}
+<div class="mx-auto max-w-3xl space-y-6 px-4 py-6">
+  <div>
+    <h1 class="text-2xl font-bold">{% translate "Mes corrigés" %}</h1>
+    <p class="mt-1 text-gris">{% translate "Les corrigés de vos matières qui attendent votre vérification, puis ceux que vous avez vérifiés." %}</p>
+  </div>
+
+  <section aria-labelledby="a-verifier">
+    <h2 id="a-verifier" class="text-lg font-semibold">{% translate "À vérifier" %}</h2>
+    <ul class="mt-3 space-y-2">
+      {% for corrige in a_verifier %}
+        <li class="carte flex flex-wrap items-center justify-between gap-3">
+          <span><span class="block font-semibold">{{ corrige.sujet.matiere.nom }} — {{ corrige.sujet.session.annee }}</span>
+            <span class="text-sm text-gris">{{ corrige.get_statut_display }} · {{ corrige.auteur }}</span></span>
+          {% if user.is_staff %}<a href="{% url 'admin:sujets_corrige_change' corrige.pk %}" class="bouton-contour">{% translate "Relire et vérifier" %}</a>{% endif %}
+        </li>
+      {% empty %}
+        <li class="text-sm text-gris">{% translate "Aucun corrigé de vos matières n'attend de vérification." %}</li>
+      {% endfor %}
+    </ul>
+    {% if a_verifier and not user.is_staff %}<p class="mt-2 text-sm text-gris">{% translate "Pour les vérifier, demandez à l'équipe l'accès à la modération de vos matières." %}</p>{% endif %}
+  </section>
+
+  <section aria-labelledby="verifies">
+    <h2 id="verifies" class="text-lg font-semibold">{% translate "Vérifiés par vous" %}</h2>
+    <ul class="mt-3 space-y-2">
+      {% for corrige in verifies %}
+        <li><a href="{% url 'sujets:detail' corrige.sujet.pk %}?onglet=corrige" class="carte block hover:border-vert">
+          <span class="block font-semibold">{{ corrige.sujet.matiere.nom }} — {{ corrige.sujet.session.annee }}</span>
+          <span class="text-sm text-gris">{% blocktranslate with date=corrige.verifie_le|date:"d/m/Y" %}Vérifié le {{ date }}{% endblocktranslate %}</span></a></li>
+      {% empty %}
+        <li class="text-sm text-gris">{% translate "Vous n'avez encore vérifié aucun corrigé." %}</li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <a href="{% url 'accounts:profil_enseignant' %}" class="text-sm font-semibold text-vert underline">{% translate "Ma carte d'enseignant" %}</a>
+</div>
+{% endblock %}

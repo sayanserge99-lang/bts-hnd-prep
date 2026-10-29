@@ -29,6 +29,7 @@ urlpatterns = [
     path("double-authentification/configurer/", views_double_auth.configurer, name="double_auth_configurer"),
     path("profil/partage/", views.basculer_partage, name="partage"),
     path("profil/enseignant/", views_enseignant.profil_enseignant, name="profil_enseignant"),
+    path("mes-corriges/", views_enseignant.mes_corriges, name="mes_corriges"),
     path("profil/enseignant/retirer/", views_enseignant.retirer_profil_enseignant, name="retirer_profil_enseignant"),
     path("enseignants/<int:pk>/photo/", views_enseignant.photo_enseignant, name="photo_enseignant"),
     path("profil/mes-donnees/", views.exporter, name="exporter"),
