@@ -3,19 +3,7 @@
 
 {% block extrastyle %}
 {{ block.super }}
-<style>
-  /* Couleurs de l'admin Django (claires et sombres) : le tableau de bord suit le thème choisi. */
-  .stats-tuiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); gap: 1rem; margin: 1rem 0 2rem; }
-  .stats-tuile { border: 1px solid var(--hairline-color); border-radius: 8px; padding: 1rem; background: var(--body-bg); }
-  .stats-tuile .valeur { font-size: 2rem; font-weight: 700; color: var(--body-fg); line-height: 1.1; }
-  .stats-tuile .libelle { color: var(--body-quiet-color); font-size: 0.85rem; }
-  .stats-tuile .evolution { color: var(--body-quiet-color); font-size: 0.8rem; margin-top: 0.25rem; }
-  .stats-tuile.a-traiter .valeur { color: var(--error-fg); }
-  .stats-barre { display: block; height: 8px; border-radius: 0 4px 4px 0; background: var(--secondary); min-width: 2px; }
-  .stats-table { width: 100%; }
-  .stats-table td.nombre, .stats-table th.nombre { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .stats-table td.barre { width: 35%; }
-</style>
+{% include "admin/_styles_statistiques.html" %}
 {% endblock %}
 
 {% block content %}

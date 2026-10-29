@@ -14,5 +14,6 @@
 {% block nav-global %}
   {% if est_administrateur %}
     <a href="{% url 'statistiques' %}" style="color: var(--header-link-color); margin-left: 1.5rem; font-weight: 600;">📊 {% translate "Statistiques" %}</a>
+    <a href="{% url 'ventes' %}" style="color: var(--header-link-color); margin-left: 1.5rem; font-weight: 600;">{% translate "Ventes" %}</a>
   {% endif %}
 {% endblock %}

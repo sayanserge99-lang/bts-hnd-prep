@@ -1,0 +1,100 @@
+{% extends "admin/base_site.html" %}
+{% load i18n prix %}
+
+{% block extrastyle %}
+{{ block.super }}
+{% include "admin/_styles_statistiques.html" %}
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+  {% if not paiement_actif %}<p class="help">{% translate "Le paiement n'est pas encore ouvert : les chiffres ne comptent que les paiements d'essai." %}</p>{% endif %}
+
+  <h2>{% translate "Revenus" %}</h2>
+  <div class="stats-tuiles">
+    <div class="stats-tuile"><div class="valeur montant">{{ ca_periode|fcfa }}</div><div class="libelle">{% blocktranslate with n=nombre_mois %}sur les {{ n }} derniers mois{% endblocktranslate %}</div></div>
+    <div class="stats-tuile">
+      <div class="valeur montant">{{ ca_mois.valeur|fcfa }}</div><div class="libelle">{% translate "ce mois-ci" %}</div>
+      {% if ca_mois.evolution is not None %}<div class="evolution">{% if ca_mois.evolution > 0 %}▲ +{{ ca_mois.evolution|fcfa }}{% elif ca_mois.evolution < 0 %}▼ {{ ca_mois.evolution|fcfa }}{% else %}={% endif %} {% blocktranslate with n=ca_mois.precedente|fcfa %}(mois précédent : {{ n }}){% endblocktranslate %}</div>{% endif %}
+    </div>
+    <div class="stats-tuile"><div class="valeur">{{ payeurs }}</div><div class="libelle">{% translate "étudiants qui ont payé" %}</div></div>
+    <div class="stats-tuile"><div class="valeur">{{ renouvellement }} %</div><div class="libelle">{% blocktranslate count n=fideles %}ont payé plus d'une fois ({{ n }} étudiant){% plural %}ont payé plus d'une fois ({{ n }} étudiants){% endblocktranslate %}</div></div>
+    <div class="stats-tuile"><div class="valeur montant">{{ panier_moyen|fcfa }}</div><div class="libelle">{% translate "paiement moyen" %}</div></div>
+    <a class="stats-tuile" href="{% url 'admin:paiements_paiement_changelist' %}?statut__exact=echoue"><div class="valeur">{{ echoues_30_jours }}</div><div class="libelle">{% translate "paiements échoués (30 jours)" %}</div></a>
+  </div>
+
+  <table class="stats-table">
+    <thead><tr><th>{% translate "Mois" %}</th><th class="nombre">{% translate "Paiements" %}</th><th class="nombre">{% translate "Remises" %}</th><th class="nombre">{% translate "Encaissé" %}</th><th></th></tr></thead>
+    <tbody>
+      {% for ligne in mois %}
+        <tr>
+          <td>{{ ligne.mois|date:"F Y" }}</td>
+          <td class="nombre">{{ ligne.nombre }}</td>
+          <td class="nombre">{% if ligne.remises %}− {{ ligne.remises|fcfa }}{% else %}—{% endif %}</td>
+          <td class="nombre">{{ ligne.montant|fcfa }}</td>
+          <td class="barre"><span class="stats-barre" style="width: {{ ligne.part }}%"></span></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>{% translate "Par offre" %}</h2>
+  {% if par_offre %}
+    <table class="stats-table">
+      <thead><tr><th>{% translate "Offre" %}</th><th class="nombre">{% translate "Paiements" %}</th><th class="nombre">{% translate "Encaissé" %}</th></tr></thead>
+      <tbody>{% for ligne in par_offre %}<tr><td>{{ ligne.offre__nom }}</td><td class="nombre">{{ ligne.nombre }}</td><td class="nombre">{{ ligne.montant|fcfa }}</td></tr>{% endfor %}</tbody>
+    </table>
+  {% else %}<p>{% translate "Aucun paiement réussi pour le moment." %}</p>{% endif %}
+
+  <h2>{% translate "Étudiants qui ont le plus payé" %}</h2>
+  {% if meilleurs %}
+    <table class="stats-table">
+      <thead><tr><th>{% translate "Étudiant" %}</th><th class="nombre">{% translate "Paiements" %}</th><th class="nombre">{% translate "Total payé" %}</th><th class="nombre">{% translate "Dernier paiement" %}</th><th class="nombre">{% translate "Accès jusqu'au" %}</th></tr></thead>
+      <tbody>
+        {% for ligne in meilleurs %}
+          <tr>
+            <td><a href="{% url 'admin:paiements_paiement_changelist' %}?q={{ ligne.utilisateur__email|urlencode }}">{% firstof ligne.utilisateur__first_name ligne.utilisateur__email %} {{ ligne.utilisateur__last_name }}</a></td>
+            <td class="nombre">{{ ligne.nombre }}</td>
+            <td class="nombre">{{ ligne.total|fcfa }}</td>
+            <td class="nombre">{{ ligne.dernier|date:"d/m/Y" }}</td>
+            <td class="nombre">{% if ligne.fin_acces %}{{ ligne.fin_acces|date:"d/m/Y" }}{% else %}<em>{% translate "expiré" %}</em>{% endif %}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <p class="help">{% translate "Données nominatives : à consulter ici seulement, jamais à exporter ni à transmettre." %}</p>
+  {% else %}<p>{% translate "Aucun paiement réussi pour le moment." %}</p>{% endif %}
+
+  <h2>{% blocktranslate with n=jours_avant_fin %}À relancer : accès qui finit dans les {{ n }} jours{% endblocktranslate %}</h2>
+  {% if a_relancer %}
+    <table class="stats-table">
+      <thead><tr><th>{% translate "Étudiant" %}</th><th>{% translate "Offre" %}</th><th class="nombre">{% translate "Fin" %}</th></tr></thead>
+      <tbody>{% for abonnement in a_relancer %}<tr><td>{{ abonnement.utilisateur.get_full_name|default:abonnement.utilisateur.email }}</td><td>{{ abonnement.offre.nom }}</td><td class="nombre">{{ abonnement.fin|date:"d/m/Y" }}</td></tr>{% endfor %}</tbody>
+    </table>
+    <p class="help">{% translate "Ils reçoivent déjà un rappel automatique par e-mail." %}</p>
+  {% else %}<p>{% translate "Personne pour le moment." %}</p>{% endif %}
+
+  <h2>{% blocktranslate with n=jours_perdus %}Non renouvelés (fin depuis moins de {{ n }} jours){% endblocktranslate %}</h2>
+  {% if perdus %}
+    <table class="stats-table">
+      <thead><tr><th>{% translate "Étudiant" %}</th><th class="nombre">{% translate "Accès fini le" %}</th></tr></thead>
+      <tbody>{% for ligne in perdus %}<tr><td>{% firstof ligne.utilisateur__first_name ligne.utilisateur__email %} {{ ligne.utilisateur__last_name }}</td><td class="nombre">{{ ligne.fin|date:"d/m/Y" }}</td></tr>{% endfor %}</tbody>
+    </table>
+  {% else %}<p>{% translate "Personne pour le moment." %}</p>{% endif %}
+
+  <h2>{% translate "Codes de réduction utilisés" %}</h2>
+  {% if codes %}
+    <table class="stats-table">
+      <thead><tr><th>{% translate "Code" %}</th><th class="nombre">{% translate "Utilisations" %}</th><th class="nombre">{% translate "Remises" %}</th><th class="nombre">{% translate "Encaissé" %}</th></tr></thead>
+      <tbody>{% for code in codes %}<tr><td><a href="{% url 'admin:paiements_codereduction_change' code.pk %}">{{ code.code }}</a></td><td class="nombre">{{ code.nombre }}</td><td class="nombre">− {{ code.remises|default:0|fcfa }}</td><td class="nombre">{{ code.montant|default:0|fcfa }}</td></tr>{% endfor %}</tbody>
+    </table>
+  {% else %}<p>{% translate "Aucun code utilisé pour le moment." %}</p>{% endif %}
+
+  {% if a_regulariser %}
+    <h2>{% translate "Paiements à régulariser" %}</h2>
+    <ul>{% for paiement in a_regulariser %}<li><a href="{% url 'admin:paiements_paiement_change' paiement.pk %}">{{ paiement.reference }}</a> · {{ paiement.utilisateur.email }} · {{ paiement.montant|fcfa }} · {{ paiement.motif_echec }}</li>{% endfor %}</ul>
+  {% endif %}
+
+  <p><a href="{% url 'admin:paiements_paiement_changelist' %}">{% translate "Tous les paiements" %} →</a></p>
+</div>
+{% endblock %}

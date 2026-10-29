@@ -192,3 +192,8 @@
   examens blancs, offres) : Administration + Statistiques, Modération, Mon établissement, Mes corrigés. « Mon compte »
   au lieu de « Mon espace », sans études, abonnement ni favoris. Rien n'est bloqué : « Voir comme un étudiant » ouvre
   les quiz. Un compte d'équipe qui a aussi un profil d'étude garde le menu de l'étudiant.
+- **Page « Ventes » avant la bêta (29/10, Serge Alain)** : CDC 11.2 (tableau de bord administrateur) avancé à sa
+  demande. Administrateur seul ; revenus par mois et par offre, payeurs, part qui paie plus d'une fois, étudiants qui
+  ont le plus payé, à relancer (fin dans 7 jours), non renouvelés (60 jours), codes de réduction, paiements à
+  régulariser. Listes nominatives affichées, jamais exportées (précaution du CDC 11.2). Le classement des étudiants
+  les plus actifs reste après la bêta.

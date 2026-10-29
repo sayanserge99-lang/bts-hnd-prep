@@ -253,3 +253,6 @@
   l'échec, les deux tests « rien n'est consommé ». Capture de la page de paiement avec DEMO20. 567 verts.
 - Menu selon le rôle (Serge Alain : « ils ne sont pas des étudiants »). Contre-épreuve (équipe qui étudie) : échec
   attendu. Captures « Mon compte » (administrateur) et « Mes corrigés ». 574 verts.
+- Page « Ventes » (Serge Alain : « voir les paiements, les personnes qui ont payé, les plus fréquents »).
+  Contre-épreuve (paiements échoués comptés) : échec attendu. Capture : montants qui débordaient des tuiles → taille
+  réduite. 577 verts.

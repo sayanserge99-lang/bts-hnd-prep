@@ -21,6 +21,7 @@
     {% if est_administrateur %}
       <a href="{% url 'admin:index' %}" class="block px-5 py-3 font-semibold text-vert">{% translate "Administration" %}</a>
       <a href="{% url 'statistiques' %}" class="block px-5 py-3 font-semibold text-vert">{% translate "Statistiques" %}</a>
+      <a href="{% url 'ventes' %}" class="block px-5 py-3 font-semibold text-vert">{% translate "Ventes" %}</a>
     {% elif est_moderateur %}
       <a href="{% url 'admin:index' %}" class="block px-5 py-3 font-semibold text-vert">{% translate "Modération" %}</a>
     {% endif %}

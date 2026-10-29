@@ -21,6 +21,8 @@ Mis à jour le 29/10/2026. Ouvert d'abord, dans l'ordre de travail validé par S
 - [x] Recherche : « Vouliez-vous dire … ? » pour les sujets et le forum (29/10).
 - [x] CDC 11.1 : enseignant derrière chaque corrigé vérifié (carte avec consentement, initiales, photo) (29/10).
 - [x] CDC 11.1 : codes de réduction (réservation atomique, plancher, une utilisation par étudiant) (29/10).
+- [x] Menu selon le rôle (Administration, Modération, Mon établissement, Mes corrigés) (29/10).
+- [x] Page « Ventes » de l'administrateur (CDC 11.2 avancé) (29/10).
 - [ ] Forum : abonnement à une discussion (plus tard).
 
 ## 3. Pour Serge Alain

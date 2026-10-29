@@ -11,7 +11,7 @@ from catalogue.views import (
 )
 from communaute.views import avis_beta, contact, demande_retrait
 from config import plan_du_site
-from paiements.views import offres
+from paiements.views import offres, ventes
 
 admin.site.site_header = _("BTS-HND Prep — Administration")
 admin.site.site_title = _("BTS-HND Prep")
@@ -58,6 +58,7 @@ urlpatterns = [
     path("langue/", changer_langue, name="set_language"),
     # Avant admin.site.urls : sinon l'admin prendrait « statistiques » pour une application.
     path(f"{settings.ADMIN_URL}statistiques/", admin.site.admin_view(statistiques), name="statistiques"),
+    path(f"{settings.ADMIN_URL}ventes/", admin.site.admin_view(ventes), name="ventes"),
     path(settings.ADMIN_URL, admin.site.urls),
 ]
 # Volontairement aucune route vers MEDIA_URL : les PDF passent par sujets:pdf.

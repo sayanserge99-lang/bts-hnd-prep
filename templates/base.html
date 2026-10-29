@@ -54,6 +54,7 @@
           {% if est_administrateur %}
             <a href="{% url 'admin:index' %}" class="hover:text-vert">{% translate "Administration" %}</a>
             <a href="{% url 'statistiques' %}" class="hover:text-vert">{% translate "Statistiques" %}</a>
+            <a href="{% url 'ventes' %}" class="hover:text-vert">{% translate "Ventes" %}</a>
           {% elif est_moderateur %}
             <a href="{% url 'admin:index' %}" class="hover:text-vert">{% translate "Modération" %}</a>
           {% endif %}

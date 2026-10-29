@@ -2,9 +2,9 @@ import json
 
 from django import forms
 from django.conf import settings
-from django.contrib import messages
+from django.contrib import admin, messages
 from django.contrib.auth.decorators import login_required
-from django.core.exceptions import ValidationError
+from django.core.exceptions import PermissionDenied, ValidationError
 from django.http import Http404, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
@@ -13,10 +13,12 @@ from django.utils.translation import gettext_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 
+from accounts.moderation import est_administrateur
 from catalogue.models import Session
 from sujets.views import est_requete_htmx
 
 from . import codes, reductions, service
+from .ventes import tableau_des_ventes
 from .acces import a_un_abonnement_actif
 from .fournisseurs import fournisseur_actif
 from .fournisseurs.base import NotificationInvalide, signer
@@ -194,3 +196,10 @@ def simulateur(request, reference):
         service.appliquer(fournisseur_actif().decoder(corps, signer(corps)))
         return redirect("paiements:suivi", reference=paiement.reference)
     return render(request, "paiements/simulateur.html", {"paiement": paiement})
+
+
+def ventes(request):
+    """Revenus, payeurs fidèles, abonnements à relancer : administrateur seulement (pas les modérateurs)."""
+    if not est_administrateur(request.user):
+        raise PermissionDenied
+    return render(request, "admin/ventes.html", {**admin.site.each_context(request), "title": _("Ventes"), **tableau_des_ventes()})
