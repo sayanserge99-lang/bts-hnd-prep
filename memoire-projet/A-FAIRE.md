@@ -19,6 +19,8 @@ Mis à jour le 29/10/2026. Ouvert d'abord, dans l'ordre de travail validé par S
 - [x] Accueil : paires BTS ↔ HND (Specialite.equivalent, colonne facultative du classeur) (28/10).
 - [x] Forum : recherche (titres, détails, réponses ; langue de chaque examen) (28/10).
 - [x] Recherche : « Vouliez-vous dire … ? » pour les sujets et le forum (29/10).
+- [x] CDC 11.1 : enseignant derrière chaque corrigé vérifié (carte avec consentement, initiales, photo) (29/10).
+- [ ] CDC 11.1 : codes de réduction (réservation atomique à confirmer par Serge Alain, voir DECISIONS).
 - [ ] Forum : abonnement à une discussion (plus tard).
 
 ## 3. Pour Serge Alain
@@ -30,6 +32,8 @@ Mis à jour le 29/10/2026. Ouvert d'abord, dans l'ordre de travail validé par S
 - [ ] Choisir l'hébergeur (VPS) et le nom de domaine ; HTTPS Let's Encrypt fait ensemble (procédure non testée).
 - [ ] Choisir le fournisseur d'e-mails (SMTP) ; créer le compte Sentry (offre gratuite) ; identifiants Google OAuth.
 - [ ] Créer le superutilisateur ; renseigner DJANGO_ADMINS (avis des demandes de retrait).
+- [ ] Enseignants : créer leur profil enseignant dans l'administration et recueillir leur accord écrit (la case de
+      leur page enregistre le consentement) ; sans profil, un compte ne peut pas marquer un corrigé « vérifié ».
 - [ ] IPES : ville et région de HINTEL, autres IPES, comptes responsables d'IAI-Cameroun et HINTEL, conventions.
 - [ ] Faire relire l'anglais par un anglophone (vocabulaire HND), et les épreuves provisoires par un enseignant
       de chaque matière.
@@ -50,7 +54,6 @@ Mis à jour le 29/10/2026. Ouvert d'abord, dans l'ordre de travail validé par S
 
 - [ ] Remboursement : aucune procédure dans le site (à la main, à écrire dans les conditions de vente).
 - [ ] Codes d'accès : pas de date d'expiration propre au code ; prix et facturation des lots aux IPES hors plateforme.
-- [ ] Corrigé : ajouter `verifie_par` (qui a vérifié) ?
 - [ ] Épreuves internes : pas dans le mode hors ligne, pas d'avis aux étudiants à la publication.
 - [ ] Hors ligne : les lectures de PDF hors ligne ne sont pas comptées dans les statistiques.
 - [ ] Rendu : un bloc de code indenté de 4 espaces n'est pas protégé des formules (utiliser ``` ; corrigé le 29/10

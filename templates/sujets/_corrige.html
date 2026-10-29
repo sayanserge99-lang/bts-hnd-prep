@@ -10,6 +10,7 @@
           <span id="corrige-{{ corrige.pk }}" class="inline-flex items-center gap-1 rounded border border-bleu px-2 py-1 text-xs font-semibold uppercase tracking-wide text-bleu">{% translate "Proposé par la communauté" %}</span>
         {% endif %}
         <p class="mt-1 text-sm text-gris">{{ corrige.auteur }}</p>
+        {% if corrige.statut == "verifie" %}{% carte_enseignant corrige %}{% endif %}
       </div>
 
       {% if corrige.partie_gratuite %}

@@ -128,6 +128,7 @@ def exporter(request):
     """CDC 10.2 : l'utilisateur récupère toutes ses données."""
     utilisateur = request.user
     profil_etude = getattr(utilisateur, "profil", None)
+    enseignant = getattr(utilisateur, "profil_enseignant", None)
     donnees = {
         "compte": {
             "email": utilisateur.email,
@@ -142,6 +143,12 @@ def exporter(request):
             "specialite": str(profil_etude.specialite),
             "etablissement": str(profil_etude.etablissement or ""),
             "session_prevue": str(profil_etude.session_prevue or ""),
+        },
+        "profil_enseignant": enseignant and {
+            "etablissement": str(enseignant.etablissement or ""),
+            "matieres": [str(matiere) for matiere in enseignant.matieres.all()],
+            "affichage": enseignant.affichage,
+            "photo": bool(enseignant.photo),
         },
         "consentements": [
             {"objet": c.objet, "version": c.version, "date": c.date.isoformat(),

@@ -78,6 +78,7 @@
       {% endif %}
     </div>
     <div class="flex flex-col gap-3 px-5 py-4 text-sm">
+      {% if user.profil_enseignant %}<a href="{% url 'accounts:profil_enseignant' %}" class="font-semibold text-vert">{% translate "Ma carte d'enseignant" %}</a>{% endif %}
       <a href="{% url 'accounts:exporter' %}" class="font-semibold text-vert">{% translate "Télécharger mes données" %}</a>
       <a href="{% url 'accounts:mot_de_passe' %}" class="font-semibold text-vert">{% if user.has_usable_password %}{% translate "Changer mon mot de passe" %}{% else %}{% translate "Définir un mot de passe" %}{% endif %}</a>
       <a href="{% url 'confidentialite' %}" class="font-semibold text-vert">{% translate "Politique de confidentialité" %}</a>

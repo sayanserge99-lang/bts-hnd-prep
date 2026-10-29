@@ -8,7 +8,7 @@
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **544 tests verts + 5 essais JavaScript** (sautés sans Node, lancés par la CI) (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
+- `pytest` : **555 tests verts + 5 essais JavaScript** (sautés sans Node, lancés par la CI) (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
   10 statistiques, 16 Google).
 - **Connexion Google (V2)** `accounts/google.py` : OpenID Connect sans dépendance (state, PKCE, nonce ; vérifie iss,
   aud, exp, email_verified). Compte existant → connecté ; sinon page « Dernière étape » (spécialité + consentement
@@ -36,6 +36,13 @@
   vocabulaire des contenus visibles, en cache (sujets 1 h par examen, forum 10 min) ; proposé seulement s'il trouve
   des résultats avec les mêmes filtres, donc jamais un mot d'un sujet non publié. Pas de pg_trgm : à revoir si le
   vocabulaire dépasse quelques dizaines de milliers de mots (lecture complète à chaque expiration du cache).
+- **Enseignant derrière le corrigé (29/10, CDC 11.1)** — `ProfilEnseignant` (accounts : établissement, matières,
+  affichage nom/initiales, photo) créé dans l'administration ; `Corrige.verifie_par` / `verifie_le` posés par
+  `CorrigeAdmin` (refus si le compte n'a pas de profil enseignant). Carte sous le corrigé vérifié
+  (`{% carte_enseignant %}`, `_carte_enseignant.html`) seulement avec le Consentement « profil_enseignant ».
+  Page `/compte/profil/enseignant/` (accord, affichage, photo, « Tout retirer »), photo servie par
+  `accounts:photo_enseignant`. Démo : enseignant.demo@example.com / Demo-BTS-2027 (Marie Exemple, accord donné,
+  4 corrigés vérifiés). Confidentialité FR/EN complétée.
 - **Ajustements du 28/10** — mois acheté pendant un Pass actif : avertissement avec les vraies dates
   (`service.avertissement`), « Acheter quand même » / « Annuler », aucun formulaire ni débit sans `confirme=1`.
   Examen blanc : bandeau `#bandeau-hors-ligne` (texte de Serge Alain, règle des 90 s), sauvegarde relancée au

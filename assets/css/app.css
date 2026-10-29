@@ -3,6 +3,8 @@
 @source "../../templates";
 /* Le lecteur de quiz hors ligne (static/js/hors-ligne.js) construit aussi des éléments stylés. */
 @source "../../static/js/hors-ligne.js";
+/* Champ photo de la carte d'enseignant (classes dans le widget du formulaire). */
+@source "../../accounts/views_enseignant.py";
 
 /* Couleurs des maquettes. Polices du système : aucune police à télécharger (CDC 4, < 300 Ko). */
 @theme {

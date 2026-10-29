@@ -249,6 +249,12 @@ class Corrige(models.Model):
     partenariat = models.ForeignKey(
         "partenaires.Partenariat", on_delete=models.PROTECT, null=True, blank=True, related_name="corriges"
     )
+    # CDC 11.1 : posés par l'administration quand un enseignant passe le corrigé à « vérifié » (jamais à la main).
+    verifie_par = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name="corriges_verifies",
+        verbose_name=_("vérifié par"),
+    )
+    verifie_le = models.DateTimeField(_("vérifié le"), null=True, blank=True)
     cree_le = models.DateTimeField(auto_now_add=True)
     modifie_le = models.DateTimeField(auto_now=True)
 

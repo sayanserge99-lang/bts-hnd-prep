@@ -140,12 +140,37 @@ class SujetAdmin(LimiteAuxMatieresDuModerateur, admin.ModelAdmin):
 @admin.register(Corrige)
 class CorrigeAdmin(LimiteAuxMatieresDuModerateur, admin.ModelAdmin):
     chemins_matiere = ("sujet__matiere",)
-    list_display = ("sujet", "statut", "publication", "auteur", "titulaire_droits")
+    list_display = ("sujet", "statut", "publication", "auteur", "titulaire_droits", "verifie_par")
     list_filter = ("statut", "publication", "sujet__session__examen")
     search_fields = ("sujet__titre", "auteur")
     autocomplete_fields = ("sujet",)
-    readonly_fields = ("apercu",)
+    readonly_fields = ("apercu", "verifie_par", "verifie_le")
     actions = ["publier"]
+
+    def get_form(self, request, obj=None, **kwargs):
+        formulaire = super().get_form(request, obj, **kwargs)
+        statut_avant = obj.statut if obj else None
+
+        class AvecVerification(formulaire):
+            def clean(self):
+                donnees = super().clean()
+                # CDC 11.1 : « Vérifié par un enseignant » doit être vrai. Seul un compte enseignant le pose.
+                if (donnees.get("statut") == Corrige.Statut.VERIFIE and statut_avant != Corrige.Statut.VERIFIE
+                        and not hasattr(request.user, "profil_enseignant")):
+                    self.add_error("statut", _(
+                        "Seul un enseignant (compte avec un profil enseignant) peut marquer un corrigé « vérifié ». "
+                        "Laissez-le en préparation ou proposé par la communauté, et demandez à l'enseignant de le vérifier."
+                    ))
+                return donnees
+
+        return AvecVerification
+
+    def save_model(self, request, obj, form, change):
+        if obj.statut != Corrige.Statut.VERIFIE:
+            obj.verifie_par, obj.verifie_le = None, None
+        elif "statut" in form.changed_data or not change:
+            obj.verifie_par, obj.verifie_le = request.user, timezone.now()
+        super().save_model(request, obj, form, change)
 
     @admin.display(description=_("Aperçu (tel que l'étudiant le verra)"))
     def apercu(self, corrige):

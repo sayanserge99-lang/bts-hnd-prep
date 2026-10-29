@@ -171,3 +171,18 @@
   demandé), paiement fermé sans structure et NIU. HTTPS fait avec Serge Alain une fois l'hébergeur choisi.
 - **Signaler une question (27/10)** : entité Signalement (troisième cible, exactement une par signalement), dans la
   file du modérateur de la matière du chapitre ; motif de 10 caractères au moins, 10 par jour et par compte.
+- **Évolutions prévues, CDC §11 (29/10, Serge Alain)** : deux ajouts seulement avant la bêta : l'enseignant derrière
+  chaque corrigé, et les codes de réduction. Après la bêta, selon les retours : tableau de bord administrateur
+  (agrégé, pas d'export nominatif), classement volontaire sous pseudonyme, parrainage plafonné, rappels WhatsApp avec
+  consentement séparé. Plus tard : copie corrigée par un enseignant, fiches et planning de révision, cartes mémoire,
+  achat de codes en lot par les IPES, séances en direct. Exclu : résultats officiels, taux de réussite annoncé.
+- **Enseignant derrière le corrigé (29/10, choix proposés par Claude, appliqués faute d'objection)** : seul un compte
+  avec ProfilEnseignant peut passer un corrigé à « vérifié » (sinon « vérifié par » serait faux) ; « vérifié par » et
+  la date sont posés par l'administration, effacés si le corrigé quitte « vérifié ». Le consentement est la seule
+  source de la visibilité (pas de case « visible » en double). Initiales par défaut. Photo 2 Mo, recadrée 256 px,
+  réenregistrée en JPEG sans métadonnées, servie par une vue qui vérifie l'accord (no-store) ; « Tout retirer »
+  révoque et efface. Établissement et matières saisis par l'administrateur.
+- **Codes de réduction, à confirmer par Serge Alain (29/10)** : réservation atomique de l'utilisation à la commande
+  (libérée si le paiement échoue ou expire, confirmée au webhook), car compter seulement au webhook ne peut pas empêcher
+  deux paiements simultanés de dépasser la limite ; « établissement facultatif » = étudiants confirmés par
+  l'établissement.

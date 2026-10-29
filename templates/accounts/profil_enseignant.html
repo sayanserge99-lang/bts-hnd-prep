@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titre %}{% translate "Ma carte d'enseignant" %} — BTS-HND Prep{% endblock %}
+
+{% block contenu %}
+<div class="mx-auto max-w-xl space-y-5 px-4 py-6">
+  <div>
+    <a href="{% url 'accounts:profil' %}" class="text-sm text-vert hover:underline">← {% translate "Mon profil" %}</a>
+    <h1 class="mt-2 text-2xl font-bold">{% translate "Ma carte d'enseignant" %}</h1>
+    <p class="mt-1 text-gris">{% translate "Elle apparaît sous les corrigés que vous avez vérifiés, seulement si vous l'acceptez. Sans votre accord, les étudiants lisent seulement « Vérifié par un enseignant »." %}</p>
+  </div>
+
+  <section class="carte space-y-2" aria-labelledby="apercu">
+    <h2 id="apercu" class="text-xs font-semibold uppercase tracking-wide text-gris">{% translate "Aperçu" %}{% if not profil.visible %} · {% translate "non affichée" %}{% endif %}</h2>
+    <div class="flex items-center gap-3 text-sm">
+      {% if profil.photo %}<img src="{% url 'accounts:photo_enseignant' profil.pk %}" alt="" width="48" height="48" class="h-12 w-12 rounded-full object-cover">{% endif %}
+      <div>
+        <p class="font-semibold">{% blocktranslate with nom=profil.nom_affiche %}Vérifié par {{ nom }}{% endblocktranslate %}</p>
+        <p class="text-gris">{% if profil.etablissement %}{{ profil.etablissement.nom }} · {% endif %}{% for matiere in matieres %}{{ matiere.nom }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+        <p class="text-gris">{% blocktranslate count n=nombre %}{{ n }} corrigé vérifié{% plural %}{{ n }} corrigés vérifiés{% endblocktranslate %}</p>
+      </div>
+    </div>
+    <p class="text-xs text-gris">{% translate "L'établissement et les matières sont renseignés par l'équipe : écrivez-nous s'ils sont faux." %}</p>
+  </section>
+
+  <form method="post" enctype="multipart/form-data" class="carte space-y-4" novalidate>
+    {% csrf_token %}
+    {% include "forms/champ.html" with field=form.consentement %}
+    {% include "forms/champ.html" with field=form.affichage %}
+    {% include "forms/champ.html" with field=form.nouvelle_photo %}
+    {% if profil.photo %}{% include "forms/champ.html" with field=form.supprimer_photo %}{% endif %}
+    <button class="bouton-plein w-full">{% translate "Enregistrer" %}</button>
+  </form>
+
+  {% if profil.visible or profil.photo %}
+    <form method="post" action="{% url 'accounts:retirer_profil_enseignant' %}">
+      {% csrf_token %}
+      <button class="bouton-contour w-full text-red-700">{% translate "Tout retirer (carte et photo)" %}</button>
+    </form>
+  {% endif %}
+</div>
+{% endblock %}

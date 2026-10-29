@@ -6,12 +6,14 @@ from datetime import date, timedelta
 from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand, CommandError
+from django.contrib.auth.models import Group
 from django.db import transaction
 from django.http import QueryDict
+from django.utils import timezone
 
 from catalogue.models import Chapitre, Examen, Matiere, Session, Specialite, SpecialiteMatiere
 from accounts.forms import preparer_etudiant
-from accounts.models import Utilisateur
+from accounts.models import AffectationModerateur, Consentement, ProfilEnseignant, Utilisateur
 from communaute.models import Contribution
 from entrainement import examen_blanc, quiz
 from entrainement.correction import est_correcte
@@ -34,6 +36,7 @@ ANCIENNE_SOURCE_DEMO = "Démonstration (sujet fictif)"
 MARQUE_DEMO = "[DÉMO]"
 ETUDIANT_DEMO = "etudiant.demo@example.com"
 MOT_DE_PASSE_DEMO = "Demo-BTS-2027"
+ENSEIGNANT_DEMO = "enseignant.demo@example.com"
 
 SPECIALITES = {
     "BTS": [
@@ -343,6 +346,7 @@ class Command(BaseCommand):
             self.creer_informatique()
             self.remplir_epreuves()
             self.creer_activite()
+            self.creer_enseignant()
             return
 
         with transaction.atomic():
@@ -403,6 +407,7 @@ class Command(BaseCommand):
         self.creer_informatique()
         self.remplir_epreuves()
         self.creer_activite()
+        self.creer_enseignant()
 
     def creer_examen_en_cours(self):
         """Examen blanc commencé il y a un quart d'heure, deux réponses enregistrées. Le minuteur est réel :
@@ -481,6 +486,31 @@ class Command(BaseCommand):
             f"Activité de démonstration : {ETUDIANT_DEMO} (mot de passe {MOT_DE_PASSE_DEMO}), "
             "1 quiz terminé, 3 contributions en attente."
         ))
+
+    def creer_enseignant(self):
+        """CDC 11.1 : une enseignante fictive, d'accord pour sa carte, qui a vérifié les corrigés de démonstration."""
+        utilisateur, cree = Utilisateur.objects.get_or_create(
+            email=ENSEIGNANT_DEMO, defaults={"first_name": "Marie", "last_name": "Exemple (fictif)", "langue": "fr"}
+        )
+        if cree:
+            utilisateur.set_password(MOT_DE_PASSE_DEMO)
+            utilisateur.save()
+            utilisateur.groups.add(Group.objects.get(name="Modérateur"))
+        profil, _ = ProfilEnseignant.objects.get_or_create(
+            utilisateur=utilisateur,
+            defaults={"affichage": ProfilEnseignant.Affichage.NOM,
+                      "etablissement": Etablissement.objects.filter(nom__startswith="IAI").first()},
+        )
+        verifies = Corrige.objects.filter(titulaire_droits=TITULAIRE_DEMO, statut=Corrige.Statut.VERIFIE)
+        matieres = Matiere.objects.filter(sujets__corriges__in=verifies).distinct()
+        profil.matieres.add(*matieres)
+        for matiere in matieres:
+            AffectationModerateur.objects.get_or_create(moderateur=utilisateur, matiere=matiere)
+        if not profil.visible:
+            Consentement.objects.create(
+                utilisateur=utilisateur, objet=Consentement.Objet.PROFIL_ENSEIGNANT, version=settings.VERSION_POLITIQUES
+            )
+        verifies.filter(verifie_par__isnull=True).update(verifie_par=utilisateur, verifie_le=timezone.now())
 
     def creer_corriges(self):
         if Corrige.objects.filter(titulaire_droits=TITULAIRE_DEMO).exists():

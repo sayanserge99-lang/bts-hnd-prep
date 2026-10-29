@@ -242,3 +242,9 @@
   proposition vérifiée par une vraie recherche avec les mêmes filtres. Contre-épreuve (vocabulaire de tous les sujets
   et sans vérification) : le test « aucun mot d'un sujet non publié » échoue. Essai sur la base de démo :
   amortisement → amortissement, depreciaton → depreciation (HND), algoritme → algorithme (forum). 544 verts.
+- CDC v3 §11 « Évolutions prévues » reçue (copie complétée, README). Enseignant derrière le corrigé : ProfilEnseignant,
+  verifie_par / verifie_le, carte avec consentement, page de l'enseignant, photo sans métadonnées. Contre-épreuve
+  (carte sans vérifier l'accord, photo servie sans accord, « vérifié » sans profil) : 5 tests échouent. Captures :
+  « » » seul en bout de ligne → espaces insécables ; champ photo sans style (Tailwind ne lit que les gabarits →
+  `@source` du formulaire). Incident : `docker compose exec … -o /tmp/essai.css` sous Git Bash a créé un dossier
+  « C: » dans le projet (conversion de chemin) ; supprimé fichier par fichier. 555 verts.

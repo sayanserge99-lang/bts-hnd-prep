@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-29 10:35+0100\n"
+"POT-Creation-Date: 2026-10-29 11:38+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,23 +18,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: accounts/admin.py:13
+#: accounts/admin.py:15
 msgid "Matières modérées (rôle Modérateur)"
 msgstr "Moderated subjects (Moderator role)"
 
-#: accounts/admin.py:27
+#: accounts/admin.py:29
 msgid "Identité"
 msgstr "Identity"
 
-#: accounts/admin.py:28
+#: accounts/admin.py:30
 msgid "Rôles"
 msgstr "Roles"
 
-#: accounts/admin.py:29
+#: accounts/admin.py:31
 msgid "Dates"
 msgstr "Dates"
 
-#: accounts/admin.py:70
+#: accounts/admin.py:60
+msgid "carte visible (accord de l'enseignant)"
+msgstr "card visible (teacher's consent)"
+
+#: accounts/admin.py:89
 msgid "codes de secours restants"
 msgstr "backup codes left"
 
@@ -132,99 +136,131 @@ msgstr "This is not the email address of this account."
 msgid "Mot de passe incorrect."
 msgstr "Incorrect password."
 
-#: accounts/models.py:35
+#: accounts/models.py:38
 msgid "adresse e-mail"
 msgstr "email address"
 
-#: accounts/models.py:37
+#: accounts/models.py:40
 msgid "téléphone"
 msgstr "phone"
 
-#: accounts/models.py:37
+#: accounts/models.py:40
 msgid "Facultatif, utilisé pour le paiement (V3)."
 msgstr "Optional, used for payment (V3)."
 
-#: accounts/models.py:47
+#: accounts/models.py:50
 msgid "utilisateur"
 msgstr "user"
 
-#: accounts/models.py:55
+#: accounts/models.py:58
 msgid "examen visé"
 msgstr "target exam"
 
-#: accounts/models.py:62
+#: accounts/models.py:65
 msgid "établissement validé le"
 msgstr "institution confirmed on"
 
-#: accounts/models.py:67
+#: accounts/models.py:70
 msgid "session prévue"
 msgstr "planned session"
 
-#: accounts/models.py:71
+#: accounts/models.py:74
 msgid "profil d'étude"
 msgstr "study profile"
 
-#: accounts/models.py:91
+#: accounts/models.py:94
 msgid "Cette spécialité n'appartient pas à l'examen choisi."
 msgstr "This specialty does not belong to the chosen exam."
 
-#: accounts/models.py:96
+#: accounts/models.py:99
 msgid "Conditions générales"
 msgstr "Terms and conditions"
 
-#: accounts/models.py:97 templates/accounts/google_finir.html:17
-#: templates/accounts/inscription.html:19 templates/accounts/profil.html:83
+#: accounts/models.py:100 templates/accounts/google_finir.html:17
+#: templates/accounts/inscription.html:19 templates/accounts/profil.html:84
 #: templates/pages/confidentialite.html:4
 #: templates/pages/confidentialite.html:5
 msgid "Politique de confidentialité"
 msgstr "Privacy policy"
 
-#: accounts/models.py:98
+#: accounts/models.py:101
 msgid "Partage des résultats avec l'établissement"
 msgstr "Sharing results with the institution"
 
-#: accounts/models.py:99 templates/base.html:112
+#: accounts/models.py:102 templates/base.html:112
 msgid "Conditions de vente"
 msgstr "Terms of sale"
 
 #: accounts/models.py:103
+msgid "Profil public d'enseignant"
+msgstr "Public teacher profile"
+
+#: accounts/models.py:107
 msgid "version de la politique"
 msgstr "policy version"
 
-#: accounts/models.py:108
+#: accounts/models.py:112
 msgid "consentement"
 msgstr "consent"
 
-#: accounts/models.py:132
+#: accounts/models.py:146
 msgid "affectation de modérateur"
 msgstr "moderator assignment"
 
-#: accounts/models.py:147
+#: accounts/models.py:161
 msgid "activée le"
 msgstr "enabled on"
 
-#: accounts/models.py:147
+#: accounts/models.py:161
 msgid "Vide : mise en place pas terminée."
 msgstr "Empty: setup not finished."
 
-#: accounts/models.py:148
+#: accounts/models.py:162
 msgid "Dernier code accepté : il ne peut pas resservir."
 msgstr "Last accepted code: it cannot be used again."
 
-#: accounts/models.py:152
+#: accounts/models.py:166
 msgid "double authentification"
 msgstr "two-factor authentication"
 
-#: accounts/models.py:153
+#: accounts/models.py:167
 msgid "doubles authentifications"
 msgstr "two-factor authentications"
+
+#: accounts/models.py:186
+msgid "Nom complet"
+msgstr "Full name"
+
+#: accounts/models.py:187
+msgid "Initiales seules"
+msgstr "Initials only"
+
+#: accounts/models.py:194
+msgid "matières enseignées"
+msgstr "subjects taught"
+
+#: accounts/models.py:196
+msgid "affichage du nom"
+msgstr "name display"
+
+#: accounts/models.py:202
+msgid "profil enseignant"
+msgstr "teacher profile"
+
+#: accounts/models.py:203
+msgid "profils enseignants"
+msgstr "teacher profiles"
+
+#: accounts/models.py:219 sujets/models.py:224
+msgid "Enseignant"
+msgstr "Teacher"
 
 #: accounts/views.py:43
 msgid ""
 "Trop de comptes créés depuis cette connexion. Réessayez dans une heure."
 msgstr "Too many accounts created from this connection. Try again in an hour."
 
-#: accounts/views.py:48 accounts/views.py:231
+#: accounts/views.py:48 accounts/views.py:238
 msgid "Bienvenue ! Votre compte est créé."
 msgstr "Welcome! Your account has been created."
 
@@ -244,30 +280,30 @@ msgstr "This account has no study profile."
 msgid "Profil enregistré."
 msgstr "Profile saved."
 
-#: accounts/views.py:168
+#: accounts/views.py:175
 msgid "Ce compte est lié à des paiements : contactez-nous pour le supprimer."
 msgstr "This account is linked to payments: contact us to delete it."
 
-#: accounts/views.py:171
+#: accounts/views.py:178
 msgid "Votre compte et vos données ont été supprimés."
 msgstr "Your account and your data have been deleted."
 
-#: accounts/views.py:199
+#: accounts/views.py:206
 msgid ""
 "La connexion avec Google n'a pas abouti. Réessayez, ou connectez-vous avec "
 "votre e-mail."
 msgstr ""
 "Signing in with Google did not work. Try again, or log in with your email."
 
-#: accounts/views.py:205
+#: accounts/views.py:212
 msgid "Ce compte est désactivé."
 msgstr "This account is disabled."
 
-#: accounts/views.py:280
+#: accounts/views.py:287
 msgid "Mot de passe enregistré."
 msgstr "Password saved."
 
-#: accounts/views.py:290
+#: accounts/views.py:297
 msgid "Mot de passe modifié. Vous pouvez vous connecter."
 msgstr "Password changed. You can now log in."
 
@@ -299,6 +335,55 @@ msgstr ""
 #: accounts/views_double_auth.py:102
 msgid "Code incorrect."
 msgstr "Incorrect code."
+
+#: accounts/views_enseignant.py:32
+msgid "Ce fichier n'est pas une image (JPEG, PNG ou WebP)."
+msgstr "This file is not an image (JPEG, PNG or WebP)."
+
+#: accounts/views_enseignant.py:43
+msgid "Afficher ma carte sous les corrigés que j'ai vérifiés"
+msgstr "Show my card under the marking guides I have verified"
+
+#: accounts/views_enseignant.py:45
+msgid ""
+"Nom ou initiales, établissement, matières enseignées, nombre de corrigés "
+"vérifiés et photo si vous en ajoutez une. Vous pouvez la retirer à tout "
+"moment."
+msgstr ""
+"Name or initials, institution, subjects taught, number of verified marking "
+"guides and your photo if you add one. You can remove it at any time."
+
+#: accounts/views_enseignant.py:50
+msgid "Photo (facultative)"
+msgstr "Photo (optional)"
+
+#: accounts/views_enseignant.py:56
+msgid ""
+"2 Mo au plus. Elle est recadrée en carré ; sa localisation et ses autres "
+"données cachées sont supprimées."
+msgstr ""
+"2 MB at most. It is cropped to a square; its location and other hidden data "
+"are removed."
+
+#: accounts/views_enseignant.py:58
+msgid "Supprimer ma photo"
+msgstr "Delete my photo"
+
+#: accounts/views_enseignant.py:68
+msgid "La photo dépasse 2 Mo."
+msgstr "The photo is larger than 2 MB."
+
+#: accounts/views_enseignant.py:102
+msgid "Votre carte d'enseignant est enregistrée."
+msgstr "Your teacher card has been saved."
+
+#: accounts/views_enseignant.py:117
+msgid ""
+"Votre carte est retirée : les corrigés affichent seulement « Vérifié par un "
+"enseignant »."
+msgstr ""
+"Your card has been removed: marking guides now only show “Verified by a "
+"teacher”."
 
 #: catalogue/apps.py:8
 msgid "Catalogue"
@@ -535,7 +620,7 @@ msgstr "target"
 msgid "Question (%(chapitre)s)"
 msgstr "Question (%(chapitre)s)"
 
-#: communaute/admin.py:183 communaute/models.py:26 sujets/models.py:273
+#: communaute/admin.py:183 communaute/models.py:26 sujets/models.py:279
 #: templates/communaute/mes_contributions.html:21
 #: templates/sujets/detail.html:17 templates/sujets/detail.html:19
 #: templates/sujets/liste.html:87
@@ -1083,7 +1168,7 @@ msgstr "BTS-HND Prep — Administration"
 msgid "BTS-HND Prep"
 msgstr "BTS-HND Prep"
 
-#: config/urls.py:18 templates/accounts/profil.html:91 templates/base.html:49
+#: config/urls.py:18 templates/accounts/profil.html:92 templates/base.html:49
 #: templates/entrainement/progression.html:4
 msgid "Tableau de bord"
 msgstr "Dashboard"
@@ -2083,26 +2168,36 @@ msgid_plural "%d PDF mis en file de traitement."
 msgstr[0] "%d PDF queued for processing."
 msgstr[1] "%d PDFs queued for processing."
 
-#: sujets/admin.py:150
+#: sujets/admin.py:161
+msgid ""
+"Seul un enseignant (compte avec un profil enseignant) peut marquer un "
+"corrigé « vérifié ». Laissez-le en préparation ou proposé par la communauté,"
+" et demandez à l'enseignant de le vérifier."
+msgstr ""
+"Only a teacher (an account with a teacher profile) can mark a marking guide "
+"as “verified”. Leave it in preparation or as community-proposed, and ask the"
+" teacher to verify it."
+
+#: sujets/admin.py:175
 msgid "Aperçu (tel que l'étudiant le verra)"
 msgstr "Preview (as the student will see it)"
 
-#: sujets/admin.py:153
+#: sujets/admin.py:178
 msgid "Enregistrez une première fois pour voir l'aperçu."
 msgstr "Save once to see the preview."
 
-#: sujets/admin.py:158
+#: sujets/admin.py:183
 msgid "Publier les corrigés sélectionnés"
 msgstr "Publish selected marking guides"
 
-#: sujets/admin.py:166
+#: sujets/admin.py:191
 #, python-format
 msgid "%d corrigé publié."
 msgid_plural "%d corrigés publiés."
 msgstr[0] "%d marking guide published."
 msgstr[1] "%d marking guides published."
 
-#: sujets/admin.py:171
+#: sujets/admin.py:196
 #, python-format
 msgid ""
 "%d corrigé refusé : la session de son sujet n'est pas officiellement "
@@ -2290,10 +2385,6 @@ msgstr "Verified by a teacher"
 msgid "Plateforme"
 msgstr "Platform"
 
-#: sujets/models.py:224
-msgid "Enseignant"
-msgstr "Teacher"
-
 #: sujets/models.py:225
 msgid "Partagé"
 msgstr "Shared"
@@ -2334,23 +2425,31 @@ msgstr "rights holder"
 msgid "régime de propriété"
 msgstr "ownership"
 
-#: sujets/models.py:258
+#: sujets/models.py:255
+msgid "vérifié par"
+msgstr "verified by"
+
+#: sujets/models.py:257
+msgid "vérifié le"
+msgstr "verified on"
+
+#: sujets/models.py:264
 msgid "corrigé"
 msgstr "marking guide"
 
-#: sujets/models.py:301
+#: sujets/models.py:307
 msgid "PDF ouverts ou téléchargés"
 msgstr "PDFs opened or downloaded"
 
-#: sujets/models.py:304
+#: sujets/models.py:310
 msgid "consultations du jour"
 msgstr "daily views"
 
-#: sujets/models.py:305
+#: sujets/models.py:311
 msgid "consultations par jour"
 msgstr "views per day"
 
-#: sujets/models.py:330
+#: sujets/models.py:336
 msgid "favori"
 msgstr "favourite"
 
@@ -2611,11 +2710,13 @@ msgstr "Edit my profile"
 msgid "Mon espace"
 msgstr "My account"
 
-#: templates/accounts/modifier_profil.html:12 templates/forum/modifier.html:12
+#: templates/accounts/modifier_profil.html:12
+#: templates/accounts/profil_enseignant.html:33
+#: templates/forum/modifier.html:12
 msgid "Enregistrer"
 msgstr "Save"
 
-#: templates/accounts/mot_de_passe.html:10 templates/accounts/profil.html:82
+#: templates/accounts/mot_de_passe.html:10 templates/accounts/profil.html:83
 msgid "Définir un mot de passe"
 msgstr "Set a password"
 
@@ -2627,7 +2728,7 @@ msgstr ""
 "Your account was created with Google. With a password, you can also log in "
 "with your email and use “Forgot password”."
 
-#: templates/accounts/mot_de_passe.html:13 templates/accounts/profil.html:82
+#: templates/accounts/mot_de_passe.html:13 templates/accounts/profil.html:83
 msgid "Changer mon mot de passe"
 msgstr "Change my password"
 
@@ -2762,56 +2863,109 @@ msgid "Possible quand votre établissement a validé votre inscription."
 msgstr "Available once your institution has confirmed your enrolment."
 
 #: templates/accounts/profil.html:81
+#: templates/accounts/profil_enseignant.html:4
+#: templates/accounts/profil_enseignant.html:10
+msgid "Ma carte d'enseignant"
+msgstr "My teacher card"
+
+#: templates/accounts/profil.html:82
 msgid "Télécharger mes données"
 msgstr "Download my data"
 
-#: templates/accounts/profil.html:84 templates/accounts/supprimer.html:4
+#: templates/accounts/profil.html:85 templates/accounts/supprimer.html:4
 #: templates/accounts/supprimer.html:8
 msgid "Supprimer mon compte"
 msgstr "Delete my account"
 
-#: templates/accounts/profil.html:92
+#: templates/accounts/profil.html:93
 #, python-format
 msgid "%(n)s jour avant la session %(nom)s"
 msgid_plural "%(n)s jours avant la session %(nom)s"
 msgstr[0] "%(n)s day before the %(nom)s session"
 msgstr[1] "%(n)s days before the %(nom)s session"
 
-#: templates/accounts/profil.html:92
+#: templates/accounts/profil.html:93
 msgid "Résultats, points faibles et dernières activités"
 msgstr "Results, weak points and recent activity"
 
-#: templates/accounts/profil.html:98
+#: templates/accounts/profil.html:99
 msgid "Mes favoris"
 msgstr "My favourites"
 
-#: templates/accounts/profil.html:103
+#: templates/accounts/profil.html:104
 msgid ""
 "Ajoutez des sujets à vos favoris depuis leur fiche pour les retrouver ici."
 msgstr "Add papers to your favourites from their page to find them here."
 
-#: templates/accounts/profil.html:110
+#: templates/accounts/profil.html:111
 msgid "Sujets récents de votre spécialité"
 msgstr "Recent papers for your specialty"
 
-#: templates/accounts/profil.html:115
+#: templates/accounts/profil.html:116
 msgid "Aucun sujet publié pour le moment."
 msgstr "No papers published yet."
 
-#: templates/accounts/profil.html:118
+#: templates/accounts/profil.html:119
 msgid "Tous les sujets de ma spécialité"
 msgstr "All papers for my specialty"
 
-#: templates/accounts/profil.html:124
+#: templates/accounts/profil.html:125
 #: templates/communaute/envoyer_sujet.html:8
 #: templates/communaute/mes_contributions.html:4
 #: templates/communaute/mes_contributions.html:10
 msgid "Mes contributions"
 msgstr "My contributions"
 
-#: templates/accounts/profil.html:125
+#: templates/accounts/profil.html:126
 msgid "Envoyez des sujets de sessions passées ou proposez des corrigés."
 msgstr "Send papers from past sessions or propose marking guides."
+
+#: templates/accounts/profil_enseignant.html:9
+msgid "Mon profil"
+msgstr "My profile"
+
+#: templates/accounts/profil_enseignant.html:11
+msgid ""
+"Elle apparaît sous les corrigés que vous avez vérifiés, seulement si vous "
+"l'acceptez. Sans votre accord, les étudiants lisent seulement « Vérifié par "
+"un enseignant »."
+msgstr ""
+"It appears under the marking guides you have verified, only if you agree. "
+"Without your consent, students only see “Verified by a teacher”."
+
+#: templates/accounts/profil_enseignant.html:15
+msgid "Aperçu"
+msgstr "Preview"
+
+#: templates/accounts/profil_enseignant.html:15
+msgid "non affichée"
+msgstr "not shown"
+
+#: templates/accounts/profil_enseignant.html:19
+#: templates/sujets/_carte_enseignant.html:11
+#, python-format
+msgid "Vérifié par %(nom)s"
+msgstr "Verified by %(nom)s"
+
+#: templates/accounts/profil_enseignant.html:21
+#: templates/sujets/_carte_enseignant.html:15
+#, python-format
+msgid "%(n)s corrigé vérifié"
+msgid_plural "%(n)s corrigés vérifiés"
+msgstr[0] "%(n)s verified marking guide"
+msgstr[1] "%(n)s verified marking guides"
+
+#: templates/accounts/profil_enseignant.html:24
+msgid ""
+"L'établissement et les matières sont renseignés par l'équipe : écrivez-nous "
+"s'ils sont faux."
+msgstr ""
+"Your institution and subjects are entered by the team: write to us if they "
+"are wrong."
+
+#: templates/accounts/profil_enseignant.html:39
+msgid "Tout retirer (carte et photo)"
+msgstr "Remove everything (card and photo)"
 
 #: templates/accounts/supprimer.html:9
 msgid ""
@@ -3588,7 +3742,7 @@ msgid "le document est masqué dès réception."
 msgstr "the document is hidden as soon as it is received."
 
 #: templates/communaute/contact.html:15 templates/forum/_signaler.html:9
-#: templates/sujets/_corrige.html:43
+#: templates/sujets/_corrige.html:44
 msgid "Envoyer"
 msgstr "Send"
 
@@ -4167,7 +4321,7 @@ msgstr ""
 
 #: templates/entrainement/examens/liste.html:16
 #: templates/entrainement/progression.html:81
-#: templates/sujets/_corrige.html:29
+#: templates/sujets/_corrige.html:30
 msgid "Voir le Pass session"
 msgstr "See the Session pass"
 
@@ -4459,15 +4613,15 @@ msgstr "Your results stay private."
 msgid "Gérer le partage"
 msgstr "Manage sharing"
 
-#: templates/forms/champ.html:13 templates/forms/champ.html:20
+#: templates/forms/champ.html:14 templates/forms/champ.html:21
 msgid "(facultatif)"
 msgstr "(optional)"
 
-#: templates/forms/champ.html:27 templates/forms/champ.html:28
+#: templates/forms/champ.html:28 templates/forms/champ.html:29
 msgid "Afficher le mot de passe"
 msgstr "Show password"
 
-#: templates/forms/champ.html:29
+#: templates/forms/champ.html:30
 msgid "Masquer le mot de passe"
 msgstr "Hide password"
 
@@ -5234,22 +5388,22 @@ msgstr "Add to favourites"
 msgid "Se connecter pour garder ce sujet"
 msgstr "Log in to save this paper"
 
-#: templates/sujets/_corrige.html:22
+#: templates/sujets/_corrige.html:23
 msgid "Lire le corrigé (PDF)"
 msgstr "Read the marking guide (PDF)"
 
-#: templates/sujets/_corrige.html:27
+#: templates/sujets/_corrige.html:28
 msgid "La suite avec le Pass session"
 msgstr "The rest with the Session pass"
 
-#: templates/sujets/_corrige.html:28
+#: templates/sujets/_corrige.html:29
 msgid ""
 "Le corrigé complet, le barème détaillé et les conseils de l'enseignant."
 msgstr ""
 "The full marking guide, the detailed marking scheme and the teacher's "
 "advice."
 
-#: templates/sujets/_corrige.html:35
+#: templates/sujets/_corrige.html:36
 msgid ""
 "Même vérifié, un corrigé peut contenir des erreurs. Si vous en trouvez une, "
 "signalez-la : l'enseignant la relira."
@@ -5257,35 +5411,35 @@ msgstr ""
 "Even when verified, a marking guide may contain mistakes. If you find one, "
 "report it: the teacher will review it."
 
-#: templates/sujets/_corrige.html:38
+#: templates/sujets/_corrige.html:39
 msgid "Signaler une erreur"
 msgstr "Report a mistake"
 
-#: templates/sujets/_corrige.html:41
+#: templates/sujets/_corrige.html:42
 msgid "Où est l'erreur, et quelle serait la bonne réponse ?"
 msgstr "Where is the mistake, and what would the right answer be?"
 
-#: templates/sujets/_corrige.html:47
+#: templates/sujets/_corrige.html:48
 msgid "Se connecter pour signaler une erreur"
 msgstr "Log in to report a mistake"
 
-#: templates/sujets/_corrige.html:49 templates/sujets/detail.html:102
+#: templates/sujets/_corrige.html:50 templates/sujets/detail.html:102
 msgid "Demander le retrait de ce document"
 msgstr "Request removal of this document"
 
-#: templates/sujets/_corrige.html:54
+#: templates/sujets/_corrige.html:55
 msgid "Le corrigé de ce sujet est en préparation."
 msgstr "The marking guide for this paper is in preparation."
 
-#: templates/sujets/_corrige.html:54
+#: templates/sujets/_corrige.html:55
 msgid "Ce sujet n'a pas encore de corrigé."
 msgstr "This paper has no marking guide yet."
 
-#: templates/sujets/_corrige.html:60
+#: templates/sujets/_corrige.html:61
 msgid "Vous avez résolu ce sujet ? Proposez votre corrigé"
 msgstr "Solved this paper? Propose your marking guide"
 
-#: templates/sujets/_corrige.html:61
+#: templates/sujets/_corrige.html:62
 msgid "Vous avez résolu ce sujet ? Connectez-vous pour proposer votre corrigé"
 msgstr "Solved this paper? Log in to propose your marking guide"
 

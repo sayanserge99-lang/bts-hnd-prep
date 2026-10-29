@@ -3,7 +3,9 @@ from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 
 from .forms import ConnexionAdminForm, UtilisateurChangeForm, UtilisateurCreationForm
-from .models import AffectationModerateur, Consentement, DoubleAuthentification, ProfilEtude, Utilisateur
+from .models import (
+    AffectationModerateur, Consentement, DoubleAuthentification, ProfilEnseignant, ProfilEtude, Utilisateur,
+)
 
 
 class AffectationModerateurInline(admin.TabularInline):
@@ -41,6 +43,23 @@ class ProfilEtudeAdmin(admin.ModelAdmin):
 class ConsentementAdmin(admin.ModelAdmin):
     list_display = ("utilisateur", "objet", "version", "date", "date_revocation")
     list_filter = ("objet",)
+
+
+@admin.register(ProfilEnseignant)
+class ProfilEnseignantAdmin(admin.ModelAdmin):
+    """L'administrateur crée le profil (établissement, matières) ; l'enseignant choisit lui-même son affichage, sa
+    photo et donne ou retire son accord depuis son profil (accounts:profil_enseignant)."""
+
+    list_display = ("utilisateur", "etablissement", "affichage", "carte_visible")
+    list_filter = ("etablissement",)
+    search_fields = ("utilisateur__email", "utilisateur__first_name", "utilisateur__last_name")
+    autocomplete_fields = ("utilisateur",)
+    filter_horizontal = ("matieres",)
+    fields = ("utilisateur", "etablissement", "matieres")
+
+    @admin.display(boolean=True, description=_("carte visible (accord de l'enseignant)"))
+    def carte_visible(self, profil):
+        return profil.visible
 
 
 @admin.register(AffectationModerateur)

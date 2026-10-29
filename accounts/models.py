@@ -2,6 +2,9 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from catalogue.models import Langue
@@ -97,6 +100,7 @@ class Consentement(models.Model):
         CONFIDENTIALITE = "confidentialite", _("Politique de confidentialité")
         PARTAGE_ETABLISSEMENT = "partage_etablissement", _("Partage des résultats avec l'établissement")
         CONDITIONS_DE_VENTE = "conditions_de_vente", _("Conditions de vente")
+        PROFIL_ENSEIGNANT = "profil_enseignant", _("Profil public d'enseignant")
 
     utilisateur = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="consentements")
     objet = models.CharField(max_length=30, choices=Objet.choices)
@@ -114,6 +118,16 @@ class Consentement(models.Model):
     @property
     def est_actif(self):
         return self.date_revocation is None
+
+    @classmethod
+    def actif(cls, utilisateur, objet):
+        return cls.objects.filter(utilisateur=utilisateur, objet=objet, date_revocation__isnull=True).exists()
+
+    @classmethod
+    def revoquer(cls, utilisateur, objet):
+        cls.objects.filter(utilisateur=utilisateur, objet=objet, date_revocation__isnull=True).update(
+            date_revocation=timezone.now()
+        )
 
     @classmethod
     def partage_actif(cls, utilisateur):
@@ -158,3 +172,55 @@ class DoubleAuthentification(models.Model):
     @property
     def active(self):
         return self.active_le is not None
+
+
+class ProfilEnseignant(models.Model):
+    """CDC 11.1 : l'enseignant derrière chaque corrigé vérifié.
+
+    Créé par l'administrateur (établissement, matières). L'enseignant choisit lui-même son affichage et sa photo ;
+    sa carte n'apparaît qu'avec son consentement (Consentement « profil public enseignant »), retirable à tout moment.
+    Sans lui, le corrigé affiche seulement « Vérifié par un enseignant ».
+    """
+
+    class Affichage(models.TextChoices):
+        NOM = "nom", _("Nom complet")
+        INITIALES = "initiales", _("Initiales seules")
+
+    utilisateur = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="profil_enseignant")
+    etablissement = models.ForeignKey(
+        "partenaires.Etablissement", on_delete=models.SET_NULL, null=True, blank=True, related_name="enseignants"
+    )
+    matieres = models.ManyToManyField("catalogue.Matiere", blank=True, related_name="enseignants",
+                                      verbose_name=_("matières enseignées"))
+    # Initiales par défaut : on n'affiche jamais plus que ce que l'enseignant a choisi.
+    affichage = models.CharField(_("affichage du nom"), max_length=10, choices=Affichage.choices, default=Affichage.INITIALES)
+    # Recadrée et réenregistrée sans métadonnées (accounts.enseignant.preparer_photo) ; servie par une vue qui vérifie
+    # le consentement, jamais par son chemin.
+    photo = models.ImageField(upload_to="enseignants/", blank=True)
+
+    class Meta:
+        verbose_name = _("profil enseignant")
+        verbose_name_plural = _("profils enseignants")
+
+    def __str__(self):
+        return str(self.utilisateur)
+
+    @property
+    def visible(self):
+        """Le consentement est la seule source : pas de case « visible » qui pourrait le contredire."""
+        return Consentement.actif(self.utilisateur, Consentement.Objet.PROFIL_ENSEIGNANT)
+
+    @property
+    def nom_affiche(self):
+        prenom, nom = self.utilisateur.first_name.strip(), self.utilisateur.last_name.strip()
+        if self.affichage == self.Affichage.NOM and (prenom or nom):
+            return f"{prenom} {nom}".strip()
+        initiales = " ".join(f"{partie[0].upper()}." for partie in (prenom, nom) if partie)
+        return initiales or _("Enseignant")
+
+
+@receiver(post_delete, sender=ProfilEnseignant)
+def effacer_photo(sender, instance, **kwargs):
+    # Compte supprimé (CDC 10.2) : la photo part avec lui.
+    if instance.photo:
+        instance.photo.delete(save=False)

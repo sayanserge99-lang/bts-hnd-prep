@@ -1,0 +1,18 @@
+{% load i18n %}
+{# CDC 11.1 : rien de plus que ce que l'enseignant a accepté (nom ou initiales, établissement, matières, photo). #}
+{% if profil %}
+  <div class="mt-3 flex items-center gap-3 rounded-xl border border-bordure p-3 text-sm">
+    {% if profil.photo %}
+      <img src="{% url 'accounts:photo_enseignant' profil.pk %}" alt="" width="48" height="48" loading="lazy" class="h-12 w-12 shrink-0 rounded-full object-cover">
+    {% else %}
+      <span aria-hidden="true" class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-vert-clair font-semibold text-vert">✓</span>
+    {% endif %}
+    <div>
+      <p class="font-semibold">{% blocktranslate with nom=profil.nom_affiche %}Vérifié par {{ nom }}{% endblocktranslate %}</p>
+      <p class="text-gris">
+        {% if profil.etablissement %}{{ profil.etablissement.nom }} · {% endif %}{% for matiere in matieres %}{{ matiere.nom }}{% if not forloop.last %}, {% endif %}{% endfor %}
+      </p>
+      <p class="text-gris">{% blocktranslate count n=nombre %}{{ n }} corrigé vérifié{% plural %}{{ n }} corrigés vérifiés{% endblocktranslate %}</p>
+    </div>
+  </div>
+{% endif %}
