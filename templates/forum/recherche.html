@@ -12,6 +12,10 @@
   {% include "forum/_recherche.html" %}
   {% if texte %}
     <p class="text-sm text-gris" role="status">{% blocktranslate count n=page.paginator.count %}{{ n }} discussion trouvée{% plural %}{{ n }} discussions trouvées{% endblocktranslate %}</p>
+    {% if suggestion %}
+      <p>{% translate "Vouliez-vous dire :" %}
+        <a href="?q={{ suggestion|urlencode }}{% if matiere %}&amp;matiere={{ matiere.pk }}{% endif %}" class="font-semibold text-vert underline">{{ suggestion }}</a></p>
+    {% endif %}
     <ul class="space-y-2">
       {% for discussion in page %}{% include "forum/_ligne_discussion.html" with avec_matiere=True %}
       {% empty %}<li class="carte text-gris">{% translate "Aucune discussion ne contient tous ces mots. Essayez d'autres mots, ou posez la question." %}</li>{% endfor %}

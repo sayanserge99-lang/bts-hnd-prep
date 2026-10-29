@@ -18,7 +18,8 @@ Mis à jour le 29/10/2026. Ouvert d'abord, dans l'ordre de travail validé par S
 - [x] Paiement : « +237 » devant le champ téléphone ; textes de l'accueil et du Pass (28/10).
 - [x] Accueil : paires BTS ↔ HND (Specialite.equivalent, colonne facultative du classeur) (28/10).
 - [x] Forum : recherche (titres, détails, réponses ; langue de chaque examen) (28/10).
-- [ ] Forum : abonnement à une discussion (plus tard) ; la recherche ne tolère pas les fautes d'orthographe.
+- [x] Recherche : « Vouliez-vous dire … ? » pour les sujets et le forum (29/10).
+- [ ] Forum : abonnement à une discussion (plus tard).
 
 ## 3. Pour Serge Alain
 

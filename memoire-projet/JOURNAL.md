@@ -238,3 +238,7 @@
   à part avant les formules et les espaces fines. Contre-épreuve sans la correction : le nouveau test échoue.
   Première version du motif cassée par un heredoc (
  devenu un vrai retour à la ligne) → refaite avec Edit. 537 verts.
+- « Vouliez-vous dire … ? » (sujets et forum) : vocabulaire des contenus visibles en cache, mot le plus proche,
+  proposition vérifiée par une vraie recherche avec les mêmes filtres. Contre-épreuve (vocabulaire de tous les sujets
+  et sans vérification) : le test « aucun mot d'un sujet non publié » échoue. Essai sur la base de démo :
+  amortisement → amortissement, depreciaton → depreciation (HND), algoritme → algorithme (forum). 544 verts.

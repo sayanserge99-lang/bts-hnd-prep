@@ -15,6 +15,7 @@ from django.utils.translation import gettext as _
 from django.views.decorators.http import require_POST
 
 from catalogue.models import Matiere
+from sujets import suggestion
 from sujets.models import CONFIG_RECHERCHE, Sujet, requete_plein_texte
 
 from . import services
@@ -225,6 +226,17 @@ def discussions_trouvees(texte, matiere=None):
     return discussions.annotate(nb_reponses=Count("reponses", filter=Q(reponses__masquee=False))).order_by("-derniere_activite")
 
 
+def vocabulaire_du_forum():
+    """Mots des discussions visibles et de leurs réponses visibles, pour « Vouliez-vous dire … ? »."""
+    def textes():
+        visibles = Discussion.objects.visibles()
+        for titre, texte in visibles.values_list("titre", "texte").iterator():
+            yield from (titre, texte)
+        yield from Reponse.objects.filter(masquee=False, discussion__in=visibles).values_list("texte", flat=True).iterator()
+
+    return suggestion.vocabulaire("vocabulaire:forum", textes, suggestion.DUREE_FORUM)
+
+
 @forum_ouvert
 def recherche(request):
     """Recherche dans le forum (titres, détails et réponses), dans tout le forum ou une matière."""
@@ -233,5 +245,12 @@ def recherche(request):
     if request.GET.get("matiere", "").isdigit():
         matiere = get_object_or_404(Matiere, pk=request.GET["matiere"])
     discussions = discussions_trouvees(texte, matiere) if texte else Discussion.objects.none()
+    proposition = None
+    if texte and not discussions.exists():
+        proposition = suggestion.suggestion(texte, vocabulaire_du_forum())
+        if proposition and not discussions_trouvees(proposition, matiere).exists():
+            proposition = None
     page = Paginator(discussions, 20).get_page(request.GET.get("page"))
-    return render(request, "forum/recherche.html", {"texte": texte, "matiere": matiere, "page": page})
+    return render(
+        request, "forum/recherche.html", {"texte": texte, "matiere": matiere, "page": page, "suggestion": proposition}
+    )

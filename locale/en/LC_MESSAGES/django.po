@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-28 13:04+0100\n"
+"POT-Creation-Date: 2026-10-29 10:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1437,7 +1437,7 @@ msgstr "Choose an answer before submitting."
 msgid "Décrivez le problème en quelques mots (10 caractères au moins)."
 msgstr "Describe the problem in a few words (at least 10 characters)."
 
-#: entrainement/views.py:244 sujets/views.py:217
+#: entrainement/views.py:244 sujets/views.py:236
 msgid "Vous avez déjà beaucoup signalé aujourd'hui. Merci ! Revenez demain."
 msgstr "You have already reported a lot today. Thank you! Come back tomorrow."
 
@@ -1576,27 +1576,27 @@ msgstr "forum reports"
 msgid "Nouvelle réponse à votre question"
 msgstr "New answer to your question"
 
-#: forum/views.py:89 forum/views.py:107
+#: forum/views.py:90 forum/views.py:108
 msgid "Vous avez beaucoup écrit aujourd'hui : revenez demain."
 msgstr "You have written a lot today: come back tomorrow."
 
-#: forum/views.py:147
+#: forum/views.py:148
 msgid "Indiquez en quelques mots pourquoi vous signalez ce message."
 msgstr "Say in a few words why you are reporting this message."
 
-#: forum/views.py:149
+#: forum/views.py:150
 msgid "Merci, un modérateur va regarder ce message."
 msgstr "Thank you, a moderator will look at this message."
 
-#: forum/views.py:151
+#: forum/views.py:152
 msgid "Vous avez déjà signalé ce message."
 msgstr "You have already reported this message."
 
-#: forum/views.py:193
+#: forum/views.py:194
 msgid "Votre réponse est supprimée."
 msgstr "Your answer has been deleted."
 
-#: forum/views.py:197
+#: forum/views.py:198
 msgid ""
 "D'autres personnes ont répondu : la question reste. Modifiez-la, ou demandez"
 " au modérateur."
@@ -1604,7 +1604,7 @@ msgstr ""
 "Other people have answered: the question stays. Edit it, or ask the "
 "moderator."
 
-#: forum/views.py:201
+#: forum/views.py:202
 msgid "Votre question est supprimée."
 msgstr "Your question has been deleted."
 
@@ -2275,13 +2275,13 @@ msgid "En préparation"
 msgstr "In preparation"
 
 #: sujets/models.py:214 templates/entrainement/examens/auto_evaluation.html:38
-#: templates/sujets/_corrige.html:10 templates/sujets/_resultats.html:20
+#: templates/sujets/_corrige.html:10 templates/sujets/_resultats.html:25
 #: templates/sujets/liste.html:91
 msgid "Proposé par la communauté"
 msgstr "Community answer"
 
 #: sujets/models.py:215 templates/entrainement/examens/auto_evaluation.html:38
-#: templates/sujets/_corrige.html:8 templates/sujets/_resultats.html:18
+#: templates/sujets/_corrige.html:8 templates/sujets/_resultats.html:23
 #: templates/sujets/liste.html:90
 msgid "Vérifié par un enseignant"
 msgstr "Verified by a teacher"
@@ -2358,7 +2358,7 @@ msgstr "favourite"
 msgid "Une spécialité choisie n'est pas rattachée à la matière du sujet."
 msgstr "A chosen specialty is not linked to the paper's subject."
 
-#: sujets/views.py:178
+#: sujets/views.py:197
 #, python-format
 msgid ""
 "Sans compte, on peut ouvrir %(n)s sujets par jour. Créez un compte gratuit "
@@ -2367,11 +2367,11 @@ msgstr ""
 "Without an account, you can open %(n)s papers a day. Create a free account "
 "to read them all."
 
-#: sujets/views.py:214
+#: sujets/views.py:233
 msgid "Décrivez l'erreur en quelques mots (10 caractères au moins)."
 msgstr "Describe the mistake in a few words (at least 10 characters)."
 
-#: sujets/views.py:222
+#: sujets/views.py:241
 msgid "Merci ! L'enseignant relira ce passage."
 msgstr "Thank you! The teacher will review this part."
 
@@ -4140,12 +4140,12 @@ msgid "En cours"
 msgstr "Current"
 
 #: templates/entrainement/examens/epreuve.html:98
-#: templates/forum/recherche.html:21
+#: templates/forum/recherche.html:25
 msgid "Précédente"
 msgstr "Previous"
 
 #: templates/entrainement/examens/epreuve.html:99
-#: templates/forum/recherche.html:22
+#: templates/forum/recherche.html:26
 msgid "Suivante"
 msgstr "Next"
 
@@ -4172,7 +4172,7 @@ msgid "Voir le Pass session"
 msgstr "See the Session pass"
 
 #: templates/entrainement/examens/liste.html:24
-#: templates/sujets/_resultats.html:12
+#: templates/sujets/_resultats.html:17
 #, python-format
 msgid "Session %(annee)s"
 msgstr "%(annee)s session"
@@ -4325,18 +4325,18 @@ msgid "Date"
 msgstr "Date"
 
 #: templates/entrainement/progression.html:135 templates/forum/matiere.html:27
-#: templates/forum/recherche.html:20 templates/sujets/_resultats.html:34
+#: templates/forum/recherche.html:24 templates/sujets/_resultats.html:39
 #: templates/sujets/detail.html:82
 msgid "Pages"
 msgstr "Pages"
 
 #: templates/entrainement/progression.html:136
-#: templates/sujets/_resultats.html:36
+#: templates/sujets/_resultats.html:41
 msgid "Précédent"
 msgstr "Previous"
 
 #: templates/entrainement/progression.html:137
-#: templates/sujets/_resultats.html:40
+#: templates/sujets/_resultats.html:45
 msgid "Suivant"
 msgstr "Next"
 
@@ -4660,7 +4660,11 @@ msgid_plural "%(n)s discussions trouvées"
 msgstr[0] "%(n)s discussion found"
 msgstr[1] "%(n)s discussions found"
 
-#: templates/forum/recherche.html:17
+#: templates/forum/recherche.html:16 templates/sujets/_resultats.html:8
+msgid "Vouliez-vous dire :"
+msgstr "Did you mean:"
+
+#: templates/forum/recherche.html:21
 msgid ""
 "Aucune discussion ne contient tous ces mots. Essayez d'autres mots, ou posez"
 " la question."
@@ -5292,24 +5296,24 @@ msgid_plural "%(total)s sujets"
 msgstr[0] "%(total)s paper"
 msgstr[1] "%(total)s papers"
 
-#: templates/sujets/_resultats.html:13
+#: templates/sujets/_resultats.html:18
 #, python-format
 msgid "Matière commune à %(n)s spécialités"
 msgstr "Subject shared by %(n)s specialties"
 
-#: templates/sujets/_resultats.html:22
+#: templates/sujets/_resultats.html:27
 msgid "Corrigé en préparation"
 msgstr "Marking guide in preparation"
 
-#: templates/sujets/_resultats.html:26
+#: templates/sujets/_resultats.html:31
 msgid "Voir le sujet"
 msgstr "See the paper"
 
-#: templates/sujets/_resultats.html:29
+#: templates/sujets/_resultats.html:34
 msgid "Aucun sujet ne correspond à ces critères."
 msgstr "No paper matches these criteria."
 
-#: templates/sujets/_resultats.html:38
+#: templates/sujets/_resultats.html:43
 #, python-format
 msgid "Page %(n)s sur %(total)s"
 msgstr "Page %(n)s of %(total)s"

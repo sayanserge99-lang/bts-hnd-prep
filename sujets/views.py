@@ -22,7 +22,7 @@ from config.securite import SIGNALEMENTS_CORRIGE_PAR_COMPTE
 from paiements.acces import lit_le_corrige_complet
 from partenaires.models import Etablissement
 
-from . import quota
+from . import quota, suggestion
 from .filigrane import filigraner, jeton_valide
 from .models import ConsultationJour, Corrige, Favori, Sujet
 
@@ -53,6 +53,17 @@ def meilleur_corrige():
         .order_by("rang")
         .values("statut")[:1]
     )
+
+
+def vocabulaire_des_sujets(examen):
+    """Mots des sujets publiés de l'examen (titres, matières, texte extrait), pour « Vouliez-vous dire … ? »."""
+    def textes():
+        for titre, texte, nom_fr, nom_en in Sujet.objects.publies().filter(session__examen=examen).values_list(
+            "titre", "texte_extrait", "matiere__nom_fr", "matiere__nom_en"
+        ).iterator():
+            yield from (titre, texte, nom_fr, nom_en)
+
+    return suggestion.vocabulaire(f"vocabulaire:sujets:{examen.pk}", textes, suggestion.DUREE_SUJETS)
 
 
 def liste(request):
@@ -95,8 +106,15 @@ def liste(request):
         sujets = sujets.filter(fourni_par_id=int(filtres["fourni_par"]))
     if filtres["type"] in Sujet.TypeEpreuve.values:
         sujets = sujets.filter(type_epreuve=filtres["type"])
+    proposition = None
     if filtres["q"]:
+        filtres_seuls = sujets
         sujets = sujets.rechercher(filtres["q"], examen.langue)
+        if not sujets.exists():
+            # Proposée seulement si elle trouve des sujets avec les mêmes filtres.
+            proposition = suggestion.suggestion(filtres["q"], vocabulaire_des_sujets(examen))
+            if proposition and not filtres_seuls.rechercher(proposition, examen.langue).exists():
+                proposition = None
 
     page = Paginator(sujets, settings.SUJETS_PAR_PAGE).get_page(request.GET.get("page"))
     contexte = {
@@ -111,6 +129,7 @@ def liste(request):
         "types": Sujet.TypeEpreuve.choices,
         "filtres": filtres,
         "page": page,
+        "suggestion": proposition,
     }
     gabarit = "sujets/_resultats.html" if est_requete_htmx(request) else "sujets/liste.html"
     return render(request, gabarit, contexte)
