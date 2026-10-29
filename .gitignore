@@ -8,6 +8,7 @@ staticfiles/
 .pytest_cache/
 static/css/
 .env.production
+.env.essai
 sauvegardes/
 
 # Réglages personnels de l'éditeur

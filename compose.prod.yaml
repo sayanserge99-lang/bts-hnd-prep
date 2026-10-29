@@ -28,7 +28,8 @@ services:
       context: .
       target: prod
     restart: unless-stopped
-    env_file: .env.production
+    # FICHIER_ENV : autre fichier de secrets (serveur d'essai par tunnel, compose.tunnel.yaml).
+    env_file: ${FICHIER_ENV:-.env.production}
     environment:
       DJANGO_PRODUCTION: "1"
       POSTGRES_HOST: db
@@ -48,7 +49,8 @@ services:
       target: prod
     restart: unless-stopped
     command: celery -A config worker -B --schedule /tmp/celerybeat-schedule --loglevel=info --concurrency=2
-    env_file: .env.production
+    # FICHIER_ENV : autre fichier de secrets (serveur d'essai par tunnel, compose.tunnel.yaml).
+    env_file: ${FICHIER_ENV:-.env.production}
     environment:
       DJANGO_PRODUCTION: "1"
       POSTGRES_HOST: db

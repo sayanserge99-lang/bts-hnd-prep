@@ -31,8 +31,8 @@ Mis à jour le 29/10/2026. Ouvert d'abord, dans l'ordre de travail validé par S
 - [ ] Même essai sur Firefox et Samsung Internet.
 - [ ] Remplir `contenu/referentiel-a-remplir.xlsx` : sessions 2020-2026 (dates de fin officielles réelles),
       spécialités, matières et coefficients (circulaire du MINESUP, CDC 3.10), chapitres.
-- [ ] Serveur d'essai : créer le compte Oracle Cloud (région Europe) et l'adresse duckdns.org, puis installation
-      ensemble (`deploy/SERVEUR-ESSAI-ORACLE.md`).
+- [x] Serveur d'essai par tunnel depuis le PC (`deploy/TUNNEL-PC.md`) (29/10).
+- [ ] Faire essayer le serveur d'essai par quelques testeurs connus ; plus tard, Oracle si une carte passe.
 - [ ] Choisir l'hébergeur (VPS) et le nom de domaine ; HTTPS Let's Encrypt fait ensemble (procédure non testée).
 - [ ] Choisir le fournisseur d'e-mails (SMTP) ; créer le compte Sentry (offre gratuite) ; identifiants Google OAuth.
 - [ ] Créer le superutilisateur ; renseigner DJANGO_ADMINS (avis des demandes de retrait).

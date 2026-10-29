@@ -1,0 +1,16 @@
+# Serveur d'essai depuis ce PC, par un tunnel Cloudflare (sans compte, sans carte) : voir deploy/TUNNEL-PC.md.
+# Projet séparé (btshnd-essai) : sa propre base, ses propres fichiers, ses propres secrets (.env.essai).
+#
+#   FICHIER_ENV=.env.essai docker compose -p btshnd-essai -f compose.prod.yaml -f compose.tunnel.yaml --env-file .env.essai up -d --build
+#
+# L'adresse publique (https://….trycloudflare.com) change à chaque démarrage du tunnel : elle s'affiche dans
+#   docker compose -p btshnd-essai logs tunnel
+
+services:
+  tunnel:
+    image: cloudflare/cloudflared:2025.10.0
+    restart: unless-stopped
+    # Cloudflare reçoit les visiteurs en HTTPS et les envoie à Nginx sur le réseau interne : rien d'autre n'est exposé.
+    command: tunnel --no-autoupdate --url http://nginx:80
+    depends_on:
+      - nginx

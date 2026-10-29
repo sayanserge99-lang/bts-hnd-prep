@@ -202,3 +202,7 @@
   bandeau, noindex + robots « Disallow: / », données de démonstration permises avec mots de passe tirés au hasard ;
   refus de démarrer si le paiement est configuré. Comptes fictifs ou testeurs connus seulement (serveur hors du
   Cameroun, pages légales en brouillon). Rien ne se recopie vers le vrai serveur.
+- **Tunnel depuis le PC plutôt qu'Oracle (29/10, Serge Alain)** : l'inscription Oracle bloquait à la carte bancaire.
+  Serveur d'essai = version de production sur le PC (projet Docker `btshnd-essai`, `.env.essai` non versionné) +
+  tunnel Cloudflare rapide (`compose.tunnel.yaml`, cloudflared 2025.10.0), jamais le serveur de développement.
+  Oracle reste possible plus tard (procédure `deploy/SERVEUR-ESSAI-ORACLE.md`).

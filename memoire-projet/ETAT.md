@@ -60,7 +60,9 @@
 - **Serveur d'essai (29/10)** — `SERVEUR_ESSAI` (settings, refus avec PAIEMENT_ACTIF), bandeau et noindex
   (`base.html`), robots.txt fermé, `donnees_demo` permis avec mots de passe aléatoires. Procédure
   `deploy/SERVEUR-ESSAI-ORACLE.md` (pare-feu Oracle, iptables, DuckDNS : points « à vérifier ensemble »).
-  En attente : compte Oracle de Serge Alain.
+  Oracle abandonné pour l'instant (carte) → **tunnel depuis le PC** (`deploy/TUNNEL-PC.md`, `compose.tunnel.yaml`,
+  `FICHIER_ENV` dans compose.prod.yaml) : lancé le 29/10, contenu de démonstration chargé, connexion vérifiée à
+  travers le tunnel. Comptes (mots de passe aléatoires) donnés à Serge Alain dans la conversation, pas ici.
 - **Ajustements du 28/10** — mois acheté pendant un Pass actif : avertissement avec les vraies dates
   (`service.avertissement`), « Acheter quand même » / « Annuler », aucun formulaire ni débit sans `confirme=1`.
   Examen blanc : bandeau `#bandeau-hors-ligne` (texte de Serge Alain, règle des 90 s), sauvegarde relancée au

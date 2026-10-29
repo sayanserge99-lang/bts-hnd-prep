@@ -260,3 +260,6 @@
   Mode « serveur d'essai » + procédure Oracle. Contre-épreuves (garde-fou du paiement, mot de passe de démo
   public) : échecs attendus. 580 verts.
   Image de production construite pour arm64 (émulation, 7 min) : aarch64, Tailwind, Tesseract, imports Python OK.
+- Oracle : inscription bloquée à la carte → tunnel Cloudflare depuis le PC. Projet `btshnd-essai` (version de
+  production, port 8081), contenu de démonstration, compte administrateur de Serge Alain ; pages, robots et
+  connexion vérifiés par l'adresse publique (CSRF : `https://*.trycloudflare.com`, DJANGO_HTTPS=0).
