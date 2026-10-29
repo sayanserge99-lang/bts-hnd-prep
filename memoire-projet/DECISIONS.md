@@ -197,3 +197,8 @@
   ont le plus payé, à relancer (fin dans 7 jours), non renouvelés (60 jours), codes de réduction, paiements à
   régulariser. Listes nominatives affichées, jamais exportées (précaution du CDC 11.2). Le classement des étudiants
   les plus actifs reste après la bêta.
+- **Serveur d'essai sur Oracle Cloud Always Free (29/10, Serge Alain)** : avant le VPS payant, répétition complète
+  de la mise en ligne (Ampere A1 2 OCPU / 12 Go, Ubuntu 24.04, région Europe, adresse DuckDNS). `DJANGO_SERVEUR_ESSAI=1` :
+  bandeau, noindex + robots « Disallow: / », données de démonstration permises avec mots de passe tirés au hasard ;
+  refus de démarrer si le paiement est configuré. Comptes fictifs ou testeurs connus seulement (serveur hors du
+  Cameroun, pages légales en brouillon). Rien ne se recopie vers le vrai serveur.

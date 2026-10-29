@@ -27,6 +27,7 @@ def fonctionnalites(request):
         "fonctionnalites": settings.FONCTIONNALITES,
         "paiement_actif": settings.PAIEMENT_ACTIF,
         "beta": settings.BETA,
+        "serveur_essai": settings.SERVEUR_ESSAI,
         # En développement, le CSS change souvent : on empêche le téléphone de garder l'ancien en cache.
         # En production, ManifestStaticFilesStorage donne déjà un nom unique à chaque version.
         "mode_developpement": settings.DEBUG,

@@ -3,6 +3,8 @@
 Ce guide installe la plateforme sur un VPS Linux (Ubuntu 24.04, 2 vCPU, 4 Go de RAM, CDC 5)
 avec Docker. Comptez une heure la première fois.
 
+Serveur d'essai gratuit d'abord (Oracle Cloud) : voir `SERVEUR-ESSAI-ORACLE.md`, qui renvoie ici.
+
 ## 1. Préparer le serveur
 
 ```sh

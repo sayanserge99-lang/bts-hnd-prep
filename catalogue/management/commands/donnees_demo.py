@@ -1,6 +1,7 @@
 """Données fictives pour voir les pages en développement. Les dates de session sont inventées."""
 
 import re
+import secrets
 from datetime import date, timedelta
 
 from django.conf import settings
@@ -333,8 +334,11 @@ class Command(BaseCommand):
     help = "Remplit la base avec des données fictives (développement uniquement)."
 
     def handle(self, *args, **options):
-        if not settings.DEBUG:
-            raise CommandError("Refusé : DEBUG est désactivé (base de production ?).")
+        if not (settings.DEBUG or settings.SERVEUR_ESSAI):
+            raise CommandError("Refusé : DEBUG est désactivé (base de production ?). Serveur d'essai : DJANGO_SERVEUR_ESSAI=1.")
+        # Sur un serveur joignable depuis Internet, pas de mot de passe connu de tous (l'enseignante de démonstration
+        # ouvre l'administration) : il est tiré au hasard et affiché une seule fois, à la création des comptes.
+        self.mot_de_passe = MOT_DE_PASSE_DEMO if settings.DEBUG else f"Essai-{secrets.token_urlsafe(9)}"
         Sujet.objects.filter(source=ANCIENNE_SOURCE_DEMO).update(source=SOURCE_DEMO)
         Corrige.objects.filter(titulaire_droits=ANCIENNE_SOURCE_DEMO).update(titulaire_droits=TITULAIRE_DEMO)
         if Sujet.objects.filter(source=SOURCE_DEMO).exists():
@@ -449,7 +453,7 @@ class Command(BaseCommand):
         etudiant = Utilisateur.objects.filter(email=ETUDIANT_DEMO).first()
         if etudiant is None:
             etudiant = Utilisateur.objects.create_user(
-                email=ETUDIANT_DEMO, password=MOT_DE_PASSE_DEMO, first_name="Awa", last_name=MARQUE_DEMO
+                email=ETUDIANT_DEMO, password=self.mot_de_passe, first_name="Awa", last_name=MARQUE_DEMO
             )
             preparer_etudiant(etudiant, cge)
         compta = Matiere.objects.get(examen__code="BTS", nom_fr="Comptabilité générale")
@@ -486,7 +490,7 @@ class Command(BaseCommand):
             contribution.save()
         self.creer_examen_en_cours()
         self.stdout.write(self.style.SUCCESS(
-            f"Activité de démonstration : {ETUDIANT_DEMO} (mot de passe {MOT_DE_PASSE_DEMO}), "
+            f"Activité de démonstration : {ETUDIANT_DEMO} (mot de passe {self.mot_de_passe}), "
             "1 quiz terminé, 3 contributions en attente."
         ))
 
@@ -506,9 +510,10 @@ class Command(BaseCommand):
             email=ENSEIGNANT_DEMO, defaults={"first_name": "Marie", "last_name": "Exemple (fictif)", "langue": "fr"}
         )
         if cree:
-            utilisateur.set_password(MOT_DE_PASSE_DEMO)
+            utilisateur.set_password(self.mot_de_passe)
             utilisateur.save()
             utilisateur.groups.add(Group.objects.get(name="Modérateur"))
+            self.stdout.write(self.style.SUCCESS(f"Enseignante de démonstration : {ENSEIGNANT_DEMO} (mot de passe {self.mot_de_passe})."))
         profil, _ = ProfilEnseignant.objects.get_or_create(
             utilisateur=utilisateur,
             defaults={"affichage": ProfilEnseignant.Affichage.NOM,

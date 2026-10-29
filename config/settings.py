@@ -271,6 +271,12 @@ PAIEMENT_ACTIF = bool(EXPLOITANT["structure"] and EXPLOITANT["niu"])
 # Essai du parcours de paiement en développement, avec l'agrégateur simulé (jamais en production).
 if DEBUG and os.environ.get("PAIEMENT_ESSAI") == "1":
     PAIEMENT_ACTIF = True
+# Serveur d'essai (Oracle gratuit, 29/10) : bandeau « Serveur d'essai », moteurs de recherche écartés, données de
+# démonstration autorisées (mots de passe tirés au hasard). Jamais avec le paiement : il ne peut pas devenir, par
+# erreur, le vrai site.
+SERVEUR_ESSAI = os.environ.get("DJANGO_SERVEUR_ESSAI") == "1"
+if SERVEUR_ESSAI and PAIEMENT_ACTIF:
+    raise ImproperlyConfigured("DJANGO_SERVEUR_ESSAI=1 est incompatible avec le paiement (EXPLOITANT_STRUCTURE et NIU).")
 # Agrégateur Mobile Money (CDC 3.8) : « simule » tant qu'il n'est pas choisi (refusé hors DEBUG).
 PAIEMENT_FOURNISSEUR = os.environ.get("PAIEMENT_FOURNISSEUR", "simule")
 # Secret partagé avec l'agrégateur pour signer ses notifications.

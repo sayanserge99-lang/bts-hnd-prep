@@ -256,3 +256,7 @@
 - Page « Ventes » (Serge Alain : « voir les paiements, les personnes qui ont payé, les plus fréquents »).
   Contre-épreuve (paiements échoués comptés) : échec attendu. Capture : montants qui débordaient des tuiles → taille
   réduite. 577 verts.
+- Hébergement gratuit : recherche (Render, Railway, Koyeb, Oracle) → Oracle Always Free retenu par Serge Alain.
+  Mode « serveur d'essai » + procédure Oracle. Contre-épreuves (garde-fou du paiement, mot de passe de démo
+  public) : échecs attendus. 580 verts.
+  Image de production construite pour arm64 (émulation, 7 min) : aarch64, Tailwind, Tesseract, imports Python OK.

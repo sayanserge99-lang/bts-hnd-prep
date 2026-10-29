@@ -4,6 +4,7 @@ Seul ce qui est public y figure : sujets publiés, discussions visibles, pages g
 session en cours n'est jamais publié, donc jamais annoncé ici (CDC 4.2).
 """
 
+from django.conf import settings
 from django.contrib.sitemaps import Sitemap
 from django.http import HttpResponse
 from django.urls import reverse
@@ -61,6 +62,9 @@ INTERDITS = ["/compte/", "/entrainement/", "/paiement/", "/etablissement/", "/co
 
 @require_GET
 def robots(request):
+    if settings.SERVEUR_ESSAI:
+        # Le serveur d'essai ne doit jamais apparaître dans un moteur de recherche.
+        return HttpResponse("User-agent: *\nDisallow: /\n", content_type="text/plain; charset=utf-8")
     lignes = ["User-agent: *", *(f"Disallow: {chemin}" for chemin in INTERDITS), "",
               f"Sitemap: {request.build_absolute_uri(reverse('plan_du_site'))}"]
     return HttpResponse("\n".join(lignes) + "\n", content_type="text/plain; charset=utf-8")

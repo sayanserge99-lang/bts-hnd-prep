@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  {% if serveur_essai %}<meta name="robots" content="noindex, nofollow">{% endif %}
   <title>{% block titre %}BTS-HND Prep{% endblock %}</title>
   <meta name="description" content="{% translate 'Sujets BTS et HND des sessions passées, classés par spécialité, matière et année.' %}">
   <link rel="stylesheet" href="{% static 'css/app.css' %}{% if mode_developpement %}?v={% now 'U' %}{% endif %}">
@@ -24,6 +25,11 @@
   <a href="#contenu" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:rounded focus:bg-white focus:px-3 focus:py-2">{% translate "Aller au contenu" %}</a>
 
   {% block entete %}
+  {% if serveur_essai %}
+    <div class="bg-ambre-clair text-encre" role="region" aria-label="{% translate 'Serveur d’essai' %}">
+      <p class="mx-auto max-w-6xl px-4 py-1.5 text-sm font-semibold">{% translate "Serveur d’essai : comptes et sujets fictifs. N’y mettez aucune donnée personnelle réelle." %}</p>
+    </div>
+  {% endif %}
   {% if beta %}
     {# Dans le bloc d'en-tête : absente du mode concentré de l'examen blanc. #}
     <div class="bg-encre text-white" role="region" aria-label="{% translate 'Bêta' %}">

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-29 12:33+0100\n"
+"POT-Creation-Date: 2026-10-29 12:54+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,7 +58,7 @@ msgid "Spécialité"
 msgstr "Specialty"
 
 #: accounts/forms.py:49 templates/accounts/profil.html:46
-#: templates/admin/statistiques.html:27 templates/base.html:147
+#: templates/admin/statistiques.html:27 templates/base.html:153
 msgid "Établissement"
 msgstr "Institution"
 
@@ -187,7 +187,7 @@ msgstr "Privacy policy"
 msgid "Partage des résultats avec l'établissement"
 msgstr "Sharing results with the institution"
 
-#: accounts/models.py:102 templates/base.html:127
+#: accounts/models.py:102 templates/base.html:133
 msgid "Conditions de vente"
 msgstr "Terms of sale"
 
@@ -504,7 +504,7 @@ msgid "chapitre"
 msgstr "chapter"
 
 #: catalogue/views.py:87 templates/accounts/profil.html:23
-#: templates/admin/base_site.html:16 templates/base.html:56
+#: templates/admin/base_site.html:16 templates/base.html:62
 #: templates/paiements/offres.html:31
 msgid "Statistiques"
 msgstr "Statistics"
@@ -1169,7 +1169,7 @@ msgstr "BTS-HND Prep — Administration"
 msgid "BTS-HND Prep"
 msgstr "BTS-HND Prep"
 
-#: config/urls.py:18 templates/accounts/profil.html:118 templates/base.html:63
+#: config/urls.py:18 templates/accounts/profil.html:118 templates/base.html:69
 #: templates/entrainement/progression.html:4
 msgid "Tableau de bord"
 msgstr "Dashboard"
@@ -1225,8 +1225,8 @@ msgid_plural "%d questions retirées."
 msgstr[0] "%d question removed."
 msgstr[1] "%d questions removed."
 
-#: entrainement/apps.py:8 templates/base.html:67 templates/base.html:69
-#: templates/base.html:157 templates/base.html:162
+#: entrainement/apps.py:8 templates/base.html:73 templates/base.html:75
+#: templates/base.html:163 templates/base.html:168
 #: templates/entrainement/accueil.html:4 templates/entrainement/accueil.html:9
 #: templates/entrainement/examens/liste.html:9
 msgid "Entraînement"
@@ -1588,7 +1588,7 @@ msgid_plural "%d signalements rejetés."
 msgstr[0] "%d report rejected."
 msgstr[1] "%d reports rejected."
 
-#: forum/apps.py:8 templates/base.html:51 templates/base.html:74
+#: forum/apps.py:8 templates/base.html:57 templates/base.html:80
 #: templates/entrainement/accueil.html:23 templates/forum/accueil.html:4
 #: templates/forum/accueil.html:9 templates/forum/discussion.html:4
 #: templates/forum/matiere.html:4 templates/forum/matiere.html:9
@@ -2065,7 +2065,7 @@ msgid "Numéro de mobile camerounais attendu (9 chiffres, commençant par 6)."
 msgstr "A Cameroonian mobile number is expected (9 digits, starting with 6)."
 
 #: paiements/views.py:205 templates/accounts/profil.html:24
-#: templates/admin/base_site.html:17 templates/base.html:57
+#: templates/admin/base_site.html:17 templates/base.html:63
 msgid "Ventes"
 msgstr "Sales"
 
@@ -2330,8 +2330,8 @@ msgstr[0] ""
 msgstr[1] ""
 "%d marking guides refused: their paper's session has not officially ended."
 
-#: sujets/apps.py:8 templates/base.html:50 templates/base.html:65
-#: templates/base.html:143 templates/sujets/liste.html:4
+#: sujets/apps.py:8 templates/base.html:56 templates/base.html:71
+#: templates/base.html:149 templates/sujets/liste.html:4
 #: templates/sujets/liste.html:9
 msgid "Sujets"
 msgstr "Past papers"
@@ -2664,7 +2664,7 @@ msgstr "Continue with Google"
 
 #: templates/accounts/connexion.html:4 templates/accounts/connexion.html:8
 #: templates/accounts/connexion.html:12 templates/accounts/inscription.html:21
-#: templates/base.html:93
+#: templates/base.html:99
 msgid "Se connecter"
 msgstr "Log in"
 
@@ -2678,7 +2678,7 @@ msgstr "No account yet?"
 
 #: templates/accounts/connexion.html:17 templates/accounts/google_finir.html:4
 #: templates/accounts/inscription.html:4 templates/accounts/inscription.html:8
-#: templates/base.html:94
+#: templates/base.html:100
 msgid "Créer un compte"
 msgstr "Create an account"
 
@@ -2803,7 +2803,7 @@ msgid "Créer mon compte"
 msgstr "Create my account"
 
 #: templates/accounts/google_finir.html:16
-#: templates/accounts/inscription.html:18 templates/base.html:126
+#: templates/accounts/inscription.html:18 templates/base.html:132
 #: templates/pages/conditions_utilisation.html:4
 #: templates/pages/conditions_utilisation.html:5
 msgid "Conditions d'utilisation"
@@ -2819,7 +2819,7 @@ msgstr "Already registered?"
 
 #: templates/accounts/mes_corriges.html:4
 #: templates/accounts/mes_corriges.html:9 templates/accounts/profil.html:30
-#: templates/base.html:53 templates/base.html:148
+#: templates/base.html:59 templates/base.html:154
 msgid "Mes corrigés"
 msgstr "My marking guides"
 
@@ -2877,7 +2877,7 @@ msgstr "Edit my profile"
 
 #: templates/accounts/modifier_profil.html:8
 #: templates/accounts/mot_de_passe.html:8 templates/accounts/profil.html:4
-#: templates/base.html:90 templates/communaute/mes_contributions.html:9
+#: templates/base.html:96 templates/communaute/mes_contributions.html:9
 #: templates/paiements/activer_code.html:8 templates/paiements/recu.html:8
 #: templates/partenaires/mes_epreuves.html:9
 msgid "Mon espace"
@@ -2950,7 +2950,7 @@ msgstr "This link is no longer valid. Request a new one."
 msgid "Nouveau lien"
 msgstr "New link"
 
-#: templates/accounts/profil.html:4 templates/base.html:90
+#: templates/accounts/profil.html:4 templates/base.html:96
 msgid "Mon compte"
 msgstr "My account"
 
@@ -2958,18 +2958,18 @@ msgstr "My account"
 msgid "Mon rôle"
 msgstr "My role"
 
-#: templates/accounts/profil.html:22 templates/base.html:55
-#: templates/base.html:146
+#: templates/accounts/profil.html:22 templates/base.html:61
+#: templates/base.html:152
 msgid "Administration"
 msgstr "Admin"
 
-#: templates/accounts/profil.html:26 templates/base.html:59
-#: templates/base.html:149
+#: templates/accounts/profil.html:26 templates/base.html:65
+#: templates/base.html:155
 msgid "Modération"
 msgstr "Moderation"
 
-#: templates/accounts/profil.html:28 templates/base.html:52
-#: templates/base.html:89
+#: templates/accounts/profil.html:28 templates/base.html:58
+#: templates/base.html:95
 msgid "Mon établissement"
 msgstr "My institution"
 
@@ -3046,7 +3046,7 @@ msgstr "Receipt"
 msgid "J'ai un code d'accès"
 msgstr "I have an access code"
 
-#: templates/accounts/profil.html:86 templates/base.html:125
+#: templates/accounts/profil.html:86 templates/base.html:131
 msgid "Confidentialité"
 msgstr "Privacy"
 
@@ -3231,7 +3231,7 @@ msgstr ""
 #: templates/admin/communaute/contribution/valider.html:6
 #: templates/admin/entrainement/question/importer.html:6
 #: templates/admin/paiements/codeacces/generer.html:6
-#: templates/admin/sujets/sujet/importer.html:6 templates/base.html:139
+#: templates/admin/sujets/sujet/importer.html:6 templates/base.html:145
 msgid "Accueil"
 msgstr "Home"
 
@@ -3857,39 +3857,51 @@ msgstr "Payments to settle"
 msgid "Tous les paiements"
 msgstr "All payments"
 
-#: templates/base.html:8
+#: templates/base.html:9
 msgid ""
 "Sujets BTS et HND des sessions passées, classés par spécialité, matière et "
 "année."
 msgstr "Past BTS and HND papers, sorted by specialty, subject and year."
 
-#: templates/base.html:24
+#: templates/base.html:25
 msgid "Aller au contenu"
 msgstr "Skip to content"
 
-#: templates/base.html:29 templates/base.html:31
+#: templates/base.html:29
+msgid "Serveur d’essai"
+msgstr "Test server"
+
+#: templates/base.html:30
+msgid ""
+"Serveur d’essai : comptes et sujets fictifs. N’y mettez aucune donnée "
+"personnelle réelle."
+msgstr ""
+"Test server: fictitious accounts and papers. Do not enter any real personal "
+"data."
+
+#: templates/base.html:35 templates/base.html:37
 msgid "Bêta"
 msgstr "Beta"
 
-#: templates/base.html:31
+#: templates/base.html:37
 msgid "Le site est en test : il peut changer ou contenir des erreurs."
 msgstr "The site is being tested: it may change or contain errors."
 
-#: templates/base.html:32 templates/communaute/avis_beta.html:4
+#: templates/base.html:38 templates/communaute/avis_beta.html:4
 #: templates/communaute/avis_beta.html:8
 msgid "Donner mon avis"
 msgstr "Give feedback"
 
-#: templates/base.html:47
+#: templates/base.html:53
 msgid "Navigation principale"
 msgstr "Main navigation"
 
-#: templates/base.html:69 templates/base.html:162
+#: templates/base.html:75 templates/base.html:168
 #: templates/sujets/detail.html:19
 msgid "Bientôt"
 msgstr "Soon"
 
-#: templates/base.html:72 templates/entrainement/accueil.html:29
+#: templates/base.html:78 templates/entrainement/accueil.html:29
 #: templates/entrainement/examens/consignes.html:8
 #: templates/entrainement/examens/liste.html:4
 #: templates/entrainement/examens/liste.html:10
@@ -3897,45 +3909,45 @@ msgstr "Soon"
 msgid "Examens blancs"
 msgstr "Mock exams"
 
-#: templates/base.html:75 templates/paiements/commander.html:8
+#: templates/base.html:81 templates/paiements/commander.html:8
 #: templates/paiements/offres.html:4 templates/paiements/offres.html:9
 msgid "Offres"
 msgstr "Plans"
 
-#: templates/base.html:91
+#: templates/base.html:97
 msgid "Déconnexion"
 msgstr "Log out"
 
-#: templates/base.html:123
+#: templates/base.html:129
 msgid "Informations légales"
 msgstr "Legal information"
 
-#: templates/base.html:124 templates/pages/mentions_legales.html:4
+#: templates/base.html:130 templates/pages/mentions_legales.html:4
 #: templates/pages/mentions_legales.html:5
 msgid "Mentions légales"
 msgstr "Legal notice"
 
-#: templates/base.html:128 templates/communaute/demande_retrait.html:4
+#: templates/base.html:134 templates/communaute/demande_retrait.html:4
 #: templates/communaute/demande_retrait.html:8
 #: templates/communaute/demande_retrait_recue.html:4
 msgid "Demande de retrait"
 msgstr "Takedown request"
 
-#: templates/base.html:129 templates/communaute/contact.html:4
+#: templates/base.html:135 templates/communaute/contact.html:4
 #: templates/communaute/contact.html:8
 #: templates/communaute/demande_retrait.html:22
 msgid "Contact"
 msgstr "Contact"
 
-#: templates/base.html:135
+#: templates/base.html:141
 msgid "Navigation mobile"
 msgstr "Mobile navigation"
 
-#: templates/base.html:168
+#: templates/base.html:174
 msgid "Compte"
 msgstr "Account"
 
-#: templates/base.html:168
+#: templates/base.html:174
 msgid "Profil"
 msgstr "Profile"
 
