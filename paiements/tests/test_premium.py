@@ -79,7 +79,9 @@ def test_la_page_offres_affiche_les_prix_ttc(client, bts):
     assert f"jusqu'à la fin de la session {aujourd_hui.year + 1} (30/06/{aujourd_hui.year + 1})" in contenu
     assert "pendant 30 jours" in contenu
     assert "Ancienne offre" not in contenu
-    assert "Phase de lancement" in contenu  # paiement fermé
+    # Paiement fermé : on dit d'abord que tout est gratuit (avis de la bêta du 29/10).
+    assert "Tout est gratuit pendant la bêta" in contenu and "Gratuit pendant la bêta" in contenu
+    assert "Paiement bientôt disponible" not in contenu
     assert reverse("accounts:activer_code") in contenu
     # Les mêmes offres sur l'accueil, et le menu mène à la page.
     accueil = client.get(reverse("accueil")).content.decode()

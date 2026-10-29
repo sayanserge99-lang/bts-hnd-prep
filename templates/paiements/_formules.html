@@ -29,7 +29,7 @@
       {% if paiement_actif %}
         <a href="{% url 'paiements:commander' offre.pk %}" class="bouton-plein mt-4 w-full">{% translate "Choisir" %}</a>
       {% else %}
-        <p class="mt-4 inline-block rounded-lg border border-dashed border-gris/60 px-4 py-2 text-sm text-gris">{% translate "Paiement bientôt disponible" %}</p>
+        <p class="mt-4 inline-block rounded-lg bg-vert-clair px-4 py-2 text-sm font-semibold text-vert-fonce">{% if beta %}{% translate "Gratuit pendant la bêta" %}{% else %}{% translate "Gratuit pendant la phase de lancement" %}{% endif %}</p>
       {% endif %}
     </div>
   {% empty %}

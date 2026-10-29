@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-29 12:54+0100\n"
+"POT-Creation-Date: 2026-10-29 13:57+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -505,7 +505,7 @@ msgstr "chapter"
 
 #: catalogue/views.py:87 templates/accounts/profil.html:23
 #: templates/admin/base_site.html:16 templates/base.html:62
-#: templates/paiements/offres.html:31
+#: templates/paiements/offres.html:36
 msgid "Statistiques"
 msgstr "Statistics"
 
@@ -3029,7 +3029,7 @@ msgid "Premium du %(debut)s au %(fin)s"
 msgstr "Premium from %(debut)s to %(fin)s"
 
 #: templates/accounts/profil.html:70 templates/paiements/_formules.html:6
-#: templates/paiements/offres.html:25
+#: templates/paiements/offres.html:30
 msgid "Gratuit"
 msgstr "Free"
 
@@ -3042,7 +3042,7 @@ msgstr "Get the Pass"
 msgid "Reçu"
 msgstr "Receipt"
 
-#: templates/accounts/profil.html:80 templates/paiements/offres.html:40
+#: templates/accounts/profil.html:80 templates/paiements/offres.html:45
 msgid "J'ai un code d'accès"
 msgstr "I have an access code"
 
@@ -5310,10 +5310,14 @@ msgid "Choisir"
 msgstr "Choose"
 
 #: templates/paiements/_formules.html:32
-msgid "Paiement bientôt disponible"
-msgstr "Payment coming soon"
+msgid "Gratuit pendant la bêta"
+msgstr "Free during the beta"
 
-#: templates/paiements/_formules.html:37 templates/paiements/offres.html:25
+#: templates/paiements/_formules.html:32
+msgid "Gratuit pendant la phase de lancement"
+msgstr "Free during the launch phase"
+
+#: templates/paiements/_formules.html:37 templates/paiements/offres.html:30
 msgid "Premium"
 msgstr "Premium"
 
@@ -5462,75 +5466,89 @@ msgstr "Payment method"
 msgid "Le reçu reste consultable dans « Mon espace »."
 msgstr "The receipt remains available in “My area”."
 
-#: templates/paiements/offres.html:11
-msgid ""
-"Phase de lancement : tout est ouvert gratuitement aux inscrits tant que le "
-"paiement n'est pas ouvert."
-msgstr ""
-"Launch phase: everything is free for registered users until payment opens."
+#: templates/paiements/offres.html:13
+msgid "Tout est gratuit pendant la bêta"
+msgstr "Everything is free during the beta"
+
+#: templates/paiements/offres.html:13
+msgid "Tout est gratuit pendant la phase de lancement"
+msgstr "Everything is free during the launch phase"
 
 #: templates/paiements/offres.html:14
+msgid ""
+"Corrigés complets, quiz illimités et examens blancs : il suffit d'un compte "
+"gratuit. Les prix ci-dessous s'appliqueront seulement à l'ouverture du "
+"paiement."
+msgstr ""
+"Full marking guides, unlimited quizzes and mock exams: all you need is a "
+"free account. The prices below will only apply once payment opens."
+
+#: templates/paiements/offres.html:15
+msgid "Créer un compte gratuit"
+msgstr "Create a free account"
+
+#: templates/paiements/offres.html:19
 #, python-format
 msgid "Votre abonnement est actif jusqu'au %(fin)s."
 msgstr "Your subscription is active until %(fin)s."
 
-#: templates/paiements/offres.html:22
+#: templates/paiements/offres.html:27
 msgid "Ce qui est compris"
 msgstr "What is included"
 
-#: templates/paiements/offres.html:27
+#: templates/paiements/offres.html:32
 msgid "Sujets : consultation et téléchargement"
 msgstr "Papers: viewing and download"
 
-#: templates/paiements/offres.html:28
+#: templates/paiements/offres.html:33
 msgid "Corrigés"
 msgstr "Marking guides"
 
-#: templates/paiements/offres.html:28
+#: templates/paiements/offres.html:33
 msgid "Le début"
 msgstr "The beginning"
 
-#: templates/paiements/offres.html:28
+#: templates/paiements/offres.html:33
 msgid "Complets, avec le PDF"
 msgstr "Complete, with the PDF"
 
-#: templates/paiements/offres.html:29 templates/partenaires/espace.html:77
+#: templates/paiements/offres.html:34 templates/partenaires/espace.html:77
 msgid "Quiz"
 msgstr "Quiz"
 
-#: templates/paiements/offres.html:29
+#: templates/paiements/offres.html:34
 #, python-format
 msgid "%(n)s par jour"
 msgid_plural "%(n)s par jour"
 msgstr[0] "%(n)s a day"
 msgstr[1] "%(n)s a day"
 
-#: templates/paiements/offres.html:29
+#: templates/paiements/offres.html:34
 msgid "Illimités"
 msgstr "Unlimited"
 
-#: templates/paiements/offres.html:30
+#: templates/paiements/offres.html:35
 msgid "Examens blancs chronométrés"
 msgstr "Timed mock exams"
 
-#: templates/paiements/offres.html:31
+#: templates/paiements/offres.html:36
 msgid "Par matière"
 msgstr "By subject"
 
-#: templates/paiements/offres.html:31
+#: templates/paiements/offres.html:36
 msgid "Par chapitre, points faibles"
 msgstr "By chapter, weak points"
 
-#: templates/paiements/offres.html:32
+#: templates/paiements/offres.html:37
 msgid "Forum, contributions"
 msgstr "Forum, contributions"
 
-#: templates/paiements/offres.html:39
+#: templates/paiements/offres.html:44
 msgid ""
 "Votre établissement est partenaire ? Il peut vous remettre un code d'accès."
 msgstr "Is your institution a partner? It can give you an access code."
 
-#: templates/paiements/offres.html:44
+#: templates/paiements/offres.html:49
 msgid ""
 "Aucune plateforme ne peut garantir la réussite à l'examen : nous vous aidons"
 " à vous entraîner sérieusement."
@@ -5987,6 +6005,15 @@ msgstr "A paper is missing?"
 #: templates/sujets/liste.html:103
 msgid "Envoyez-le, il vous offre des jours d'abonnement"
 msgstr "Send it and earn free subscription days"
+
+#~ msgid "Paiement bientôt disponible"
+#~ msgstr "Payment coming soon"
+
+#~ msgid ""
+#~ "Phase de lancement : tout est ouvert gratuitement aux inscrits tant que le "
+#~ "paiement n'est pas ouvert."
+#~ msgstr ""
+#~ "Launch phase: everything is free for registered users until payment opens."
 
 #~ msgid "Langue"
 #~ msgstr "Language"

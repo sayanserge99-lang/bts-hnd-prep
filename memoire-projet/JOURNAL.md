@@ -263,3 +263,7 @@
 - Oracle : inscription bloquée à la carte → tunnel Cloudflare depuis le PC. Projet `btshnd-essai` (version de
   production, port 8081), contenu de démonstration, compte administrateur de Serge Alain ; pages, robots et
   connexion vérifiés par l'adresse publique (CSRF : `https://*.trycloudflare.com`, DJANGO_HTTPS=0).
+- Premier avis de la bêta (Serge Alain, serveur d'essai) : « la partie offre n'est pas encore disponible ». Choix A :
+  encadré « Tout est gratuit pendant la bêta » en tête de la page Offres (+ « Créer un compte gratuit ») et « Gratuit
+  pendant la bêta » sur chaque offre au lieu de « Paiement bientôt disponible ». Serveur d'essai mis à jour (même
+  adresse), avis marqué traité. 580 verts.

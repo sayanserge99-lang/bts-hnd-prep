@@ -8,7 +8,12 @@
   <div>
     <h1 class="text-2xl font-bold">{% translate "Offres" %}</h1>
     {% if not paiement_actif %}
-      <p class="mt-2 rounded-lg border border-vert/30 bg-vert-clair px-4 py-3 text-sm text-vert-fonce">{% translate "Phase de lancement : tout est ouvert gratuitement aux inscrits tant que le paiement n'est pas ouvert." %}</p>
+      {# Avis de la bêta (29/10) : sans paiement, la page semblait « pas encore disponible ». On dit d'abord que tout est gratuit. #}
+      <div class="carte mt-3 border-2 border-vert bg-vert-clair" role="status">
+        <p class="text-xl font-bold text-vert-fonce">{% if beta %}{% translate "Tout est gratuit pendant la bêta" %}{% else %}{% translate "Tout est gratuit pendant la phase de lancement" %}{% endif %}</p>
+        <p class="mt-1 text-vert-fonce">{% translate "Corrigés complets, quiz illimités et examens blancs : il suffit d'un compte gratuit. Les prix ci-dessous s'appliqueront seulement à l'ouverture du paiement." %}</p>
+        {% if not user.is_authenticated %}<a href="{% url 'accounts:inscription' %}" class="bouton-plein mt-3">{% translate "Créer un compte gratuit" %}</a>{% endif %}
+      </div>
     {% endif %}
     {% if en_cours %}
       <p class="mt-2 text-sm">{% blocktranslate with fin=en_cours.fin|date:"d/m/Y" %}Votre abonnement est actif jusqu'au {{ fin }}.{% endblocktranslate %}</p>
