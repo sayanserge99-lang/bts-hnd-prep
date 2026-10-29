@@ -9,7 +9,9 @@ from django.utils.translation import gettext_lazy as _
 from partenaires.models import Partenariat
 
 from . import codes
-from .models import Abonnement, CodeAcces, Offre, Paiement
+from django.db.models import Count, Q, Sum
+
+from .models import Abonnement, CodeAcces, CodeReduction, Offre, Paiement, UtilisationCode
 
 
 @admin.register(Offre)
@@ -21,7 +23,7 @@ class OffreAdmin(admin.ModelAdmin):
 class PaiementAdmin(admin.ModelAdmin):
     """Lecture seule : seul l'agrégateur fait changer un paiement d'état."""
 
-    list_display = ("reference", "utilisateur", "offre", "montant", "operateur", "statut", "motif_echec", "cree_le")
+    list_display = ("reference", "utilisateur", "offre", "prix_initial", "remise", "montant", "operateur", "statut", "motif_echec", "cree_le")
     list_filter = ("statut", "operateur", "fournisseur")
     search_fields = ("reference", "utilisateur__email", "telephone")
 
@@ -30,6 +32,43 @@ class PaiementAdmin(admin.ModelAdmin):
 
     def has_change_permission(self, request, obj=None):
         return False
+
+
+class UtilisationCodeInline(admin.TabularInline):
+    model = UtilisationCode
+    fields = readonly_fields = ("utilisateur", "paiement", "remise", "reservee_le", "confirmee_le")
+    extra = 0
+    can_delete = False
+
+    def has_add_permission(self, request, obj=None):
+        return False
+
+
+@admin.register(CodeReduction)
+class CodeReductionAdmin(admin.ModelAdmin):
+    """CDC 11.1 : codes de réduction, créés par l'administrateur seulement (le groupe Modérateur n'a aucun droit
+    dessus) ; utilisations et chiffre d'affaires généré."""
+
+    list_display = ("code", "type", "valeur", "debut", "fin", "etablissement", "actif", "utilisations", "chiffre_affaires")
+    list_filter = ("actif", "type", "offres")
+    search_fields = ("code",)
+    filter_horizontal = ("offres",)
+    inlines = [UtilisationCodeInline]
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).annotate(
+            nb_confirmees=Count("utilisations", filter=Q(utilisations__confirmee_le__isnull=False)),
+            ca=Sum("utilisations__paiement__montant", filter=Q(utilisations__paiement__statut=Paiement.Statut.REUSSI)),
+        )
+
+    @admin.display(description=_("utilisations"), ordering="nb_confirmees")
+    def utilisations(self, code):
+        maximum = code.utilisations_max if code.utilisations_max is not None else "∞"
+        return f"{code.nb_confirmees} / {maximum}"
+
+    @admin.display(description=_("chiffre d'affaires (FCFA)"), ordering="ca")
+    def chiffre_affaires(self, code):
+        return f"{code.ca or 0:,}".replace(",", " ")
 
 
 class GenerationCodesForm(forms.Form):

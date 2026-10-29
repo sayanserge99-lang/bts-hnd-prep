@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-29 11:38+0100\n"
+"POT-Creation-Date: 2026-10-29 11:56+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -508,7 +508,7 @@ msgstr "chapter"
 msgid "Statistiques"
 msgstr "Statistics"
 
-#: communaute/admin.py:43 communaute/models.py:66 paiements/admin.py:106
+#: communaute/admin.py:43 communaute/models.py:66 paiements/admin.py:145
 msgid "contribution"
 msgstr "contribution"
 
@@ -1693,35 +1693,43 @@ msgstr ""
 msgid "Votre question est supprimée."
 msgstr "Your question has been deleted."
 
-#: paiements/admin.py:38
+#: paiements/admin.py:64
+msgid "utilisations"
+msgstr "uses"
+
+#: paiements/admin.py:69
+msgid "chiffre d'affaires (FCFA)"
+msgstr "revenue (FCFA)"
+
+#: paiements/admin.py:77
 msgid "Établissement (convention active)"
 msgstr "Institution (active agreement)"
 
-#: paiements/admin.py:40
+#: paiements/admin.py:79
 msgid "Offre donnée par chaque code"
 msgstr "Offer given by each code"
 
-#: paiements/admin.py:41
+#: paiements/admin.py:80
 msgid "Nombre de codes"
 msgstr "Number of codes"
 
-#: paiements/admin.py:84
+#: paiements/admin.py:123
 msgid "Générer des codes d'accès"
 msgstr "Generate access codes"
 
-#: paiements/admin.py:89
+#: paiements/admin.py:128
 msgid "Exporter les codes sélectionnés (CSV)"
 msgstr "Export selected codes (CSV)"
 
-#: paiements/admin.py:100
+#: paiements/admin.py:139
 msgid "origine"
 msgstr "origin"
 
-#: paiements/admin.py:103 paiements/models.py:72
+#: paiements/admin.py:142 paiements/models.py:75
 msgid "paiement"
 msgstr "payment"
 
-#: paiements/admin.py:105 paiements/models.py:95
+#: paiements/admin.py:144 paiements/models.py:103
 msgid "code d'accès"
 msgstr "access code"
 
@@ -1729,11 +1737,12 @@ msgstr "access code"
 msgid "Paiements"
 msgstr "Payments"
 
-#: paiements/codes.py:42 paiements/models.py:103
+#: paiements/codes.py:42 paiements/models.py:111
 msgid "Un établissement sans convention active ne peut pas recevoir de codes."
 msgstr "An institution without an active agreement cannot receive codes."
 
-#: paiements/codes.py:56
+#: paiements/codes.py:56 templates/paiements/email_recu.txt:10
+#: templates/paiements/recu.html:29
 msgid "code"
 msgstr "code"
 
@@ -1806,64 +1815,168 @@ msgstr "Successful"
 msgid "Échoué"
 msgstr "Failed"
 
-#: paiements/models.py:61
-msgid "montant (FCFA)"
-msgstr "amount (FCFA)"
+#: paiements/models.py:62
+msgid "prix de l'offre (FCFA)"
+msgstr "plan price (FCFA)"
 
 #: paiements/models.py:63
+msgid "remise (FCFA)"
+msgstr "discount (FCFA)"
+
+#: paiements/models.py:64
+msgid "montant payé (FCFA)"
+msgstr "amount paid (FCFA)"
+
+#: paiements/models.py:66
 msgid "numéro Mobile Money"
 msgstr "Mobile Money number"
 
-#: paiements/models.py:64
+#: paiements/models.py:67
 msgid "agrégateur"
 msgstr "payment aggregator"
 
-#: paiements/models.py:65
+#: paiements/models.py:68
 msgid "référence de l'agrégateur"
 msgstr "aggregator reference"
 
-#: paiements/models.py:96
+#: paiements/models.py:104
 msgid "codes d'accès"
 msgstr "access codes"
 
-#: paiements/models.py:109 partenaires/models.py:38
+#: paiements/models.py:117 partenaires/models.py:38
 msgid "Actif"
 msgstr "Active"
 
-#: paiements/models.py:110
+#: paiements/models.py:118
 msgid "Expiré"
 msgstr "Expired"
 
-#: paiements/models.py:111
+#: paiements/models.py:119
 msgid "Annulé"
 msgstr "Cancelled"
 
-#: paiements/models.py:120
+#: paiements/models.py:128
 msgid "rappel envoyé le"
 msgstr "reminder sent on"
 
-#: paiements/models.py:120
+#: paiements/models.py:128
 msgid "Rappel de fin d'abonnement : un seul par abonnement."
 msgstr "End-of-subscription reminder: only one per subscription."
 
-#: paiements/models.py:131
+#: paiements/models.py:139
 msgid "abonnement"
 msgstr "subscription"
 
-#: paiements/models.py:145
+#: paiements/models.py:153
 msgid "jours offerts"
 msgstr "free days"
 
-#: paiements/models.py:167
+#: paiements/models.py:175
 msgid "Jours offerts (contribution)"
 msgstr "Free days (contribution)"
 
-#: paiements/service.py:43
+#: paiements/models.py:211
+msgid "Pourcentage"
+msgstr "Percentage"
+
+#: paiements/models.py:212
+msgid "Montant en FCFA"
+msgstr "Amount in FCFA"
+
+#: paiements/models.py:215
+msgid "Lettres et chiffres ; l'étudiant peut le taper en minuscules."
+msgstr "Letters and numbers; students may type it in lower case."
+
+#: paiements/models.py:218
+msgid "Pourcentage (1 à 100) ou montant en FCFA."
+msgstr "Percentage (1 to 100) or amount in FCFA."
+
+#: paiements/models.py:219
+msgid "offres concernées"
+msgstr "plans covered"
+
+#: paiements/models.py:220
+msgid "valable à partir du"
+msgstr "valid from"
+
+#: paiements/models.py:221
+msgid "valable jusqu'au (inclus)"
+msgstr "valid until (inclusive)"
+
+#: paiements/models.py:223
+msgid "utilisations au total"
+msgstr "total uses"
+
+#: paiements/models.py:223
+msgid "Vide : sans limite. Une seule par étudiant."
+msgstr "Empty: no limit. One per student."
+
+#: paiements/models.py:227
+msgid "Facultatif : réservé aux étudiants confirmés par cet établissement."
+msgstr "Optional: only for students confirmed by this institution."
+
+#: paiements/models.py:233
+msgid "code de réduction"
+msgstr "discount code"
+
+#: paiements/models.py:234
+msgid "codes de réduction"
+msgstr "discount codes"
+
+#: paiements/models.py:259
+msgid "remise accordée (FCFA)"
+msgstr "discount given (FCFA)"
+
+#: paiements/models.py:264
+msgid "utilisation d'un code de réduction"
+msgstr "discount code use"
+
+#: paiements/models.py:265
+msgid "utilisations des codes de réduction"
+msgstr "discount code uses"
+
+#: paiements/reductions.py:40
+msgid "Ce code de réduction n'existe pas. Vérifiez l'orthographe."
+msgstr "This discount code does not exist. Check the spelling."
+
+#: paiements/reductions.py:43
+#, python-format
+msgid "Ce code n'est valable qu'à partir du %(debut)s."
+msgstr "This code is only valid from %(debut)s."
+
+#: paiements/reductions.py:45
+#, python-format
+msgid "Ce code a expiré le %(fin)s."
+msgstr "This code expired on %(fin)s."
+
+#: paiements/reductions.py:47
+#, python-format
+msgid "Ce code ne vaut pas pour l'offre « %(offre)s »."
+msgstr "This code does not apply to the “%(offre)s” plan."
+
+#: paiements/reductions.py:52
+#, python-format
+msgid "Ce code est réservé aux étudiants confirmés par %(etablissement)s."
+msgstr "This code is only for students confirmed by %(etablissement)s."
+
+#: paiements/reductions.py:55
+msgid "Vous avez déjà utilisé ce code (un seul usage par étudiant)."
+msgstr "You have already used this code (one use per student)."
+
+#: paiements/reductions.py:57
+msgid "Ce code est épuisé : toutes ses utilisations ont été prises."
+msgstr "This code has run out: all its uses have been taken."
+
+#: paiements/reductions.py:59
+msgid "Ce code n'apporte aucune remise sur cette offre."
+msgstr "This code gives no discount on this plan."
+
+#: paiements/service.py:44
 #, python-format
 msgid "Vous avez déjà le Pass session, valable jusqu'au %(fin)s."
 msgstr "You already have the session pass, valid until %(fin)s."
 
-#: paiements/service.py:61
+#: paiements/service.py:62
 #, python-format
 msgid ""
 "Votre accès Premium couvre déjà toute la session %(annee)s (jusqu'au "
@@ -1872,7 +1985,7 @@ msgstr ""
 "Your Premium access already covers the whole %(annee)s session (until "
 "%(fin)s): the Pass would add nothing."
 
-#: paiements/service.py:75
+#: paiements/service.py:76
 #, python-format
 msgid ""
 "Votre Pass couvre déjà jusqu'au %(fin)s. Ce mois commencerait le %(debut)s, "
@@ -1881,29 +1994,29 @@ msgstr ""
 "Your Session Pass already covers you until %(fin)s. This month would start "
 "on %(debut)s, after the exam session."
 
-#: paiements/service.py:83
+#: paiements/service.py:85
 msgid "Le paiement n'est pas encore ouvert."
 msgstr "Payment is not open yet."
 
-#: paiements/service.py:106
+#: paiements/service.py:115
 #, python-format
 msgid "Montant reçu (%(recu)s FCFA) différent du prix (%(prix)s FCFA)."
 msgstr ""
 "Amount received (%(recu)s FCFA) differs from the price (%(prix)s FCFA)."
 
-#: paiements/service.py:110
+#: paiements/service.py:119
 msgid "Paiement refusé ou annulé."
 msgstr "Payment declined or cancelled."
 
-#: paiements/service.py:121
+#: paiements/service.py:130
 msgid "À régulariser : "
 msgstr "To be settled: "
 
-#: paiements/service.py:152
+#: paiements/service.py:165
 msgid "Délai dépassé : aucune confirmation reçue."
 msgstr "Time limit exceeded: no confirmation received."
 
-#: paiements/service.py:162
+#: paiements/service.py:175
 #, python-format
 msgid "Votre reçu BTS-HND Prep n° %(numero)s"
 msgstr "Your BTS-HND Prep receipt no. %(numero)s"
@@ -2979,7 +3092,7 @@ msgstr ""
 msgid "Supprimer définitivement"
 msgstr "Delete permanently"
 
-#: templates/accounts/supprimer.html:15 templates/paiements/commander.html:42
+#: templates/accounts/supprimer.html:15 templates/paiements/commander.html:45
 msgid "Annuler"
 msgstr "Cancel"
 
@@ -4614,6 +4727,7 @@ msgid "Gérer le partage"
 msgstr "Manage sharing"
 
 #: templates/forms/champ.html:14 templates/forms/champ.html:21
+#: templates/paiements/commander.html:52
 msgid "(facultatif)"
 msgstr "(optional)"
 
@@ -4893,8 +5007,8 @@ msgstr ""
 msgid "Actualiser"
 msgstr "Refresh"
 
-#: templates/paiements/_etat.html:22 templates/paiements/email_recu.txt:11
-#: templates/paiements/recu.html:29
+#: templates/paiements/_etat.html:22 templates/paiements/email_recu.txt:13
+#: templates/paiements/recu.html:33
 msgid "Référence"
 msgstr "Reference"
 
@@ -4911,7 +5025,8 @@ msgid "Début des corrigés, quelques quiz par jour"
 msgstr "Start of marking guides, a few quizzes a day"
 
 #: templates/paiements/_formules.html:18 templates/paiements/email_recu.txt:9
-#: templates/paiements/recu.html:27
+#: templates/paiements/email_recu.txt:11 templates/paiements/recu.html:28
+#: templates/paiements/recu.html:31
 msgid "TTC"
 msgstr "incl. VAT"
 
@@ -4935,11 +5050,11 @@ msgstr "until the end of the next session"
 msgid "Corrigés complets"
 msgstr "Full marking guides"
 
-#: templates/paiements/_formules.html:26 templates/paiements/commander.html:25
+#: templates/paiements/_formules.html:26 templates/paiements/commander.html:28
 msgid "QCM illimités et examens blancs"
 msgstr "Unlimited MCQs and mock exams"
 
-#: templates/paiements/_formules.html:27 templates/paiements/commander.html:26
+#: templates/paiements/_formules.html:27 templates/paiements/commander.html:29
 msgid "Suivi de vos points faibles"
 msgstr "Track your weak points"
 
@@ -4994,42 +5109,55 @@ msgstr "Valid until the official end of the %(annee)s session (%(fin)s)"
 msgid "Accès Premium du %(debut)s au %(fin)s"
 msgstr "Premium access from %(debut)s to %(fin)s"
 
-#: templates/paiements/commander.html:21
+#: templates/paiements/commander.html:23
 msgid "TTC, sans frais ajoutés"
 msgstr "All taxes included, no added fees"
 
-#: templates/paiements/commander.html:24
+#: templates/paiements/commander.html:27
 msgid "Corrigés complets de toutes les matières"
 msgstr "Full answer keys for every subject"
 
-#: templates/paiements/commander.html:40
+#: templates/paiements/commander.html:43
 msgid "Acheter quand même"
 msgstr "Buy anyway"
 
-#: templates/paiements/commander.html:49
+#: templates/paiements/commander.html:52
+msgid "Code de réduction"
+msgstr "Discount code"
+
+#: templates/paiements/commander.html:56
+msgid "Appliquer"
+msgstr "Apply"
+
+#: templates/paiements/commander.html:59
+#, python-format
+msgid "Code %(code)s appliqué : %(remise)s de remise."
+msgstr "Code %(code)s applied: %(remise)s off."
+
+#: templates/paiements/commander.html:66
 #, python-format
 msgid "Payer %(prix)s"
 msgstr "Pay %(prix)s"
 
-#: templates/paiements/commander.html:56
+#: templates/paiements/commander.html:73
 #, python-format
 msgid "Paiement traité par %(agregateur)s."
 msgstr "Payment processed by %(agregateur)s."
 
-#: templates/paiements/commander.html:56
+#: templates/paiements/commander.html:73
 msgid ""
 "Nous ne voyons jamais votre code secret. Un reçu vous est envoyé par e-mail."
 msgstr "We never see your secret code. A receipt is sent to you by email."
 
-#: templates/paiements/commander.html:57
+#: templates/paiements/commander.html:74
 msgid "Lire les conditions de vente"
 msgstr "Read the terms of sale"
 
-#: templates/paiements/commander.html:60
+#: templates/paiements/commander.html:77
 msgid "Votre établissement vous a remis un code ?"
 msgstr "Did your institution give you a code?"
 
-#: templates/paiements/commander.html:61
+#: templates/paiements/commander.html:78
 msgid "Utiliser un code d'accès"
 msgstr "Use an access code"
 
@@ -5071,15 +5199,23 @@ msgstr "Premium access"
 msgid "du %(debut)s au %(fin)s"
 msgstr "from %(debut)s to %(fin)s"
 
-#: templates/paiements/email_recu.txt:9 templates/paiements/recu.html:27
+#: templates/paiements/email_recu.txt:9 templates/paiements/recu.html:28
+msgid "Prix de l'offre"
+msgstr "Plan price"
+
+#: templates/paiements/email_recu.txt:10 templates/paiements/recu.html:29
+msgid "Remise"
+msgstr "Discount"
+
+#: templates/paiements/email_recu.txt:11 templates/paiements/recu.html:31
 msgid "Montant payé"
 msgstr "Amount paid"
 
-#: templates/paiements/email_recu.txt:10 templates/paiements/recu.html:28
+#: templates/paiements/email_recu.txt:12 templates/paiements/recu.html:32
 msgid "Moyen de paiement"
 msgstr "Payment method"
 
-#: templates/paiements/email_recu.txt:13
+#: templates/paiements/email_recu.txt:15
 msgid "Le reçu reste consultable dans « Mon espace »."
 msgstr "The receipt remains available in “My area”."
 
@@ -5162,7 +5298,7 @@ msgstr ""
 msgid "Client"
 msgstr "Customer"
 
-#: templates/paiements/recu.html:32
+#: templates/paiements/recu.html:36
 msgid "Imprimer"
 msgstr "Print"
 

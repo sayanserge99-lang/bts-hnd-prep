@@ -182,7 +182,8 @@
   source de la visibilité (pas de case « visible » en double). Initiales par défaut. Photo 2 Mo, recadrée 256 px,
   réenregistrée en JPEG sans métadonnées, servie par une vue qui vérifie l'accord (no-store) ; « Tout retirer »
   révoque et efface. Établissement et matières saisis par l'administrateur.
-- **Codes de réduction, à confirmer par Serge Alain (29/10)** : réservation atomique de l'utilisation à la commande
+- **Codes de réduction (29/10, validé par Serge Alain)** : réservation atomique de l'utilisation à la commande
   (libérée si le paiement échoue ou expire, confirmée au webhook), car compter seulement au webhook ne peut pas empêcher
   deux paiements simultanés de dépasser la limite ; « établissement facultatif » = étudiants confirmés par
-  l'établissement.
+  l'établissement. Plancher PAIEMENT_PRIX_MINIMUM = 500 FCFA par défaut (à ajuster aux frais de l'agrégateur choisi) ;
+  offres concernées obligatoires ; limite totale facultative ; un code sans remise réelle (plancher) est refusé.

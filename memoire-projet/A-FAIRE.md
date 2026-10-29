@@ -20,7 +20,7 @@ Mis à jour le 29/10/2026. Ouvert d'abord, dans l'ordre de travail validé par S
 - [x] Forum : recherche (titres, détails, réponses ; langue de chaque examen) (28/10).
 - [x] Recherche : « Vouliez-vous dire … ? » pour les sujets et le forum (29/10).
 - [x] CDC 11.1 : enseignant derrière chaque corrigé vérifié (carte avec consentement, initiales, photo) (29/10).
-- [ ] CDC 11.1 : codes de réduction (réservation atomique à confirmer par Serge Alain, voir DECISIONS).
+- [x] CDC 11.1 : codes de réduction (réservation atomique, plancher, une utilisation par étudiant) (29/10).
 - [ ] Forum : abonnement à une discussion (plus tard).
 
 ## 3. Pour Serge Alain
@@ -42,7 +42,7 @@ Mis à jour le 29/10/2026. Ouvert d'abord, dans l'ordre de travail validé par S
       contributions) ; puis rédiger les conditions de vente (avant l'ouverture du paiement).
 - [ ] Remplacer les épreuves provisoires par les vrais sujets (IAI, HINTEL, contributions), matière par matière.
 - [ ] Paiement réel : choisir l'agrégateur (puis Claude écrit sa classe dans paiements/fournisseurs/), structure
-      au CFCE et NIU, EXPLOITANT_* et PAIEMENT_* dans .env.production ; enquête auprès de 50 étudiants sur le prix
+      au CFCE et NIU, EXPLOITANT_* et PAIEMENT_* dans .env.production (PAIEMENT_PRIX_MINIMUM selon ses frais) ; enquête auprès de 50 étudiants sur le prix
       du Pass (CDC v3, questions ouvertes).
 
 ## 4. À la mise en ligne

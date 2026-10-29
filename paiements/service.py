@@ -22,7 +22,8 @@ from accounts.models import Consentement
 from .fournisseurs import fournisseur_actif
 from catalogue.models import Session
 
-from .models import Abonnement, Paiement
+from . import reductions
+from .models import Abonnement, Paiement, UtilisationCode
 
 NUMERO = re.compile(r"^(?:\+?237)?(6\d{8})$")
 
@@ -77,16 +78,24 @@ def avertissement(utilisateur, offre, debut):
     }
 
 
-def commander(utilisateur, offre, operateur, telephone, request):
-    """Crée le paiement en attente et le lance chez l'agrégateur ; renvoie (paiement, adresse ou None)."""
+def commander(utilisateur, offre, operateur, telephone, request, code=None):
+    """Crée le paiement en attente et le lance chez l'agrégateur ; renvoie (paiement, adresse ou None).
+    Avec un code de réduction : son utilisation est réservée dans la même transaction (reductions.CodeRefuse sinon)."""
     if not settings.PAIEMENT_ACTIF:
         raise ValidationError(_("Le paiement n'est pas encore ouvert."))
     fournisseur = fournisseur_actif()
+    reductions.liberer_les_reservations_expirees(code)
     with transaction.atomic():
+        remise = 0
+        if code is not None:
+            code, remise = reductions.verrouiller(code, utilisateur, offre)
         paiement = Paiement.objects.create(
-            utilisateur=utilisateur, offre=offre, montant=offre.prix, operateur=operateur, telephone=telephone,
+            utilisateur=utilisateur, offre=offre, prix_initial=offre.prix, remise=remise, montant=offre.prix - remise,
+            operateur=operateur, telephone=telephone,
             fournisseur=fournisseur.code, reference=f"BHP-{secrets.token_hex(8).upper()}",
         )
+        if code is not None:
+            UtilisationCode.objects.create(code=code, utilisateur=utilisateur, paiement=paiement, remise=remise)
         # CDC 10.7 : conditions de vente acceptées avant de payer, et tracées.
         Consentement.objects.create(
             utilisateur=utilisateur, objet=Consentement.Objet.CONDITIONS_DE_VENTE, version=settings.VERSION_POLITIQUES
@@ -126,6 +135,8 @@ def appliquer(notification):
             ))
             return paiement
         paiement.save(update_fields=["statut", "confirme_le"])
+        # Le code de réduction n'est compté comme utilisé qu'ici, au succès annoncé par l'agrégateur.
+        UtilisationCode.objects.filter(paiement=paiement).update(confirmee_le=paiement.confirme_le)
         Abonnement.objects.create(utilisateur=paiement.utilisateur, offre=paiement.offre, debut=debut, fin=fin, paiement=paiement)
         transaction.on_commit(lambda: envoyer_recu(paiement))
     return paiement
@@ -135,6 +146,8 @@ def _echec(paiement, motif):
     paiement.statut = Paiement.Statut.ECHOUE
     paiement.motif_echec = motif[:200]
     paiement.save(update_fields=["statut", "motif_echec"])
+    # Paiement raté : le code de réduction réservé est rendu (à l'étudiant comme au compteur).
+    UtilisationCode.objects.filter(paiement=paiement).delete()
     return paiement
 
 

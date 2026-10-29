@@ -57,8 +57,11 @@ class Paiement(models.Model):
 
     utilisateur = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="paiements")
     offre = models.ForeignKey(Offre, on_delete=models.PROTECT)
-    # Fixé par le serveur à la commande (prix de l'offre), jamais reçu du navigateur.
-    montant = models.PositiveIntegerField(_("montant (FCFA)"))
+    # Fixés par le serveur à la commande, jamais reçus du navigateur : prix de l'offre, remise d'un code de réduction,
+    # et montant demandé à l'agrégateur (prix − remise, jamais sous PAIEMENT_PRIX_MINIMUM).
+    prix_initial = models.PositiveIntegerField(_("prix de l'offre (FCFA)"))
+    remise = models.PositiveIntegerField(_("remise (FCFA)"), default=0)
+    montant = models.PositiveIntegerField(_("montant payé (FCFA)"))
     operateur = models.CharField(max_length=10, choices=Operateur.choices)
     telephone = models.CharField(_("numéro Mobile Money"), max_length=15, blank=True)
     fournisseur = models.CharField(_("agrégateur"), max_length=20, blank=True)
@@ -74,6 +77,11 @@ class Paiement(models.Model):
 
     def __str__(self):
         return f"{self.reference} · {self.montant} FCFA"
+
+    def save(self, *args, **kwargs):
+        if self.prix_initial is None:  # paiement sans code : le montant payé est le prix
+            self.prix_initial = self.montant + self.remise
+        super().save(*args, **kwargs)
 
     @property
     def numero_recu(self):
@@ -190,3 +198,73 @@ class Abonnement(models.Model):
         return cls.objects.create(
             utilisateur=utilisateur, debut=debut, fin=debut + timedelta(days=jours - 1), contribution=contribution
         )
+
+
+class CodeReduction(models.Model):
+    """CDC 11.1 : code de réduction sur une offre payante (distinct des codes d'accès, qui donnent l'accès gratuit).
+
+    La remise se calcule seulement sur le serveur (paiements.reductions). Une utilisation est réservée à la commande,
+    confirmée par le webhook de succès, et libérée si le paiement échoue ou expire.
+    """
+
+    class Type(models.TextChoices):
+        POURCENTAGE = "pourcentage", _("Pourcentage")
+        MONTANT = "montant", _("Montant en FCFA")
+
+    code = models.CharField(
+        max_length=30, unique=True, help_text=_("Lettres et chiffres ; l'étudiant peut le taper en minuscules.")
+    )
+    type = models.CharField(max_length=12, choices=Type.choices)
+    valeur = models.PositiveIntegerField(help_text=_("Pourcentage (1 à 100) ou montant en FCFA."))
+    offres = models.ManyToManyField(Offre, related_name="codes_reduction", verbose_name=_("offres concernées"))
+    debut = models.DateField(_("valable à partir du"))
+    fin = models.DateField(_("valable jusqu'au (inclus)"))
+    utilisations_max = models.PositiveIntegerField(
+        _("utilisations au total"), null=True, blank=True, help_text=_("Vide : sans limite. Une seule par étudiant.")
+    )
+    etablissement = models.ForeignKey(
+        "partenaires.Etablissement", on_delete=models.PROTECT, null=True, blank=True, related_name="codes_reduction",
+        help_text=_("Facultatif : réservé aux étudiants confirmés par cet établissement."),
+    )
+    actif = models.BooleanField(default=True)
+    cree_le = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = _("code de réduction")
+        verbose_name_plural = _("codes de réduction")
+        ordering = ["-cree_le"]
+        constraints = [
+            models.CheckConstraint(
+                condition=Q(type="montant", valeur__gt=0) | Q(type="pourcentage", valeur__gte=1, valeur__lte=100),
+                name="code_reduction_valeur",
+            ),
+            models.CheckConstraint(condition=Q(fin__gte=models.F("debut")), name="code_reduction_dates"),
+        ]
+
+    def __str__(self):
+        return self.code
+
+    def save(self, *args, **kwargs):
+        self.code = self.code.strip().upper()
+        super().save(*args, **kwargs)
+
+
+class UtilisationCode(models.Model):
+    """Une utilisation d'un code de réduction, liée à son paiement. Réservée à la commande (le paiement est en
+    attente), confirmée par le webhook de succès ; effacée si le paiement échoue : rien n'est consommé."""
+
+    code = models.ForeignKey(CodeReduction, on_delete=models.PROTECT, related_name="utilisations")
+    utilisateur = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name="codes_reduction")
+    paiement = models.OneToOneField(Paiement, on_delete=models.PROTECT, related_name="utilisation_code")
+    remise = models.PositiveIntegerField(_("remise accordée (FCFA)"))
+    reservee_le = models.DateTimeField(auto_now_add=True)
+    confirmee_le = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = _("utilisation d'un code de réduction")
+        verbose_name_plural = _("utilisations des codes de réduction")
+        # Une seule utilisation par étudiant, même pendant qu'un paiement est en attente.
+        constraints = [models.UniqueConstraint(fields=["code", "utilisateur"], name="une_utilisation_par_etudiant")]
+
+    def __str__(self):
+        return f"{self.code} · {self.utilisateur}"

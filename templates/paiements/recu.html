@@ -24,6 +24,10 @@
       <dt class="text-gris">{% translate "Client" %}</dt><dd>{{ paiement.utilisateur.get_full_name|default:paiement.utilisateur.email }} · {{ paiement.utilisateur.email }}</dd>
       <dt class="text-gris">{% translate "Offre" %}</dt><dd>{{ paiement.offre.nom }}</dd>
       <dt class="text-gris">{% translate "Accès Premium" %}</dt><dd>{% blocktranslate with debut=abonnement.debut|date:"d/m/Y" fin=abonnement.fin|date:"d/m/Y" %}du {{ debut }} au {{ fin }}{% endblocktranslate %}</dd>
+      {% if paiement.remise %}
+        <dt class="text-gris">{% translate "Prix de l'offre" %}</dt><dd>{{ paiement.prix_initial|fcfa }} {% translate "TTC" %}</dd>
+        <dt class="text-gris">{% translate "Remise" %}</dt><dd>− {{ paiement.remise|fcfa }}{% if paiement.utilisation_code %} ({% translate "code" %} {{ paiement.utilisation_code.code }}){% endif %}</dd>
+      {% endif %}
       <dt class="text-gris">{% translate "Montant payé" %}</dt><dd class="font-semibold">{{ paiement.montant|fcfa }} {% translate "TTC" %}</dd>
       <dt class="text-gris">{% translate "Moyen de paiement" %}</dt><dd>{{ paiement.get_operateur_display }}</dd>
       <dt class="text-gris">{% translate "Référence" %}</dt><dd>{{ paiement.reference }}</dd>

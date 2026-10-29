@@ -16,7 +16,7 @@ from django.views.decorators.http import require_POST
 from catalogue.models import Session
 from sujets.views import est_requete_htmx
 
-from . import codes, service
+from . import codes, reductions, service
 from .acces import a_un_abonnement_actif
 from .fournisseurs import fournisseur_actif
 from .fournisseurs.base import NotificationInvalide, signer
@@ -109,22 +109,38 @@ def commander(request, pk):
         return redirect("offres")
     profil = getattr(request.user, "profil", None)
     session = Session.objects.prochaine(profil.examen, debut) if offre.type == Offre.Type.SESSION and profil else None
-    contexte = {"offre": offre, "debut": debut, "fin": fin, "session": session, "agregateur": fournisseur_actif().nom}
+    contexte = {"offre": offre, "debut": debut, "fin": fin, "session": session, "agregateur": fournisseur_actif().nom,
+                "a_payer": offre.prix}
     # Mois acheté pendant un Pass : rien ne part (ni formulaire, ni débit) sans « Acheter quand même ».
     avertissement = service.avertissement(request.user, offre, debut)
     confirme = "1" in (request.GET.get("confirme"), request.POST.get("confirme"))
     if avertissement and not confirme:
         return render(request, "paiements/commander.html", {**contexte, "avertissement": avertissement})
+    # CDC 11.1 : code de réduction appliqué avant de payer (nouveau prix affiché) ; tout est recalculé au paiement.
+    saisie = (request.POST.get("code") or request.GET.get("code") or "").strip()[:30]
+    code, remise, refus_code = None, 0, None
+    if saisie:
+        try:
+            code, remise = reductions.evaluer(saisie, request.user, offre)
+        except reductions.CodeRefuse as refus:
+            refus_code = str(refus)
+    contexte.update({"saisie_code": saisie, "code": code, "remise": remise, "a_payer": offre.prix - remise,
+                     "refus_code": refus_code, "confirme": confirme})
     form = CommandeForm(request.POST or None)
-    if form.is_valid():
-        paiement, adresse = service.commander(
-            request.user, offre, form.cleaned_data["operateur"], form.cleaned_data["telephone"], request
-        )
-        # Page de l'agrégateur, ou attente de la confirmation sur le téléphone.
-        if adresse:
-            return redirect(adresse)
-        return redirect("paiements:suivi", reference=paiement.reference)
-    return render(request, "paiements/commander.html", {**contexte, "form": form, "confirme": confirme})
+    if form.is_valid() and not refus_code:
+        try:
+            paiement, adresse = service.commander(
+                request.user, offre, form.cleaned_data["operateur"], form.cleaned_data["telephone"], request, code=code
+            )
+        except reductions.CodeRefuse as refus:
+            # Pris par quelqu'un d'autre entre l'affichage et le paiement : rien n'est créé ni débité.
+            contexte.update({"code": None, "remise": 0, "a_payer": offre.prix, "refus_code": str(refus)})
+        else:
+            # Page de l'agrégateur, ou attente de la confirmation sur le téléphone.
+            if adresse:
+                return redirect(adresse)
+            return redirect("paiements:suivi", reference=paiement.reference)
+    return render(request, "paiements/commander.html", {**contexte, "form": form})
 
 
 def paiement_de(request, reference):

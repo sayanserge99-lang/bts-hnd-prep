@@ -18,6 +18,7 @@ from communaute.models import Contribution
 from entrainement import examen_blanc, quiz
 from entrainement.correction import est_correcte
 from entrainement.models import Choix, CritereBareme, ExamenBlanc, Question, Quiz, ReponseQuestion, Tentative
+from paiements.models import CodeReduction, Offre
 from partenaires.models import Etablissement
 from sujets.models import Corrige, Sujet
 
@@ -347,6 +348,7 @@ class Command(BaseCommand):
             self.remplir_epreuves()
             self.creer_activite()
             self.creer_enseignant()
+            self.creer_code_reduction()
             return
 
         with transaction.atomic():
@@ -408,6 +410,7 @@ class Command(BaseCommand):
         self.remplir_epreuves()
         self.creer_activite()
         self.creer_enseignant()
+        self.creer_code_reduction()
 
     def creer_examen_en_cours(self):
         """Examen blanc commencé il y a un quart d'heure, deux réponses enregistrées. Le minuteur est réel :
@@ -486,6 +489,16 @@ class Command(BaseCommand):
             f"Activité de démonstration : {ETUDIANT_DEMO} (mot de passe {MOT_DE_PASSE_DEMO}), "
             "1 quiz terminé, 3 contributions en attente."
         ))
+
+    def creer_code_reduction(self):
+        """CDC 11.1 : DEMO20, 20 % sur les offres de lancement (paiement simulé : PAIEMENT_ESSAI=1)."""
+        aujourd_hui = date.today()
+        code, cree = CodeReduction.objects.get_or_create(
+            code="DEMO20", defaults={"type": CodeReduction.Type.POURCENTAGE, "valeur": 20, "debut": aujourd_hui,
+                                     "fin": aujourd_hui + timedelta(days=365), "utilisations_max": 50},
+        )
+        if cree:
+            code.offres.set(Offre.objects.filter(active=True))
 
     def creer_enseignant(self):
         """CDC 11.1 : une enseignante fictive, d'accord pour sa carte, qui a vérifié les corrigés de démonstration."""

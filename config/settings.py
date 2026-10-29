@@ -277,6 +277,8 @@ PAIEMENT_FOURNISSEUR = os.environ.get("PAIEMENT_FOURNISSEUR", "simule")
 PAIEMENT_SECRET = os.environ.get("PAIEMENT_SECRET", "") or f"simule-{SECRET_KEY}"
 # Au-delà, un paiement resté en attente (téléphone éteint, confirmation oubliée) est abandonné.
 PAIEMENT_DELAI_MINUTES = 30
+# CDC 11.1 : avec un code de réduction, le montant payé ne descend jamais sous ce plancher (frais de l'agrégateur).
+PAIEMENT_PRIX_MINIMUM = int(os.environ.get("PAIEMENT_PRIX_MINIMUM", "500"))
 
 # Suivi des erreurs (Sentry) : actif seulement si SENTRY_DSN est réglé, sans aucune donnée personnelle.
 from config.suivi_erreurs import demarrer as demarrer_suivi_des_erreurs  # noqa: E402

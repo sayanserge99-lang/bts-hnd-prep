@@ -18,7 +18,10 @@
           {% else %}{% blocktranslate with debut=debut|date:"d/m/Y" fin=fin|date:"d/m/Y" %}Accès Premium du {{ debut }} au {{ fin }}{% endblocktranslate %}{% endif %}
         </p>
       </div>
-      <p class="shrink-0 text-right"><span class="block text-2xl font-extrabold">{{ offre.prix|fcfa }}</span><span class="text-xs text-gris">{% translate "TTC, sans frais ajoutés" %}</span></p>
+      <p class="shrink-0 text-right">
+        {% if code %}<s class="block text-sm text-gris">{{ offre.prix|fcfa }}</s>{% endif %}
+        <span class="block text-2xl font-extrabold">{{ a_payer|fcfa }}</span><span class="text-xs text-gris">{% translate "TTC, sans frais ajoutés" %}</span>
+      </p>
     </div>
     <ul class="mt-3 list-disc space-y-1 pl-5 text-sm text-gris">
       <li>{% translate "Corrigés complets de toutes les matières" %}</li>
@@ -43,10 +46,24 @@
     </div>
   </div>
   {% else %}
+  {# CDC 11.1 : un seul code par paiement ; le nouveau prix s'affiche avant de payer. #}
+  <form method="get" class="mt-6 space-y-1">
+    {% if confirme %}<input type="hidden" name="confirme" value="1">{% endif %}
+    <label for="code-reduction" class="text-sm font-medium">{% translate "Code de réduction" %} <span class="font-normal text-gris">{% translate "(facultatif)" %}</span></label>
+    <div class="flex gap-2">
+      <input id="code-reduction" name="code" value="{{ saisie_code }}" maxlength="30" autocomplete="off" autocapitalize="characters" spellcheck="false"
+             class="champ uppercase" {% if refus_code %}aria-invalid="true" aria-describedby="refus-code"{% endif %}>
+      <button class="bouton-contour mt-1 shrink-0">{% translate "Appliquer" %}</button>
+    </div>
+    {% if refus_code %}<p id="refus-code" class="text-sm text-red-700" role="alert">{{ refus_code }}</p>
+    {% elif code %}<p class="text-sm font-semibold text-vert" role="status">{% blocktranslate with code=code.code remise=remise|fcfa %}Code {{ code }} appliqué : {{ remise }} de remise.{% endblocktranslate %}</p>{% endif %}
+  </form>
+
   <form method="post" class="formulaire mt-6 space-y-4" novalidate>
     {% csrf_token %}
     {% if confirme %}<input type="hidden" name="confirme" value="1">{% endif %}
-    {% blocktranslate with prix=offre.prix|fcfa asvar bouton %}Payer {{ prix }}{% endblocktranslate %}
+    {% if code %}<input type="hidden" name="code" value="{{ code.code }}">{% endif %}
+    {% blocktranslate with prix=a_payer|fcfa asvar bouton %}Payer {{ prix }}{% endblocktranslate %}
     {% include "accounts/_formulaire.html" %}
   </form>
   {% endif %}

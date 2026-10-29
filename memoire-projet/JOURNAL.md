@@ -248,3 +248,6 @@
   « » » seul en bout de ligne → espaces insécables ; champ photo sans style (Tailwind ne lit que les gabarits →
   `@source` du formulaire). Incident : `docker compose exec … -o /tmp/essai.css` sous Git Bash a créé un dossier
   « C: » dans le projet (conversion de chemin) ; supprimé fichier par fichier. 555 verts.
+- Codes de réduction (choix de réservation validés par Serge Alain). Contre-épreuves : sans verrou, le test des deux
+  paiements simultanés (deux fils, comptage ralenti) échoue ; sans plancher, le test du plancher ; sans effacement à
+  l'échec, les deux tests « rien n'est consommé ». Capture de la page de paiement avec DEMO20. 567 verts.
