@@ -229,3 +229,12 @@
   lignes) ; la recherche du même défaut en a trouvé un second, écrit le matin sur la page d'épreuve de l'examen blanc,
   visible des étudiants → corrigé + test. +237, textes, paires BTS ↔ HND (le classeur garde ses anciens fichiers
   valables), recherche du forum. 536 verts.
+
+## 29/10/2026
+
+- Essai réel sur le Galaxy A15 par Serge Alain (Chrome, liaison USB) : installation, examen court, coupure du câble,
+  fin du temps, veille : « tout est bon ». Firefox et Samsung Internet restent à faire.
+- Rendu : les `$` du code (scripts shell, PHP) devenaient des formules → le code entre ``` / ~~~ ou en ligne est mis
+  à part avant les formules et les espaces fines. Contre-épreuve sans la correction : le nouveau test échoue.
+  Première version du motif cassée par un heredoc (
+ devenu un vrai retour à la ligne) → refaite avec Edit. 537 verts.

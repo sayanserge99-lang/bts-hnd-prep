@@ -1,6 +1,6 @@
 # À faire
 
-Mis à jour le 28/10/2026. Ouvert d'abord, dans l'ordre de travail validé par Serge Alain ; ce qui est fait est en bas.
+Mis à jour le 29/10/2026. Ouvert d'abord, dans l'ordre de travail validé par Serge Alain ; ce qui est fait est en bas.
 
 ## 1. Préalables à la bêta (Claude, un commit chacun)
 
@@ -22,8 +22,8 @@ Mis à jour le 28/10/2026. Ouvert d'abord, dans l'ordre de travail validé par S
 
 ## 3. Pour Serge Alain
 
-- [ ] Essai réel sur téléphone : examen court (mode avion, navigateur fermé, réouverture, fin du temps), minuteur en
-      veille / changement d'onglet, mode hors ligne (Galaxy) ; puis Firefox et Samsung Internet.
+- [x] Essai réel sur le Galaxy (Chrome) : application installée, examen court, coupure, fin du temps, veille (29/10).
+- [ ] Même essai sur Firefox et Samsung Internet.
 - [ ] Remplir `contenu/referentiel-a-remplir.xlsx` : sessions 2020-2026 (dates de fin officielles réelles),
       spécialités, matières et coefficients (circulaire du MINESUP, CDC 3.10), chapitres.
 - [ ] Choisir l'hébergeur (VPS) et le nom de domaine ; HTTPS Let's Encrypt fait ensemble (procédure non testée).
@@ -52,7 +52,8 @@ Mis à jour le 28/10/2026. Ouvert d'abord, dans l'ordre de travail validé par S
 - [ ] Corrigé : ajouter `verifie_par` (qui a vérifié) ?
 - [ ] Épreuves internes : pas dans le mode hors ligne, pas d'avis aux étudiants à la publication.
 - [ ] Hors ligne : les lectures de PDF hors ligne ne sont pas comptées dans les statistiques.
-- [ ] Rendu : les $ dans un bloc de code sont pris pour des formules.
+- [ ] Rendu : un bloc de code indenté de 4 espaces n'est pas protégé des formules (utiliser ``` ; corrigé le 29/10
+      pour ``` / ~~~ et `en ligne`).
 - [ ] Photos de sujets et de contributions : pas de recadrage automatique ni de WebP (retouche manuelle).
 - [ ] django-storages si stockage S3 (aujourd'hui : volume Docker `fichiers`).
 - [ ] Annonces par e-mail (voir DECISIONS) ; Alpine.js si un jour nécessaire.

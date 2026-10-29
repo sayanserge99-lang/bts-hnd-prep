@@ -96,6 +96,17 @@ def test_un_prix_en_dollars_n_est_pas_une_formule():
     assert "<math" not in rendre("Entre 5 $ et 10 $ par mois.")
 
 
+def test_les_dollars_du_code_restent_du_code():
+    html = rendre(
+        "Script :\n\n```bash\nfor f in $FICHIERS; do\n  echo \"$f : 1 000\"\ndone\n```\n\n"
+        "En PHP, `$total = $prix * 2;` puis ``$a`` ; et la formule $x^2$ reste une formule."
+    )
+
+    assert 'for f in $FICHIERS; do\n  echo "$f : 1 000"' in html  # ni formule, ni espace fine
+    assert "<code>$total = $prix * 2;</code>" in html and "<code>$a</code>" in html
+    assert html.count("<math") == 1
+
+
 # --- Règle de publication et visibilité -------------------------------------
 
 def test_un_corrige_ne_se_publie_pas_avant_la_fin_de_la_session(creer_sujet, session_en_cours):

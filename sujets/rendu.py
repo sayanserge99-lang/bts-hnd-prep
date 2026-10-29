@@ -16,6 +16,10 @@ from latex2mathml.converter import convert as latex_vers_mathml
 # $$ bloc $$ ou $ en ligne $ (sans espace juste après le premier $ ni juste avant le dernier,
 # pour ne pas prendre « 5 $ et 10 $ » pour une formule).
 FORMULE = re.compile(r"\$\$(.+?)\$\$|\$([^\s$](?:[^$\n]*?[^\s$])?)\$", re.DOTALL)
+# Code (bloc entre ``` ou ~~~, ou `en ligne`) : recopié tel quel, sans formule ni espace fine, car un script shell
+# ou PHP contient des $ (« echo $HOME ») et se recopie caractère pour caractère.
+CODE = re.compile(r"^(?P<cloture>`{3,}|~{3,})[^\n]*\n.*?^(?P=cloture)[ \t]*$|(?P<accents>`+)(?!`).+?(?<!`)(?P=accents)(?!`)",
+                  re.DOTALL | re.MULTILINE)
 # Repère sans caractère spécial Markdown, remplacé par la formule avant le nettoyage.
 REPERE = re.compile(r"FORMULEMATH(\d+)FIN")
 # Espace des milliers (« 12 000 000 ») : remplacée par une espace fine insécable, pour qu'un montant
@@ -74,8 +78,15 @@ def rendre(texte, balises=BALISES, rel_liens="noopener noreferrer"):
             # Une formule mal écrite s'affiche telle quelle au lieu de faire planter la page.
             return f"<code>{escape(latex)}</code>"
 
-    # Les formules sont mises de côté d'abord : LaTeX gère ses propres espaces.
-    texte = MILLIERS.sub(ESPACE_FINE_INSECABLE, FORMULE.sub(mettre_de_cote, texte))
+    def hors_code(morceau):
+        # Les formules sont mises de côté d'abord : LaTeX gère ses propres espaces.
+        return MILLIERS.sub(ESPACE_FINE_INSECABLE, FORMULE.sub(mettre_de_cote, morceau))
+
+    morceaux, debut = [], 0
+    for code in CODE.finditer(texte):
+        morceaux += [hors_code(texte[debut:code.start()]), code.group()]
+        debut = code.end()
+    texte = "".join(morceaux + [hors_code(texte[debut:])])
     html = markdown.markdown(texte, extensions=["tables", "fenced_code", "sane_lists"])
     return mark_safe(nh3.clean(REPERE.sub(remettre, html), tags=balises, attributes=ATTRIBUTS, link_rel=rel_liens))
 

@@ -1,6 +1,6 @@
 # État du projet
 
-**Dernière mise à jour : 28/10/2026**
+**Dernière mise à jour : 29/10/2026**
 
 ## Où on en est
 
@@ -8,7 +8,7 @@
 - venv `.venv` (Python 3.15.1, Django 5.2.18), dépendances installées ;
 - migrations 0001 des 7 applications + `accounts/0002_groupes_roles` + `sujets/0002-0003` (recherche) ;
 - **PostgreSQL uniquement** (plus de SQLite) : base du `compose.yaml`, joignable aussi depuis le venv sur localhost:5432 ;
-- `pytest` : **536 tests verts + 5 essais JavaScript** (sautés sans Node, lancés par la CI) (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
+- `pytest` : **537 tests verts + 5 essais JavaScript** (sautés sans Node, lancés par la CI) (dont 20 corrigés, 17 QCM, 14 examens blancs, 11 progression, 12 hors ligne,
   10 statistiques, 16 Google).
 - **Connexion Google (V2)** `accounts/google.py` : OpenID Connect sans dépendance (state, PKCE, nonce ; vérifie iss,
   aud, exp, email_verified). Compte existant → connecté ; sinon page « Dernière étape » (spécialité + consentement
@@ -27,6 +27,11 @@
   `entrainement/tests/test_examen_js.py` (sautés sans Node ; la CI installe jsdom) ; « Signaler cette question »
   (`Signalement.question`, contrainte à trois cibles, vue `entrainement:signaler_question`, limite 10/jour, file
   du modérateur de la matière via `question__chapitre__matiere`).
+- **29/10** — essai réel sur le Galaxy A15 (Chrome, liaison USB `adb reverse`) fait par Serge Alain : application
+  installée, examen court, coupure du câble (bandeau, copie locale, renvoi), fin du temps, veille : tout bon.
+  Restent Firefox et Samsung Internet. Rendu : le code (blocs ``` / ~~~ et `en ligne`) est recopié tel quel, sans
+  formule ni espace fine (`CODE` dans `sujets/rendu.py`) ; un bloc de code indenté de 4 espaces n'est pas protégé
+  (confondu avec un paragraphe de liste).
 - **Ajustements du 28/10** — mois acheté pendant un Pass actif : avertissement avec les vraies dates
   (`service.avertissement`), « Acheter quand même » / « Annuler », aucun formulaire ni débit sans `confirme=1`.
   Examen blanc : bandeau `#bandeau-hors-ligne` (texte de Serge Alain, règle des 90 s), sauvegarde relancée au
@@ -253,7 +258,7 @@ Ensuite, rappel des autres pistes :
 3. Petits travaux faits le 23/10 : quiz d'épreuve hors ligne, page mot de passe (définir/changer), cache apt de la CI.
    Serge Alain choisit l'hébergeur et le domaine pendant ce temps.
 À faire par Serge Alain : identifiants Google, comptes responsables IAI/HINTEL + conventions, ville de HINTEL,
-pages légales, essai hors ligne sur le Galaxy.
+pages légales, essai sur Firefox et Samsung Internet (Galaxy/Chrome fait le 29/10).
 
 ## Repères
 
